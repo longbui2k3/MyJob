@@ -1,0 +1,470 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Job Hunt",
+    "description": "API endpoints for music app",
+    "contact": {
+      "name": "Long Bui",
+      "email": "buiduclongit@gmail.com",
+      "url": ""
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api/v1",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/api/v1/docs.json": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/signup": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Sign Up",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/forgotPassword": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Forgot Password",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forgotPasswordResponse200Schema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forgotPasswordResponse400Schema"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "Failed Dependency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forgotPasswordResponse424Schema"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/forgotPasswordBodySchema"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/resetPassword/{token}": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Reset Password",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Reset Password Token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resetPasswordResponse200Schema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resetPasswordResponse400Schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Auth Failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/resetPasswordResponse401Schema"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resetPasswordBodySchema"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/verify": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Verify OTP",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/refreshToken": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Refresh Token",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "signUpBodySchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Your Name"
+          },
+          "email": {
+            "type": "string",
+            "example": "youremail@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "string"
+          },
+          "passwordConfirm": {
+            "type": "string",
+            "example": "string"
+          },
+          "mobile": {
+            "type": "string",
+            "example": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "passwordConfirm",
+          "mobile"
+        ]
+      },
+      "forgotPasswordBodySchema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "youremail@gmail.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "forgotPasswordResponse200Schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Password reset email sent"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {}
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "metadata"
+        ]
+      },
+      "forgotPasswordResponse400Schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "No account with the supplied email exists!"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "forgotPasswordResponse424Schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 424
+          },
+          "message": {
+            "type": "string",
+            "example": "Password reset email failed!"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "resetPasswordBodySchema": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "example": "string"
+          },
+          "passwordConfirm": {
+            "type": "string",
+            "example": "string"
+          }
+        },
+        "required": [
+          "password",
+          "passwordConfirm"
+        ]
+      },
+      "resetPasswordResponse200Schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Reset password successfully!"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "tokens": {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "refreshToken": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                },
+                "required": [
+                  "accessToken",
+                  "refreshToken"
+                ]
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "typeOfAccount": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "example": "string"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "example": "string"
+                  }
+                },
+                "required": [
+                  "_id",
+                  "name",
+                  "email",
+                  "role",
+                  "typeOfAccount",
+                  "dateOfBirth",
+                  "gender"
+                ]
+              }
+            },
+            "required": [
+              "tokens",
+              "user"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "metadata"
+        ]
+      },
+      "resetPasswordResponse400Schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 400
+          },
+          "message": {
+            "type": "string",
+            "example": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "resetPasswordResponse401Schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "example": 401
+          },
+          "message": {
+            "type": "string",
+            "example": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      }
+    },
+    "examples": {},
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization",
+        "description": "API Key"
+      },
+      "clientId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-client-id",
+        "description": "Client ID (User ID)"
+      }
+    }
+  }
+}
