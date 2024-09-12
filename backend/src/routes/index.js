@@ -3,6 +3,7 @@
 const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const authen = require("./authen");
+const company = require("./company");
 const swagger = require("../../swagger-output.json");
 const keytokenRepo = require("../models/repos/keytokenRepo");
 const { convertToObjectId } = require("../utils");
@@ -34,6 +35,7 @@ router.get("/api/v1/docs.json", (req, res) => {
 //     d
 //   });
 // });
+router.use("/api/v1/company", company);
 router.use("/api/v1", authen);
 
 module.exports = router;
