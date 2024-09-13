@@ -7,11 +7,14 @@ class CompanyController {
   createCompany = async (req, res, next) => {
     new SuccessResponse({
       message: "Create company success",
-      metadata: await CompanyService.createCompany({
-        ...req.body,
-        user: req.user.userId,
-        email: req.user.email,
-      }),
+      metadata: await CompanyService.createCompany(
+        {
+          ...req.body,
+          user: req.user.userId,
+          email: req.user.email,
+        },
+        req.file
+      ),
     }).send(res);
   };
 }
