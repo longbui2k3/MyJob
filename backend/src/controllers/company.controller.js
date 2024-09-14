@@ -13,7 +13,7 @@ class CompanyController {
           user: req.user.userId,
           email: req.user.email,
         },
-        req.file
+        req.files
       ),
     }).send(res);
   };

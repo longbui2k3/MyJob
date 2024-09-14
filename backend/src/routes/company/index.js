@@ -28,11 +28,12 @@ router.use(authentication);
 //////////////////
 
 // create company
-router
-  .route("/")
-  .post(
-    upload.upload.single("logo_img"),
-    asyncHandler(companyController.createCompany)
-  );
+router.route("/").post(
+  upload.fields([
+    { name: "logo_img", maxCount: 1 },
+    { name: "banner_img", maxCount: 1 },
+  ]),
+  asyncHandler(companyController.createCompany)
+);
 
 module.exports = router;

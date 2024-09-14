@@ -9,7 +9,6 @@ class CompanyRepo extends BaseRepo {
 
   async createCompany(
     {
-      banner_img,
       company_name,
       about_us,
       user,
@@ -19,17 +18,15 @@ class CompanyRepo extends BaseRepo {
       map_location,
       email,
     },
-    file
+    files
   ) {
-    const image = await new UploadFiles(
-      "company",
-      "image",
-      file
-    ).uploadFileAndDownloadURL();
+    const logoImg = await this.uploadFile("image", files["logo_img"][0]);
+    const bannerImg = await this.uploadFile("image", files["banner_img"][0]);
+
     return await this.create({
       _id: user,
-      logo_img: image,
-      banner_img,
+      logo_img: logoImg,
+      banner_img: bannerImg,
       company_name,
       about_us,
       user,
@@ -39,6 +36,13 @@ class CompanyRepo extends BaseRepo {
       map_location,
       email,
     });
+  }
+  async uploadFile(type, file) {
+    return await new UploadFiles(
+      "company",
+      type,
+      file
+    ).uploadFileAndDownloadURL();
   }
 }
 
