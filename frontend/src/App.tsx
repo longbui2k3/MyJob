@@ -16,7 +16,7 @@ function App() {
         <Route path="/signup" element={<PageSignup />} />
         <Route path="/forgotpassword" element={<PageForgotPassword />} />
         <Route path="/verify" element={<PageEmailVerification />} />
-        <Route path="/resetpassword" element={<PageResetPassword />} />
+        <Route path="/resetpassword/:token" element={<PageResetPassword />} />
       </Routes>
     </BrowserRouter>
   );

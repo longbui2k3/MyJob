@@ -9,7 +9,12 @@ import {
 import { Heading3 } from "../../components/headings";
 import { EmailInput, useEmailInput } from "../../components/inputs";
 import { ButtonSubmit } from "../../components/buttons";
-import { ButtonSignInFacebook, ButtonSignInGoogle } from "../../components/buttons/ButtonThirdParty";
+import {
+  ButtonSignInFacebook,
+  ButtonSignInGoogle,
+} from "../../components/buttons/ButtonThirdParty";
+import { ForgotPasswordAPI } from "../../apis";
+import { MessageError, MessageSuccess } from "../../components/global";
 
 export default function PageForgotPassword() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,10 +22,30 @@ export default function PageForgotPassword() {
     useEmailInput({
       defaultValue: null,
     });
+  const defaultMessage = {
+    isShow: false,
+    type: "error",
+    message: "",
+  };
+  const [message, setMessage] = useState(defaultMessage);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+    if (!inputEmail) return;
+    const data = await ForgotPasswordAPI({ email: inputEmail });
+    if (data.status === 200) {
+      setMessage({
+        isShow: true,
+        type: "success",
+        message: data.message,
+      });
+    } else {
+      setMessage({
+        isShow: true,
+        type: "error",
+        message: data.message,
+      });
+    }
     setIsLoading(false);
   };
   return (
@@ -42,6 +67,21 @@ export default function PageForgotPassword() {
             />
           </div>
           <ButtonSubmit label="Reset Password" isLoading={isLoading} />
+          {message.isShow ? (
+            message.type === "error" ? (
+              <MessageError
+                content={message.message}
+                className="text-center mt-5"
+              />
+            ) : (
+              <MessageSuccess
+                content={message.message}
+                className="text-center mt-5"
+              />
+            )
+          ) : (
+            ""
+          )}
           <Or />
           <div className="my-[15px] flex justify-between space-x-4">
             <ButtonSignInGoogle />

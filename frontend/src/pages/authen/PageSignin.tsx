@@ -48,25 +48,25 @@ export default function PageSignin() {
     e.preventDefault();
     setIsLoading(true);
     if (!inputEmail || !inputPassword) return;
-    const res = await LoginAPI({ email: inputEmail, password: inputPassword });
-    if (res.status === 200) {
+    const data = await LoginAPI({ email: inputEmail, password: inputPassword });
+    if (data.status === 200) {
       setCookie("remember", isChecked ? inputEmail : "", {});
-      setCookie("jwt", res.metadata.tokens.accessToken, {
+      setCookie("jwt", data.metadata.tokens.accessToken, {
         path: "/",
       });
-      setCookie("user", res.metadata.user._id, {
+      setCookie("user", data.metadata.user._id, {
         path: "/",
       });
       setMessage({
         isShow: true,
         type: "success",
-        message: res.message,
+        message: data.message,
       });
     } else {
       setMessage({
         isShow: true,
         type: "error",
-        message: res.message,
+        message: data.message,
       });
     }
     setIsLoading(false);

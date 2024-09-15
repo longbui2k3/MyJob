@@ -8,8 +8,13 @@ import {
   usePasswordConfirmInput,
   usePasswordInput,
 } from "../../components/inputs";
+import { useNavigate, useParams } from "react-router-dom";
+import { ResetPasswordAPI } from "../../apis/authenAPI";
+import { MessageError, MessageSuccess } from "../../components/global";
 
 export default function PageResetPassword() {
+  const navigate = useNavigate();
+  const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const { inputPassword, handleInputPassword, isEmptyPassword } =
     usePasswordInput({});
@@ -18,9 +23,36 @@ export default function PageResetPassword() {
     handleInputPasswordConfirm,
     isEmptyPasswordConfirm,
   } = usePasswordConfirmInput({});
+  const defaultMessage = {
+    isShow: false,
+    type: "error",
+    message: "",
+  };
+  const [message, setMessage] = useState(defaultMessage);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    if (!params.token || !inputPassword || !inputPasswordConfirm) return;
+    const data = await ResetPasswordAPI(params.token, {
+      password: inputPassword,
+      passwordConfirm: inputPasswordConfirm,
+    });
+    if (data.status === 200) {
+      setMessage({
+        isShow: true,
+        type: "success",
+        message: data.message,
+      });
+      setTimeout(() => {
+        navigate("/signin");
+      }, 1000);
+    } else {
+      setMessage({
+        isShow: true,
+        type: "error",
+        message: data.message,
+      });
+    }
     setIsLoading(false);
   };
   return (
@@ -47,6 +79,21 @@ export default function PageResetPassword() {
               />
             </div>
             <ButtonSubmit label={"Reset Password"} isLoading={isLoading} />
+            {message.isShow ? (
+              message.type === "error" ? (
+                <MessageError
+                  content={message.message}
+                  className="text-center mt-5"
+                />
+              ) : (
+                <MessageSuccess
+                  content={message.message}
+                  className="text-center mt-5"
+                />
+              )
+            ) : (
+              ""
+            )}
           </form>
         </div>
       </div>

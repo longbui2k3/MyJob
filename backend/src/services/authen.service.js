@@ -23,6 +23,8 @@ const {
   PASSWORD_RESET_EXPIRES,
   OTP_EXPIRES,
   ACCESS_TOKEN_EXPIRES,
+  UserType,
+  UserStatus,
 } = require("../helpers/constants");
 
 class AuthenService {
@@ -77,10 +79,7 @@ class AuthenService {
     };
   };
   // type: forgotPwd, signUp
-  static verifyOTP = async ({ type, email, OTP }) => {
-    if (!["forgotPwd", "signUp"].includes(type)) {
-      throw new BadRequestError("Type is invalid!");
-    }
+  static verifyOTP = async ({ email, OTP }) => {
     const user = await userRepo.findByEmailAndOTPExpires(email);
     if (!user) {
       throw new BadRequestError(
@@ -97,45 +96,24 @@ class AuthenService {
     user.OTP = undefined;
     user.OTPExpires = undefined;
     await user.save({ validateBeforeSave: false });
-
-    if (type === "forgotPwd") {
-      const resetToken = createTokenString(32);
-      const passwordResetToken = hashString(resetToken);
-      const passwordResetExpires = Date.now() + PASSWORD_RESET_EXPIRES; // 10p hiệu lực
-
-      await userRepo.updatePasswordReset(user._id, {
-        passwordResetToken,
-        passwordResetExpires,
-      });
+    await userRepo.updateActiveStatus(user._id);
+    if (user) {
+      const tokens = await this.#createTokens(user);
       return {
-        message: "Verify OTP successfully!",
+        message: "Sign up successfully!",
         metadata: {
-          resetURL: `http://localhost:${process.env.PORT}/api/v1/resetPassword/${resetToken}`,
+          user: getInfoData({
+            object: user,
+            fields: ["_id", "name", "email"],
+          }),
+          tokens,
         },
       };
-    } else if (type === "signUp") {
-      if (user?.role === "user") {
-        await userRepo.updateActiveStatus(user._id);
-        if (user) {
-          const tokens = await this.#createTokens(user);
-          return {
-            statusCode: 201,
-            message: "Sign up successfully!",
-            metadata: {
-              user: getInfoData({
-                object: user,
-                fields: ["_id", "name", "email"],
-              }),
-              tokens,
-            },
-          };
-        }
-        return {
-          statusCode: 200,
-          metadata: null,
-        };
-      }
     }
+    return {
+      statusCode: 200,
+      metadata: null,
+    };
   };
   static forgotPassword = async ({ email }) => {
     const user = await userRepo.findByEmailAndActiveStatus(email);
@@ -143,13 +121,17 @@ class AuthenService {
       throw new BadRequestError("There is no user with email address!");
     }
 
-    const OTP = generateOTPConfig(OTP_LENGTH);
-    const hashOTP = hashString(OTP);
-    user.OTP = hashOTP;
-    user.OTPExpires = Date.now() + OTP_EXPIRES;
-    await user.save({ validateBeforeSave: false });
+    const resetToken = createTokenString(32);
+    const passwordResetToken = hashString(resetToken);
+    const passwordResetExpires = Date.now() + PASSWORD_RESET_EXPIRES; // 10p hiệu lực
+
+    await userRepo.updatePasswordReset(user._id, {
+      passwordResetToken,
+      passwordResetExpires,
+    });
+
     try {
-      await new Email({ type: "forgot", email, OTP }).sendEmail();
+      await new Email({ type: "forgot", email, value: resetToken }).sendEmail();
     } catch (error) {
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
@@ -170,15 +152,37 @@ class AuthenService {
     return delKey;
   };
   static signUp = async ({
+    userType,
     name,
+    username,
     email,
     password,
     passwordConfirm,
-    mobile,
   }) => {
-    if (!name || !email || !password || !passwordConfirm) {
+    if (
+      !name ||
+      !username ||
+      !email ||
+      !password ||
+      !passwordConfirm ||
+      !userType
+    ) {
       throw new BadRequestError("Error: Please fill all the fields!");
     }
+
+    if (!Object.values(UserType).includes(userType)) {
+      throw new BadRequestError(
+        `Error: User type should be ${UserType.EMPLOYEE} or ${UserType.EMPLOYER}`
+      );
+    }
+
+    const existingUsername = await userRepo.findByUsernameAndActiveStatus(
+      username
+    );
+    if (existingUsername) {
+      throw new BadRequestError("Error: Username already exists!");
+    }
+
     const existingUser = await userRepo.findByEmailAndActiveStatus(email);
     if (existingUser) {
       throw new BadRequestError("Error: User already registered!");
@@ -186,16 +190,22 @@ class AuthenService {
 
     const existingUnverifiedUser =
       await userRepo.findByEmailAndUnverifiedStatus(email);
+
+    if (password !== passwordConfirm) {
+      throw new AuthFailureError("Passwords do not match! Please try again!");
+    }
+
     const newUser =
       existingUnverifiedUser ||
       (await userRepo.create(
         removeUndefinedInObject({
           name,
+          username,
           email,
           password,
           passwordConfirm,
-          status: "unverified",
-          mobile,
+          status: UserStatus.UNVERIFIED,
+          userType,
         })
       ));
     const OTP = generateOTPConfig(OTP_LENGTH);
@@ -204,7 +214,7 @@ class AuthenService {
     newUser.OTPExpires = Date.now() + OTP_EXPIRES;
     await newUser.save({ validateBeforeSave: false });
     try {
-      await new Email({ email, OTP }).sendEmail();
+      await new Email({type: "signup", email, value: OTP }).sendEmail();
     } catch (err) {
       throw new InternalServerError(
         "There was an error sending the email. Try again later!"

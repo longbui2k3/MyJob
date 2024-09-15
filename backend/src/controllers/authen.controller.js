@@ -1,6 +1,6 @@
 "use strict";
 
-const { SuccessResponse, OK } = require("../core/success.response");
+const { SuccessResponse, OK, CREATED } = require("../core/success.response");
 const AuthenService = require("../services/authen.service");
 const HEADER = {
   API_KEY: "x-api-key",
@@ -14,10 +14,7 @@ class AuthenController {
     return new OK(result).send(res);
   };
   verifyOTP = async (req, res, next) => {
-    const result = await AuthenService.verifyOTP({
-      type: req.query.type,
-      ...req.body,
-    });
+    const result = await AuthenService.verifyOTP(req.body);
     return new OK(result).send(res);
   };
   forgotPassword = async (req, res, next) => {
@@ -32,7 +29,7 @@ class AuthenController {
     console.log("[P]::signUp::", req.body);
 
     const result = await AuthenService.signUp(req.body);
-    return new SuccessResponse(result).send(res);
+    return new CREATED(result).send(res);
   };
   logIn = async (req, res, next) => {
     console.log("[P]::logIn::", req.body);

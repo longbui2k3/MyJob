@@ -1,9 +1,6 @@
 import axios from "../configs/axios.config";
 
-export const LoginAPI = async (body: {
-  email: string;
-  password: string;
-}) => {
+export const LoginAPI = async (body: { email: string; password: string }) => {
   try {
     const res = await axios.post(
       `${import.meta.env.VITE_SERVER_DOMAIN}/login`,
@@ -29,11 +26,12 @@ export const LogoutAPI = async () => {
 };
 
 export const SignUpAPI = async (body: {
-  mobile?: string;
-  email?: string;
-  username: string;
   name: string;
+  username: string;
+  email: string;
   password: string;
+  passwordConfirm: string;
+  userType: string;
 }) => {
   try {
     const res = await axios.post(
@@ -47,11 +45,7 @@ export const SignUpAPI = async (body: {
   }
 };
 
-export const VerifyCodeAPI = async (body: {
-  email?: string;
-  mobile?: string;
-  OTP: string;
-}) => {
+export const VerifyCodeAPI = async (body: { email: string; OTP: string }) => {
   try {
     const res = await axios.post(
       `${import.meta.env.VITE_SERVER_DOMAIN}/verify`,
@@ -64,11 +58,7 @@ export const VerifyCodeAPI = async (body: {
   }
 };
 
-export const ForgotPasswordAPI = async (body: {
-  mobile?: string;
-  email?: string;
-  username?: string;
-}) => {
+export const ForgotPasswordAPI = async (body: { email: string }) => {
   try {
     const res = await axios.post(
       `${import.meta.env.VITE_SERVER_DOMAIN}/forgotPassword`,
@@ -90,9 +80,7 @@ export const ResetPasswordAPI = async (
 ) => {
   try {
     const res = await axios.post(
-      `${
-        import.meta.env.VITE_SERVER_DOMAIN
-      }/resetPassword/${resetToken}`,
+      `${import.meta.env.VITE_SERVER_DOMAIN}/resetPassword/${resetToken}`,
       body
     );
     return res.data;
