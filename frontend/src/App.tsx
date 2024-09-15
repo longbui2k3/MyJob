@@ -1,12 +1,22 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { PageLogin } from "./pages";
+import {
+  PageEmailVerification,
+  PageForgotPassword,
+  PageResetPassword,
+  PageSignin,
+  PageSignup,
+} from "./pages";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<PageLogin />} />
+        <Route path="/signin" element={<PageSignin />} />
+        <Route path="/signup" element={<PageSignup />} />
+        <Route path="/forgotpassword" element={<PageForgotPassword />} />
+        <Route path="/verify" element={<PageEmailVerification />} />
+        <Route path="/resetpassword" element={<PageResetPassword />} />
       </Routes>
     </BrowserRouter>
   );

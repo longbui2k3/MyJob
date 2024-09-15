@@ -2,11 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const { default: helmet } = require("helmet");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
+app.use(cors());
 
 //thiết lập database
 require("./dbs/init.mongodb");
