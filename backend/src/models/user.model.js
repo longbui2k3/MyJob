@@ -1,6 +1,7 @@
 "use strict";
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { UserStatus, UserRole, UserType, UserGender } = require("../helpers/constants");
 const COLLECTION_NAME = "users";
 const DOCUMENT_NAME = "User";
 const userSchema = new mongoose.Schema(
@@ -8,6 +9,12 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Please provide your name!"],
+    },
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
     },
     email: {
       type: String,
@@ -17,19 +24,23 @@ const userSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["unverified", "pending", "active", "inactive"],
-      default: "unverified",
+      enum: Object.values(UserStatus),
+      default: UserStatus.UNVERIFIED,
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user",
+      enum: Object.values(UserRole),
+      default: UserRole.USER,
+    },
+    userType: {
+      type: String,
+      enum: Object.values(UserType),
+      default: UserType.EMPLOYEE,
     },
     avatar: { type: String },
     gender: {
       type: String,
-      enum: ["Nam", "Nữ", "Không xác định", ""],
-      default: "",
+      enum: Object.values(UserGender),
     },
     dateOfBirth: { type: Date, default: null },
     address: { type: String, default: "" },

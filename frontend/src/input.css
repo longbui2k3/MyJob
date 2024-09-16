@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .all-\[unset\] {
+    all: unset;
+    font-family: "Inter", Helvetica;
+  }
+}
+:root {
+  --success: #14ae5c;
+  --error: rgb(229,89,77);
+  --gray-500: #5e6670;
+  --gray-600: rgba(94, 102, 112, 1);
+  --gray-900: rgba(24, 25, 28, 1);
+  --graywhite: rgba(255, 255, 255, 1);
+  --primary-100: rgba(206, 224, 245, 1);
+  --primary-200: rgba(157, 193, 235, 1);
+  --primary-300: rgba(108, 163, 224, 1);
+  --primary-50: rgba(231, 240, 250, 1);
+  --primary-500: rgba(10, 101, 204, 1);
+  --primary-600: rgba(8, 81, 163, 1);
+}

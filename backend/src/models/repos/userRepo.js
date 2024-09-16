@@ -33,6 +33,10 @@ class UserRepo extends BaseRepo {
     });
   }
 
+  async findByUsernameAndActiveStatus(username) {
+    return await this.findOne({ username, status: UserStatus.ACTIVE });
+  }
+
   async findByPasswordReset({ passwordResetToken }) {
     return await this.findOne({
       passwordResetToken,

@@ -1,1 +1,7 @@
-export { default as PageLogin } from "./PageLogin";
+export {
+  PageSignin,
+  PageSignup,
+  PageEmailVerification,
+  PageForgotPassword,
+  PageResetPassword
+} from "./authen";
