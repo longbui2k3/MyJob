@@ -4,7 +4,7 @@ interface NavigationProps {
   isCenter?: boolean;
 }
 
-export default function Navigation({ isCenter = false }: NavigationProps) {
+export default function NavigationHome({ isCenter = false }: NavigationProps) {
   return (
     <div
       className={`absolute flex flex-col justify-center h-[80px] ${

@@ -1,4 +1,4 @@
-export { default as Navigation } from "./Navigation";
+export { default as NavigationHome } from "./NavigationHome";
 export { default as NavigationCreateAccount } from "./NavigationCreateAccount";
 export { default as NavigationSignIn } from "./NavigationSignIn";
 export { default as NavigationSignInV2 } from "./NavigationSignInV2";

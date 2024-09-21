@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import {
+  Cover,
   PageEmailVerification,
   PageForgotPassword,
+  PageHome,
   PageResetPassword,
   PageSignin,
   PageSignup,
@@ -17,6 +19,10 @@ function App() {
         <Route path="/forgotpassword" element={<PageForgotPassword />} />
         <Route path="/verify" element={<PageEmailVerification />} />
         <Route path="/resetpassword/:token" element={<PageResetPassword />} />
+        <Route path="/" element={<Cover />}>
+          <Route path="" element={<PageHome />} />
+          <Route path="home" element={<PageHome />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

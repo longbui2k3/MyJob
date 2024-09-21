@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   Background,
-  Navigation,
+  NavigationHome,
   NavigationCreateAccount,
   NavigationSignInV2,
   Or,
@@ -50,7 +50,7 @@ export default function PageForgotPassword() {
   };
   return (
     <div className="relative flex h-[100vh]">
-      <Navigation />
+      <NavigationHome />
       <div className="flex flex-col justify-center w-[50%]">
         <form className="w-[480px] ml-[220px]" onSubmit={handleSubmit}>
           <div>
@@ -66,7 +66,11 @@ export default function PageForgotPassword() {
               isEmptyEmail={isEmptyEmail}
             />
           </div>
-          <ButtonSubmit label="Reset Password" isLoading={isLoading} />
+          <ButtonSubmit
+            label="Reset Password"
+            isLoading={isLoading}
+            className="mt-[25px] "
+          />
           {message.isShow ? (
             message.type === "error" ? (
               <MessageError

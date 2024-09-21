@@ -1,11 +1,15 @@
 import { useState } from "react";
 import {
   Background,
-  Navigation,
+  NavigationHome,
   NavigationSignIn,
   Or,
 } from "../../components/authen";
-import { ButtonSubmit } from "../../components/buttons";
+import {
+  ButtonSignUpFacebook,
+  ButtonSignUpGoogle,
+  ButtonSubmit,
+} from "../../components/buttons";
 import {
   Checkbox,
   MessageError,
@@ -25,10 +29,6 @@ import {
   UsernameInput,
   useUsernameInput,
 } from "../../components/inputs";
-import {
-  ButtonSignUpFacebook,
-  ButtonSignUpGoogle,
-} from "../../components/buttons/ButtonThirdParty";
 import { Select } from "@chakra-ui/react";
 import { SignUpAPI } from "../../apis";
 import { useNavigate } from "react-router-dom";
@@ -102,7 +102,6 @@ export default function PageSignup() {
       setTimeout(() => {
         navigate(`/verify?type=signup&email=${inputEmail}`);
       }, 1000);
-      
     } else {
       setMessage({
         isShow: true,
@@ -114,7 +113,7 @@ export default function PageSignup() {
   }
   return (
     <div className="relative flex h-full">
-      <Navigation />
+      <NavigationHome />
       <div className="w-[50%]">
         <form
           className="w-[480px] ml-[220px] mt-[120px]"
@@ -182,7 +181,11 @@ export default function PageSignup() {
                 onChange={handleCheckbox}
               />
             </div>
-            <ButtonSubmit label="Create Account" isLoading={isLoading} />
+            <ButtonSubmit
+              label="Create Account"
+              isLoading={isLoading}
+              className="mt-[25px] "
+            />
             {message.isShow ? (
               message.type === "error" ? (
                 <MessageError

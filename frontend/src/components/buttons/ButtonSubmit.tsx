@@ -3,19 +3,28 @@ import { FiArrowRight } from "react-icons/fi";
 
 interface ButtonSubmitProps {
   label: string;
-  isLoading: boolean;
+  isLoading?: boolean;
+  className?: string;
+  height?: string;
+  fontSize?: string;
 }
 
-export default function ButtonSubmit({ label, isLoading }: ButtonSubmitProps) {
+export default function ButtonSubmit({
+  label,
+  isLoading = false,
+  className,
+  height = "44px",
+  fontSize = "14px",
+}: ButtonSubmitProps) {
   return (
     <Button
       type="submit"
-      className="h-[40px] mt-[25px] w-full rounded-[8px] bg-primary-500 text-white"
-      height={"44px"}
-      fontSize={"14px"}
+      className={`w-full rounded-[8px] bg-primary-500 text-white ${className}`}
+      height={height}
+      fontSize={fontSize}
       bg="--primary-500"
       color="--white"
-      _hover={{ bg: "var(--primary-500)", color: "--white" }}
+      _hover={{ bg: "var(--primary-500)", color: "white" }}
       rightIcon={<FiArrowRight className="text-[18px]" />}
       isLoading={isLoading}
     >
