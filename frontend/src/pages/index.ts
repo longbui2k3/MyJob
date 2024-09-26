@@ -3,5 +3,7 @@ export {
   PageSignup,
   PageEmailVerification,
   PageForgotPassword,
-  PageResetPassword
+  PageResetPassword,
 } from "./authen";
+
+export { PageCreateCompany } from "./company";

@@ -1,0 +1,9 @@
+export { default as Navigation } from "./Navigation";
+export { default as Tabs } from "./Tabs";
+export { default as TabItem } from "./TabItem";
+export { default as FormCompanyInfo } from "./FormCompanyInfo";
+export { default as FormFoundingInfo } from "./FormFoundingInfo";
+export { default as FormSocialMediaInfo } from "./FormSocialMediaInfo";
+export { default as FormContact } from "./FormContact";
+export { default as ProfilePicture } from "./ProfilePicture";
+export { default as CompletedCompany } from "./CompletedCompany";
