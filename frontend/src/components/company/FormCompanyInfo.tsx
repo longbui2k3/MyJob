@@ -2,8 +2,14 @@ import BaseInput from "../inputs/Input/BaseInput";
 import ProfilePicture from "./ProfilePicture";
 import { Text } from "@chakra-ui/react";
 import { RichTextEditer } from "../inputs/RichTextEditer";
+import { useState } from "react";
 
 export default function FormCompanyInfo() {
+  const [companyName, setCompanyName] = useState<string>("");
+  const handleInputChange = (e) => {
+    setCompanyName(e.target.value);
+  };
+
   return (
     <div className="flex flex-col text-gray-900 space-y-4">
       <div className="font-medium text-lg leading-7">Logo & Banner Image</div>
@@ -22,7 +28,11 @@ export default function FormCompanyInfo() {
       <div className="border-[1px]"></div>
       <div>
         <Text className="font-normal text-sm mb-2">Company name</Text>
-        <BaseInput />
+        <BaseInput
+          type="text"
+          value={companyName}
+          onChange={handleInputChange}
+        />
       </div>
       <div>
         <Text className="font-normal text-sm mb-2">Abouts us</Text>
