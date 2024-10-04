@@ -1,3 +1,5 @@
+"use strict";
+
 const keytokenRepo = require("../models/repos/keytokenRepo");
 
 class KeyTokenService {

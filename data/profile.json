@@ -1,0 +1,20 @@
+{
+    "user": "66d9d5bdf64dfe524969c2db",
+    "avatar": "https://example.com/avatar1.jpg",
+    "fullName": "John Doe",
+    "title": "Software Engineer",
+    "experience": "THREE_YEARS",
+    "educations": "BACHELOR",
+    "personalWebsite": "https://johndoe.com",
+    "gender": "MALE",
+    "nationality": "American",
+    "dateOfBirth": "1990-04-15T00:00:00.000Z",
+    "maritalStatus": "SINGLE",
+    "biography": "John is a passionate software engineer with experience in developing full-stack web applications.",
+    "address": "123 Main St, San Francisco, CA",
+    "socialMedias": [
+      { "socialMedia": "LinkedIn", "linkUrl": "https://linkedin.com/in/johndoe" },
+      { "socialMedia": "GitHub", "linkUrl": "https://github.com/johndoe" }
+    ],
+    "isPrivacy": false
+  }

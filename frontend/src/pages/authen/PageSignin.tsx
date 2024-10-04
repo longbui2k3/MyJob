@@ -26,7 +26,9 @@ import {
   useEmailInput,
   usePasswordInput,
 } from "../../components/inputs";
+import { useNavigate } from "react-router-dom";
 export default function PageSignin() {
+  const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt", "remember", "user"]);
   const { inputEmail, handleInputEmail, isValidEmail, isEmptyEmail } =
     useEmailInput({
@@ -62,6 +64,9 @@ export default function PageSignin() {
         type: "success",
         message: data.message,
       });
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 500);
     } else {
       setMessage({
         isShow: true,

@@ -1,13 +1,8 @@
 "use strict";
 
 const { SuccessResponse, OK, CREATED } = require("../core/success.response");
+const { HEADER } = require("../helpers/constants");
 const AuthenService = require("../services/authen.service");
-const HEADER = {
-  API_KEY: "x-api-key",
-  CLIENT_ID: "x-client-id",
-  AUTHORIZATION: "authorization",
-  REFRESHTOKEN: "x-rtoken-id",
-};
 class AuthenController {
   resetPassword = async (req, res, next) => {
     const result = await AuthenService.resetPassword(req);

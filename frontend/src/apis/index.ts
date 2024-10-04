@@ -5,3 +5,4 @@ export {
   VerifyCodeAPI,
   ForgotPasswordAPI,
 } from "./authenAPI";
+export { GetUser } from "./userAPI";

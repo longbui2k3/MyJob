@@ -51,7 +51,7 @@ export default function Logo({
         </defs>
       </svg>
       <div
-        className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[25px] tracking-[0] leading-10 whitespace-nowrap"
+        className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[25px] tracking-[0]whitespace-nowrap mt-1"
         style={{
           color: textColor,
         }}

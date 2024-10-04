@@ -86,7 +86,7 @@ export default function PageSignup() {
       return;
     }
     const data = await SignUpAPI({
-      name: inputFullName,
+      fullName: inputFullName,
       username: inputUsername,
       email: inputEmail,
       password: inputPassword,

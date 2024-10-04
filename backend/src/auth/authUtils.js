@@ -6,13 +6,9 @@ const { findByUserId } = require("../services/keytoken.service");
 const {
   ACCESS_TOKEN_EXPIRES,
   REFRESH_TOKEN_EXPIRES,
+  HEADER,
 } = require("../helpers/constants");
-const HEADER = {
-  API_KEY: "x-api-key",
-  CLIENT_ID: "x-client-id",
-  AUTHORIZATION: "authorization",
-  REFRESHTOKEN: "x-rtoken-id",
-};
+
 const restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

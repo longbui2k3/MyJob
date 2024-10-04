@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../context";
+import { Navigations } from "../../helpers/constants";
 interface LiProps {
   label: string;
   href: string;
@@ -22,17 +25,61 @@ function Li({ label, href, href1 }: LiProps) {
     </li>
   );
 }
-
+const navigationRoles = {
+  normal: [
+    Navigations.FIND_JOB,
+    Navigations.EMPLOYERS,
+    Navigations.CANDIDATES,
+    Navigations.PRICING_PLANS,
+    Navigations.CUSTOMER_SUPPORTS,
+  ],
+  employee: [
+    Navigations.FIND_JOB,
+    Navigations.FIND_EMPLOYERS,
+    Navigations.DASHBOARD,
+    Navigations.JOB_ALERTS,
+    Navigations.CUSTOMER_SUPPORTS,
+  ],
+  employer: [
+    Navigations.FIND_CANDIDATES,
+    Navigations.DASHBOARD,
+    Navigations.MY_JOBS,
+    Navigations.APPLICATIONS,
+    Navigations.CUSTOMER_SUPPORTS,
+  ],
+};
 export default function Navigation() {
+  const { user } = useAuthContext();
+  const [navigations, setNavigations] = useState<
+    Array<{ label: string; href: string }>
+  >([]);
+
+  useEffect(() => {
+    if (typeof user === "string") return;
+    if (user) {
+      setNavigations(navigationRoles[user.userType]);
+    } else {
+      setNavigations(navigationRoles["normal"]);
+    }
+  }, [user]);
+
   return (
     <div className="flex flex-col justify-center w-full h-[50px] bg-[--gray-100]">
       <ul className="flex space-x-6 ml-[240px] h-full">
-        <Li label="Home" href="/" href1="/home" />
-        <Li label="Find Job" href="#" />
-        <Li label="Employers" href="#" />
-        <Li label="Candidates" href="#" />
-        <Li label="Pricing Plans" href="#" />
-        <Li label="Customer Supports" href="#" />
+        {navigations.length ? (
+          <>
+            <Li
+              label={Navigations.HOME.label}
+              href={Navigations.HOME.href}
+              href1={Navigations.HOME.href1}
+            />
+            {navigations.map((navigation) => (
+              <Li label={navigation.label} href={navigation.href} />
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
       </ul>
     </div>
   );
