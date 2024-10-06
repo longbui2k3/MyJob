@@ -1,6 +1,11 @@
 "use strict";
 const mongoose = require("mongoose");
-const COLLECTION_NAME = "companys";
+const {
+  OrganizationTypes,
+  IndustryTypes,
+  TeamSizes,
+} = require("../helpers/constants");
+const COLLECTION_NAME = "companies";
 const DOCUMENT_NAME = "Company";
 const companySchema = new mongoose.Schema(
   {
@@ -25,48 +30,17 @@ const companySchema = new mongoose.Schema(
     },
     organization_type: {
       type: String,
-      enum: [
-        "",
-        "Public",
-        "Private",
-        "Non-Profit",
-        "Government",
-        "Partnership",
-        "Sole Proprietorship",
-        "Corporation",
-      ],
+      enum: OrganizationTypes,
       default: "",
     },
     industry_type: {
       type: String,
-      enum: [
-        "",
-        "Technology",
-        "Finance",
-        "Healthcare",
-        "Manufacturing",
-        "Retail",
-        "Education",
-        "Real Estate",
-        "Hospitality",
-        "Consulting",
-        "Transportation",
-      ],
+      enum: IndustryTypes,
       default: "",
     },
     team_size: {
       type: String,
-      enum: [
-        "",
-        "1-10",
-        "11-50",
-        "51-200",
-        "201-500",
-        "501-1000",
-        "1001-5000",
-        "5001-10000",
-        "10001+",
-      ],
+      enum: TeamSizes,
       default: "",
     },
     year_of_establishment: {

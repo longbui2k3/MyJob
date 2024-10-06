@@ -4,10 +4,8 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const authen = require("./authen");
 const company = require("./company");
+const user = require("./user");
 const swagger = require("../../swagger-output.json");
-const keytokenRepo = require("../models/repos/keytokenRepo");
-const { convertToObjectId } = require("../utils");
-const userRepo = require("../models/repos/userRepo");
 const router = express.Router();
 router.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swagger));
 // Documentation in JSON format
@@ -35,6 +33,7 @@ router.get("/api/v1/docs.json", (req, res) => {
 //     d
 //   });
 // });
+router.use("/api/v1/user", user);
 router.use("/api/v1/company", company);
 router.use("/api/v1", authen);
 

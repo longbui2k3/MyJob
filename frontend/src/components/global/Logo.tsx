@@ -1,4 +1,10 @@
-export default function Logo(): JSX.Element {
+interface LogoProps {
+  textColor?: string;
+}
+
+export default function Logo({
+  textColor = "var(--gray-900)",
+}: LogoProps): JSX.Element {
   return (
     <div className="inline-flex items-center gap-2 relative cursor-pointer">
       <svg
@@ -44,7 +50,12 @@ export default function Logo(): JSX.Element {
           </clipPath>
         </defs>
       </svg>
-      <div className="relative w-fit mt-[-1.00px] [font-family:'Inter-SemiBold',Helvetica] font-semibold text-gray-900 text-[25px] tracking-[0] leading-10 whitespace-nowrap">
+      <div
+        className="relative w-fit [font-family:'Inter-SemiBold',Helvetica] font-semibold text-[25px] tracking-[0]whitespace-nowrap mt-1"
+        style={{
+          color: textColor,
+        }}
+      >
         MyJob
       </div>
     </div>

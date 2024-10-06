@@ -26,6 +26,7 @@ const {
   UserType,
   UserStatus,
 } = require("../helpers/constants");
+const profileRepo = require("../models/repos/profileRepo");
 
 class AuthenService {
   static async #createTokens(user) {
@@ -153,14 +154,14 @@ class AuthenService {
   };
   static signUp = async ({
     userType,
-    name,
+    fullName,
     username,
     email,
     password,
     passwordConfirm,
   }) => {
     if (
-      !name ||
+      !fullName ||
       !username ||
       !email ||
       !password ||
@@ -199,7 +200,6 @@ class AuthenService {
       existingUnverifiedUser ||
       (await userRepo.create(
         removeUndefinedInObject({
-          name,
           username,
           email,
           password,
@@ -208,13 +208,20 @@ class AuthenService {
           userType,
         })
       ));
+
     const OTP = generateOTPConfig(OTP_LENGTH);
     const hashOTP = hashString(OTP);
     newUser.OTP = hashOTP;
     newUser.OTPExpires = Date.now() + OTP_EXPIRES;
     await newUser.save({ validateBeforeSave: false });
+
+    await profileRepo.createProfile({
+      userId: newUser._id,
+      fullName,
+    });
+
     try {
-      await new Email({type: "signup", email, value: OTP }).sendEmail();
+      await new Email({ type: "signup", email, value: OTP }).sendEmail();
     } catch (err) {
       throw new InternalServerError(
         "There was an error sending the email. Try again later!"

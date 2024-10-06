@@ -26,7 +26,7 @@ export const LogoutAPI = async () => {
 };
 
 export const SignUpAPI = async (body: {
-  name: string;
+  fullName: string;
   username: string;
   email: string;
   password: string;

@@ -1,15 +1,11 @@
 "use strict";
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { UserStatus, UserRole, UserType, UserGender } = require("../helpers/constants");
+const { UserStatus, UserRole, UserType } = require("../helpers/constants");
 const COLLECTION_NAME = "users";
 const DOCUMENT_NAME = "User";
 const userSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, "Please provide your name!"],
-    },
     username: {
       type: String,
       required: true,
@@ -37,14 +33,6 @@ const userSchema = new mongoose.Schema(
       enum: Object.values(UserType),
       default: UserType.EMPLOYEE,
     },
-    avatar: { type: String },
-    gender: {
-      type: String,
-      enum: Object.values(UserGender),
-    },
-    dateOfBirth: { type: Date, default: null },
-    address: { type: String, default: "" },
-    mobile: { type: String, default: "" },
     password: {
       type: String,
       required: [true, "Please provide your password!"],
@@ -65,6 +53,10 @@ const userSchema = new mongoose.Schema(
     passwordResetExpires: Date,
     OTP: String,
     OTPExpires: Date,
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );

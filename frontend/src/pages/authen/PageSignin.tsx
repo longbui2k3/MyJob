@@ -1,16 +1,16 @@
 import {
   Background,
   Hyperlink,
-  Navigation,
+  NavigationHome,
   NavigationCreateAccount,
   Or,
 } from "../../components/authen";
 import { Heading3 } from "../../components/headings";
-import { ButtonSubmit } from "../../components/buttons";
 import {
   ButtonSignInFacebook,
   ButtonSignInGoogle,
-} from "../../components/buttons/ButtonThirdParty";
+  ButtonSubmit,
+} from "../../components/buttons";
 import {
   Checkbox,
   MessageError,
@@ -26,7 +26,9 @@ import {
   useEmailInput,
   usePasswordInput,
 } from "../../components/inputs";
+import { useNavigate } from "react-router-dom";
 export default function PageSignin() {
+  const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt", "remember", "user"]);
   const { inputEmail, handleInputEmail, isValidEmail, isEmptyEmail } =
     useEmailInput({
@@ -62,6 +64,9 @@ export default function PageSignin() {
         type: "success",
         message: data.message,
       });
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 500);
     } else {
       setMessage({
         isShow: true,
@@ -73,7 +78,7 @@ export default function PageSignin() {
   };
   return (
     <div className="relative flex h-[100vh]">
-      <Navigation />
+      <NavigationHome />
       <div className="flex flex-col justify-center w-[50%]">
         <form className="w-[480px] ml-[220px]" onSubmit={handleSubmit}>
           <div>
@@ -97,7 +102,11 @@ export default function PageSignin() {
             <Checkbox label="Remember Me" onChange={handleCheckbox} />
             <Hyperlink href="/forgotpassword" label="Forget password" />
           </div>
-          <ButtonSubmit label="Sign In" isLoading={isLoading} />
+          <ButtonSubmit
+            label="Sign In"
+            isLoading={isLoading}
+            className="mt-[25px] "
+          />
           {message.isShow ? (
             message.type === "error" ? (
               <MessageError

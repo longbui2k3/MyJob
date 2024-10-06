@@ -5,5 +5,5 @@ export {
   PageForgotPassword,
   PageResetPassword,
 } from "./authen";
-
-export { PageCreateCompany } from "./company";
+export { PageHome } from "./home";
+export { default as Cover } from "./Cover";

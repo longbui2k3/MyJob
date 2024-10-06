@@ -7,8 +7,8 @@ class Database {
     this.connect();
   }
 
-  connect() {
-    mongoose
+  async connect() {
+    const connection = await mongoose
       .connect(uri, {
         maxPoolSize: 50,
       })
@@ -18,6 +18,17 @@ class Database {
       .catch((err) => {
         console.log("Error Connect!");
       });
+    // if (connection) {
+    //   connection.model(userModel);
+    //   connection.model(keytokenModel);
+    //   connection.model(applicationModel);
+    //   connection.model(companyModel);
+    //   connection.model(favoritejobModel);
+    //   connection.model("Job", jobSchema);
+    //   connection.model(profileModel);
+    //   connection.model(resumeModel);
+    //   connection.model(savedcandidateModel);
+    // }
   }
   static getInstance() {
     if (!Database.instance) {

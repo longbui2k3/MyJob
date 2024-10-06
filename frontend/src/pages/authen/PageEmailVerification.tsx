@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Navigation, Unsend } from "../../components/authen";
+import { NavigationHome, Unsend } from "../../components/authen";
 import { Heading3 } from "../../components/headings";
 import { useVerifyCodeInput, VerifyCodeInput } from "../../components/inputs";
 import { ButtonSubmit } from "../../components/buttons";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { VerifyCodeAPI } from "../../apis";
 import { MessageError, MessageSuccess } from "../../components/global";
+import { Text } from "../../components/text";
 
 export default function PageEmailVerification() {
   const navigate = useNavigate();
@@ -48,16 +49,16 @@ export default function PageEmailVerification() {
   };
   return (
     <div className="relative h-[100vh]">
-      <Navigation isCenter={true} />
+      <NavigationHome isCenter={true} />
       <div className="flex justify-center w-full h-[100vh]">
         <div className="flex flex-col justify-center">
           <form className="w-[480px]" onSubmit={handleSubmit}>
             <Heading3 name="Email Verification" className="text-center" />
-            <div className="mt-3 text-[--gray-500] text-[14px] font-normal leading-normal text-center">
+            <Text className="text-center">
               We've sent an verification to{" "}
               <span className="font-semibold">{searchParams.get("email")}</span>{" "}
               to verify your email address and activate your email account
-            </div>
+            </Text>
             <div className="pt-[20px] space-y-4">
               <VerifyCodeInput
                 value={inputVerifyCode}
@@ -65,7 +66,11 @@ export default function PageEmailVerification() {
                 isEmptyVerifyCode={isEmptyVerifyCode}
               />
             </div>
-            <ButtonSubmit label={"Verify My Account"} isLoading={isLoading} />
+            <ButtonSubmit
+              label={"Verify My Account"}
+              isLoading={isLoading}
+              className="mt-[25px] "
+            />
             {message.isShow ? (
               message.type === "error" ? (
                 <MessageError
