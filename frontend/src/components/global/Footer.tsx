@@ -3,6 +3,7 @@ import { Heading5 } from "../headings";
 import { Text } from "../text";
 import Logo from "./Logo";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 export default function Footer() {
   const navigates = [
@@ -89,7 +90,12 @@ export default function Footer() {
   ];
   return (
     <>
-      <div className="flex space-x-4 w-full bg-[--gray-900] px-[240px] py-[60px]">
+      <div
+        className={`flex space-x-4 w-full bg-[--gray-900]`}
+        style={{
+          padding: `60px ${DEFAULT_PADDING_X}`,
+        }}
+      >
         <div className="w-[30%]">
           <Logo textColor="white" />
           <div className="flex space-x-2">
@@ -133,7 +139,12 @@ export default function Footer() {
           ))}
         </div>
       </div>
-      <div className="flex justify-between w-full bg-[--gray-900] px-[240px] py-[20px] border-t-[1px] border-[--gray-500]">
+      <div
+        className={`flex justify-between w-full bg-[--gray-900] border-t-[1px] border-[--gray-500]`}
+        style={{
+          padding: `20px ${DEFAULT_PADDING_X}`,
+        }}
+      >
         <Text
           children={"@ 2024 MyJob - Job Portal. All rights Rserved"}
           className="mt-[0px]"

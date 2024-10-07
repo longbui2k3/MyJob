@@ -32,6 +32,7 @@ import {
 import { Select } from "@chakra-ui/react";
 import { SignUpAPI } from "../../apis";
 import { useNavigate } from "react-router-dom";
+import { getRoute, VERIFY_KEY } from "../../helpers/constants";
 
 export default function PageSignup() {
   const navigate = useNavigate();
@@ -100,7 +101,14 @@ export default function PageSignup() {
         message: data.message,
       });
       setTimeout(() => {
-        navigate(`/verify?type=signup&email=${inputEmail}`);
+        navigate(
+          getRoute(VERIFY_KEY, {
+            query: {
+              type: "signup",
+              email: inputEmail,
+            },
+          }).path
+        );
       }, 1000);
     } else {
       setMessage({

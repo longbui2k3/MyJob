@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ResetPasswordAPI } from "../../apis/authenAPI";
 import { MessageError, MessageSuccess } from "../../components/global";
 import { Text } from "../../components/text";
+import { getRoute, SIGN_IN_KEY } from "../../helpers/constants";
 
 export default function PageResetPassword() {
   const navigate = useNavigate();
@@ -45,8 +46,8 @@ export default function PageResetPassword() {
         message: data.message,
       });
       setTimeout(() => {
-        navigate("/signin");
-      }, 1000);
+        navigate(getRoute(SIGN_IN_KEY).path);
+      }, 500);
     } else {
       setMessage({
         isShow: true,

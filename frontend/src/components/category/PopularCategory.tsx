@@ -2,6 +2,7 @@ import { FiArrowRight } from "react-icons/fi";
 import { ButtonOutline } from "../buttons";
 import { Heading3 } from "../headings";
 import Category from "./Category";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 export default function PopularCategory() {
   const categories = [
@@ -16,7 +17,12 @@ export default function PopularCategory() {
   ];
 
   return (
-    <div className="w-full px-[240px] py-[80px]">
+    <div
+      className={`w-full`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="flex justify-between">
         <Heading3 name="Popular category" />
         <ButtonOutline

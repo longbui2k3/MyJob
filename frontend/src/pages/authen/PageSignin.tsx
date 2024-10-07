@@ -27,7 +27,10 @@ import {
   usePasswordInput,
 } from "../../components/inputs";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../context";
+import { DEFAULT_KEY, getRoute } from "../../helpers/constants";
 export default function PageSignin() {
+  const {setUserId} = useAuthContext();
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt", "remember", "user"]);
   const { inputEmail, handleInputEmail, isValidEmail, isEmptyEmail } =
@@ -59,13 +62,14 @@ export default function PageSignin() {
       setCookie("user", data.metadata.user._id, {
         path: "/",
       });
+      setUserId(data.metadata.user._id);
       setMessage({
         isShow: true,
         type: "success",
         message: data.message,
       });
       setTimeout(() => {
-        navigate("/", { replace: true });
+        navigate(getRoute(DEFAULT_KEY).path, { replace: true });
       }, 500);
     } else {
       setMessage({

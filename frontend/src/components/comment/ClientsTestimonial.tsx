@@ -1,11 +1,17 @@
 import { FaQuoteLeft } from "react-icons/fa";
-import { Heading3, Heading6} from "../headings";
+import { Heading3, Heading6 } from "../headings";
 import StarRating from "./StarRating";
 import { Text } from "../text";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 export default function ClientsTestimonial() {
   return (
-    <div className="w-full bg-[--gray-100] px-[240px] py-[80px]">
+    <div
+      className={`w-full bg-[--gray-100]`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="flex justify-center w-full">
         <div>
           <Heading3 name="Client Testimonial" className="text-center" />

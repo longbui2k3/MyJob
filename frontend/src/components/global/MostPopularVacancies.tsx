@@ -1,3 +1,4 @@
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 import { Heading3, Heading6 } from "../headings";
 import { Text } from "../text";
 
@@ -25,7 +26,12 @@ export default function MostPopularVacancies() {
     },
   ];
   return (
-    <div className="w-full h-[400px] px-[240px] py-[80px]">
+    <div
+      className={`w-full h-[400px]`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <Heading3 name="Most Popular Vacancies" />
       <div className="w-full mt-10 grid grid-cols-4 gap-5 content-around">
         {vacancies.map((vacancy) => (

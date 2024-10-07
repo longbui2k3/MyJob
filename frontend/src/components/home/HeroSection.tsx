@@ -1,3 +1,4 @@
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 import { Heading1 } from "../headings";
 import { SearchInput_2 } from "../inputs";
 import { Text } from "../text";
@@ -6,7 +7,12 @@ import Suggestion from "./Suggestion";
 
 export default function HeroSection() {
   return (
-    <div className="w-full bg-[--gray-100] px-[240px] py-[60px]">
+    <div
+      className={`w-full bg-[--gray-100]`}
+      style={{
+        padding: `60px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="flex justify-center">
         <div className="w-[60%] flex flex-col justify-center">
           <Heading1

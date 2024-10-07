@@ -7,6 +7,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { VerifyCodeAPI } from "../../apis";
 import { MessageError, MessageSuccess } from "../../components/global";
 import { Text } from "../../components/text";
+import { getRoute, SIGN_IN_KEY } from "../../helpers/constants";
 
 export default function PageEmailVerification() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export default function PageEmailVerification() {
         message: data.message,
       });
       setTimeout(() => {
-        navigate("/signin");
+        navigate(getRoute(SIGN_IN_KEY).path);
       }, 1000);
     } else {
       setMessage({

@@ -1,3 +1,4 @@
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 import { Heading, Heading3 } from "../headings";
 import { Text } from "../text";
 
@@ -31,7 +32,12 @@ export default function HowItWorks() {
     },
   ];
   return (
-    <div className="w-full bg-[--gray-100] px-[240px] py-[80px]">
+    <div
+      className={`w-full bg-[--gray-100]`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="flex justify-center w-full">
         <div>
           <Heading3 name="How jobpilot work" className="text-center" />
