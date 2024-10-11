@@ -57,7 +57,7 @@ export default function FormFoundingInfo() {
       </div>
       <div>
         <Text className="font-normal text-sm mb-2">Company Vision</Text>
-        <RichTextEditer placeholder="Write down about your company here. Let the candidate know who we are..."></RichTextEditer>
+        <RichTextEditer placeholder="Tell us about your company vision..."></RichTextEditer>
       </div>
     </div>
   );

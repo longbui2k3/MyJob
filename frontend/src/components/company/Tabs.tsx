@@ -7,10 +7,35 @@ import FormSocialMediaInfo from "./FormSocialMediaInfo";
 import FormContact from "./FormContact";
 import { GrLinkNext } from "react-icons/gr";
 import { Button } from "@chakra-ui/react";
+import { CreateCompanyAPI } from "../../apis/companyAPI";
+import { useCookies } from "react-cookie";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
+
+  const [companyName, setCompanyName] = useState<string>("");
+  const handleCompanyNameChange = (name: string) => {
+    setCompanyName(name);
+  };
+
+  const [cookies] = useCookies(["jwt", "user"]);
+  console.log(cookies.jwt);
+  console.log(cookies.user);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!companyName) return;
+    const data = await CreateCompanyAPI(
+      { company_name: companyName },
+      { authorization: cookies.jwt, x_client_id: cookies.user }
+    );
+    if (data.status === 201) {
+      console.log("tao cong ty thanh cong");
+    } else {
+      console.log("tao cong ty that bai");
+    }
+  };
 
   const TabList = [
     {
@@ -24,7 +49,12 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormCompanyInfo />,
+      content: (
+        <FormCompanyInfo
+          companyName={companyName}
+          onCompanyNameChange={handleCompanyNameChange}
+        />
+      ),
     },
     {
       id: 2,
@@ -103,7 +133,8 @@ export default function Tabs() {
           textColor={"white"}
           bg={"var(--primary-500)"}
           rightIcon={<GrLinkNext />}
-          onClick={() => handelClick(activeIndex + 1)}
+          onClick={() => handleSubmit}
+          //onClick={() => handelClick(activeIndex + 1)}
         >
           {activeIndex === 4 ? "Finish Editing" : "Save & Next"}
         </Button>

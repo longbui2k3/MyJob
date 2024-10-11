@@ -34,6 +34,11 @@ function App() {
           <Route path={getRoute("__").path} element={<PageHome />} />
           <Route path={getRoute("HOME").path} element={<PageHome />} />
         </Route>
+
+        <Route
+          path={getRoute("COMPANY").path}
+          element={<PageCreateCompany />}
+        />
       </Routes>
     </BrowserRouter>
   );

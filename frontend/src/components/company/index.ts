@@ -1,2 +1,12 @@
 export { default as TopCompanies } from "./TopCompanies";
 export { DeadlineInfo, LocationInfo, SalaryInfo } from "./CompanyInfos";
+export { default as BaseSelect } from "./BaseSelect";
+export { default as CompletedCompany } from "./CompletedCompany";
+export { default as FormCompanyInfo } from "./FormCompanyInfo";
+export { default as FormContact } from "./FormContact";
+export { default as FormFoundingInfo } from "./FormFoundingInfo";
+export { default as FormSocialMediaInfo } from "./FormSocialMediaInfo";
+export { default as Navigation } from "./Navigation";
+export { default as ProfilePicture } from "./ProfilePicture";
+export { default as TabItem } from "./TabItem";
+export { default as Tabs } from "./Tabs";

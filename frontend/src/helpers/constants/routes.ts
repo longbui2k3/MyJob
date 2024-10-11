@@ -38,6 +38,12 @@ const ROUTES: Array<RouteItem> = [
     isPrivate: false,
   },
   {
+    key: "COMPANY",
+    name: "Company",
+    path: "/company",
+    isPrivate: false,
+  },
+  {
     key: "__",
     name: "Home",
     path: "/",

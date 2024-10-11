@@ -7,3 +7,5 @@ export {
 } from "./authen";
 export { PageHome } from "./home";
 export { default as Cover } from "./Cover";
+
+export { PageCreateCompany } from "./company";

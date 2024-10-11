@@ -6,26 +6,26 @@ class CompanyService {
   static createCompany = async (
     {
       company_name,
-      about_us,
       user,
-      year_of_establishment,
-      company_website,
-      company_vision,
-      map_location,
-      email,
+      // about_us,
+      // year_of_establishment,
+      // company_website,
+      // company_vision,
+      // map_location,
+      // email,
     },
     files
   ) => {
     return await companyRepo.createCompany(
       {
         company_name,
-        about_us,
         user,
-        year_of_establishment,
-        company_website,
-        company_vision,
-        map_location,
-        email,
+        // about_us,
+        // year_of_establishment,
+        // company_website,
+        // company_vision,
+        // map_location,
+        // email,
       },
       files
     );
