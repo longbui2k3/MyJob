@@ -2,10 +2,16 @@ import { FiArrowRight } from "react-icons/fi";
 import { ButtonOutline } from "../buttons";
 import { Heading3 } from "../headings";
 import Job from "./Job";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 export default function FeaturedJob() {
   return (
-    <div className="w-full px-[240px] py-[80px]">
+    <div
+      className={`w-full`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="flex justify-between">
         <Heading3 name="Featured Job" />
         <ButtonOutline

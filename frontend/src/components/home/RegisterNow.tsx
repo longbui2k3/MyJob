@@ -2,10 +2,16 @@ import { FaArrowRight } from "react-icons/fa";
 import { ButtonOutline } from "../buttons";
 import { Heading3 } from "../headings";
 import { Text } from "../text";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 export default function RegisterNow() {
   return (
-    <div className="w-full px-[240px] py-[80px] flex space-x-4">
+    <div
+      className={`w-full flex space-x-4`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="w-[50%] p-8 bg-[--gray-100] rounded-lg">
         <Heading3 name="Become a Candidate" />
         <Text className="w-[250px]">

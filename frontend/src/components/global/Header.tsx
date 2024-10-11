@@ -7,10 +7,36 @@ import Logo from "./Logo";
 import Navigation from "./Navigation";
 import { Avatar } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import Dropdown from "./Dropdown";
+import { NavigateFunction, useNavigate } from "react-router-dom";
+import { LogoutAPI } from "../../apis";
+import { CookieSetOptions } from "universal-cookie";
+import { useCookies } from "react-cookie";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 interface SubNavigationProps {
   user: string | User | null;
 }
+
+const logOut = async (
+  setCookie: (
+    name: "user" | "jwt",
+    value: any,
+    options?: CookieSetOptions
+  ) => void,
+  navigate: NavigateFunction
+) => {
+  const data = await LogoutAPI();
+  if (data.status === 200) {
+    setCookie("jwt", "", {
+      path: "/",
+    });
+    setCookie("user", "", {
+      path: "/",
+    });
+    navigate(0);
+  }
+};
 
 const subNavigationRoles = {
   normal: () =>
@@ -28,35 +54,92 @@ const subNavigationRoles = {
     },
   employee: () =>
     function ({ user }: SubNavigationProps) {
+      const navigate = useNavigate();
+      const { setUserId } = useAuthContext();
+      const [cookies, setCookie] = useCookies(["jwt", "user"]);
+
       if (!user) return <></>;
       if (typeof user === "string") return <></>;
+      const items = [
+        {
+          item: "My profile",
+          onClick: (e) => {
+            navigate("/#");
+          },
+        },
+        {
+          item: "Settings",
+          onClick: (e) => {
+            navigate("/#");
+          },
+        },
+        {
+          item: "Log out",
+          onClick: async (e) => {
+            await logOut(setCookie, navigate);
+          },
+        },
+      ];
       return (
         <div className="flex space-x-4 items-center">
           <IoNotificationsOutline size="22px" />
-          <Avatar
-            name={user.name}
-            src={user.avatar}
-            width={"40px"}
-            height={"40px"}
+          <Dropdown
+            Button={
+              <Avatar
+                name={user.name}
+                src={user.avatar}
+                width={"40px"}
+                height={"40px"}
+              />
+            }
+            items={items}
           />
         </div>
       );
     },
   employer: () =>
     function ({ user }: SubNavigationProps) {
+      const navigate = useNavigate();
+      const { setUserId } = useAuthContext();
+      const [cookies, setCookie] = useCookies(["jwt", "user"]);
       if (!user) return <></>;
       if (typeof user === "string") return <></>;
+      const items = [
+        {
+          item: "My profile",
+          onClick: (e) => {
+            navigate("/");
+          },
+        },
+        {
+          item: "Settings",
+          onClick: (e) => {
+            navigate("/");
+          },
+        },
+        {
+          item: "Log out",
+          onClick: async (e) => {
+            await logOut(setCookie, navigate);
+          },
+        },
+      ];
       return (
         <div className="flex space-x-4 items-center">
           <IoNotificationsOutline size="22px" />
           <a href="/post">
             <ButtonOutline children={"Post A Job"} />
           </a>
-          <Avatar
-            name={user.name}
-            src={user.avatar}
-            width={"40px"}
-            height={"40px"}
+          <Dropdown
+            Button={
+              <Avatar
+                name={user.name}
+                src={user.avatar}
+                width={"40px"}
+                height={"40px"}
+              />
+            }
+            items={items}
           />
         </div>
       );
@@ -79,7 +162,12 @@ export default function Header() {
   return (
     <>
       <Navigation />
-      <div className="flex flex-col justify-center w-full h-[80px] px-[240px]">
+      <div
+        className={`flex flex-col justify-center w-full h-[80px]`}
+        style={{
+          padding: `0px ${DEFAULT_PADDING_X}`,
+        }}
+      >
         <div className="flex justify-between">
           <div className="flex space-x-8 items-center">
             <a href="/">
@@ -87,7 +175,7 @@ export default function Header() {
             </a>
             <SearchInput_1 />
           </div>
-          {SubNavigation && SubNavigation({ user })}
+          {SubNavigation && <SubNavigation user={user} />}
         </div>
       </div>
     </>

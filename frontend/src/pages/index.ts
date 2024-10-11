@@ -5,7 +5,8 @@ export {
   PageForgotPassword,
   PageResetPassword,
 } from "./authen";
-export { PageHome } from "./home";
+export { PageHome, PageDashboard } from "./home";
 export { default as Cover } from "./Cover";
 
 export { PageCreateCompany } from "./company";
+export { default as PrivateRoutes } from "./PrivateRoutes";

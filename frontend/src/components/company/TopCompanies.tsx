@@ -3,10 +3,16 @@ import { ButtonSolid_2 } from "../buttons";
 import { Heading3, Heading6 } from "../headings";
 import { LocationInfo } from "./CompanyInfos";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+import { DEFAULT_PADDING_X } from "../../helpers/constants";
 
 export default function TopCompanies() {
   return (
-    <div className="w-full px-[240px] py-[80px]">
+    <div
+      className={`w-full`}
+      style={{
+        padding: `80px ${DEFAULT_PADDING_X}`,
+      }}
+    >
       <div className="flex justify-between">
         <Heading3 name="Top companies" />
         <div className="flex space-x-2">
