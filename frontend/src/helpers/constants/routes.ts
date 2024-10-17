@@ -17,6 +17,8 @@ export const HOME_KEY = "HOME";
 export const DASHBOARD_KEY = "DASHBOARD";
 export const FIND_JOBS_KEY = "FIND_JOBS";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
+export const COMPANY_KEY = "COMPANY";
+export const CREATE_COMPANY_KEY = "CREATE_COMPANY_KEY";
 
 const ROUTES: Array<RouteItem> = [
   {
@@ -50,12 +52,6 @@ const ROUTES: Array<RouteItem> = [
     isPrivate: false,
   },
   {
-    key: "COMPANY",
-    name: "Company",
-    path: "/company",
-    isPrivate: false,
-  },
-  {
     key: DEFAULT_KEY,
     name: "Home",
     path: "/",
@@ -72,12 +68,11 @@ const ROUTES: Array<RouteItem> = [
         name: "Find Jobs",
         path: "/jobs",
         isPrivate: false,
-
       },
       {
         key: FIND_EMPLOYERS_KEY,
         name: "Find Employers",
-        path: "/employers/:id",
+        path: "/employers",
         isPrivate: false,
       },
       {
@@ -85,6 +80,20 @@ const ROUTES: Array<RouteItem> = [
         name: "Dashboard",
         path: "/dashboard/:type",
         isPrivate: true,
+      },
+      {
+        key: COMPANY_KEY,
+        name: "Company",
+        path: "/company",
+        children: [
+          {
+            key: CREATE_COMPANY_KEY,
+            name: "Create Company",
+            path: "/company/create",
+            isPrivate: true,
+          },
+        ],
+        isPrivate: false,
       },
     ],
   },

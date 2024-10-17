@@ -27,6 +27,7 @@ const {
   UserStatus,
 } = require("../helpers/constants");
 const profileRepo = require("../models/repos/profileRepo");
+const companyRepo = require("../models/repos/company.repo");
 
 class AuthenService {
   static async #createTokens(user) {
@@ -242,14 +243,14 @@ class AuthenService {
     if (!user || !(await user.matchPassword(password))) {
       throw new AuthFailureError("Error: Incorrect email or password!");
     }
-    if (user.status === "unverified") {
+    if (user.status === UserStatus.UNVERIFIED) {
       throw new AuthFailureError(
         "Error: This account is unverified! Please sign up again!"
       );
     }
 
-    const tokens = await this.#createTokens(user);
-
+    const [company, tokens] = await Promise.all([companyRepo.findCompanyByUser(user._id), this.#createTokens(user)]);
+    
     return {
       statusCode: 200,
       message: "Log in successfully!",
@@ -259,6 +260,9 @@ class AuthenService {
             object: user,
             fields: ["_id", "name", "email", "role"],
           }),
+          ...(user.userType === UserType.EMPLOYER
+            ? { hasCompany: Boolean(company) }
+            : {}),
         }),
         tokens,
       },

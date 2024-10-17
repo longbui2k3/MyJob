@@ -15,6 +15,8 @@ export {
   VERIFY_KEY,
   FIND_JOBS_KEY,
   FIND_EMPLOYERS_KEY,
+  COMPANY_KEY,
+  CREATE_COMPANY_KEY
 } from "./routes";
 export type { RouteItem } from "./routes";
 export const DEFAULT_PADDING_X = "200px";

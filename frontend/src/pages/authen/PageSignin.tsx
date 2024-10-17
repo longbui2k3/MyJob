@@ -28,9 +28,13 @@ import {
 } from "../../components/inputs";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context";
-import { DEFAULT_KEY, getRoute } from "../../helpers/constants";
+import {
+  CREATE_COMPANY_KEY,
+  DEFAULT_KEY,
+  getRoute,
+} from "../../helpers/constants";
 export default function PageSignin() {
-  const {setUserId} = useAuthContext();
+  const { setUserId } = useAuthContext();
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt", "remember", "user"]);
   const { inputEmail, handleInputEmail, isValidEmail, isEmptyEmail } =
@@ -69,7 +73,9 @@ export default function PageSignin() {
         message: data.message,
       });
       setTimeout(() => {
-        navigate(getRoute(DEFAULT_KEY).path, { replace: true });
+        if (data.metadata.user.hasCompany)
+          navigate(getRoute(DEFAULT_KEY).path, { replace: true });
+        else navigate(getRoute(CREATE_COMPANY_KEY).path, { replace: true });
       }, 500);
     } else {
       setMessage({

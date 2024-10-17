@@ -7,6 +7,10 @@ class CompanyRepo extends BaseRepo {
     super(companyModel);
   }
 
+  async findCompanyByUser(user_id) {
+    return await this.findOne({ user: user_id });
+  }
+
   async createCompany(
     {
       company_name,

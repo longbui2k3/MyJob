@@ -14,6 +14,7 @@ import {
   PrivateRoutes,
 } from "./pages";
 import {
+  CREATE_COMPANY_KEY,
   DASHBOARD_KEY,
   DEFAULT_KEY,
   FIND_EMPLOYERS_KEY,
@@ -52,6 +53,10 @@ const AuthenRoutes = [
   {
     route: getRoute(RESET_PASSWORD_KEY),
     element: <PageResetPassword />,
+  },
+  {
+    route: getRoute(CREATE_COMPANY_KEY),
+    element: <PageCreateCompany />,
   },
 ];
 
@@ -119,11 +124,6 @@ function App() {
             ))}
           </Route>
         </Route>
-
-        <Route
-          path={getRoute("COMPANY").path}
-          element={<PageCreateCompany />}
-        />
       </Routes>
     </BrowserRouter>
   );
