@@ -1,6 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthContext } from "../context";
-import { getRoute, SIGN_IN_KEY } from "../helpers/constants";
+import {
+  getRoute,
+  SIGN_IN_KEY,
+} from "../helpers/constants";
 
 export default function PrivateRoutes() {
   const { user } = useAuthContext();

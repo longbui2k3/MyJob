@@ -249,7 +249,7 @@ class AuthenService {
       );
     }
 
-    const [company, tokens] = await Promise.all([companyRepo.findCompanyByUser(user._id), this.#createTokens(user)]);
+    const tokens = await this.#createTokens(user);
     
     return {
       statusCode: 200,
@@ -260,9 +260,6 @@ class AuthenService {
             object: user,
             fields: ["_id", "name", "email", "role"],
           }),
-          ...(user.userType === UserType.EMPLOYER
-            ? { hasCompany: Boolean(company) }
-            : {}),
         }),
         tokens,
       },

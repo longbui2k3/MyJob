@@ -5,4 +5,5 @@ export default interface User {
   name: string;
   avatar: string;
   userType: UserTypeValues;
+  hasCompany?: boolean;
 }

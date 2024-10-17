@@ -73,9 +73,7 @@ export default function PageSignin() {
         message: data.message,
       });
       setTimeout(() => {
-        if (data.metadata.user.hasCompany)
-          navigate(getRoute(DEFAULT_KEY).path, { replace: true });
-        else navigate(getRoute(CREATE_COMPANY_KEY).path, { replace: true });
+        navigate(getRoute(DEFAULT_KEY).path, { replace: true });
       }, 500);
     } else {
       setMessage({

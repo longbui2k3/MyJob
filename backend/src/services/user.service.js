@@ -1,14 +1,17 @@
 "use strict";
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
+const { UserType } = require("../helpers/constants");
+const companyRepo = require("../models/repos/company.repo");
 const profileRepo = require("../models/repos/profileRepo");
 const userRepo = require("../models/repos/userRepo");
 
 class UserService {
   static async getMe(userId) {
-    const [user, profile] = await Promise.all([
+    const [user, profile, company] = await Promise.all([
       userRepo.findById(userId),
       profileRepo.findProfileByUser(userId),
+      companyRepo.findCompanyByUser(userId),
     ]);
 
     if (!user) {
@@ -23,6 +26,9 @@ class UserService {
       userType: user.userType,
       fullName: profile.fullName,
       avatar: profile.avatar,
+      ...(user.userType === UserType.EMPLOYER
+        ? { hasCompany: Boolean(company) }
+        : {}),
     };
   }
 }
