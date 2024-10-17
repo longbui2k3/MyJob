@@ -10,6 +10,7 @@ import {
   PageResetPassword,
   PageSignin,
   PageSignup,
+  PageCreateCompany,
   PrivateRoutes,
 } from "./pages";
 import {
@@ -118,6 +119,11 @@ function App() {
             ))}
           </Route>
         </Route>
+
+        <Route
+          path={getRoute("COMPANY").path}
+          element={<PageCreateCompany />}
+        />
       </Routes>
     </BrowserRouter>
   );

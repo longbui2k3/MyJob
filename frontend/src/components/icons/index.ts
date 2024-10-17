@@ -3,3 +3,7 @@ export { default as GoogleIcon } from "./GoogleIcon";
 export { default as IconWithBg } from "./IconWithBg";
 export { default as YellowStar } from "./YellowStar";
 export { default as GrayStar } from "./GrayStar";
+export { default as AtIcon } from "./AtIcon";
+export { default as GlobeSimpleIcon } from "./GlobeSimpleIcon";
+export { default as UserCircleIcon } from "./UserCircleIcon";
+export { default as UserIcon } from "./UserIcon";

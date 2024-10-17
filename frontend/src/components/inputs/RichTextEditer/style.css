@@ -1,0 +1,15 @@
+.ql-container {
+  border: 1px solid #ccc; /* Đặt border cho container */
+  border-radius: 0 0 0.375rem 0.375rem; /* Bo góc */
+  height: 10rem; /* Đặt chiều cao */
+}
+
+.ql-editor {
+  padding: 0.5rem; /* Thêm padding cho editor */
+  min-height: 10rem; /* Đặt chiều cao tối thiểu */
+}
+
+.ql-toolbar {
+  border-bottom: 1px solid #ccc; /* Đặt border dưới thanh công cụ */
+  border-radius: 0.375rem 0.375rem 0 0; /* Bo góc trên */
+}
