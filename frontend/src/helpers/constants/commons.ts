@@ -1,4 +1,4 @@
-import { DASHBOARD_KEY, DEFAULT_KEY, getRoute, HOME_KEY } from "./routes";
+import { DASHBOARD_KEY, DEFAULT_KEY, FIND_EMPLOYERS_KEY, FIND_JOBS_KEY, getRoute, HOME_KEY } from "./routes";
 
 export const Navigations = {
   HOME: {
@@ -8,9 +8,9 @@ export const Navigations = {
     pattern: getRoute(DEFAULT_KEY).path,
   },
   FIND_JOB: {
-    label: "Find Job",
-    href: "#",
-    pattern: "#",
+    label: "Find Jobs",
+    href: getRoute(FIND_JOBS_KEY).path,
+    pattern: getRoute(FIND_JOBS_KEY).path,
   },
   EMPLOYERS: {
     label: "Employers",
@@ -34,8 +34,8 @@ export const Navigations = {
   },
   FIND_EMPLOYERS: {
     label: "Find Employers",
-    href: "#",
-    pattern: "#",
+    href: getRoute(FIND_EMPLOYERS_KEY).path,
+    pattern: getRoute(FIND_EMPLOYERS_KEY).path,
   },
   DASHBOARD: {
     label: "Dashboard",

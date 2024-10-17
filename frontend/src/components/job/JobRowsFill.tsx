@@ -1,13 +1,12 @@
 import { Tag } from "@chakra-ui/react";
 import { Heading6 } from "../headings";
-import { CiBookmark, CiCalendar, CiLocationOn } from "react-icons/ci";
-import { PiCurrencyDollarLight } from "react-icons/pi";
+import { CiBookmark} from "react-icons/ci";
 import { ButtonSubmit } from "../buttons";
 import { DeadlineInfo, LocationInfo, SalaryInfo } from "../company";
 
-export default function Job() {
+export default function JobRowsFill() {
   return (
-    <div className="flex justify-between w-full p-5 border-[1px] border-[--gray-100]">
+    <div className="flex justify-between w-full p-5 border-[1px] border-[--gray-100] rounded-lg">
       <div className="flex">
         <img src="/upwork.png" width={"50px"} />
         <div className="flex flex-col justify-between ml-4">
@@ -21,7 +20,7 @@ export default function Job() {
               paddingY="4px"
               marginY="auto"
             >
-              Full Name
+              Full Time
             </Tag>
           </div>
           <div className="flex space-x-2">

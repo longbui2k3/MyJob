@@ -15,6 +15,8 @@ export const RESET_PASSWORD_KEY = "RESET_PASSWORD";
 export const DEFAULT_KEY = "__";
 export const HOME_KEY = "HOME";
 export const DASHBOARD_KEY = "DASHBOARD";
+export const FIND_JOBS_KEY = "FIND_JOBS";
+export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
 
 const ROUTES: Array<RouteItem> = [
   {
@@ -60,6 +62,19 @@ const ROUTES: Array<RouteItem> = [
         isPrivate: false,
       },
       {
+        key: FIND_JOBS_KEY,
+        name: "Find Jobs",
+        path: "/jobs",
+        isPrivate: false,
+
+      },
+      {
+        key: FIND_EMPLOYERS_KEY,
+        name: "Find Employers",
+        path: "/employers/:id",
+        isPrivate: false,
+      },
+      {
         key: DASHBOARD_KEY,
         name: "Dashboard",
         path: "/dashboard/:type",
@@ -76,24 +91,6 @@ const DEFAULT_ROUTE = {
   isPrivate: false,
 };
 
-const __ = (key: string, routes: Array<RouteItem>): RouteItem | undefined => {
-  for (const route of routes) {
-    if (route["key"] === key) {
-      return {
-        key: route["key"],
-        name: route["name"],
-        path: route["path"],
-        isPrivate: route["isPrivate"],
-      };
-    }
-    if (!route["children"]) {
-      continue;
-    }
-    return __(key, route["children"]);
-  }
-  return undefined;
-};
-
 export const getRoute = (
   key: string,
   options?: {
@@ -101,7 +98,7 @@ export const getRoute = (
     param?: { [key: string]: string };
   }
 ): RouteItem => {
-  const route = __(key, ROUTES) || DEFAULT_ROUTE;
+  const route = findRouteByKey(key, ROUTES) || DEFAULT_ROUTE;
 
   let queryString = "";
   if (options && options.query)
@@ -141,4 +138,52 @@ export const matchPathPattern = (path: string, pattern: string) => {
     }
   }
   return true;
+};
+
+let selectedRoutes: Array<RouteItem> = [];
+let resRoutes: Array<RouteItem> = [];
+export const getBreadcrumb = (key: string) => {
+  resRoutes = [];
+  selectedRoutes = [];
+  getBreadcrumbBacktrack(key, ROUTES, selectedRoutes);
+  return resRoutes;
+};
+
+const findRouteByKey = (
+  key: string,
+  routes: Array<RouteItem>
+): RouteItem | undefined => {
+  for (const route of routes) {
+    if (route["key"] === key) {
+      return {
+        key: route["key"],
+        name: route["name"],
+        path: route["path"],
+        isPrivate: route["isPrivate"],
+      };
+    }
+    if (!route["children"]) {
+      continue;
+    }
+    return findRouteByKey(key, route["children"]);
+  }
+  return undefined;
+};
+
+const getBreadcrumbBacktrack = (
+  key: string,
+  routes: Array<RouteItem>,
+  selectedRoutes: Array<RouteItem>
+) => {
+  for (const route of routes) {
+    selectedRoutes = [...selectedRoutes, route];
+    if (route["key"] === key) {
+      resRoutes = selectedRoutes;
+      return;
+    }
+    if (route["children"]) {
+      getBreadcrumbBacktrack(key, route["children"], selectedRoutes);
+    }
+    selectedRoutes = selectedRoutes.slice(0, -1);
+  }
 };

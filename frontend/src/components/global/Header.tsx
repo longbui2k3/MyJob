@@ -160,10 +160,10 @@ export default function Header() {
     }
   }, [user]);
   return (
-    <>
+    <div className="fixed top-0 w-full z-[9999]">
       <Navigation />
       <div
-        className={`flex flex-col justify-center w-full h-[80px]`}
+        className={`flex flex-col justify-center w-full h-[80px] bg-white`}
         style={{
           padding: `0px ${DEFAULT_PADDING_X}`,
         }}
@@ -178,6 +178,6 @@ export default function Header() {
           {SubNavigation && <SubNavigation user={user} />}
         </div>
       </div>
-    </>
+    </div>
   );
 }

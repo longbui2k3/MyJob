@@ -1,8 +1,9 @@
-export { UserTypes } from "./enums";
+export { UserTypes, ViewTypes } from "./enums";
 export type { UserTypeKeys, UserTypeValues } from "./enums";
 export { Navigations } from "./commons";
 export {
   getRoute,
+  getBreadcrumb,
   matchPathPattern,
   DASHBOARD_KEY,
   DEFAULT_KEY,
@@ -12,6 +13,8 @@ export {
   SIGN_IN_KEY,
   SIGN_UP_KEY,
   VERIFY_KEY,
+  FIND_JOBS_KEY,
+  FIND_EMPLOYERS_KEY,
 } from "./routes";
 export type { RouteItem } from "./routes";
 export const DEFAULT_PADDING_X = "200px";

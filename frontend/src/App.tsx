@@ -4,6 +4,7 @@ import {
   Cover,
   PageDashboard,
   PageEmailVerification,
+  PageFindJobs,
   PageForgotPassword,
   PageHome,
   PageResetPassword,
@@ -14,45 +15,107 @@ import {
 import {
   DASHBOARD_KEY,
   DEFAULT_KEY,
+  FIND_EMPLOYERS_KEY,
+  FIND_JOBS_KEY,
   FORGOT_PASSWORD_KEY,
   getRoute,
   HOME_KEY,
   RESET_PASSWORD_KEY,
+  RouteItem,
   SIGN_IN_KEY,
   SIGN_UP_KEY,
   VERIFY_KEY,
 } from "./helpers/constants";
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { PageFindEmployers } from "./pages/home";
+
+const AuthenRoutes = [
+  {
+    route: getRoute(SIGN_IN_KEY),
+    element: <PageSignin />,
+  },
+  {
+    route: getRoute(SIGN_UP_KEY),
+    element: <PageSignup />,
+  },
+  {
+    route: getRoute(FORGOT_PASSWORD_KEY),
+    element: <PageForgotPassword />,
+  },
+  {
+    route: getRoute(VERIFY_KEY),
+    element: <PageEmailVerification />,
+  },
+  {
+    route: getRoute(RESET_PASSWORD_KEY),
+    element: <PageResetPassword />,
+  },
+];
+
+const OtherRoutes = [
+  {
+    route: getRoute(DEFAULT_KEY),
+    element: <PageHome />,
+  },
+  {
+    route: getRoute(HOME_KEY),
+    element: <PageHome />,
+  },
+  {
+    route: getRoute(FIND_JOBS_KEY),
+    element: <PageFindJobs />,
+  },
+  {
+    route: getRoute(FIND_EMPLOYERS_KEY),
+    element: <PageFindEmployers />,
+  },
+  {
+    route: getRoute(DASHBOARD_KEY),
+    element: <PageDashboard />,
+  },
+];
 
 function App() {
   const { user } = useAuthContext();
-  if (typeof user === "string") return <CircularProgress isIndeterminate color="var(--primary-500)" size="30px" />;
+  const [authenRoutes, setAuthenRoutes] = useState<
+    Array<{ route: RouteItem; element: JSX.Element }>
+  >([]);
+  const [publicRoutes, setPublicRoutes] = useState<
+    Array<{ route: RouteItem; element: JSX.Element }>
+  >([]);
+  const [privateRoutes, setPrivateRoutes] = useState<
+    Array<{ route: RouteItem; element: JSX.Element }>
+  >([]);
+
+  useEffect(() => {
+    setAuthenRoutes(AuthenRoutes);
+    setPrivateRoutes(OtherRoutes.filter((route) => route.route.isPrivate));
+    setPublicRoutes(OtherRoutes.filter((route) => !route.route.isPrivate));
+  }, []);
+  if (typeof user === "string")
+    return (
+      <CircularProgress
+        isIndeterminate
+        color="var(--primary-500)"
+        size="30px"
+      />
+    );
   return (
-    <BrowserRouter> 
+    <BrowserRouter>
       <Routes>
-        <Route path={getRoute(SIGN_IN_KEY).path} element={<PageSignin />} />
-        <Route path={getRoute(SIGN_UP_KEY).path} element={<PageSignup />} />
-        <Route
-          path={getRoute(FORGOT_PASSWORD_KEY).path}
-          element={<PageForgotPassword />}
-        />
-        <Route
-          path={getRoute(VERIFY_KEY).path}
-          element={<PageEmailVerification />}
-        />
-        <Route
-          path={getRoute(RESET_PASSWORD_KEY).path}
-          element={<PageResetPassword />}
-        />
+        {authenRoutes.map((route) => (
+          <Route path={route.route.path} element={route.element} />
+        ))}
         <Route path={getRoute(DEFAULT_KEY).path} element={<Cover />}>
-          <Route path={getRoute(DEFAULT_KEY).path} element={<PageHome />} />
-          <Route path={getRoute(HOME_KEY).path} element={<PageHome />} />
+          {publicRoutes.map((route) => (
+            <Route path={route.route.path} element={route.element} />
+          ))}
           <Route path={getRoute(DEFAULT_KEY).path} element={<PrivateRoutes />}>
-            <Route
-              path={getRoute(DASHBOARD_KEY).path}
-              element={<PageDashboard />}
-            />
+            {privateRoutes.map((route) => (
+              <Route path={route.route.path} element={route.element} />
+            ))}
           </Route>
         </Route>
       </Routes>
