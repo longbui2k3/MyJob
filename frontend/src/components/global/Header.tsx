@@ -204,7 +204,7 @@ export default function Header() {
     }
   }, [user]);
   return (
-    <div className="fixed top-0 w-full z-[9999]">
+    <div className="fixed top-0 w-full z-[1000]">
       <Navigation />
       <div
         className={`flex flex-col justify-center w-full h-[80px] bg-white`}

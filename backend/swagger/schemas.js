@@ -56,5 +56,5 @@ module.exports = {
   resetPasswordResponse401Schema: {
     $status: 401,
     $message: "string",
-  },
+  }
 };

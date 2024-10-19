@@ -7,4 +7,6 @@ export { default as Header } from "./Header";
 export { default as Footer } from "./Footer";
 export { default as Dropdown } from "./Dropdown";
 export { default as BreadcrumbHeader } from "./BreadcrumbHeader";
+export { default as OutsideForm } from "./OutsideForm";
+export { default as CustomTooltip } from "./CustomTooltip";
 export { Pagination, usePagination } from "./Pagination";

@@ -67,6 +67,49 @@
         ]
       }
     },
+    "/api/v1/category/": {
+      "post": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Create category",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "iconUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/signup": {
       "post": {
         "tags": [
@@ -531,6 +574,28 @@
         "required": [
           "status",
           "message"
+        ]
+      },
+      "createCategoryBodySchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "string"
+          },
+          "iconUrl": {
+            "type": "string",
+            "example": "file"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "file"
+          }
+        },
+        "required": [
+          "name",
+          "iconUrl",
+          "imageUrl"
         ]
       }
     },

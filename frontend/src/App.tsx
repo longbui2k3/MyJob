@@ -14,7 +14,6 @@ import {
   PrivateRoutes,
 } from "./pages";
 import {
-  COMPANY_KEY,
   CREATE_COMPANY_KEY,
   DASHBOARD_CATEGORIES_KEY,
   DASHBOARD_KEY,

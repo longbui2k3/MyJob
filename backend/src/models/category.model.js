@@ -5,6 +5,7 @@ const DOCUMENT_NAME = "Category";
 const categorySchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    iconUrl: { type: String, required: true },
     imageUrl: { type: String, required: true },
   },
   { timestamps: true, collection: COLLECTION_NAME }
