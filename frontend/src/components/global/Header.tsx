@@ -144,6 +144,50 @@ const subNavigationRoles = {
         </div>
       );
     },
+  admin: () =>
+    function ({ user }: SubNavigationProps) {
+      const navigate = useNavigate();
+      const { setUserId } = useAuthContext();
+      const [cookies, setCookie] = useCookies(["jwt", "user"]);
+      if (!user) return <></>;
+      if (typeof user === "string") return <></>;
+      const items = [
+        {
+          item: "My profile",
+          onClick: (e) => {
+            navigate("/");
+          },
+        },
+        {
+          item: "Settings",
+          onClick: (e) => {
+            navigate("/");
+          },
+        },
+        {
+          item: "Log out",
+          onClick: async (e) => {
+            await logOut(setCookie, navigate);
+          },
+        },
+      ];
+      return (
+        <div className="flex space-x-4 items-center">
+          <IoNotificationsOutline size="22px" />
+          <Dropdown
+            Button={
+              <Avatar
+                name={user.name}
+                src={user.avatar}
+                width={"40px"}
+                height={"40px"}
+              />
+            }
+            items={items}
+          />
+        </div>
+      );
+    },
 };
 
 export default function Header() {

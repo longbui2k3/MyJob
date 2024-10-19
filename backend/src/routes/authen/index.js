@@ -9,11 +9,33 @@ const router = express.Router();
 router.route("/signup").post(
   // #swagger.tags = ['Authentication']
   // #swagger.summary = 'Sign Up'
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            $ref: '#/components/schemas/signUpBodySchema'
+          },
+        }
+      }
+    } 
+  */
   asyncHandler(AuthenController.signUp)
 );
 router.route("/login").post(
   // #swagger.tags = ['Authentication']
   // #swagger.summary = 'Login'
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+          schema: {
+            $ref: '#/components/schemas/logInBodySchema'
+          },
+        }
+      }
+    }
+  */
   asyncHandler(AuthenController.logIn)
 );
 router.route("/forgotPassword").post(
@@ -137,6 +159,11 @@ router.use(authentication);
 router.route("/logout").post(
   // #swagger.tags = ['Authentication']
   // #swagger.summary = 'Logout'
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
   asyncHandler(AuthenController.logOut)
 );
 

@@ -7,7 +7,7 @@ const swaggerAutogen = require("swagger-autogen")({
 const doc = {
   openapi: "3.0.0",
   info: {
-    title: "Job Hunt",
+    title: "My Job",
     description: "API endpoints for music app",
     contact: {
       name: "Long Bui",
@@ -17,7 +17,7 @@ const doc = {
     version: "1.0.0",
   },
   servers: [
-    { url: `http://localhost:8000/api/v1`, description: "Local server" },
+    { url: `http://localhost:8080`, description: "Local server" },
   ],
   components: {
     schemas: schemas,

@@ -52,6 +52,9 @@ const navigationRoles = {
     Navigations.APPLICATIONS,
     Navigations.CUSTOMER_SUPPORTS,
   ],
+  admin: [
+    Navigations.DASHBOARD
+  ]
 };
 export default function Navigation() {
   const { user } = useAuthContext();

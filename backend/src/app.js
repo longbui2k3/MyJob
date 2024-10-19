@@ -3,8 +3,9 @@ const express = require("express");
 const { default: helmet } = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
-
+const cookieParser = require("cookie-parser")
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());

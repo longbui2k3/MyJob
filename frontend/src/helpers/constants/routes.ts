@@ -18,7 +18,18 @@ export const DASHBOARD_KEY = "DASHBOARD";
 export const FIND_JOBS_KEY = "FIND_JOBS";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
 export const COMPANY_KEY = "COMPANY";
-export const CREATE_COMPANY_KEY = "CREATE_COMPANY_KEY";
+export const CREATE_COMPANY_KEY = "CREATE_COMPANY";
+export const DASHBOARD_OVERVIEW_KEY = "DASHBOARD_OVERVIEW";
+export const DASHBOARD_APPLIED_JOBS_KEY = "DASHBOARD_APPLIED_JOBS";
+export const DASHBOARD_FAVORITE_JOBS_KEY = "DASHBOARD_FAVORITE_JOBS";
+export const DASHBOARD_JOB_ALERT_KEY = "DASHBOARD_JOB_ALERT";
+export const DASHBOARD_SETTINGS_KEY = "DASHBOARD_SETTINGS";
+export const DASHBOARD_EMPLOYERS_PROFILE_KEY = "DASHBOARD_EMPLOYERS_PROFILE";
+export const DASHBOARD_POST_A_JOB_KEY = "DASHBOARD_POST_A_JOB";
+export const DASHBOARD_MY_JOBS_KEY = "DASHBOARD_MY_JOBS";
+export const DASHBOARD_SAVED_CANDIDATE_KEY = "DASHBOARD_SAVED_CANDIDATE";
+export const DASHBOARD_PLANS_AND_BILLING_KEY = "DASHBOARD_PLANS_AND_BILLING";
+export const DASHBOARD_CATEGORIES_KEY = "DASHBOARD_CATEGORIES";
 
 const ROUTES: Array<RouteItem> = [
   {
@@ -76,12 +87,6 @@ const ROUTES: Array<RouteItem> = [
         isPrivate: false,
       },
       {
-        key: DASHBOARD_KEY,
-        name: "Dashboard",
-        path: "/dashboard/:type",
-        isPrivate: true,
-      },
-      {
         key: COMPANY_KEY,
         name: "Company",
         path: "/company",
@@ -94,6 +99,80 @@ const ROUTES: Array<RouteItem> = [
           },
         ],
         isPrivate: false,
+      },
+      {
+        key: DASHBOARD_KEY,
+        name: "Dashboard",
+        path: "/dashboard",
+        children: [
+          {
+            key: DASHBOARD_OVERVIEW_KEY,
+            name: "Dashboard Overview",
+            path: "/dashboard/overview",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_APPLIED_JOBS_KEY,
+            name: "Dashboard Applied Jobs",
+            path: "/dashboard/applied-jobs",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_FAVORITE_JOBS_KEY,
+            name: "Dashboard Favorite Jobs",
+            path: "/dashboard/favorite-jobs",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_JOB_ALERT_KEY,
+            name: "Dashboard Job Alert",
+            path: "/dashboard/job-alert",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_SETTINGS_KEY,
+            name: "Dashboard Settings",
+            path: "/dashboard/settings",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_EMPLOYERS_PROFILE_KEY,
+            name: "Dashboard Employers Profile",
+            path: "/dashboard/employers-profile",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_POST_A_JOB_KEY,
+            name: "Dashboard Post A Job",
+            path: "/dashboard/post-a-job",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_MY_JOBS_KEY,
+            name: "Dashboard My Jobs ",
+            path: "/dashboard/my-jobs",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_SAVED_CANDIDATE_KEY,
+            name: "Dashboard Saved Candidate",
+            path: "/dashboard/saved-candidate",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_PLANS_AND_BILLING_KEY,
+            name: "Dashboard Plans And Billing",
+            path: "/dashboard/plans-and-billing",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_CATEGORIES_KEY,
+            name: "Dashboard Categories",
+            path: "/dashboard/categories",
+            isPrivate: true,
+          },
+        ],
+        isPrivate: true,
       },
     ],
   },
@@ -180,7 +259,10 @@ const findRouteByKey = (
     if (!route["children"]) {
       continue;
     }
-    return findRouteByKey(key, route["children"]);
+    const childRoute = findRouteByKey(key, route["children"]);
+    if (childRoute) {
+      return childRoute;
+    }
   }
   return undefined;
 };

@@ -30,6 +30,12 @@ class AuthenController {
     console.log("[P]::logIn::", req.body);
 
     const result = await AuthenService.logIn(req.body);
+    res.cookie("authorization", result.metadata.tokens.accessToken, {
+      path: "/",
+    });
+    res.cookie("x-client-id", result.metadata.user._id, {
+      path: "/",
+    });
     return new SuccessResponse(result).send(res);
   };
   refreshToken = async (req, res, next) => {

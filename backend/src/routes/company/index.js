@@ -33,6 +33,13 @@ router.route("/").post(
     { name: "logo_img", maxCount: 1 },
     { name: "banner_img", maxCount: 1 },
   ]),
+  // #swagger.tags = ['Company']
+  // #swagger.summary = 'Create company'
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
   asyncHandler(companyController.createCompany)
 );
 

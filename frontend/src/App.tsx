@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import {
   Cover,
@@ -14,8 +14,11 @@ import {
   PrivateRoutes,
 } from "./pages";
 import {
+  COMPANY_KEY,
   CREATE_COMPANY_KEY,
+  DASHBOARD_CATEGORIES_KEY,
   DASHBOARD_KEY,
+  DASHBOARD_OVERVIEW_KEY,
   DEFAULT_KEY,
   FIND_EMPLOYERS_KEY,
   FIND_JOBS_KEY,
@@ -32,6 +35,7 @@ import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { PageFindEmployers } from "./pages/home";
+import { DashboardCategory, DashboardOverview } from "./components/dashboard";
 
 const AuthenRoutes = [
   {
@@ -53,7 +57,7 @@ const AuthenRoutes = [
   {
     route: getRoute(RESET_PASSWORD_KEY),
     element: <PageResetPassword />,
-  },
+  },  
   {
     route: getRoute(CREATE_COMPANY_KEY),
     element: <PageCreateCompany />,
@@ -83,6 +87,17 @@ const OtherRoutes = [
   },
 ];
 
+const DashboardRoutes = [
+  {
+    route: getRoute(DASHBOARD_CATEGORIES_KEY),
+    element: <DashboardCategory />,
+  },
+  {
+    route: getRoute(DASHBOARD_OVERVIEW_KEY),
+    element: <DashboardOverview />,
+  },
+];
+
 function App() {
   const { user } = useAuthContext();
   const [authenRoutes, setAuthenRoutes] = useState<
@@ -94,18 +109,22 @@ function App() {
   const [privateRoutes, setPrivateRoutes] = useState<
     Array<{ route: RouteItem; element: JSX.Element }>
   >([]);
+  const [dashboardRoutes, setDashboardRoutes] = useState<
+    Array<{ route: RouteItem; element: JSX.Element }>
+  >([]);
 
   useEffect(() => {
     setAuthenRoutes(AuthenRoutes);
     setPrivateRoutes(OtherRoutes.filter((route) => route.route.isPrivate));
     setPublicRoutes(OtherRoutes.filter((route) => !route.route.isPrivate));
+    setDashboardRoutes(DashboardRoutes);
   }, []);
   if (typeof user === "string")
     return (
       <CircularProgress
         isIndeterminate
         color="var(--primary-500)"
-        size="30px"
+        size="25px"
       />
     );
   return (
@@ -119,9 +138,20 @@ function App() {
             <Route path={route.route.path} element={route.element} />
           ))}
           <Route path={getRoute(DEFAULT_KEY).path} element={<PrivateRoutes />}>
-            {privateRoutes.map((route) => (
-              <Route path={route.route.path} element={route.element} />
-            ))}
+            {privateRoutes.map((route) => {
+              if (route.route.key !== DASHBOARD_KEY)
+                return (
+                  <Route path={route.route.path} element={route.element} />
+                );
+              else
+                return (
+                  <Route path={route.route.path} element={route.element}>
+                    {dashboardRoutes.map((route) => (
+                      <Route path={route.route.path} element={route.element} />
+                    ))}
+                  </Route>
+                );
+            })}
           </Route>
         </Route>
       </Routes>

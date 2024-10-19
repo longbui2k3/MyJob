@@ -39,7 +39,7 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
 };
 
 const authentication = asyncHandler(async (req, res, next) => {
-  const userId = req.headers[HEADER.CLIENT_ID];
+  const userId = req.headers[HEADER.CLIENT_ID] || req.cookies[HEADER.CLIENT_ID];
   if (!userId) {
     throw new AuthFailureError("Invalid Request!");
   }
@@ -48,8 +48,9 @@ const authentication = asyncHandler(async (req, res, next) => {
     throw new NotFoundError("Not Found KeyStore!");
   }
 
-  if (req.headers[HEADER.REFRESHTOKEN]) {
-    const refreshToken = req.headers[HEADER.REFRESHTOKEN];
+  if (req.headers[HEADER.REFRESHTOKEN] || req.cookies[HEADER.REFRESHTOKEN]) {
+    const refreshToken =
+      req.headers[HEADER.REFRESHTOKEN] || req.cookies[HEADER.REFRESHTOKEN];
     if (!refreshToken) {
       throw new AuthRequestError("Invalid Request!");
     }
@@ -67,7 +68,8 @@ const authentication = asyncHandler(async (req, res, next) => {
     }
   }
 
-  const accessToken = req.headers[HEADER.AUTHORIZATION];
+  const accessToken =
+    req.headers[HEADER.AUTHORIZATION] || req.cookies[HEADER.AUTHORIZATION];
   if (!accessToken) {
     throw new AuthRequestError("Invalid Request!");
   }

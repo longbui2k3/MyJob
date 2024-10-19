@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Job Hunt",
+    "title": "My Job",
     "description": "API endpoints for music app",
     "contact": {
       "name": "Long Bui",
@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8000/api/v1",
+      "url": "http://localhost:8080",
       "description": "Local server"
     }
   ],
@@ -27,6 +27,46 @@
         }
       }
     },
+    "/api/v1/user/me": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get Me",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ]
+      }
+    },
+    "/api/v1/company/": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Create company",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ]
+      }
+    },
     "/api/v1/signup": {
       "post": {
         "tags": [
@@ -37,6 +77,16 @@
         "responses": {
           "default": {
             "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/signUpBodySchema"
+              }
+            }
           }
         }
       }
@@ -51,6 +101,16 @@
         "responses": {
           "default": {
             "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/logInBodySchema"
+              }
+            }
           }
         }
       }
@@ -207,7 +267,13 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ]
       }
     }
   },
@@ -243,6 +309,23 @@
           "password",
           "passwordConfirm",
           "mobile"
+        ]
+      },
+      "logInBodySchema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "buiduclong911@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345678"
+          }
+        },
+        "required": [
+          "email",
+          "password"
         ]
       },
       "forgotPasswordBodySchema": {

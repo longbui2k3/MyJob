@@ -1,4 +1,22 @@
-import { DASHBOARD_KEY, DEFAULT_KEY, FIND_EMPLOYERS_KEY, FIND_JOBS_KEY, getRoute, HOME_KEY } from "./routes";
+import {
+  DASHBOARD_APPLIED_JOBS_KEY,
+  DASHBOARD_CATEGORIES_KEY,
+  DASHBOARD_EMPLOYERS_PROFILE_KEY,
+  DASHBOARD_FAVORITE_JOBS_KEY,
+  DASHBOARD_JOB_ALERT_KEY,
+  DASHBOARD_KEY,
+  DASHBOARD_MY_JOBS_KEY,
+  DASHBOARD_OVERVIEW_KEY,
+  DASHBOARD_PLANS_AND_BILLING_KEY,
+  DASHBOARD_POST_A_JOB_KEY,
+  DASHBOARD_SAVED_CANDIDATE_KEY,
+  DASHBOARD_SETTINGS_KEY,
+  DEFAULT_KEY,
+  FIND_EMPLOYERS_KEY,
+  FIND_JOBS_KEY,
+  getRoute,
+  HOME_KEY,
+} from "./routes";
 
 export const Navigations = {
   HOME: {
@@ -39,12 +57,8 @@ export const Navigations = {
   },
   DASHBOARD: {
     label: "Dashboard",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "overview",
-      },
-    }).path,
-    pattern: getRoute(DASHBOARD_KEY).path,
+    href: getRoute(DASHBOARD_KEY).path,
+    pattern: getRoute(DASHBOARD_KEY).path + "/:type",
   },
   JOB_ALERTS: {
     label: "Job Alerts",
@@ -68,92 +82,57 @@ export const Navigations = {
   },
   DASHBOARD_OVERVIEW: {
     label: "Overview",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "overview",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_OVERVIEW_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_APPLIED_JOBS: {
     label: "Applied Jobs",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "applied-jobs",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_APPLIED_JOBS_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_FAVORITE_JOBS: {
     label: "Favorite Jobs",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "favorite-jobs",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_FAVORITE_JOBS_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_JOB_ALERT: {
     label: "Job Alert",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "job-alert",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_JOB_ALERT_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_SETTINGS: {
     label: "Settings",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "settings",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_SETTINGS_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_EMPLOYERS_PROFILE: {
     label: "Employers Profile",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "employers-profile",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_EMPLOYERS_PROFILE_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_POST_A_JOB: {
     label: "Post a Job",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "post-a-job",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_POST_A_JOB_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_MY_JOBS: {
     label: "My Jobs",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "my-jobs",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_MY_JOBS_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_SAVED_CANDIDATE: {
     label: "Saved Candidate",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "saved-candidate",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_SAVED_CANDIDATE_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
   DASHBOARD_PLANS_AND_BILLING: {
     label: "Plans & Billing",
-    href: getRoute(DASHBOARD_KEY, {
-      param: {
-        type: "plans-and-billing",
-      },
-    }).path,
+    href: getRoute(DASHBOARD_PLANS_AND_BILLING_KEY).path,
+    pattern: getRoute(DASHBOARD_KEY).path,
+  },
+  DASHBOARD_CATEGORIES: {
+    label: "Categories",
+    href: getRoute(DASHBOARD_CATEGORIES_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
 };

@@ -6,6 +6,10 @@ module.exports = {
     $passwordConfirm: "string",
     $mobile: "string",
   },
+  logInBodySchema: {
+    $email: "buiduclong911@gmail.com",
+    $password: "12345678",
+  },
   forgotPasswordBodySchema: {
     $email: "youremail@gmail.com",
   },

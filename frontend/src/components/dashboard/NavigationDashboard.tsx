@@ -14,6 +14,7 @@ import { CgProfile } from "react-icons/cg";
 import { FiPlusCircle } from "react-icons/fi";
 import { PiNotebookLight } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import { BiCategory } from "react-icons/bi";
 
 const navigationRoles = {
   employee: [
@@ -66,6 +67,16 @@ const navigationRoles = {
     {
       Icon: IoSettingsOutline,
       navigation: Navigations.DASHBOARD_SETTINGS,
+    },
+  ],
+  admin: [
+    {
+      Icon: GoStack,
+      navigation: Navigations.DASHBOARD_OVERVIEW,
+    },
+    {
+      Icon: BiCategory,
+      navigation: Navigations.DASHBOARD_CATEGORIES
     },
   ],
 };
