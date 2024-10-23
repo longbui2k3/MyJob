@@ -1,19 +1,21 @@
-import BaseInput from "../inputs/Input/BaseInput";
 import ProfilePicture from "./ProfilePicture";
 import { Text } from "@chakra-ui/react";
 import { RichTextEditer } from "../inputs/RichTextEditer";
+import { CompanyNameInput } from "../inputs/CompanyNameInput";
 
 interface FormCompanyInfoProps {
-  companyName: string;
-  onCompanyNameChange: (name: string) => void;
+  inputCompanyName?: string;
+  onInputCompanyNameChange: (e) => void; // Hàm callback để gửi dữ liệu về cha
 }
 
 export default function FormCompanyInfo({
-  companyName,
-  onCompanyNameChange,
+  inputCompanyName,
+  onInputCompanyNameChange,
 }: FormCompanyInfoProps) {
-  const handleInputCompanyNameChange = (e) => {
-    onCompanyNameChange(e.target.value);
+  const handleInputCompanyNameChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    onInputCompanyNameChange(e.target.value); // Gọi hàm callback với giá trị từ input
   };
 
   return (
@@ -33,10 +35,8 @@ export default function FormCompanyInfo({
       </div>
       <div className="border-[1px]"></div>
       <div>
-        <Text className="font-normal text-sm mb-2">Company name</Text>
-        <BaseInput
-          type="text"
-          value={companyName}
+        <CompanyNameInput
+          value={inputCompanyName}
           onChange={handleInputCompanyNameChange}
         />
       </div>

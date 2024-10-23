@@ -13,7 +13,7 @@ class CompanyRepo extends BaseRepo {
 
   async createCompany(
     {
-      company_name,
+      companyName,
       user,
       // about_us,
       // year_of_establishment,
@@ -29,10 +29,10 @@ class CompanyRepo extends BaseRepo {
 
     return await this.create({
       _id: user,
-      company_name,
+      companyName,
       user,
-      // logo_img: logoImg,
-      // banner_img: bannerImg,
+      // logo: logoImg,
+      // banner: bannerImg,
       // about_us,
       // year_of_establishment,
       // company_website,

@@ -19,6 +19,7 @@ export const FIND_JOBS_KEY = "FIND_JOBS";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
 export const COMPANY_KEY = "COMPANY";
 export const CREATE_COMPANY_KEY = "CREATE_COMPANY";
+export const COMPLETED_COMPANY_KEY = "COMPLETED_COMPANY";
 export const DASHBOARD_OVERVIEW_KEY = "DASHBOARD_OVERVIEW";
 export const DASHBOARD_APPLIED_JOBS_KEY = "DASHBOARD_APPLIED_JOBS";
 export const DASHBOARD_FAVORITE_JOBS_KEY = "DASHBOARD_FAVORITE_JOBS";
@@ -96,6 +97,12 @@ const ROUTES: Array<RouteItem> = [
             name: "Create Company",
             path: "/company/create",
             isPrivate: true,
+          },
+          {
+            key: COMPLETED_COMPANY_KEY,
+            name: "Completed Company",
+            path: "/company/completed",
+            isPrivate: false,
           },
         ],
         isPrivate: false,

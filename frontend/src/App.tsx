@@ -15,6 +15,7 @@ import {
 } from "./pages";
 import {
   CREATE_COMPANY_KEY,
+  COMPLETED_COMPANY_KEY,
   DASHBOARD_CATEGORIES_KEY,
   DASHBOARD_KEY,
   DASHBOARD_OVERVIEW_KEY,
@@ -35,6 +36,7 @@ import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { PageFindEmployers } from "./pages/home";
 import { DashboardCategory, DashboardOverview } from "./components/dashboard";
+import { PageCompletedCompany } from "./pages/company";
 
 const AuthenRoutes = [
   {
@@ -56,10 +58,14 @@ const AuthenRoutes = [
   {
     route: getRoute(RESET_PASSWORD_KEY),
     element: <PageResetPassword />,
-  },  
+  },
   {
     route: getRoute(CREATE_COMPANY_KEY),
     element: <PageCreateCompany />,
+  },
+  {
+    route: getRoute(COMPLETED_COMPANY_KEY),
+    element: <PageCompletedCompany />,
   },
 ];
 

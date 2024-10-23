@@ -8,28 +8,26 @@ import FormContact from "./FormContact";
 import { GrLinkNext } from "react-icons/gr";
 import { Button } from "@chakra-ui/react";
 import { CreateCompanyAPI } from "../../apis/companyAPI";
-import { useCookies } from "react-cookie";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
 
-  const [companyName, setCompanyName] = useState<string>("");
-  const handleCompanyNameChange = (name: string) => {
-    setCompanyName(name);
+  // input company name
+  const [inputCompanyName, setInputCompanyName] = useState("");
+  const handleInputCompanyNameChange = (name: string) => {
+    setInputCompanyName(name);
   };
 
-  const [cookies] = useCookies(["jwt", "user"]);
-  console.log(cookies.jwt);
-  console.log(cookies.user);
+  // input logo
+
+  // input banner
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!companyName) return;
-    const data = await CreateCompanyAPI(
-      { company_name: companyName },
-      { authorization: cookies.jwt, x_client_id: cookies.user }
-    );
+    if (!inputCompanyName) return;
+    const data = await CreateCompanyAPI({ companyName: inputCompanyName });
+    console.log(data);
     if (data.status === 201) {
       console.log("tao cong ty thanh cong");
     } else {
@@ -51,8 +49,8 @@ export default function Tabs() {
       ),
       content: (
         <FormCompanyInfo
-          companyName={companyName}
-          onCompanyNameChange={handleCompanyNameChange}
+          inputCompanyName={inputCompanyName}
+          onInputCompanyNameChange={handleInputCompanyNameChange}
         />
       ),
     },
@@ -122,18 +120,18 @@ export default function Tabs() {
       ))}
 
       <div className="flex">
-        <Button
+        {/* <Button
           className="mr-3"
           display={activeIndex === 1 ? "none" : "block"}
           onClick={() => handelClick(activeIndex - 1)}
         >
           Previous
-        </Button>
+        </Button> */}
         <Button
           textColor={"white"}
           bg={"var(--primary-500)"}
           rightIcon={<GrLinkNext />}
-          onClick={() => handleSubmit}
+          onClick={(e) => handleSubmit(e)}
           //onClick={() => handelClick(activeIndex + 1)}
         >
           {activeIndex === 4 ? "Finish Editing" : "Save & Next"}
