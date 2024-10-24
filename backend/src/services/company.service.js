@@ -7,7 +7,7 @@ class CompanyService {
     {
       companyName,
       user,
-      // about_us,
+      aboutUs,
       // year_of_establishment,
       // company_website,
       // company_vision,
@@ -20,7 +20,7 @@ class CompanyService {
       {
         companyName,
         user,
-        // about_us,
+        aboutUs,
         // year_of_establishment,
         // company_website,
         // company_vision,

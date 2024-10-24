@@ -13,20 +13,36 @@ export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
 
-  // input company name
+  
+  // logo
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const handleLogoChange = (file: File | null) => setLogoFile(file);
+  // banner
+  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const handleBannerChange = (file: File | null) => setBannerFile(file);
+  
+  // company name
   const [inputCompanyName, setInputCompanyName] = useState("");
   const handleInputCompanyNameChange = (name: string) => {
     setInputCompanyName(name);
   };
 
-  // input logo
+  // about us
+  const[editerAboutUs, setEditerAboutUs] = useState("");
+  const handleEditerAboutUsChange = (text: string) => {
+    setEditerAboutUs(text);
+  };
 
-  // input banner
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!inputCompanyName) return;
-    const data = await CreateCompanyAPI({ companyName: inputCompanyName });
+    if (!inputCompanyName || !logoFile || !bannerFile) return;
+    const data = await CreateCompanyAPI({
+      companyName: inputCompanyName,
+      logo: logoFile,
+      banner: bannerFile,
+      aboutUs: editerAboutUs
+    });
     console.log(data);
     if (data.status === 201) {
       console.log("tao cong ty thanh cong");
@@ -50,7 +66,11 @@ export default function Tabs() {
       content: (
         <FormCompanyInfo
           inputCompanyName={inputCompanyName}
+          editerAboutUs={editerAboutUs}
           onInputCompanyNameChange={handleInputCompanyNameChange}
+          onEditerAboutUsChange={handleEditerAboutUsChange}
+          onLogoChange={handleLogoChange}
+          onBannerChange={handleBannerChange}
         />
       ),
     },

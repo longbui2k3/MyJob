@@ -1,4 +1,3 @@
-import { MessageError } from "../../global";
 import { Text } from "@chakra-ui/react";
 import BaseInput from "../Input/BaseInput";
 

@@ -15,7 +15,7 @@ class CompanyRepo extends BaseRepo {
     {
       companyName,
       user,
-      // about_us,
+      aboutUs,
       // year_of_establishment,
       // company_website,
       // company_vision,
@@ -24,16 +24,16 @@ class CompanyRepo extends BaseRepo {
     },
     files
   ) {
-    // const logoImg = await this.uploadFile("image", files["logo_img"][0]);
-    // const bannerImg = await this.uploadFile("image", files["banner_img"][0]);
+    const logoImg = await this.uploadFile("image", files["logo"][0]);
+    const bannerImg = await this.uploadFile("image", files["banner"][0]);
 
     return await this.create({
       _id: user,
       companyName,
       user,
-      // logo: logoImg,
-      // banner: bannerImg,
-      // about_us,
+      logo: logoImg,
+      banner: bannerImg,
+      aboutUs,
       // year_of_establishment,
       // company_website,
       // company_vision,
