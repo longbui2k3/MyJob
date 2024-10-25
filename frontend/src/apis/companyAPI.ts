@@ -10,10 +10,10 @@ export const CreateCompanyAPI = async (body: {
   yearOfEstablishment: Date;
   companyWebsite: string;
   companyVision: string;
-  // socialMedias: { socialMedia: string; linkUrl: string }[];
-  // mapLocation: string;
-  // phone: string;
-  // email: string;
+  socialMedias: { socialMedia: string; linkUrl: string }[];
+  mapLocation: string;
+  phone: string;
+  email: string;
 }) => {
   try {
     const formData = new FormData();
@@ -29,10 +29,10 @@ export const CreateCompanyAPI = async (body: {
       body.yearOfEstablishment.toISOString()
     );
     formData.append("companyWebsite", body.companyWebsite);
-    // formData.append("socialMedias", JSON.stringify(body.socialMedias));
-    // formData.append("mapLocation", body.mapLocation);
-    // formData.append("phone", body.phone);
-    // formData.append("email", body.email);
+    formData.append("socialMedias", JSON.stringify(body.socialMedias));
+    formData.append("mapLocation", body.mapLocation);
+    formData.append("phone", body.phone);
+    formData.append("email", body.email);
 
     const res = await axios.post(
       `${import.meta.env.VITE_SERVER_DOMAIN}/company`,

@@ -45,7 +45,7 @@ class CompanyRepo extends BaseRepo {
       yearOfEstablishment,
       companyWebsite,
       companyVision,
-      socialMedias,
+      socialMedias: JSON.parse(socialMedias),
       mapLocation,
       phone,
       email,

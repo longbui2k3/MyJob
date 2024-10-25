@@ -4,6 +4,7 @@ import { RxLink2 } from "react-icons/rx";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 
 interface FormFoundingInfoProps {
+  companyVision: string;
   onOrganizationTypeChange: (value: string) => void;
   onIndustryTypeChange: (value: string) => void;
   onTeamSizeChange: (value: string) => void;
@@ -13,6 +14,7 @@ interface FormFoundingInfoProps {
 }
 
 export default function FormFoundingInfo({
+  companyVision,
   onOrganizationTypeChange,
   onIndustryTypeChange,
   onTeamSizeChange,
@@ -31,10 +33,8 @@ export default function FormFoundingInfo({
     onCompanyWebsiteChange(e.target.value);
   };
 
-  const handleCompanyVisionChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    onCompanyVisionChange(e.target.value);
+  const handleCompanyVisionChange = (content: string) => {
+    onCompanyVisionChange(content);
   };
   return (
     <div className="flex flex-col text-gray-900 space-y-4">
@@ -42,13 +42,13 @@ export default function FormFoundingInfo({
         <BaseSelect
           text="Organization Type"
           options={[
-            { value: "Public", label: "Public" },
-            { value: "Private", label: "Private" },
-            { value: "Non-Profit", label: "Non-Profit" },
-            { value: "Government", label: "Government" },
-            { value: "Partnership", label: "Partnership" },
-            { value: "Sole Proprietorship", label: "Sole Proprietorship" },
-            { value: "Corporation", label: "Corporation" },
+            "Public",
+            "Private",
+            "Non-Profit",
+            "Government",
+            "Partnership",
+            "Sole Proprietorship",
+            "Corporation",
           ]}
           onChange={onOrganizationTypeChange}
         />
@@ -56,16 +56,16 @@ export default function FormFoundingInfo({
         <BaseSelect
           text="Industry Type"
           options={[
-            { value: "Technology", label: "Technology" },
-            { value: "Finance", label: "Finance" },
-            { value: "Healthcare", label: "Healthcare" },
-            { value: "Manufacturing", label: "Manufacturing" },
-            { value: "Retail", label: "Retail" },
-            { value: "Education", label: "Education" },
-            { value: "Real Estate", label: "Real Estate" },
-            { value: "Hospitality", label: "Hospitality" },
-            { value: "Consulting", label: "Consulting" },
-            { value: "Transportation", label: "Transportation" },
+            "Technology",
+            "Finance",
+            "Healthcare",
+            "Manufacturing",
+            "Retail",
+            "Education",
+            "Real Estate",
+            "Hospitality",
+            "Consulting",
+            "Transportation",
           ]}
           onChange={onIndustryTypeChange}
         />
@@ -73,13 +73,13 @@ export default function FormFoundingInfo({
         <BaseSelect
           text="Team Size"
           options={[
-            { value: "1-10", label: "1-10 employees" },
-            { value: "11-50", label: "11-50 employees" },
-            { value: "51-200", label: "51-200 employees" },
-            { value: "201-500", label: "201-500 employees" },
-            { value: "501-1000", label: "501-1000 employees" },
-            { value: "1001-5000", label: "1001-5000 employees" },
-            { value: "5001+", label: "5001+ employees" },
+            "1-10",
+            "11-50",
+            "51-200",
+            "201-500",
+            "501-1000",
+            "1001-5000",
+            "5001+",
           ]}
           onChange={onTeamSizeChange}
         />
@@ -109,6 +109,7 @@ export default function FormFoundingInfo({
         <Text className="font-normal text-sm mb-2">Company Vision</Text>
         <RichTextEditer
           placeholder="Tell us about your company vision..."
+          value={companyVision}
           onChange={handleCompanyVisionChange}
         ></RichTextEditer>
       </div>

@@ -5,6 +5,7 @@ import { RichTextEditer } from "../inputs/RichTextEditer";
 
 interface FormCompanyInfoProps {
   inputCompanyName?: string;
+  aboutUs: string;
   onInputCompanyNameChange: (name: string) => void; // Hàm callback để gửi dữ liệu về cha
   onAboutUsChange: (value: string) => void;
   onLogoChange: (file: File | null) => void;
@@ -13,6 +14,7 @@ interface FormCompanyInfoProps {
 
 export default function FormCompanyInfo({
   inputCompanyName,
+  aboutUs,
   onInputCompanyNameChange,
   onAboutUsChange,
   onLogoChange,
@@ -24,8 +26,8 @@ export default function FormCompanyInfo({
     onInputCompanyNameChange(e.target.value);
   };
 
-  const handleAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onAboutUsChange(e.target.value);
+  const handleAboutUsChange = (content: string) => {
+    onAboutUsChange(content);
   };
 
   return (
@@ -54,6 +56,7 @@ export default function FormCompanyInfo({
         <Text className="font-normal text-sm mb-2">About Us</Text>
         <RichTextEditer
           placeholder="Write down about your company here. Let the candidate know who we are..."
+          value={aboutUs}
           onChange={handleAboutUsChange}
         ></RichTextEditer>
       </div>

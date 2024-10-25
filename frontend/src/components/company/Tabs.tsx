@@ -8,10 +8,13 @@ import FormContact from "./FormContact";
 import { GrLinkNext } from "react-icons/gr";
 import { Button } from "@chakra-ui/react";
 import { CreateCompanyAPI } from "../../apis/companyAPI";
+import { useNavigate } from "react-router-dom";
+import { COMPLETED_COMPANY_KEY, getRoute } from "../../helpers/constants";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
+  const navigate = useNavigate();
 
   // logo
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -70,6 +73,34 @@ export default function Tabs() {
     setCompanyVision(value);
   };
 
+  // social medias
+  const [socialMedias, setSocialMedias] = useState<
+    { socialMedia: string; linkUrl: string }[]
+  >([]);
+  const handleSocialMediaChange = (
+    updatedSocialMedias: { socialMedia: string; linkUrl: string }[]
+  ) => {
+    setSocialMedias(updatedSocialMedias);
+  };
+
+  // map location
+  const [mapLocation, setMapLocation] = useState<string>("");
+  const handleMapLocationChange = (value: string) => {
+    setMapLocation(value);
+  };
+
+  // phone
+  const [phone, setPhone] = useState<string>("");
+  const handlePhoneChange = (value: string) => {
+    setPhone(value);
+  };
+
+  // email
+  const [email, setEmail] = useState<string>("");
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment)
@@ -85,10 +116,17 @@ export default function Tabs() {
       yearOfEstablishment: yearOfEstablishment,
       companyWebsite: companyWebsite,
       companyVision: companyVision,
+      socialMedias: socialMedias,
+      mapLocation: mapLocation,
+      phone: phone,
+      email: email,
     });
     console.log(data);
     if (data.status === 201) {
       console.log("tao cong ty thanh cong");
+      setTimeout(() => {
+        navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
+      }, 500);
     } else {
       console.log("tao cong ty that bai");
     }
@@ -109,6 +147,7 @@ export default function Tabs() {
       content: (
         <FormCompanyInfo
           inputCompanyName={inputCompanyName}
+          aboutUs={aboutUs}
           onInputCompanyNameChange={handleInputCompanyNameChange}
           onAboutUsChange={handleAboutUsChange}
           onLogoChange={handleLogoChange}
@@ -129,6 +168,7 @@ export default function Tabs() {
       ),
       content: (
         <FormFoundingInfo
+          companyVision={companyVision}
           onIndustryTypeChange={handleIndustryTypeChange}
           onOrganizationTypeChange={handleOrganizationTypeChange}
           onTeamSizeChange={handleTeamSizeChange}
@@ -149,7 +189,9 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormSocialMediaInfo />,
+      content: (
+        <FormSocialMediaInfo onSocialMediaChange={handleSocialMediaChange} />
+      ),
     },
     {
       id: 4,
@@ -162,7 +204,15 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormContact />,
+      content: (
+        <FormContact
+          mapLocation={mapLocation}
+          phone={phone}
+          onMapLocationChange={handleMapLocationChange}
+          onPhoneChange={handlePhoneChange}
+          onEmailChange={handleEmailChange}
+        />
+      ),
     },
   ];
 

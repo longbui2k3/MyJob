@@ -63,7 +63,7 @@ const companySchema = new mongoose.Schema(
       default: "",
     },
     socialMedias: {
-      type: [{ type: { socialMedia: String, linkUrl: String } }],
+      type: [{ socialMedia: String, linkUrl: String }],
       default: [],
     },
     mapLocation: {
