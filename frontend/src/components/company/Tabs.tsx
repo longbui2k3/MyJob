@@ -13,35 +13,78 @@ export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
 
-  
   // logo
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const handleLogoChange = (file: File | null) => setLogoFile(file);
   // banner
   const [bannerFile, setBannerFile] = useState<File | null>(null);
   const handleBannerChange = (file: File | null) => setBannerFile(file);
-  
+
   // company name
-  const [inputCompanyName, setInputCompanyName] = useState("");
+  const [inputCompanyName, setInputCompanyName] = useState<string>("");
   const handleInputCompanyNameChange = (name: string) => {
     setInputCompanyName(name);
   };
 
   // about us
-  const[editerAboutUs, setEditerAboutUs] = useState("");
-  const handleEditerAboutUsChange = (text: string) => {
-    setEditerAboutUs(text);
+  const [aboutUs, setAboutUs] = useState<string>("");
+  const handleAboutUsChange = (value: string) => {
+    setAboutUs(value);
   };
 
+  // organization Type
+  const [organizationType, setOrganizationType] = useState<string>("");
+  const handleOrganizationTypeChange = (value: string) => {
+    setOrganizationType(value);
+  };
+
+  // industry Type
+  const [industryType, setIndustryType] = useState<string>("");
+  const handleIndustryTypeChange = (value: string) => {
+    setIndustryType(value);
+  };
+
+  // team Size
+  const [teamSize, setTeamSize] = useState<string>("");
+  const handleTeamSizeChange = (value: string) => {
+    setTeamSize(value);
+  };
+
+  // year Of Establishment
+  const [yearOfEstablishment, setYearOfEstablishment] = useState<Date | null>(
+    null
+  );
+  const handleYearOfEstablishmentChange = (value: Date) => {
+    setYearOfEstablishment(value);
+  };
+
+  // company Website
+  const [companyWebsite, setCompanyWebsite] = useState<string>("");
+  const handleCompanyWebsiteChange = (value: string) => {
+    setCompanyWebsite(value);
+  };
+
+  // company Vision
+  const [companyVision, setCompanyVision] = useState<string>("");
+  const handleCompanyVisionChange = (value: string) => {
+    setCompanyVision(value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!inputCompanyName || !logoFile || !bannerFile) return;
+    if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment)
+      return;
     const data = await CreateCompanyAPI({
       companyName: inputCompanyName,
       logo: logoFile,
       banner: bannerFile,
-      aboutUs: editerAboutUs
+      aboutUs: aboutUs,
+      organizationType: organizationType,
+      industryType: industryType,
+      teamSize: teamSize,
+      yearOfEstablishment: yearOfEstablishment,
+      companyWebsite: companyWebsite,
+      companyVision: companyVision,
     });
     console.log(data);
     if (data.status === 201) {
@@ -66,9 +109,8 @@ export default function Tabs() {
       content: (
         <FormCompanyInfo
           inputCompanyName={inputCompanyName}
-          editerAboutUs={editerAboutUs}
           onInputCompanyNameChange={handleInputCompanyNameChange}
-          onEditerAboutUsChange={handleEditerAboutUsChange}
+          onAboutUsChange={handleAboutUsChange}
           onLogoChange={handleLogoChange}
           onBannerChange={handleBannerChange}
         />
@@ -85,7 +127,16 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormFoundingInfo />,
+      content: (
+        <FormFoundingInfo
+          onIndustryTypeChange={handleIndustryTypeChange}
+          onOrganizationTypeChange={handleOrganizationTypeChange}
+          onTeamSizeChange={handleTeamSizeChange}
+          onYearOfEstablishmentChange={handleYearOfEstablishmentChange}
+          onCompanyWebsiteChange={handleCompanyWebsiteChange}
+          onCompanyVisionChange={handleCompanyVisionChange}
+        />
+      ),
     },
     {
       id: 3,
@@ -154,7 +205,8 @@ export default function Tabs() {
           onClick={(e) => handleSubmit(e)}
           //onClick={() => handelClick(activeIndex + 1)}
         >
-          {activeIndex === 4 ? "Finish Editing" : "Save & Next"}
+          {/* {activeIndex === 4 ? "Finish Editing" : "Save & Next"} */}
+          Save
         </Button>
       </div>
     </div>

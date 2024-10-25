@@ -1,33 +1,31 @@
 import ProfilePicture from "./ProfilePicture";
-import { CompanyNameInput, AboutUsEditer } from "../inputs";
+import { CompanyNameInput } from "../inputs";
+import { Text } from "@chakra-ui/react";
+import { RichTextEditer } from "../inputs/RichTextEditer";
 
 interface FormCompanyInfoProps {
   inputCompanyName?: string;
-  editerAboutUs?: string;
   onInputCompanyNameChange: (name: string) => void; // Hàm callback để gửi dữ liệu về cha
-  onEditerAboutUsChange: (text: string) => void;
+  onAboutUsChange: (value: string) => void;
   onLogoChange: (file: File | null) => void;
   onBannerChange: (file: File | null) => void;
 }
 
 export default function FormCompanyInfo({
   inputCompanyName,
-  editerAboutUs,
   onInputCompanyNameChange,
-  onEditerAboutUsChange,
+  onAboutUsChange,
   onLogoChange,
   onBannerChange,
 }: FormCompanyInfoProps) {
   const handleInputCompanyNameChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    onInputCompanyNameChange(e.target.value); // Gọi hàm callback với giá trị từ input
+    onInputCompanyNameChange(e.target.value);
   };
 
-  const handleEditerAboutUsChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    onEditerAboutUsChange(e.target.value);
+  const handleAboutUsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onAboutUsChange(e.target.value);
   };
 
   return (
@@ -48,19 +46,16 @@ export default function FormCompanyInfo({
         />
       </div>
       <div className="border-[1px]"></div>
+      <CompanyNameInput
+        value={inputCompanyName}
+        onChange={handleInputCompanyNameChange}
+      />
       <div>
-        <CompanyNameInput
-          value={inputCompanyName}
-          onChange={handleInputCompanyNameChange}
-        />
-      </div>
-      <div>
-        <AboutUsEditer
-          value={editerAboutUs}
-          onChange={handleEditerAboutUsChange}
-        />
-        {/* <Text className="font-normal text-sm mb-2">Abouts us</Text>
-        <RichTextEditer placeholder="Write down about your company here. Let the candidate know who we are..."></RichTextEditer> */}
+        <Text className="font-normal text-sm mb-2">About Us</Text>
+        <RichTextEditer
+          placeholder="Write down about your company here. Let the candidate know who we are..."
+          onChange={handleAboutUsChange}
+        ></RichTextEditer>
       </div>
     </div>
   );
