@@ -1,4 +1,4 @@
-const { CREATED } = require("../core/success.response");
+const { CREATED, OK } = require("../core/success.response");
 const CategoryService = require("../services/category.service");
 
 class CategoryController {
@@ -11,6 +11,17 @@ class CategoryController {
       message: "Create category successfully",
       metadata: {
         category: result,
+      },
+    }).send(res);
+  };
+
+  findAllCategories = async (req, res, next) => {
+    const result = await CategoryService.findAllCategories(req.query);
+
+    return new OK({
+      message: "Get all categories successfully",
+      metadata: {
+        categories: result,
       },
     }).send(res);
   };

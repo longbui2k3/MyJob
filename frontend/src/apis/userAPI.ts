@@ -1,12 +1,8 @@
-import axios from "../configs/axios.config";
+import { HttpMethods } from "../helpers/constants";
+import BaseAPI from "./baseAPI";
 export const GetUser = async () => {
-  try {
-    const res = await axios.get(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/user/me`
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: "/user/me",
+    method: HttpMethods.GET
+  });
 };

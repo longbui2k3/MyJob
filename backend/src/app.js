@@ -3,7 +3,7 @@ const express = require("express");
 const { default: helmet } = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
@@ -30,6 +30,7 @@ app.use((error, req, res, next) => {
     code: statusCode,
     err: error.stack,
     message: error.message || "Internal Server Error",
+    isSuccess: error.isSuccess,
   });
 });
 

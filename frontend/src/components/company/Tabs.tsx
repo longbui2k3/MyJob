@@ -30,7 +30,7 @@ export default function Tabs() {
       { company_name: companyName },
       { authorization: cookies.jwt, x_client_id: cookies.user }
     );
-    if (data.status === 201) {
+    if (data.isSuccess) {
       console.log("tao cong ty thanh cong");
     } else {
       console.log("tao cong ty that bai");

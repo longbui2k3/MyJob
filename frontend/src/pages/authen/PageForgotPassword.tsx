@@ -33,7 +33,7 @@ export default function PageForgotPassword() {
     setIsLoading(true);
     if (!inputEmail) return;
     const data = await ForgotPasswordAPI({ email: inputEmail });
-    if (data.status === 200) {
+    if (data.isSuccess) {
       setMessage({
         isShow: true,
         type: "success",

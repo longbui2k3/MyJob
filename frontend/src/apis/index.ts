@@ -8,3 +8,5 @@ export {
 export { GetUser } from "./userAPI";
 
 export { CreateCompanyAPI } from "./companyAPI";
+export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
+export { ResendOtpAPI } from "./otpAPI";

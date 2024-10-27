@@ -68,6 +68,28 @@
       }
     },
     "/api/v1/category/": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get all categories",
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit number of categories to return",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
       "post": {
         "tags": [
           "Category"
@@ -104,6 +126,30 @@
                     "format": "binary"
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/otp/": {
+      "post": {
+        "tags": [
+          "OTP"
+        ],
+        "summary": "Resend OTP",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resendOTPBodySchema"
               }
             }
           }
@@ -576,26 +622,16 @@
           "message"
         ]
       },
-      "createCategoryBodySchema": {
+      "resendOTPBodySchema": {
         "type": "object",
         "properties": {
-          "name": {
+          "email": {
             "type": "string",
             "example": "string"
-          },
-          "iconUrl": {
-            "type": "string",
-            "example": "file"
-          },
-          "imageUrl": {
-            "type": "string",
-            "example": "file"
           }
         },
         "required": [
-          "name",
-          "iconUrl",
-          "imageUrl"
+          "email"
         ]
       }
     },

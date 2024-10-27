@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import { Footer, Header } from "../components/global";
 import { useSelector } from "react-redux";
-import { FormEditCategory } from "../components/category";
+import { FormCategory } from "../components/category";
 
 export default function Cover() {
   const isOpenForm = useSelector((state) => state.openForm.isOpenForm);
   return (
     <div className="relative w-full">
-      {isOpenForm ? <FormEditCategory /> : ""}
+      {isOpenForm ? <FormCategory /> : ""}
       <Header />
       <div className="pt-[130px]">
         <Outlet />

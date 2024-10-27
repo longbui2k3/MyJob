@@ -3,7 +3,7 @@ interface UnsendProps {
   className?: string;
 }
 
-export default function Unsend({ onClick, className = "" }: UnsendProps) {
+export default function Resend({ onClick, className = "" }: UnsendProps) {
   return (
     <div className={`flex mt-[15px] ${className}`}>
       <div className="text-[--gray-500] text-[14px] font-normal leading-normal">
@@ -13,7 +13,7 @@ export default function Unsend({ onClick, className = "" }: UnsendProps) {
         className="ml-[5px] text-[--primary-600] text-[14px] font-medium leading-normal cursor-pointer hover:text-[--primary-500]"
         onClick={onClick}
       >
-        {"Unsend"}
+        {"Resend"}
       </div>
     </div>
   );

@@ -7,10 +7,30 @@ const { uploadMulter } = require("../../helpers/uploadMulter");
 const categoryController = require("../../controllers/category.controller");
 
 const router = express.Router();
-const upload = uploadMulter(
-  ["image/png", "image/jpeg", "image/jpg", "image/webp"],
-  "Only .png, .jpg, .jpeg, .webp files are allowed."
-);
+const upload = uploadMulter([
+  {
+    fieldname: "imageUrl",
+    allowedTypes: ["image/png", "image/jpeg", "image/jpg", "image/webp"],
+  },
+  {
+    fieldname: "iconUrl",
+    allowedTypes: ["image/svg+xml"],
+  },
+]);
+
+router.route("/").get(
+  // #swagger.tags = ['Category']
+  // #swagger.summary = 'Get all categories'
+  /* #swagger.parameters = [
+    {
+      "in": "query",
+      "name": "limit",
+      "description": "Limit number of categories to return"
+    }
+  ] 
+  */
+  asyncHandler(categoryController.findAllCategories));
+
 router.use(authentication);
 router.route("/").post(
   upload.fields([
