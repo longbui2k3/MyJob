@@ -19,6 +19,7 @@ import {
   DASHBOARD_CATEGORIES_KEY,
   DASHBOARD_KEY,
   DASHBOARD_OVERVIEW_KEY,
+  DASHBOARD_SETTINGS_KEY,
   DEFAULT_KEY,
   FIND_EMPLOYERS_KEY,
   FIND_JOBS_KEY,
@@ -35,7 +36,11 @@ import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { PageFindEmployers } from "./pages/home";
-import { DashboardCategory, DashboardOverview } from "./components/dashboard";
+import {
+  DashboardCategory,
+  DashboardOverview,
+  DashboardSettings,
+} from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 
 const AuthenRoutes = [
@@ -100,6 +105,10 @@ const DashboardRoutes = [
   {
     route: getRoute(DASHBOARD_OVERVIEW_KEY),
     element: <DashboardOverview />,
+  },
+  {
+    route: getRoute(DASHBOARD_SETTINGS_KEY),
+    element: <DashboardSettings />,
   },
 ];
 
