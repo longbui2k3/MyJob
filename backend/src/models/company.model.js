@@ -9,21 +9,21 @@ const COLLECTION_NAME = "companies";
 const DOCUMENT_NAME = "Company";
 const companySchema = new mongoose.Schema(
   {
-    logo_img: {
+    logo: {
       type: String,
       // require: true,
       default: "",
     },
-    banner_img: {
+    banner: {
       type: String,
       // require: true,
       default: "",
     },
-    company_name: {
+    companyName: {
       type: String,
       required: true,
     },
-    about_us: {
+    aboutUs: {
       type: String,
       default: "",
     },
@@ -33,40 +33,40 @@ const companySchema = new mongoose.Schema(
       unique: true,
       ref: "User",
     },
-    organization_type: {
+    organizationType: {
       type: String,
       enum: OrganizationTypes,
       default: OrganizationTypes.EMPTY,
     },
-    industry_type: {
+    industryType: {
       type: String,
       enum: IndustryTypes,
       default: IndustryTypes.EMPTY,
     },
-    team_size: {
+    teamSize: {
       type: String,
       enum: TeamSizes,
       default: TeamSizes.EMPTY,
     },
-    year_of_establishment: {
+    yearOfEstablishment: {
       type: Date,
       // require: true,
       default: null,
     },
-    company_website: {
+    companyWebsite: {
       type: String,
       // require: true,
       default: "",
     },
-    company_vision: {
+    companyVision: {
       type: String,
       default: "",
     },
     socialMedias: {
-      type: [{ type: { socialMedia: String, linkUrl: String } }],
+      type: [{ socialMedia: String, linkUrl: String }],
       default: [],
     },
-    map_location: {
+    mapLocation: {
       type: String,
       // require: true,
       default: "",

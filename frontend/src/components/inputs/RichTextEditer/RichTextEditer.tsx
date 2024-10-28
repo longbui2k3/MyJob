@@ -1,6 +1,6 @@
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "./style.css"
+import "./style.css";
 
 interface RichTextEditerProps {
   value?: string;

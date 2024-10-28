@@ -1,49 +1,95 @@
-import BaseInput from "../inputs/Input/BaseInput";
 import BaseSelect from "./BaseSelect";
 import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import { RxLink2 } from "react-icons/rx";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 
-export default function FormFoundingInfo() {
+interface FormFoundingInfoProps {
+  companyVision: string;
+  onOrganizationTypeChange: (value: string) => void;
+  onIndustryTypeChange: (value: string) => void;
+  onTeamSizeChange: (value: string) => void;
+  onYearOfEstablishmentChange: (value: Date) => void;
+  onCompanyWebsiteChange: (value: string) => void;
+  onCompanyVisionChange: (value: string) => void;
+}
+
+export default function FormFoundingInfo({
+  companyVision,
+  onOrganizationTypeChange,
+  onIndustryTypeChange,
+  onTeamSizeChange,
+  onYearOfEstablishmentChange,
+  onCompanyWebsiteChange,
+  onCompanyVisionChange,
+}: FormFoundingInfoProps) {
+  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = new Date(e.target.value);
+    onYearOfEstablishmentChange(selectedDate);
+  };
+
+  const handleCompanyWebsiteChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    onCompanyWebsiteChange(e.target.value);
+  };
+
+  const handleCompanyVisionChange = (content: string) => {
+    onCompanyVisionChange(content);
+  };
   return (
     <div className="flex flex-col text-gray-900 space-y-4">
       <div className="grid grid-cols-3 gap-4 font-normal text-sm">
         <BaseSelect
           text="Organization Type"
           options={[
-            { value: "non-profit", label: "Non-Profit" },
-            { value: "corporation", label: "Corporation" },
-            { value: "government", label: "Government" },
+            "Public",
+            "Private",
+            "Non-Profit",
+            "Government",
+            "Partnership",
+            "Sole Proprietorship",
+            "Corporation",
           ]}
+          onChange={onOrganizationTypeChange}
         />
 
         <BaseSelect
           text="Industry Type"
           options={[
-            { value: "technology", label: "Technology" },
-            { value: "finance", label: "Finance" },
-            { value: "healthcare", label: "Healthcare" },
-            { value: "education", label: "Education" },
-            { value: "retail", label: "Retail" },
+            "Technology",
+            "Finance",
+            "Healthcare",
+            "Manufacturing",
+            "Retail",
+            "Education",
+            "Real Estate",
+            "Hospitality",
+            "Consulting",
+            "Transportation",
           ]}
+          onChange={onIndustryTypeChange}
         />
 
         <BaseSelect
           text="Team Size"
           options={[
-            { value: "1-10", label: "1-10 employees" },
-            { value: "11-50", label: "11-50 employees" },
-            { value: "51-200", label: "51-200 employees" },
-            { value: "201-500", label: "201-500 employees" },
-            { value: "500+", label: "500+ employees" },
+            "1-10",
+            "11-50",
+            "51-200",
+            "201-500",
+            "501-1000",
+            "1001-5000",
+            "5001+",
           ]}
+          onChange={onTeamSizeChange}
         />
 
         <div>
           <Text className="font-normal text-sm mb-2">
             Year of Establishment
           </Text>
-          <BaseInput type="date" />
+          {/* <BaseInput type="date" onChange={handleYearChange} /> */}
+          <Input type="date" onChange={handleYearChange} />
         </div>
         <div>
           <Text className="font-normal text-sm mb-2">Company Website</Text>
@@ -51,13 +97,21 @@ export default function FormFoundingInfo() {
             <InputLeftElement pointerEvents="none">
               <RxLink2 size={22} color="var(--primary-500)" />
             </InputLeftElement>
-            <Input type="url" placeholder="Website url..." />
+            <Input
+              type="url"
+              placeholder="Website url..."
+              onChange={handleCompanyWebsiteChange}
+            />
           </InputGroup>
         </div>
       </div>
       <div>
         <Text className="font-normal text-sm mb-2">Company Vision</Text>
-        <RichTextEditer placeholder="Tell us about your company vision..."></RichTextEditer>
+        <RichTextEditer
+          placeholder="Tell us about your company vision..."
+          value={companyVision}
+          onChange={handleCompanyVisionChange}
+        ></RichTextEditer>
       </div>
     </div>
   );

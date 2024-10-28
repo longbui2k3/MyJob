@@ -30,8 +30,8 @@ router.use(authentication);
 // create company
 router.route("/").post(
   upload.fields([
-    { name: "logo_img", maxCount: 1 },
-    { name: "banner_img", maxCount: 1 },
+    { name: "logo", maxCount: 1 },
+    { name: "banner", maxCount: 1 },
   ]),
   // #swagger.tags = ['Company']
   // #swagger.summary = 'Create company'

@@ -8,30 +8,125 @@ import FormContact from "./FormContact";
 import { GrLinkNext } from "react-icons/gr";
 import { Button } from "@chakra-ui/react";
 import { CreateCompanyAPI } from "../../apis/companyAPI";
-import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { COMPLETED_COMPANY_KEY, getRoute } from "../../helpers/constants";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
+  const navigate = useNavigate();
 
-  const [companyName, setCompanyName] = useState<string>("");
-  const handleCompanyNameChange = (name: string) => {
-    setCompanyName(name);
+  // logo
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const handleLogoChange = (file: File | null) => setLogoFile(file);
+  // banner
+  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const handleBannerChange = (file: File | null) => setBannerFile(file);
+
+  // company name
+  const [inputCompanyName, setInputCompanyName] = useState<string>("");
+  const handleInputCompanyNameChange = (name: string) => {
+    setInputCompanyName(name);
   };
 
-  const [cookies] = useCookies(["jwt", "user"]);
-  console.log(cookies.jwt);
-  console.log(cookies.user);
+  // about us
+  const [aboutUs, setAboutUs] = useState<string>("");
+  const handleAboutUsChange = (value: string) => {
+    setAboutUs(value);
+  };
+
+  // organization Type
+  const [organizationType, setOrganizationType] = useState<string>("");
+  const handleOrganizationTypeChange = (value: string) => {
+    setOrganizationType(value);
+  };
+
+  // industry Type
+  const [industryType, setIndustryType] = useState<string>("");
+  const handleIndustryTypeChange = (value: string) => {
+    setIndustryType(value);
+  };
+
+  // team Size
+  const [teamSize, setTeamSize] = useState<string>("");
+  const handleTeamSizeChange = (value: string) => {
+    setTeamSize(value);
+  };
+
+  // year Of Establishment
+  const [yearOfEstablishment, setYearOfEstablishment] = useState<Date | null>(
+    null
+  );
+  const handleYearOfEstablishmentChange = (value: Date) => {
+    setYearOfEstablishment(value);
+  };
+
+  // company Website
+  const [companyWebsite, setCompanyWebsite] = useState<string>("");
+  const handleCompanyWebsiteChange = (value: string) => {
+    setCompanyWebsite(value);
+  };
+
+  // company Vision
+  const [companyVision, setCompanyVision] = useState<string>("");
+  const handleCompanyVisionChange = (value: string) => {
+    setCompanyVision(value);
+  };
+
+  // social medias
+  const [socialMedias, setSocialMedias] = useState<
+    { socialMedia: string; linkUrl: string }[]
+  >([]);
+  const handleSocialMediaChange = (
+    updatedSocialMedias: { socialMedia: string; linkUrl: string }[]
+  ) => {
+    setSocialMedias(updatedSocialMedias);
+  };
+
+  // map location
+  const [mapLocation, setMapLocation] = useState<string>("");
+  const handleMapLocationChange = (value: string) => {
+    setMapLocation(value);
+  };
+
+  // phone
+  const [phone, setPhone] = useState<string>("");
+  const handlePhoneChange = (value: string) => {
+    setPhone(value);
+  };
+
+  // email
+  const [email, setEmail] = useState<string>("");
+  const handleEmailChange = (value: string) => {
+    setEmail(value);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!companyName) return;
-    const data = await CreateCompanyAPI(
-      { company_name: companyName },
-      { authorization: cookies.jwt, x_client_id: cookies.user }
-    );
-    if (data.isSuccess) {
+    if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment)
+      return;
+    const data = await CreateCompanyAPI({
+      companyName: inputCompanyName,
+      logo: logoFile,
+      banner: bannerFile,
+      aboutUs: aboutUs,
+      organizationType: organizationType,
+      industryType: industryType,
+      teamSize: teamSize,
+      yearOfEstablishment: yearOfEstablishment,
+      companyWebsite: companyWebsite,
+      companyVision: companyVision,
+      socialMedias: socialMedias,
+      mapLocation: mapLocation,
+      phone: phone,
+      email: email,
+    });
+    console.log(data);
+    if (data.status === 201) {
       console.log("tao cong ty thanh cong");
+      setTimeout(() => {
+        navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
+      }, 500);
     } else {
       console.log("tao cong ty that bai");
     }
@@ -51,8 +146,12 @@ export default function Tabs() {
       ),
       content: (
         <FormCompanyInfo
-          companyName={companyName}
-          onCompanyNameChange={handleCompanyNameChange}
+          inputCompanyName={inputCompanyName}
+          aboutUs={aboutUs}
+          onInputCompanyNameChange={handleInputCompanyNameChange}
+          onAboutUsChange={handleAboutUsChange}
+          onLogoChange={handleLogoChange}
+          onBannerChange={handleBannerChange}
         />
       ),
     },
@@ -67,7 +166,17 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormFoundingInfo />,
+      content: (
+        <FormFoundingInfo
+          companyVision={companyVision}
+          onIndustryTypeChange={handleIndustryTypeChange}
+          onOrganizationTypeChange={handleOrganizationTypeChange}
+          onTeamSizeChange={handleTeamSizeChange}
+          onYearOfEstablishmentChange={handleYearOfEstablishmentChange}
+          onCompanyWebsiteChange={handleCompanyWebsiteChange}
+          onCompanyVisionChange={handleCompanyVisionChange}
+        />
+      ),
     },
     {
       id: 3,
@@ -80,7 +189,9 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormSocialMediaInfo />,
+      content: (
+        <FormSocialMediaInfo onSocialMediaChange={handleSocialMediaChange} />
+      ),
     },
     {
       id: 4,
@@ -93,7 +204,15 @@ export default function Tabs() {
           }`}
         />
       ),
-      content: <FormContact />,
+      content: (
+        <FormContact
+          mapLocation={mapLocation}
+          phone={phone}
+          onMapLocationChange={handleMapLocationChange}
+          onPhoneChange={handlePhoneChange}
+          onEmailChange={handleEmailChange}
+        />
+      ),
     },
   ];
 
@@ -122,21 +241,22 @@ export default function Tabs() {
       ))}
 
       <div className="flex">
-        <Button
+        {/* <Button
           className="mr-3"
           display={activeIndex === 1 ? "none" : "block"}
           onClick={() => handelClick(activeIndex - 1)}
         >
           Previous
-        </Button>
+        </Button> */}
         <Button
           textColor={"white"}
           bg={"var(--primary-500)"}
           rightIcon={<GrLinkNext />}
-          onClick={() => handleSubmit}
+          onClick={(e) => handleSubmit(e)}
           //onClick={() => handelClick(activeIndex + 1)}
         >
-          {activeIndex === 4 ? "Finish Editing" : "Save & Next"}
+          {/* {activeIndex === 4 ? "Finish Editing" : "Save & Next"} */}
+          Save
         </Button>
       </div>
     </div>

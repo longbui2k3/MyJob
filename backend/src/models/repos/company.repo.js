@@ -13,32 +13,42 @@ class CompanyRepo extends BaseRepo {
 
   async createCompany(
     {
-      company_name,
+      companyName,
       user,
-      // about_us,
-      // year_of_establishment,
-      // company_website,
-      // company_vision,
-      // map_location,
-      // email,
+      aboutUs,
+      organizationType,
+      industryType,
+      teamSize,
+      yearOfEstablishment,
+      companyWebsite,
+      companyVision,
+      socialMedias,
+      mapLocation,
+      phone,
+      email,
     },
     files
   ) {
-    // const logoImg = await this.uploadFile("image", files["logo_img"][0]);
-    // const bannerImg = await this.uploadFile("image", files["banner_img"][0]);
+    const logoImg = await this.uploadFile("image", files["logo"][0]);
+    const bannerImg = await this.uploadFile("image", files["banner"][0]);
 
     return await this.create({
       _id: user,
-      company_name,
+      companyName,
       user,
-      // logo_img: logoImg,
-      // banner_img: bannerImg,
-      // about_us,
-      // year_of_establishment,
-      // company_website,
-      // company_vision,
-      // map_location,
-      // email,
+      logo: logoImg,
+      banner: bannerImg,
+      aboutUs,
+      organizationType,
+      industryType,
+      teamSize,
+      yearOfEstablishment,
+      companyWebsite,
+      companyVision,
+      socialMedias: JSON.parse(socialMedias),
+      mapLocation,
+      phone,
+      email,
     });
   }
   async uploadFile(type, file) {

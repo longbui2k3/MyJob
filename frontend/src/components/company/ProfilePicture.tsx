@@ -4,11 +4,13 @@ interface ProfilePictureProps {
   title: string;
   note: string;
   className: string;
+  onFileChange: (file: File | null) => void;
 }
 export default function ProfilePicture({
   title,
   note,
   className,
+  onFileChange,
 }: ProfilePictureProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -24,6 +26,7 @@ export default function ProfilePicture({
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setImageUrl(imageUrl);
+      onFileChange(file);
     }
   };
 

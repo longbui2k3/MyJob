@@ -1,16 +1,30 @@
 import { GoMail } from "react-icons/go";
 import BaseInput from "../inputs/Input/BaseInput";
 import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
-import { useState } from "react";
 
-export default function FormContact() {
-  const [mapLocation, setMapLocation] = useState<string>("");
-  const handleInputMapChange = (e) => {
-    setMapLocation(e.target.value);
+interface FormContactProps {
+  mapLocation: string;
+  phone: string;
+  onMapLocationChange: (value: string) => void;
+  onPhoneChange: (value: string) => void;
+  onEmailChange: (value: string) => void;
+}
+
+export default function FormContact({
+  mapLocation,
+  phone,
+  onMapLocationChange,
+  onPhoneChange,
+  onEmailChange,
+}: FormContactProps) {
+  const handleMapLocationChange = (e) => {
+    onMapLocationChange(e.target.value);
   };
-  const [phone, setPhone] = useState<string>("");
-  const handleInputPhoneChange = (e) => {
-    setPhone(e.target.value);
+  const handlePhoneChange = (e) => {
+    onPhoneChange(e.target.value);
+  };
+  const handleEmailChange = (e) => {
+    onEmailChange(e.target.value);
   };
   return (
     <div>
@@ -19,7 +33,7 @@ export default function FormContact() {
         <BaseInput
           type="text"
           value={mapLocation}
-          onChange={handleInputMapChange}
+          onChange={handleMapLocationChange}
         />
       </div>
       <div>
@@ -28,7 +42,7 @@ export default function FormContact() {
           type="text"
           placeholder="Phone number..."
           value={phone}
-          onChange={handleInputPhoneChange}
+          onChange={handlePhoneChange}
         />
       </div>
       <div>
@@ -37,7 +51,11 @@ export default function FormContact() {
           <InputLeftElement pointerEvents="none">
             <GoMail size={22} color="var(--primary-500)" />
           </InputLeftElement>
-          <Input type="url" placeholder="Email address" />
+          <Input
+            type="url"
+            placeholder="Email address"
+            onChange={handleEmailChange}
+          />
         </InputGroup>
       </div>
     </div>

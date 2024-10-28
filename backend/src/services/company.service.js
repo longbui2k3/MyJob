@@ -5,27 +5,37 @@ const companyRepo = require("../models/repos/company.repo");
 class CompanyService {
   static createCompany = async (
     {
-      company_name,
+      companyName,
       user,
-      // about_us,
-      // year_of_establishment,
-      // company_website,
-      // company_vision,
-      // map_location,
-      // email,
+      aboutUs,
+      organizationType,
+      industryType,
+      teamSize,
+      yearOfEstablishment,
+      companyWebsite,
+      companyVision,
+      socialMedias,
+      mapLocation,
+      phone,
+      email,
     },
     files
   ) => {
     return await companyRepo.createCompany(
       {
-        company_name,
+        companyName,
         user,
-        // about_us,
-        // year_of_establishment,
-        // company_website,
-        // company_vision,
-        // map_location,
-        // email,
+        aboutUs,
+        organizationType,
+        industryType,
+        teamSize,
+        yearOfEstablishment,
+        companyWebsite,
+        companyVision,
+        socialMedias,
+        mapLocation,
+        phone,
+        email,
       },
       files
     );
