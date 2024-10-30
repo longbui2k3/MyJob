@@ -3,9 +3,18 @@ import { Button } from "@chakra-ui/react";
 interface ButtonSolid_2Props {
   children?: string | JSX.Element;
   className?: string;
+  leftIcon?: JSX.Element;
+  rightIcon?: JSX.Element;
+  onClick?: (e) => void;
 }
 
-export default function ButtonSolid_2({ children, className }: ButtonSolid_2Props) {
+export default function ButtonSolid_2({
+  children,
+  className,
+  leftIcon,
+  rightIcon,
+  onClick,
+}: ButtonSolid_2Props) {
   return (
     <Button
       bg="var(--primary-50)"
@@ -13,6 +22,9 @@ export default function ButtonSolid_2({ children, className }: ButtonSolid_2Prop
       fontSize={"14px"}
       className={className}
       _hover={{ bg: "var(--primary-500)", color: "white" }}
+      leftIcon={leftIcon}
+      rightIcon={rightIcon}
+      onClick={onClick}
     >
       {children}
     </Button>

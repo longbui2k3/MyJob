@@ -1,4 +1,6 @@
-import axios from "../configs/axios.config";
+import { HttpMethods } from "../helpers/constants";
+import { changeQueryObjToQueryStr } from "../utils";
+import BaseAPI from "./baseAPI";
 export const CreateCompanyAPI = async (body: {
   logo: File;
   banner: File;
@@ -15,43 +17,37 @@ export const CreateCompanyAPI = async (body: {
   phone: string;
   email: string;
 }) => {
-  try {
-    const formData = new FormData();
-    formData.append("logo", body.logo);
-    formData.append("banner", body.banner);
-    formData.append("companyName", body.companyName);
-    formData.append("aboutUs", body.aboutUs);
-    formData.append("organizationType", body.organizationType);
-    formData.append("industryType", body.industryType);
-    formData.append("teamSize", body.teamSize);
-    formData.append(
-      "yearOfEstablishment",
-      body.yearOfEstablishment.toISOString()
-    );
-    formData.append("companyWebsite", body.companyWebsite);
-    formData.append("socialMedias", JSON.stringify(body.socialMedias));
-    formData.append("mapLocation", body.mapLocation);
-    formData.append("phone", body.phone);
-    formData.append("email", body.email);
+  const formData = new FormData();
+  formData.append("logo", body.logo);
+  formData.append("banner", body.banner);
+  formData.append("companyName", body.companyName);
+  formData.append("aboutUs", body.aboutUs);
+  formData.append("organizationType", body.organizationType);
+  formData.append("industryType", body.industryType);
+  formData.append("teamSize", body.teamSize);
+  formData.append(
+    "yearOfEstablishment",
+    body.yearOfEstablishment.toISOString()
+  );
+  formData.append("companyWebsite", body.companyWebsite);
+  formData.append("socialMedias", JSON.stringify(body.socialMedias));
+  formData.append("mapLocation", body.mapLocation);
+  formData.append("phone", body.phone);
+  formData.append("email", body.email);
+  return await BaseAPI({
+    path: "/company",
+    method: HttpMethods.POST,
+    body: formData,
+  });
+};
 
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/company`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return res.data;
-
-    // const res = await axios.post(
-    //   `${import.meta.env.VITE_SERVER_DOMAIN}/company`,
-    //   body
-    // );
-    // return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+export const FindCompaniesAPI = async (query: {
+  page?: number;
+  limit?: number;
+  search?: string;
+}) => {
+  return await BaseAPI({
+    path: `/company?${changeQueryObjToQueryStr(query)}`,
+    method: HttpMethods.GET,
+  });
 };

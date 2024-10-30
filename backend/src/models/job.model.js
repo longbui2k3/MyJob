@@ -109,5 +109,20 @@ const jobSchema = new mongoose.Schema(
   { timestamps: true, collection: COLLECTION_NAME }
 );
 
+jobSchema.statics = {
+  findAndSearchPartial: function (obj, q) {
+    return this.find({
+      ...obj,
+      companyName: new RegExp(q, "gi"),
+    });
+  },
+  findAndSearchFull: function (obj, q) {
+    return this.find({
+      ...obj,
+      $text: { $search: q, $caseSensitive: false },
+    });
+  },
+};
+
 //Export the model
 module.exports = mongoose.model(DOCUMENT_NAME, jobSchema);

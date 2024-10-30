@@ -21,7 +21,8 @@ class CategoryController {
     return new OK({
       message: "Get all categories successfully",
       metadata: {
-        categories: result,
+        categories: result.data,
+        meta: result.meta,
       },
     }).send(res);
   };

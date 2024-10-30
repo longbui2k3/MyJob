@@ -7,6 +7,7 @@ interface ButtonSubmitProps {
   className?: string;
   height?: string;
   fontSize?: string;
+  onClick?: (e) => void;
 }
 
 export default function ButtonSubmit({
@@ -15,6 +16,7 @@ export default function ButtonSubmit({
   className,
   height = "44px",
   fontSize = "14px",
+  onClick = () => {},
 }: ButtonSubmitProps) {
   return (
     <Button
@@ -27,6 +29,7 @@ export default function ButtonSubmit({
       _hover={{ bg: "var(--primary-500)", color: "white" }}
       rightIcon={<FiArrowRight className="text-[18px]" />}
       isLoading={isLoading}
+      onClick={onClick}
     >
       {label}
     </Button>

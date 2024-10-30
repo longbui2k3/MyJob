@@ -28,12 +28,17 @@ class BaseRepo {
 
   async findOne(
     obj = {},
-    { addedFields = [], select = [], unselect = [], populates = [] } = {
+    { addedFields = [], select = [], unselect = [], populates = [] } = ({
       addedFields: [],
       select: [],
       unselect: [],
       populates: [],
-    }
+    } = {
+      addedFields: [],
+      select: [],
+      unselect: [],
+      populates: [],
+    })
   ) {
     let result = this.model.findOne(obj);
     result = this.#chaining(result, {
@@ -56,6 +61,7 @@ class BaseRepo {
       sort = [],
       page = PAGE,
       limit = LIMIT,
+      search = "",
     } = {
       addedFields: [],
       select: [],
@@ -64,9 +70,33 @@ class BaseRepo {
       sort: [],
       page: PAGE,
       limit: LIMIT,
+      search: "",
     }
   ) {
-    let result = this.model.find(obj);
+    const length = await this.model.countDocuments();
+    if (!search) {
+      let result = this.model.find(obj);
+      result = this.#chaining(result, {
+        addedFields,
+        select,
+        unselect,
+        populates,
+      });
+      result = this.#chainingForList(result, { sort, page, limit });
+      return {
+        data: await result,
+        meta: {
+          limit,
+          page,
+          size:
+            length % limit
+              ? Math.floor(length / limit) + 1
+              : Math.floor(length / limit),
+        },
+      };
+    }
+
+    let result = this.model.findAndSearchFull(obj, search);
     result = this.#chaining(result, {
       addedFields,
       select,
@@ -75,7 +105,30 @@ class BaseRepo {
     });
     result = this.#chainingForList(result, { sort, page, limit });
 
-    return await result;
+    return {
+      data: await result.then((data) => {
+        if (!data || !data.length) {
+          let result = this.model.findAndSearchPartial(obj, search);
+          result = this.#chaining(result, {
+            addedFields,
+            select,
+            unselect,
+            populates,
+          });
+          result = this.#chainingForList(result, { sort, page, limit });
+          return result;
+        }
+        return data;
+      }),
+      meta: {
+        limit,
+        page,
+        size:
+          length % limit
+            ? Math.floor(length / limit) + 1
+            : Math.floor(length / limit),
+      },
+    };
   }
 
   async create(obj) {
@@ -129,7 +182,6 @@ class BaseRepo {
       unselect,
       populates,
     });
-
     return await result;
   }
 
@@ -154,6 +206,7 @@ class BaseRepo {
   #chaining(
     result,
     { addedFields = [], select = [], unselect = [], populates = [] } = {
+      addedFields: [],
       select: [],
       unselect: [],
       populates: [],

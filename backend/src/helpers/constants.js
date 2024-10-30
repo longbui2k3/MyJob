@@ -140,6 +140,11 @@ const MaritalStatus = {
   WIDOWED: "Widowed",
 };
 
+const ResumeTypes = {
+  CREATED_RESUME: "created_resume",
+  UPLOADED_RESUME: "uploaded_resume",
+};
+
 module.exports = {
   PAGE: 1,
   LIMIT: 20,
@@ -165,4 +170,5 @@ module.exports = {
   MaritalStatus,
   JobStatuses,
   HEADER,
+  ResumeTypes,
 };

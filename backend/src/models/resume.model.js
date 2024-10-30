@@ -1,5 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
+const { ResumeTypes } = require("../helpers/constants");
 const COLLECTION_NAME = "resumes";
 const DOCUMENT_NAME = "Resume";
 const resumeSchema = new mongoose.Schema(
@@ -13,9 +14,17 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    file: {
+    type: {
       type: String,
+      enum: Object.values(ResumeTypes),
       required: true,
+    },
+    resume: {
+      type: Schema.ObjectId,
+      ref: function () {
+        if (this.type === ResumeTypes.CREATED_RESUME) return "CreatedResume";
+        else return "UploadedResume";
+      },
     },
     isPrivacy: {
       type: Boolean,

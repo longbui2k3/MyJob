@@ -48,6 +48,28 @@
       }
     },
     "/api/v1/company/": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Find companies",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
       "post": {
         "tags": [
           "Company"
@@ -64,7 +86,74 @@
             "apiKeyAuth": [],
             "clientId": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "banner": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "companyName": {
+                    "type": "string"
+                  },
+                  "aboutUs": {
+                    "type": "string"
+                  },
+                  "organizationType": {
+                    "type": "string"
+                  },
+                  "industryType": {
+                    "type": "string"
+                  },
+                  "teamSize": {
+                    "type": "string"
+                  },
+                  "yearOfEstablishment": {
+                    "type": "string"
+                  },
+                  "companyWebsite": {
+                    "type": "string"
+                  },
+                  "companyVision": {
+                    "type": "string"
+                  },
+                  "socialMedias": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "socialMedia": {
+                          "type": "string"
+                        },
+                        "linkUrl": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "mapLocation": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/category/": {

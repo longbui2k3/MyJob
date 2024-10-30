@@ -1,3 +1,11 @@
+import { useState } from "react";
+
 export default function usePageLimitSelect() {
-  return;
+  const [limit, setLimit] = useState(5);
+
+  function handleLimitChange(e: any) {
+    setLimit(e.target.value);
+  }
+
+  return { limit, handleLimitChange };
 }

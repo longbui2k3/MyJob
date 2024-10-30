@@ -40,6 +40,17 @@ class CompanyService {
       files
     );
   };
+
+  static findCompanies = async ({ page, limit, search, ...props }) => {
+    return await companyRepo.find(
+      {},
+      {
+        page, 
+        limit,
+        search,
+      }
+    );
+  };
 }
 
 module.exports = CompanyService;

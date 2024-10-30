@@ -17,15 +17,12 @@ class UserService {
     if (!user) {
       throw new NotFoundError("User not found!");
     }
-    if (!profile) {
-      throw new NotFoundError("Profile not found!");
-    }
 
     return {
       _id: user._id,
       userType: user.userType,
-      fullName: profile.fullName,
-      avatar: profile.avatar,
+      fullName: profile ? profile.fullName : "",
+      avatar: profile ? profile.avatar : "",
       ...(user.userType === UserType.EMPLOYER
         ? { hasCompany: Boolean(company) }
         : {}),
