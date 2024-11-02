@@ -43,4 +43,15 @@ router.route("/").post(
   asyncHandler(companyController.createCompany)
 );
 
+// update company
+router.route("/:id").patch(
+  upload.fields([
+    { name: "logo", maxCount: 1 },
+    { name: "banner", maxCount: 1 },
+  ]),
+  asyncHandler(companyController.updateCompany)
+);
+
+router.route("/mycompany").get(asyncHandler(companyController.getMyCompany));
+
 module.exports = router;

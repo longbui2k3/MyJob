@@ -6,7 +6,7 @@ class UserRepo extends BaseRepo {
   constructor() {
     super(userModel);
   }
-  
+
   async findByEmailAndActiveStatus(email) {
     return await this.findOne({ email, status: UserStatus.ACTIVE });
   }

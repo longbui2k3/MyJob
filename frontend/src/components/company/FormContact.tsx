@@ -5,6 +5,7 @@ import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 interface FormContactProps {
   mapLocation: string;
   phone: string;
+  email: string;
   onMapLocationChange: (value: string) => void;
   onPhoneChange: (value: string) => void;
   onEmailChange: (value: string) => void;
@@ -13,6 +14,7 @@ interface FormContactProps {
 export default function FormContact({
   mapLocation,
   phone,
+  email,
   onMapLocationChange,
   onPhoneChange,
   onEmailChange,
@@ -54,6 +56,7 @@ export default function FormContact({
           <Input
             type="url"
             placeholder="Email address"
+            value={email}
             onChange={handleEmailChange}
           />
         </InputGroup>

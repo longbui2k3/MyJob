@@ -7,4 +7,8 @@ export {
 } from "./authenAPI";
 export { GetUser } from "./userAPI";
 
-export { CreateCompanyAPI } from "./companyAPI";
+export {
+  CreateCompanyAPI,
+  UpdateCompanyAPI,
+  GetMyCompanyAPI,
+} from "./companyAPI";

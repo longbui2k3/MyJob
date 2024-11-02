@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ProfilePictureProps {
   title: string;
   note: string;
   className: string;
+  fileUrl?: string;
   onFileChange: (file: File | null) => void;
 }
 export default function ProfilePicture({
   title,
   note,
   className,
+  fileUrl,
   onFileChange,
 }: ProfilePictureProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -21,6 +23,11 @@ export default function ProfilePicture({
   };
 
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  useEffect(() => {
+    if (fileUrl) {
+      setImageUrl(fileUrl);
+    }
+  }, [fileUrl]);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

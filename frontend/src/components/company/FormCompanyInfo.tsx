@@ -4,7 +4,9 @@ import { Text } from "@chakra-ui/react";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 
 interface FormCompanyInfoProps {
-  inputCompanyName?: string;
+  inputCompanyName: string;
+  logo: string;
+  banner: string;
   aboutUs: string;
   onInputCompanyNameChange: (name: string) => void; // Hàm callback để gửi dữ liệu về cha
   onAboutUsChange: (value: string) => void;
@@ -14,6 +16,8 @@ interface FormCompanyInfoProps {
 
 export default function FormCompanyInfo({
   inputCompanyName,
+  logo,
+  banner,
   aboutUs,
   onInputCompanyNameChange,
   onAboutUsChange,
@@ -38,12 +42,14 @@ export default function FormCompanyInfo({
           title="Upload document"
           note="A photo larger than 400 pixels work best. Max photo size 5 MB."
           className="w-60"
+          fileUrl={logo}
           onFileChange={onLogoChange}
         />
         <ProfilePicture
           title="Banner image"
           note="Bannar images optical dimension 1520x400. Supported format JPEG, PNG. Max photo size 5 MB."
           className="w-[720px]"
+          fileUrl={banner}
           onFileChange={onBannerChange}
         />
       </div>
