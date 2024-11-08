@@ -19,3 +19,9 @@ export function checkIsValidEmail(email: string) {
   );
   return emailRegex.test(email);
 }
+
+export function changeQueryObjToQueryStr(queryObj: { [key: string]: any }) {
+  return Object.keys(queryObj)
+    .map((key) => `${key}=${queryObj[key]}`)
+    .join("&");
+}

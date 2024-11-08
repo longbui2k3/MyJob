@@ -12,6 +12,7 @@ class SuccessResponse {
     this.message = message || reasonStatusCode;
     this.status = statusCode;
     this.metadata = metadata;
+    this.isSuccess = true;
   }
   send(res, header = {}) {
     return res.status(this.status).json(this);

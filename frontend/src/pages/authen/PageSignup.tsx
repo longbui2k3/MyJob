@@ -94,7 +94,7 @@ export default function PageSignup() {
       passwordConfirm: inputPasswordConfirm,
       userType: selectedUserType,
     });
-    if (data.status === 201) {
+    if (data.isSuccess) {
       setMessage({
         isShow: true,
         type: "success",

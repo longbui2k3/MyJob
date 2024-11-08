@@ -4,12 +4,16 @@ interface ButtonOutlineProps {
   children?: string | JSX.Element;
   className?: string;
   border?: string;
+  leftIcon?: JSX.Element;
+  onClick?: (e) => void;
 }
 
 export default function ButtonOutline({
   children,
   className,
   border = "1px",
+  leftIcon,
+  onClick = (e) => {},
 }: ButtonOutlineProps) {
   return (
     <Button
@@ -19,6 +23,8 @@ export default function ButtonOutline({
       fontSize={"14px"}
       className={className}
       _hover={{ bg: "var(--primary-500)", color: "white" }}
+      leftIcon={leftIcon}
+      onClick={onClick}
     >
       {children}
     </Button>

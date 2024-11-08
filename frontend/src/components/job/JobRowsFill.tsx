@@ -1,14 +1,19 @@
 import { Tag } from "@chakra-ui/react";
 import { Heading6 } from "../headings";
-import { CiBookmark} from "react-icons/ci";
+import { CiBookmark } from "react-icons/ci";
 import { ButtonSubmit } from "../buttons";
 import { DeadlineInfo, LocationInfo, SalaryInfo } from "../company";
 
 export default function JobRowsFill() {
   return (
     <div className="flex justify-between w-full p-5 border-[1px] border-[--gray-100] rounded-lg">
-      <div className="flex">
-        <img src="/upwork.png" width={"50px"} />
+      <div className="flex space-x-3">
+        <img
+          src="/upwork.png"
+          width={"52px"}
+          height={"52px"}
+          className="rounded-md aspect-square"
+        />
         <div className="flex flex-col justify-between ml-4">
           <div className="flex space-x-3">
             <Heading6 name="Senior UX Designer" />

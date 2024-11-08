@@ -1,28 +1,19 @@
-import axios from "../configs/axios.config";
+import { HttpMethods } from "../helpers/constants";
+import BaseAPI from "./baseAPI";
 
 export const LoginAPI = async (body: { email: string; password: string }) => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/login`,
-      body
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: "/login",
+    method: HttpMethods.POST,
+    body,
+  });
 };
 
 export const LogoutAPI = async () => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/logout`
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: "/logout",
+    method: HttpMethods.POST,
+  });
 };
 
 export const SignUpAPI = async (body: {
@@ -33,42 +24,27 @@ export const SignUpAPI = async (body: {
   passwordConfirm: string;
   userType: string;
 }) => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/signup`,
-      body
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: "/signup",
+    method: HttpMethods.POST,
+    body,
+  });
 };
 
 export const VerifyCodeAPI = async (body: { email: string; OTP: string }) => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/verify`,
-      body
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: "/verify",
+    method: HttpMethods.POST,
+    body,
+  });
 };
 
 export const ForgotPasswordAPI = async (body: { email: string }) => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/forgotPassword`,
-      body
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: "/forgotPassword",
+    method: HttpMethods.POST,
+    body,
+  });
 };
 
 export const ResetPasswordAPI = async (
@@ -78,14 +54,9 @@ export const ResetPasswordAPI = async (
     passwordConfirm: string;
   }
 ) => {
-  try {
-    const res = await axios.post(
-      `${import.meta.env.VITE_SERVER_DOMAIN}/resetPassword/${resetToken}`,
-      body
-    );
-    return res.data;
-  } catch (err: any) {
-    console.log(err);
-    if (err) return err.response?.data;
-  }
+  return await BaseAPI({
+    path: `/resetPassword/${resetToken}`,
+    method: HttpMethods.POST,
+    body,
+  });
 };

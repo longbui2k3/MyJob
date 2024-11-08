@@ -51,8 +51,6 @@ const userSchema = new mongoose.Schema(
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
-    OTP: String,
-    OTPExpires: Date,
     isDeleted: {
       type: Boolean,
       default: false,

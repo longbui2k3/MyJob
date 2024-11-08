@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { NavigationHome, Unsend } from "../../components/authen";
+import { NavigationHome, Resend } from "../../components/authen";
 import { Heading3 } from "../../components/headings";
 import { useVerifyCodeInput, VerifyCodeInput } from "../../components/inputs";
 import { ButtonSubmit } from "../../components/buttons";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { VerifyCodeAPI } from "../../apis";
+import { ResendOtpAPI, VerifyCodeAPI } from "../../apis";
 import { MessageError, MessageSuccess } from "../../components/global";
 import { Text } from "../../components/text";
 import { getRoute, SIGN_IN_KEY } from "../../helpers/constants";
@@ -30,7 +30,7 @@ export default function PageEmailVerification() {
       email,
       OTP: inputVerifyCode,
     });
-    if (data.status === 200) {
+    if (data.isSuccess) {
       setMessage({
         isShow: true,
         type: "success",
@@ -38,7 +38,7 @@ export default function PageEmailVerification() {
       });
       setTimeout(() => {
         navigate(getRoute(SIGN_IN_KEY).path);
-      }, 1000);
+      }, 500);
     } else {
       setMessage({
         isShow: true,
@@ -47,6 +47,26 @@ export default function PageEmailVerification() {
       });
     }
     setIsLoading(false);
+  };
+
+  const handleResendOTP = async (e) => {
+    const email = searchParams.get("email");
+    if (!email) return "";
+    const data = await ResendOtpAPI({ email });
+    if (data.isSuccess) {
+      setMessage({
+        isShow: true,
+        type: "success",
+        message: data.message,
+      });
+      window.location.reload();
+    } else {
+      setMessage({
+        isShow: true,
+        type: "error",
+        message: data.message,
+      });
+    }
   };
   return (
     <div className="relative h-[100vh]">
@@ -88,7 +108,7 @@ export default function PageEmailVerification() {
               ""
             )}
           </form>
-          <Unsend onClick={(e) => {}} className="justify-center" />
+          <Resend onClick={handleResendOTP} className="justify-center" />
         </div>
       </div>
     </div>

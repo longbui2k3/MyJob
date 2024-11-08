@@ -4,9 +4,24 @@ import { GoPlus } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { openForm } from "../../features";
 import { CustomTooltip } from "../global";
+import { useEffect, useState } from "react";
+import { FindAllCategoriesAPI } from "../../apis";
+import Category from "../category/Category";
 
 export default function DashboardCategory() {
   const dispatch = useDispatch();
+  const [categories, setCategories] = useState<Array<any>>([]);
+
+  async function findAllCategories() {
+    const data = await FindAllCategoriesAPI();
+    if (data.isSuccess) {
+      setCategories(data.metadata.categories);
+    }
+  }
+
+  useEffect(() => {
+    findAllCategories();
+  }, []);
   return (
     <>
       <div className="flex justify-between">
@@ -27,6 +42,16 @@ export default function DashboardCategory() {
             }}
           />
         </CustomTooltip>
+      </div>
+      <div className="mt-6 space-y-3">
+        {categories.map((category) => (
+          <Category
+            iconUrl={category.iconUrl}
+            categoryName={category.name}
+            className="border-[1px] rounded-lg p-[12px]"
+            hasTools={true}
+          />
+        ))}
       </div>
     </>
   );

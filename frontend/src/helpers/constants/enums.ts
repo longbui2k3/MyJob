@@ -11,3 +11,16 @@ export enum ViewTypes {
   GRID = "grid",
   ROWS_FILL = "rows_fill",
 }
+
+export enum HttpMethods {
+  GET = "get",
+  POST = "post",
+  PUT = "put",
+  PATCH = "patch",
+  DELETE = "delete",
+};
+
+export type HttpMethodsKeys = keyof typeof HttpMethods;
+
+export type HttpMethodsValues = (typeof HttpMethods)[HttpMethodsKeys];
+

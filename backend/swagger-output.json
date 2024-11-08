@@ -48,6 +48,28 @@
       }
     },
     "/api/v1/company/": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Find companies",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
       "post": {
         "tags": [
           "Company"
@@ -64,10 +86,99 @@
             "apiKeyAuth": [],
             "clientId": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "logo": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "banner": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "companyName": {
+                    "type": "string"
+                  },
+                  "aboutUs": {
+                    "type": "string"
+                  },
+                  "organizationType": {
+                    "type": "string"
+                  },
+                  "industryType": {
+                    "type": "string"
+                  },
+                  "teamSize": {
+                    "type": "string"
+                  },
+                  "yearOfEstablishment": {
+                    "type": "string"
+                  },
+                  "companyWebsite": {
+                    "type": "string"
+                  },
+                  "companyVision": {
+                    "type": "string"
+                  },
+                  "socialMedias": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "socialMedia": {
+                          "type": "string"
+                        },
+                        "linkUrl": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "mapLocation": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/category/": {
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "summary": "Get all categories",
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit number of categories to return",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
       "post": {
         "tags": [
           "Category"
@@ -104,6 +215,30 @@
                     "format": "binary"
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/otp/": {
+      "post": {
+        "tags": [
+          "OTP"
+        ],
+        "summary": "Resend OTP",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resendOTPBodySchema"
               }
             }
           }
@@ -576,26 +711,16 @@
           "message"
         ]
       },
-      "createCategoryBodySchema": {
+      "resendOTPBodySchema": {
         "type": "object",
         "properties": {
-          "name": {
+          "email": {
             "type": "string",
             "example": "string"
-          },
-          "iconUrl": {
-            "type": "string",
-            "example": "file"
-          },
-          "imageUrl": {
-            "type": "string",
-            "example": "file"
           }
         },
         "required": [
-          "name",
-          "iconUrl",
-          "imageUrl"
+          "email"
         ]
       }
     },

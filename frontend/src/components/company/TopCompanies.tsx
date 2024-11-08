@@ -1,11 +1,22 @@
-import { Tag } from "@chakra-ui/react";
 import { ButtonSolid_2 } from "../buttons";
-import { Heading3, Heading6 } from "../headings";
-import { LocationInfo } from "./CompanyInfos";
+import { Heading3 } from "../headings";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import CompanyGrid from "./CompanyGrid";
+import { useEffect, useState } from "react";
+import { FindCompaniesAPI } from "../../apis";
 
 export default function TopCompanies() {
+  const [companies, setCompanies] = useState<Array<any>>([]);
+  async function findCompanies() {
+    const data = await FindCompaniesAPI({ limit: 6, page: 1 });
+    if (data.isSuccess) {
+      setCompanies(data.metadata.companies);
+    }
+  }
+  useEffect(() => {
+    findCompanies();
+  }, []);
   return (
     <div
       className={`w-full`}
@@ -20,32 +31,15 @@ export default function TopCompanies() {
           <ButtonSolid_2 children={<GoArrowRight size={"20px"} />} />
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-4 mt-8">
-        {new Array(8).fill(0).map((val) => (
-          <div className="flex flex-col space-y-4 p-5 border-[1px] border-[--gray-100]">
-            <div className="flex space-x-2">
-              <img src="/dribble.png" width={50} />
-              <div className="flex flex-col justify-between">
-                <div className="flex space-x-3">
-                  <Heading6 name="Dribble" />
-                  <Tag
-                    bg="var(--danger-50)"
-                    textColor={"var(--danger-500)"}
-                    fontSize={"13px"}
-                    paddingX={"8px"}
-                    paddingY="4px"
-                    marginY="auto"
-                  >
-                    Featured
-                  </Tag>
-                </div>
-                <div className="flex">
-                  <LocationInfo info="United States" />
-                </div>
-              </div>
-            </div>
-            <ButtonSolid_2 children={"Open Position"} />
-          </div>
+      <div className="grid grid-cols-3 gap-4 mt-8">
+        {companies.map((company) => (
+          <CompanyGrid
+            _id={company._id}
+            logo={company.logo}
+            companyName={company.companyName}
+            mapLocation={company.mapLocation}
+            openJobNum={0}
+          />
         ))}
       </div>
     </div>

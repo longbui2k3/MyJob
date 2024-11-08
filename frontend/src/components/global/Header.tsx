@@ -27,7 +27,7 @@ const logOut = async (
   navigate: NavigateFunction
 ) => {
   const data = await LogoutAPI();
-  if (data.status === 200) {
+  if (data.isSuccess) {
     setCookie("jwt", "", {
       path: "/",
     });

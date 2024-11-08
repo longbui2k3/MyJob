@@ -38,6 +38,17 @@ class CompanyController {
       metadata: result,
     }).send(res);
   };
+
+  findCompanies = async (req, res, next) => {
+    const result = await CompanyService.findCompanies(req.query);
+    return new OK({
+      message: "Find companies successfully",
+      metadata: {
+        companies: result.data,
+        meta: result.meta,
+      },
+    }).send(res);
+  };
 }
 
 module.exports = new CompanyController();

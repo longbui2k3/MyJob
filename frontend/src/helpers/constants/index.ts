@@ -1,5 +1,5 @@
-export { UserTypes, ViewTypes } from "./enums";
-export type { UserTypeKeys, UserTypeValues } from "./enums";
+export { UserTypes, ViewTypes, HttpMethods } from "./enums";
+export type { UserTypeKeys, UserTypeValues, HttpMethodsKeys, HttpMethodsValues } from "./enums";
 export { Navigations } from "./commons";
 export {
   getRoute,
@@ -32,3 +32,4 @@ export {
 } from "./routes";
 export type { RouteItem } from "./routes";
 export const DEFAULT_PADDING_X = "200px";
+

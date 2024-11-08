@@ -2,32 +2,44 @@ import { Heading6 } from "../headings";
 import { IconWithBg } from "../icons";
 import { Text } from "../text";
 interface CategoryProps {
-  img_src?: string;
+  iconUrl?: string;
   href?: string;
-  category?: string;
+  categoryName?: string;
   num_open_positions?: number;
+  className?: string;
+  hasTools?: boolean;
 }
 export default function Category({
-  img_src = "",
+  iconUrl = "",
   href = "#",
-  category = "",
+  categoryName = "",
   num_open_positions = 0,
+  className = "",
+  hasTools = false,
 }: CategoryProps) {
   return (
-    <div className="flex space-x-2 p-6">
+    <div className={`flex space-x-2 p-6 ${className}`}>
       <IconWithBg
         divSize={54}
         imgSize={25}
-        src={img_src}
+        src={iconUrl}
         backgroundColor={"var(--primary-50)"}
       />
       <div className="flex flex-col justify-center">
-        <a href={href}>
+        {hasTools ? (
           <Heading6
-            name={category}
-            className="hover:text-[--primary-500] hover:underline"
+            name={categoryName}
+            className="hover:text-[--primary-500] hover:underline cursor-pointer"
           />
-        </a>
+        ) : (
+          <a href={href}>
+            <Heading6
+              name={categoryName}
+              className="hover:text-[--primary-500] hover:underline cursor-pointer"
+            />
+          </a>
+        )}
+
         <Text
           children={`${num_open_positions} Open position`}
           className="mt-[4px]"

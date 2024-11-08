@@ -7,7 +7,7 @@ const HEADER = {
 
 const UserStatus = {
   UNVERIFIED: "unverified",
-  PENDING: "pending",
+  // PENDING: "pending",
   ACTIVE: "active",
   INACTIVE: "inactive",
 };
@@ -140,11 +140,16 @@ const MaritalStatus = {
   WIDOWED: "Widowed",
 };
 
+const ResumeTypes = {
+  CREATED_RESUME: "created_resume",
+  UPLOADED_RESUME: "uploaded_resume",
+};
+
 module.exports = {
   PAGE: 1,
   LIMIT: 20,
   OTP_LENGTH: 6,
-  OTP_EXPIRES: 10 * 60 * 1000,
+  OTP_EXPIRES: 15 * 60, // 15 minutes
   PASSWORD_RESET_EXPIRES: 10 * 60 * 1000,
   ACCESS_TOKEN_EXPIRES: 1000 * 60 * 60 * 2, // 2h
   REFRESH_TOKEN_EXPIRES: "7 days",
@@ -165,4 +170,5 @@ module.exports = {
   MaritalStatus,
   JobStatuses,
   HEADER,
+  ResumeTypes,
 };

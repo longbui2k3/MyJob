@@ -23,6 +23,29 @@ const upload = multer({
 });
 const router = express.Router();
 
+router.route("/").get(
+  // #swagger.tags = ['Company']
+  // #swagger.summary = 'Find companies'
+  /* #swagger.parameters = [{
+    "in": "query",
+    "name": "page",
+    "type": "number",
+    "description": "Page"
+  }, 
+  {
+    "in": "query",
+    "name": "limit",
+    "type": "number",
+    "description": "Limit"
+  },
+  {
+    "in": "query",
+    "name": "search",
+    "type": "number",
+    "description": "Search"
+  }]*/
+  asyncHandler(companyController.findCompanies)
+);
 // authentication
 router.use(authentication);
 //////////////////
@@ -35,6 +58,74 @@ router.route("/").post(
   ]),
   // #swagger.tags = ['Company']
   // #swagger.summary = 'Create company'
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "logo": {
+                "type": "string",
+                "format": "binary"
+              },
+              "banner": {
+                "type": "string",
+                "format": "binary"
+              },
+              "companyName": {
+                "type": "string"
+              },
+              "aboutUs": {
+                "type": "string"
+              },
+              "organizationType": {
+                "type": "string"
+              },
+              "industryType": {
+                "type": "string"
+              },
+              "teamSize": {
+                "type": "string"
+              },
+              "yearOfEstablishment": {
+                "type": "string"
+              },
+              "companyWebsite": {
+                "type": "string"
+              },
+              "companyVision": {
+                "type": "string"
+              },
+              "socialMedias": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "socialMedia": {
+                      "type": "string"
+                    },
+                    "linkUrl": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "mapLocation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+        }
+      }
+    } 
+  */
   /* #swagger.security = [{
       "apiKeyAuth": [],
       "clientId": []

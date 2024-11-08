@@ -35,7 +35,7 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({
     (async () => {
       const data = await GetUser();
       console.log("Data", data);
-      if (data.status === 200) {
+      if (data.isSuccess) {
         setUser(data.metadata.user);
       } else setUser(null);
     })();

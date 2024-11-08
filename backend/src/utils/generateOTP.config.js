@@ -1,8 +1,11 @@
-module.exports = function generateOTP(num) {
-  let OTP = "";
-  for (let i = 0; i < num; i++) {
-    const randomDigit = Math.floor(Math.random() * 10);
-    OTP += randomDigit;
-  }
+const OTPGenerator = require("otp-generator");
+module.exports = function generateOTP(length) {
+  const OTP = OTPGenerator.generate(length, {
+    digits: true,
+    lowerCaseAlphabets: false,
+    upperCaseAlphabets: false,
+    specialChars: false,
+  });
+
   return OTP;
 };

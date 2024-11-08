@@ -27,7 +27,7 @@ const {
   UserStatus,
 } = require("../helpers/constants");
 const profileRepo = require("../models/repos/profileRepo");
-const companyRepo = require("../models/repos/company.repo");
+const OTPService = require("./otp.service");
 
 class AuthenService {
   static async #createTokens(user) {
@@ -82,22 +82,15 @@ class AuthenService {
   };
   // type: forgotPwd, signUp
   static verifyOTP = async ({ email, OTP }) => {
-    const user = await userRepo.findByEmailAndOTPExpires(email);
+    const user = await userRepo.findByEmail(email);
     if (!user) {
-      throw new BadRequestError(
-        "There is no user with email address or OTP has expired!"
-      );
-    }
-    const hashOTP = hashString(OTP);
-    if (user.OTP !== hashOTP) {
-      throw new AuthFailureError(
-        "Your entered OTP is invalid! Please try again!"
-      );
+      throw new BadRequestError("There is no user with email address");
     }
 
-    user.OTP = undefined;
-    user.OTPExpires = undefined;
-    await user.save({ validateBeforeSave: false });
+    const isValidOTP = await OTPService.verifyOTP({ email, otp: OTP });
+    if (!isValidOTP) {
+      throw new AuthFailureError("Invalid OTP");
+    }
     await userRepo.updateActiveStatus(user._id);
     if (user) {
       const tokens = await this.#createTokens(user);
@@ -178,16 +171,16 @@ class AuthenService {
       );
     }
 
-    const existingUsername = await userRepo.findByUsernameAndActiveStatus(
+    const existingUsername = await userRepo.findByExistedUsername(
       username
     );
     if (existingUsername) {
       throw new BadRequestError("Error: Username already exists!");
     }
 
-    const existingUser = await userRepo.findByEmailAndActiveStatus(email);
+    const existingUser = await userRepo.findByExistedEmail(email);
     if (existingUser) {
-      throw new BadRequestError("Error: User already registered!");
+      throw new BadRequestError("Error: Email already exists!");
     }
 
     const existingUnverifiedUser =
@@ -197,8 +190,7 @@ class AuthenService {
       throw new AuthFailureError("Passwords do not match! Please try again!");
     }
 
-    const newUser =
-      existingUnverifiedUser ||
+    const newUser = existingUnverifiedUser ||
       (await userRepo.create(
         removeUndefinedInObject({
           username,
@@ -210,11 +202,8 @@ class AuthenService {
         })
       ));
 
-    const OTP = generateOTPConfig(OTP_LENGTH);
-    const hashOTP = hashString(OTP);
-    newUser.OTP = hashOTP;
-    newUser.OTPExpires = Date.now() + OTP_EXPIRES;
-    await newUser.save({ validateBeforeSave: false });
+    const otp = generateOTPConfig(OTP_LENGTH);
+    await OTPService.createOTP({ email, otp });
 
     await profileRepo.createProfile({
       userId: newUser._id,
@@ -222,7 +211,7 @@ class AuthenService {
     });
 
     try {
-      await new Email({ type: "signup", email, value: OTP }).sendEmail();
+      await new Email({ type: "signup", email, value: otp }).sendEmail();
     } catch (err) {
       throw new InternalServerError(
         "There was an error sending the email. Try again later!"
@@ -250,7 +239,7 @@ class AuthenService {
     }
 
     const tokens = await this.#createTokens(user);
-    
+
     return {
       statusCode: 200,
       message: "Log in successfully!",

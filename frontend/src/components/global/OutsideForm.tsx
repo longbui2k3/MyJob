@@ -5,7 +5,7 @@ import { Heading5 } from "../headings";
 
 interface OutsideFormProps {
   children?: JSX.Element | string;
-  onSubmit?: () => void;
+  onSubmit?: (e) => void;
   width?: string;
   height?: string;
 }
@@ -19,13 +19,13 @@ export default function OutsideForm({
   const dispatch = useDispatch();
   return (
     <div
-      className="absolute backdrop-brightness-[0.6] w-full h-screen z-[1001] flex flex-col justify-center text-white"
+      className="absolute backdrop-brightness-[0.6] w-full h-full z-[1001] flex flex-col justify-center"
       onClick={() => {
         dispatch(closeForm());
       }}
     >
       <form
-        className="relative mx-auto bg-[white] px-6 py-6 rounded-2xl z-[1002]"
+        className="relative mx-auto bg-[white] px-6 py-6 rounded-2xl z-[1002] space-y-4"
         style={{
           width,
           height,
@@ -37,7 +37,7 @@ export default function OutsideForm({
       >
         <Heading5 name="Create Category" />
         <FaXmark
-          className="absolute right-[26px] top-[26px] text-[20px] text-[--gray-200]"
+          className="absolute right-[26px] top-[16px] text-[20px] text-[--gray-200]"
           onClick={function (e) {
             dispatch(closeForm());
           }}

@@ -7,8 +7,17 @@ class UserRepo extends BaseRepo {
     super(userModel);
   }
 
-  async findByEmailAndActiveStatus(email) {
-    return await this.findOne({ email, status: UserStatus.ACTIVE });
+  async findByEmail(email) {
+    return await this.findOne({ email });
+  }
+
+  async findByExistedEmail(email) {
+    return await this.findOne({
+      email,
+      status: {
+        $in: [UserStatus.ACTIVE, UserStatus.INACTIVE],
+      },
+    });
   }
 
   async findByEmailAndUnverifiedStatus(email) {
@@ -26,15 +35,13 @@ class UserRepo extends BaseRepo {
     );
   }
 
-  async findByEmailAndOTPExpires(email) {
+  async findByExistedUsername(username) {
     return await this.findOne({
-      email,
-      OTPExpires: { $gt: Date.now() },
+      username,
+      status: {
+        $in: [UserStatus.ACTIVE, UserStatus.INACTIVE],
+      },
     });
-  }
-
-  async findByUsernameAndActiveStatus(username) {
-    return await this.findOne({ username, status: UserStatus.ACTIVE });
   }
 
   async findByPasswordReset({ passwordResetToken }) {

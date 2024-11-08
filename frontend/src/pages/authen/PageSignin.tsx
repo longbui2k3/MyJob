@@ -29,7 +29,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context";
 import {
-  CREATE_COMPANY_KEY,
   DEFAULT_KEY,
   getRoute,
 } from "../../helpers/constants";
@@ -58,7 +57,7 @@ export default function PageSignin() {
     setIsLoading(true);
     if (!inputEmail || !inputPassword) return;
     const data = await LoginAPI({ email: inputEmail, password: inputPassword });
-    if (data.status === 200) {
+    if (data.isSuccess) {
       setCookie("remember", isChecked ? inputEmail : "", {});
       setCookie("jwt", data.metadata.tokens.accessToken, {
         path: "/",

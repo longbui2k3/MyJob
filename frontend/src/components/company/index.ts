@@ -10,3 +10,4 @@ export { default as Navigation } from "./Navigation";
 export { default as ProfilePicture } from "./ProfilePicture";
 export { default as TabItem } from "./TabItem";
 export { default as Tabs } from "./Tabs";
+export { default as CompanyList } from "./CompanyList";

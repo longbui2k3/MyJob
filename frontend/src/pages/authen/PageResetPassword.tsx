@@ -39,7 +39,7 @@ export default function PageResetPassword() {
       password: inputPassword,
       passwordConfirm: inputPasswordConfirm,
     });
-    if (data.status === 200) {
+    if (data.isSuccess) {
       setMessage({
         isShow: true,
         type: "success",
