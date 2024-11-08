@@ -4,6 +4,7 @@ const express = require("express");
 const swaggerUi = require("swagger-ui-express");
 const authen = require("./authen");
 const company = require("./company");
+const job = require("./job");
 const category = require("./category");
 const user = require("./user");
 const otp = require("./otp");
@@ -17,6 +18,7 @@ router.get("/api/v1/docs.json", (req, res) => {
 });
 router.use("/api/v1/user", user);
 router.use("/api/v1/company", company);
+router.use("/api/v1/job", job);
 router.use("/api/v1/category", category);
 router.use("/api/v1/otp", otp);
 router.use("/api/v1", authen);

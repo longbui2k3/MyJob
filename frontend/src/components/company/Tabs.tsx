@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabItem from "./TabItem";
 import { AtIcon, GlobeSimpleIcon, UserCircleIcon, UserIcon } from "../icons";
 import FormCompanyInfo from "./FormCompanyInfo";
@@ -7,20 +7,38 @@ import FormSocialMediaInfo from "./FormSocialMediaInfo";
 import FormContact from "./FormContact";
 import { GrLinkNext } from "react-icons/gr";
 import { Button } from "@chakra-ui/react";
-import { CreateCompanyAPI } from "../../apis/companyAPI";
+import {
+  CreateCompanyAPI,
+  GetMyCompanyAPI,
+  UpdateCompanyAPI,
+} from "../../apis/companyAPI";
 import { useNavigate } from "react-router-dom";
 import { COMPLETED_COMPANY_KEY, getRoute } from "../../helpers/constants";
+import { useAuthContext } from "../../context";
+import GearSixIcon from "../icons/GearSixIcon";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
   const navigate = useNavigate();
+  const [isSettings, setIsSettings] = useState<boolean>(false);
+  const { user } = useAuthContext();
 
+  useEffect(() => {
+    if (typeof user !== "string" && user?.hasCompany !== false) {
+      setIsSettings(true);
+    }
+  }, [user]);
+
+  // console.log(isSettings);
   // logo
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string>("");
   const handleLogoChange = (file: File | null) => setLogoFile(file);
+
   // banner
   const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [bannerUrl, setBannerUrl] = useState<string>("");
   const handleBannerChange = (file: File | null) => setBannerFile(file);
 
   // company name
@@ -57,6 +75,8 @@ export default function Tabs() {
   const [yearOfEstablishment, setYearOfEstablishment] = useState<Date | null>(
     null
   );
+  const [yearOfEstablishmentVal, setYearOfEstablishmentVal] =
+    useState<string>("");
   const handleYearOfEstablishmentChange = (value: Date) => {
     setYearOfEstablishment(value);
   };
@@ -101,7 +121,37 @@ export default function Tabs() {
     setEmail(value);
   };
 
-  const handleSubmit = async (e) => {
+  const [companyData, setCompanyData] = useState<any>(null);
+  useEffect(() => {
+    const fetchCompanyData = async () => {
+      const data = await GetMyCompanyAPI();
+      setCompanyData(data); // Lưu dữ liệu vào state
+    };
+
+    fetchCompanyData();
+  }, []);
+
+  useEffect(() => {
+    if (companyData && companyData.metadata) {
+      // Thiết lập giá trị ban đầu
+      setLogoUrl(companyData.metadata.logo);
+      setBannerUrl(companyData.metadata.banner);
+      setInputCompanyName(companyData.metadata.companyName);
+      setAboutUs(companyData.metadata.aboutUs);
+      setOrganizationType(companyData.metadata.organizationType);
+      setIndustryType(companyData.metadata.industryType);
+      setTeamSize(companyData.metadata.teamSize);
+      setYearOfEstablishmentVal(companyData.metadata.yearOfEstablishment);
+      setCompanyWebsite(companyData.metadata.companyWebsite);
+      setCompanyVision(companyData.metadata.companyVision);
+      setSocialMedias(companyData.metadata.socialMedias);
+      setMapLocation(companyData.metadata.mapLocation);
+      setPhone(companyData.metadata.phone);
+      setEmail(companyData.metadata.email);
+    }
+  }, [companyData]);
+
+  const handleCreateSubmit = async (e) => {
     e.preventDefault();
     if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment)
       return;
@@ -132,6 +182,40 @@ export default function Tabs() {
     }
   };
 
+  const handleUpdateSubmit = async (e) => {
+    e.preventDefault();
+    if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment) {
+      console.log(inputCompanyName);
+      console.log(logoFile);
+      console.log(bannerFile);
+      console.log(yearOfEstablishment);
+      return;
+    }
+
+    const data = await UpdateCompanyAPI({
+      companyName: inputCompanyName,
+      logo: logoFile,
+      banner: bannerFile,
+      aboutUs: aboutUs,
+      organizationType: organizationType,
+      industryType: industryType,
+      teamSize: teamSize,
+      yearOfEstablishment: yearOfEstablishment,
+      companyWebsite: companyWebsite,
+      companyVision: companyVision,
+      socialMedias: socialMedias,
+      mapLocation: mapLocation,
+      phone: phone,
+      email: email,
+    });
+    console.log(data);
+    if (data.status === 200) {
+      console.log("cap nhat cong ty thanh cong");
+    } else {
+      console.log("cap nhat cong ty that bai");
+    }
+  };
+
   const TabList = [
     {
       id: 1,
@@ -148,6 +232,8 @@ export default function Tabs() {
         <FormCompanyInfo
           inputCompanyName={inputCompanyName}
           aboutUs={aboutUs}
+          logo={logoUrl}
+          banner={bannerUrl}
           onInputCompanyNameChange={handleInputCompanyNameChange}
           onAboutUsChange={handleAboutUsChange}
           onLogoChange={handleLogoChange}
@@ -168,6 +254,11 @@ export default function Tabs() {
       ),
       content: (
         <FormFoundingInfo
+          organizationType={organizationType}
+          industryType={industryType}
+          teamSize={teamSize}
+          yearOfEstablishment={yearOfEstablishmentVal}
+          companyWebsite={companyWebsite}
           companyVision={companyVision}
           onIndustryTypeChange={handleIndustryTypeChange}
           onOrganizationTypeChange={handleOrganizationTypeChange}
@@ -190,15 +281,18 @@ export default function Tabs() {
         />
       ),
       content: (
-        <FormSocialMediaInfo onSocialMediaChange={handleSocialMediaChange} />
+        <FormSocialMediaInfo
+          socialMedias={socialMedias}
+          onSocialMediaChange={handleSocialMediaChange}
+        />
       ),
     },
     {
       id: 4,
       tabitem: (
         <TabItem
-          icon={<AtIcon />}
-          title="Contact"
+          icon={isSettings ? <GearSixIcon /> : <AtIcon />}
+          title={isSettings ? "Account Setting" : "Contact"}
           activeColor={`${
             activeIndex === 4 ? "var(--primary-600)" : "var(--gray-500)"
           }`}
@@ -208,6 +302,7 @@ export default function Tabs() {
         <FormContact
           mapLocation={mapLocation}
           phone={phone}
+          email={email}
           onMapLocationChange={handleMapLocationChange}
           onPhoneChange={handlePhoneChange}
           onEmailChange={handleEmailChange}
@@ -240,7 +335,7 @@ export default function Tabs() {
         </div>
       ))}
 
-      <div className="flex">
+      <div className={`flex ${isSettings ? "hidden" : "block"}`}>
         {/* <Button
           className="mr-3"
           display={activeIndex === 1 ? "none" : "block"}
@@ -252,13 +347,22 @@ export default function Tabs() {
           textColor={"white"}
           bg={"var(--primary-500)"}
           rightIcon={<GrLinkNext />}
-          onClick={(e) => handleSubmit(e)}
+          onClick={(e) => handleCreateSubmit(e)}
           //onClick={() => handelClick(activeIndex + 1)}
         >
           {/* {activeIndex === 4 ? "Finish Editing" : "Save & Next"} */}
           Save
         </Button>
       </div>
+      <Button
+        display={isSettings ? "block" : "none"}
+        textColor={"white"}
+        bg={"var(--primary-500)"}
+        width={"150px"}
+        onClick={(e) => handleUpdateSubmit(e)}
+      >
+        Save Changes
+      </Button>
     </div>
   );
 }

@@ -4,6 +4,11 @@ import { RxLink2 } from "react-icons/rx";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 
 interface FormFoundingInfoProps {
+  organizationType: string;
+  industryType: string;
+  teamSize: string;
+  yearOfEstablishment: string;
+  companyWebsite: string;
   companyVision: string;
   onOrganizationTypeChange: (value: string) => void;
   onIndustryTypeChange: (value: string) => void;
@@ -14,6 +19,11 @@ interface FormFoundingInfoProps {
 }
 
 export default function FormFoundingInfo({
+  organizationType,
+  industryType,
+  teamSize,
+  yearOfEstablishment,
+  companyWebsite,
   companyVision,
   onOrganizationTypeChange,
   onIndustryTypeChange,
@@ -36,6 +46,11 @@ export default function FormFoundingInfo({
   const handleCompanyVisionChange = (content: string) => {
     onCompanyVisionChange(content);
   };
+
+  const formattedYear =
+    yearOfEstablishment &&
+    new Date(yearOfEstablishment).toISOString().split("T")[0];
+
   return (
     <div className="flex flex-col text-gray-900 space-y-4">
       <div className="grid grid-cols-3 gap-4 font-normal text-sm">
@@ -50,6 +65,7 @@ export default function FormFoundingInfo({
             "Sole Proprietorship",
             "Corporation",
           ]}
+          value={organizationType}
           onChange={onOrganizationTypeChange}
         />
 
@@ -67,6 +83,7 @@ export default function FormFoundingInfo({
             "Consulting",
             "Transportation",
           ]}
+          value={industryType}
           onChange={onIndustryTypeChange}
         />
 
@@ -81,6 +98,7 @@ export default function FormFoundingInfo({
             "1001-5000",
             "5001+",
           ]}
+          value={teamSize}
           onChange={onTeamSizeChange}
         />
 
@@ -89,7 +107,11 @@ export default function FormFoundingInfo({
             Year of Establishment
           </Text>
           {/* <BaseInput type="date" onChange={handleYearChange} /> */}
-          <Input type="date" onChange={handleYearChange} />
+          <Input
+            type="date"
+            onChange={handleYearChange}
+            value={formattedYear}
+          />
         </div>
         <div>
           <Text className="font-normal text-sm mb-2">Company Website</Text>
@@ -100,6 +122,7 @@ export default function FormFoundingInfo({
             <Input
               type="url"
               placeholder="Website url..."
+              value={companyWebsite}
               onChange={handleCompanyWebsiteChange}
             />
           </InputGroup>

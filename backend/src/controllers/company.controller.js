@@ -4,6 +4,26 @@ const { CREATED, OK } = require("../core/success.response");
 const CompanyService = require("../services/company.service");
 
 class CompanyController {
+  getMyCompany = async (req, res, next) => {
+    const result = await CompanyService.getMyCompany(req.user.userId);
+
+    return new OK({
+      message: "Get my company successfully",
+      metadata: result,
+    }).send(res);
+  };
+  updateCompany = async (req, res, next) => {
+    const result = await CompanyService.updateCompany(
+      req.params.id,
+      req.body,
+      req.files
+    );
+    return new OK({
+      message: "Update company successfully!",
+      metadata: result,
+    }).send(res);
+  };
+
   createCompany = async (req, res, next) => {
     const result = await CompanyService.createCompany(
       {
@@ -13,7 +33,10 @@ class CompanyController {
       },
       req.files
     );
-    return new CREATED(result).send(res);
+    return new CREATED({
+      message: "Create company successfully!",
+      metadata: result,
+    }).send(res);
   };
 
   findCompanies = async (req, res, next) => {
