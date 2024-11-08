@@ -1,6 +1,6 @@
 const { UserStatus } = require("../../helpers/constants");
 const userModel = require("../user.model");
-const BaseRepo = require("./baseRepo");
+const BaseRepo = require("./base.repo");
 
 class UserRepo extends BaseRepo {
   constructor() {

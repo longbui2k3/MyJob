@@ -5,9 +5,9 @@ const {
   BadRequestError,
   AuthFailureError,
 } = require("../core/error.response");
-const otpRepo = require("../models/repos/otpRepo");
+const otpRepo = require("../models/repos/otp.repo");
 const bcrypt = require("bcrypt");
-const userRepo = require("../models/repos/userRepo");
+const userRepo = require("../models/repos/user.repo");
 const generateOTPConfig = require("../utils/generateOTP.config");
 const Email = require("../utils/email");
 const { OTP_LENGTH } = require("../helpers/constants");

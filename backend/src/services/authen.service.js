@@ -17,7 +17,7 @@ const { createTokenPair } = require("../auth/authUtils");
 const Email = require("../utils/email");
 const generateOTPConfig = require("../utils/generateOTP.config");
 const JWT = require("jsonwebtoken");
-const userRepo = require("../models/repos/userRepo");
+const userRepo = require("../models/repos/user.repo");
 const {
   OTP_LENGTH,
   PASSWORD_RESET_EXPIRES,
@@ -26,7 +26,7 @@ const {
   UserType,
   UserStatus,
 } = require("../helpers/constants");
-const profileRepo = require("../models/repos/profileRepo");
+const profileRepo = require("../models/repos/profile.repo");
 const OTPService = require("./otp.service");
 
 class AuthenService {
@@ -80,7 +80,7 @@ class AuthenService {
       },
     };
   };
-  // type: forgotPwd, signUp
+
   static verifyOTP = async ({ email, OTP }) => {
     const user = await userRepo.findByEmail(email);
     if (!user) {

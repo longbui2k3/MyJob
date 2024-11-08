@@ -3,8 +3,8 @@
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { UserType } = require("../helpers/constants");
 const companyRepo = require("../models/repos/company.repo");
-const profileRepo = require("../models/repos/profileRepo");
-const userRepo = require("../models/repos/userRepo");
+const profileRepo = require("../models/repos/profile.repo");
+const userRepo = require("../models/repos/user.repo");
 
 class UserService {
   static async getMe(userId) {

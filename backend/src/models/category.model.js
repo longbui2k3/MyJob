@@ -10,6 +10,21 @@ const categorySchema = new mongoose.Schema(
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );
+categorySchema.index({ name: "text" });
+categorySchema.statics = {
+  findAndSearchPartial: function (obj, q) {
+    return this.find({
+      ...obj,
+      name: new RegExp(q, "gi"),
+    });
+  },
+  findAndSearchFull: function (obj, q) {
+    return this.find({
+      ...obj,
+      $text: { $search: q, $caseSensitive: false },
+    });
+  },
+};
 
 //Export the model
 module.exports = mongoose.model(DOCUMENT_NAME, categorySchema);
