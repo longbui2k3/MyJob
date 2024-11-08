@@ -26,24 +26,26 @@ const router = express.Router();
 router.route("/").get(
   // #swagger.tags = ['Company']
   // #swagger.summary = 'Find companies'
-  /* #swagger.parameters = [{
+  /* #swagger.parameters["page"] = {
     "in": "query",
-    "name": "page",
     "type": "number",
     "description": "Page"
-  }, 
-  {
-    "in": "query",
-    "name": "limit",
-    "type": "number",
-    "description": "Limit"
-  },
-  {
-    "in": "query",
-    "name": "search",
-    "type": "number",
-    "description": "Search"
-  }]*/
+  }
+  */
+  /*
+    #swagger.parameters["limit"] = {
+      "in": "query",
+      "type": "number",
+      "description": "Limit"
+    }
+  */
+  /*
+    #swagger.parameters["search"] = {
+      "in": "query",
+      "type": "string",
+      "description": "Search"
+    }
+  */
   asyncHandler(companyController.findCompanies)
 );
 // authentication

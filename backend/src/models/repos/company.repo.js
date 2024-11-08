@@ -1,5 +1,5 @@
 const companyModel = require("../company.model");
-const BaseRepo = require("./baseRepo");
+const BaseRepo = require("./base.repo");
 const UploadFiles = require("../../utils/uploadFiles");
 
 class CompanyRepo extends BaseRepo {

@@ -1,5 +1,5 @@
 const profileModel = require("../profile.model");
-const BaseRepo = require("./baseRepo");
+const BaseRepo = require("./base.repo");
 
 class ProfileRepo extends BaseRepo {
   constructor() {
