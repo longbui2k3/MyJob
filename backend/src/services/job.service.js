@@ -27,7 +27,13 @@ class JobService {
 
     return await jobRepo.createJob({
       ...data,
-      company: company._id,
+      company: {
+        _id: company._id,
+        logo: company.logo,
+        companyName: company.companyName,
+        mapLocation: company.mapLocation,
+        provinceCode: company.provinceCode,
+      },
     });
   };
 

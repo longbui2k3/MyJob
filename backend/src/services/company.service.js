@@ -1,10 +1,10 @@
 "use strict";
 
 const userRepo = require("../models/repos/user.repo");
-const { UserType, JobLevels } = require("../helpers/constants");
 const companyRepo = require("../models/repos/company.repo");
 const UploadFiles = require("../utils/uploadFiles");
 const { BadRequestError } = require("../core/error.response");
+const jobRepo = require("../models/repos/job.repo");
 
 class CompanyService {
   static getMyCompany = async (userId) => {
@@ -15,6 +15,7 @@ class CompanyService {
     if (!checkCompanyExists) {
       throw new BadRequestError(`Company with id ${id} is not found!`);
     }
+    await jobRepo.deleteJobsByCompanyId(id);
     return await companyRepo.deleteCompany(id);
   };
 
@@ -25,19 +26,30 @@ class CompanyService {
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
     ]);
-    let parseSocialMedias;
+    let parseSocialMedias = [];
     if (socialMedias) {
       parseSocialMedias = JSON.parse(socialMedias);
     }
+    parseSocialMedias = parseSocialMedias.map((socialMedia) => {
+      if (typeof socialMedia === "string") return JSON.parse(socialMedia);
+      return socialMedia;
+    });
     const updateCompany = await companyRepo.updateCompany(id, {
       ...otherData,
       logo: logoImg,
       banner: bannerImg,
-      socialMedias: parseSocialMedias,
+      socialMedias: socialMedias ? parseSocialMedias : undefined,
     });
 
     if (!updateCompany)
       throw new BadRequestError(`Company with id ${id} is not found!`);
+
+    await jobRepo.updateCompanyForJob(id, {
+      companyName: updateCompany.companyName,
+      logo: updateCompany.logo,
+      mapLocation: updateCompany.mapLocation,
+      provinceCode: updateCompany.provinceCode,
+    });
     return updateCompany;
   };
 
