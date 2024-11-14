@@ -10,106 +10,51 @@ class CompanyService {
   static getMyCompany = async (userId) => {
     return await companyRepo.findCompanyByUser(userId);
   };
-
-  static updateCompany = async (
-    id,
-    {
-      companyName,
-      aboutUs,
-      organizationType,
-      industryType,
-      teamSize,
-      yearOfEstablishment,
-      companyWebsite,
-      companyVision,
-      socialMedias,
-      mapLocation,
-      phone,
-      email,
-    },
-    files
-  ) => {
-    const checkCompanyExists = await companyRepo.findCompanyByUser(id);
+  static deleteCompany = async (id) => {
+    const checkCompanyExists = await companyRepo.findCompanyById(id);
     if (!checkCompanyExists) {
       throw new BadRequestError(`Company with id ${id} is not found!`);
     }
-
-    const logoFile = Array.isArray(files["logo"])
-      ? files["logo"][0]
-      : files["logo"];
-    const bannerFile = Array.isArray(files["banner"])
-      ? files["banner"][0]
-      : files["banner"];
-
-    const logoImg = await this.uploadFile("image", logoFile);
-    const bannerImg = await this.uploadFile("image", bannerFile);
-
-    console.log(files);
-
-    if (socialMedias) {
-      socialMedias = JSON.parse(socialMedias);
-    }
-    return await companyRepo.updateCompany(id, {
-      companyName,
-      logo: logoImg,
-      banner: bannerImg,
-      aboutUs,
-      organizationType,
-      industryType,
-      teamSize,
-      yearOfEstablishment,
-      companyWebsite,
-      companyVision,
-      socialMedias: socialMedias,
-      mapLocation,
-      phone,
-      email,
-    });
+    return await companyRepo.deleteCompany(id);
   };
 
-  static createCompany = async (
-    {
-      companyName,
-      user,
-      aboutUs,
-      organizationType,
-      industryType,
-      teamSize,
-      yearOfEstablishment,
-      companyWebsite,
-      companyVision,
-      socialMedias,
-      mapLocation,
-      phone,
-      email,
-    },
-    files
-  ) => {
-    const logoImg = await this.uploadFile("image", files["logo"][0]);
-    const bannerImg = await this.uploadFile("image", files["banner"][0]);
+  static updateCompany = async (id, data, files) => {
+    const { socialMedias, ...otherData } = data;
+
+    const [logoImg, bannerImg] = await Promise.all([
+      this.uploadFile(files?.logo?.[0]),
+      this.uploadFile(files?.banner?.[0]),
+    ]);
+    const updateCompany = await companyRepo.updateCompany(id, {
+      ...otherData,
+      logo: logoImg,
+      banner: bannerImg,
+      socialMedias: socialMedias ? JSON.parse(socialMedias) : undefined,
+    });
+
+    if (!updateCompany)
+      throw new BadRequestError(`Company with id ${id} is not found!`);
+    return updateCompany;
+  };
+
+  static createCompany = async (data, files) => {
+    const { socialMedias, ...otherData } = data;
+    const [logoImg, bannerImg] = await Promise.all([
+      this.uploadFile(files?.logo?.[0]),
+      this.uploadFile(files?.banner?.[0]),
+    ]);
     return await companyRepo.createCompany({
-      companyName,
+      ...otherData,
       logo: logoImg,
       banner: bannerImg,
-      user,
-      aboutUs,
-      organizationType,
-      industryType,
-      teamSize,
-      yearOfEstablishment,
-      companyWebsite,
-      companyVision,
       socialMedias: JSON.parse(socialMedias),
-      mapLocation,
-      phone,
-      email,
     });
   };
 
-  static async uploadFile(type, file) {
+  static async uploadFile(file) {
     return await new UploadFiles(
       "company",
-      type,
+      "image",
       file
     ).uploadFileAndDownloadURL();
   }

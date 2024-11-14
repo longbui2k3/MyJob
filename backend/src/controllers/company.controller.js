@@ -12,6 +12,13 @@ class CompanyController {
       metadata: result,
     }).send(res);
   };
+  delteteCompany = async (req, res, next) => {
+    const result = await CompanyService.deleteCompany(req.params.id);
+    return new OK({
+      message: "Delete company successfully!",
+      metadata: result,
+    }).send(res);
+  };
   updateCompany = async (req, res, next) => {
     const result = await CompanyService.updateCompany(
       req.params.id,
@@ -29,7 +36,6 @@ class CompanyController {
       {
         ...req.body,
         user: req.user.userId,
-        email: req.user.email,
       },
       req.files
     );

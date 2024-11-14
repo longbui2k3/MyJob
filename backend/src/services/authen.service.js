@@ -171,9 +171,7 @@ class AuthenService {
       );
     }
 
-    const existingUsername = await userRepo.findByExistedUsername(
-      username
-    );
+    const existingUsername = await userRepo.findByExistedUsername(username);
     if (existingUsername) {
       throw new BadRequestError("Error: Username already exists!");
     }
@@ -190,7 +188,8 @@ class AuthenService {
       throw new AuthFailureError("Passwords do not match! Please try again!");
     }
 
-    const newUser = existingUnverifiedUser ||
+    const newUser =
+      existingUnverifiedUser ||
       (await userRepo.create(
         removeUndefinedInObject({
           username,
@@ -222,7 +221,6 @@ class AuthenService {
       message: "OTP sent to email!",
     };
   };
-
   static logIn = async ({ email, password }) => {
     if (!email || !password) {
       throw new BadRequestError("Error: Please enter email or password!");
