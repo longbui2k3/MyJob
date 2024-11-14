@@ -77,16 +77,20 @@ router.route("/").post(
                 "type": "string"
               },
               "organizationType": {
-                "type": "string"
+                "type": "string",
+                "default": "Public"
               },
               "industryType": {
-                "type": "string"
+                "type": "string",
+                "default": "Technology"
               },
               "teamSize": {
-                "type": "string"
+                "type": "string",
+                "default": "201-500"
               },
               "yearOfEstablishment": {
-                "type": "string"
+                "type": "string",
+                "default": "2015-01-01"
               },
               "companyWebsite": {
                 "type": "string"
@@ -106,7 +110,7 @@ router.route("/").post(
                       "type": "string"
                     }
                   }
-                }
+                }   
               },
               "mapLocation": {
                 "type": "string"
@@ -148,60 +152,13 @@ router.route("/:id").patch(
             "properties": {
               "logo": {
                 "type": "string",
-                "format": "binary",
-                "allowEmptyValue": true
+                "format": "binary"
               },
               "banner": {
                 "type": "string",
                 "format": "binary"
               },
               "companyName": {
-                "type": "string",
-                "allowEmptyValue": true
-              },
-              "aboutUs": {
-                "type": "string"
-              },
-              "organizationType": {
-                "type": "string"
-              },
-              "industryType": {
-                "type": "string"
-              },
-              "teamSize": {
-                "type": "string"
-              },
-              "yearOfEstablishment": {
-                "type": "string",
-                "allowEmptyValue": true
-              },
-              "companyWebsite": {
-                "type": "string"
-              },
-              "companyVision": {
-                "type": "string"
-              },
-              "socialMedias": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "socialMedia": {
-                      "type": "string"
-                    },
-                    "linkUrl": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "mapLocation": {
-                "type": "string"
-              },
-              "phone": {
-                "type": "string"
-              },
-              "email": {
                 "type": "string"
               }
             }

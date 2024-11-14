@@ -1,3 +1,4 @@
+const { Types } = require("mongoose");
 const { JobStatuses } = require("../../helpers/constants");
 const { removeUndefinedInObject } = require("../../utils");
 const { convertToObjectId } = require("../../utils");
@@ -8,89 +9,21 @@ class JobRepo extends BaseRepo {
   constructor() {
     super(jobModel);
   }
-
-  async updateJob(
-    id,
-    {
-      jobTitle,
-      status,
-      tags,
-      jobRole,
-      minSalary,
-      maxSalary,
-      salaryType,
-      education,
-      experience,
-      jobType,
-      vacancies,
-      expirationDate,
-      jobLevel,
-      applyJobOn,
-      jobDescription,
-      jobResponsibilities,
-    }
-  ) {
-    return await this.findByIdAndUpdate(
-      id,
-      removeUndefinedInObject({
-        jobTitle,
-        status,
-        tags,
-        jobRole,
-        minSalary,
-        maxSalary,
-        salaryType,
-        education,
-        experience,
-        jobType,
-        vacancies,
-        expirationDate,
-        jobLevel,
-        applyJobOn,
-        jobDescription,
-        jobResponsibilities,
-      })
-    );
+  async findJobById(id) {
+    return await this.findById(id);
+  }
+  async deleteJob(id) {
+    return await this.deleteOne({ _id: new Types.ObjectId(id) });
   }
 
-  async createJob({
-    jobTitle,
-    category,
-    company,
-    tags,
-    jobRole,
-    minSalary,
-    maxSalary,
-    salaryType,
-    education,
-    experience,
-    jobType,
-    vacancies,
-    expirationDate,
-    jobLevel,
-    applyJobOn,
-    jobDescription,
-    jobResponsibilities,
-  }) {
+  async updateJob(id, data) {
+    return await this.findByIdAndUpdate(id, removeUndefinedInObject(data));
+  }
+
+  async createJob(data) {
     return await this.create({
-      jobTitle,
-      category,
-      company,
+      ...data,
       status: JobStatuses.PENDING,
-      tags,
-      jobRole,
-      minSalary,
-      maxSalary,
-      salaryType,
-      education,
-      experience,
-      jobType,
-      vacancies,
-      expirationDate,
-      jobLevel,
-      applyJobOn,
-      jobDescription,
-      jobResponsibilities,
     });
   }
 }

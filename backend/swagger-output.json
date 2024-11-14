@@ -125,16 +125,20 @@
                     "type": "string"
                   },
                   "organizationType": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "Public"
                   },
                   "industryType": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "Technology"
                   },
                   "teamSize": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "201-500"
                   },
                   "yearOfEstablishment": {
-                    "type": "string"
+                    "type": "string",
+                    "default": "2015-01-01"
                   },
                   "companyWebsite": {
                     "type": "string"
@@ -209,60 +213,13 @@
                 "properties": {
                   "logo": {
                     "type": "string",
-                    "format": "binary",
-                    "allowEmptyValue": true
+                    "format": "binary"
                   },
                   "banner": {
                     "type": "string",
                     "format": "binary"
                   },
                   "companyName": {
-                    "type": "string",
-                    "allowEmptyValue": true
-                  },
-                  "aboutUs": {
-                    "type": "string"
-                  },
-                  "organizationType": {
-                    "type": "string"
-                  },
-                  "industryType": {
-                    "type": "string"
-                  },
-                  "teamSize": {
-                    "type": "string"
-                  },
-                  "yearOfEstablishment": {
-                    "type": "string",
-                    "allowEmptyValue": true
-                  },
-                  "companyWebsite": {
-                    "type": "string"
-                  },
-                  "companyVision": {
-                    "type": "string"
-                  },
-                  "socialMedias": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "socialMedia": {
-                          "type": "string"
-                        },
-                        "linkUrl": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
-                  "mapLocation": {
-                    "type": "string"
-                  },
-                  "phone": {
-                    "type": "string"
-                  },
-                  "email": {
                     "type": "string"
                   }
                 }
@@ -413,7 +370,11 @@
       }
     },
     "/api/v1/job/{id}": {
-      "post": {
+      "patch": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Update job",
         "description": "",
         "parameters": [
           {
@@ -429,7 +390,51 @@
           "default": {
             "description": ""
           }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/jobBodySchema"
+              }
+            }
+          }
         }
+      },
+      "delete": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Delete job",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ]
       }
     },
     "/api/v1/category/": {
@@ -1136,7 +1141,7 @@
           },
           "jobRole": {
             "type": "string",
-            "example": "string"
+            "example": "Software Engineer"
           },
           "minSalary": {
             "type": "number",
@@ -1148,19 +1153,19 @@
           },
           "salaryType": {
             "type": "string",
-            "example": "string"
+            "example": "Month"
           },
           "education": {
             "type": "string",
-            "example": "string"
+            "example": "Graduation"
           },
           "experience": {
             "type": "string",
-            "example": "string"
+            "example": "Fresher"
           },
           "jobType": {
             "type": "string",
-            "example": "string"
+            "example": "Full Time"
           },
           "vacancies": {
             "type": "number",
@@ -1168,15 +1173,15 @@
           },
           "expirationDate": {
             "type": "string",
-            "example": "string"
+            "example": "2024-12-12"
           },
           "jobLevel": {
             "type": "string",
-            "example": "string"
+            "example": "Entry Level"
           },
           "applyJobOn": {
             "type": "string",
-            "example": "string"
+            "example": "website"
           },
           "jobDescription": {
             "type": "string",
