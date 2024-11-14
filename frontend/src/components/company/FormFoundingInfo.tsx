@@ -47,10 +47,6 @@ export default function FormFoundingInfo({
     onCompanyVisionChange(content);
   };
 
-  const formattedYear =
-    yearOfEstablishment &&
-    new Date(yearOfEstablishment).toISOString().split("T")[0];
-
   return (
     <div className="flex flex-col text-gray-900 space-y-4">
       <div className="grid grid-cols-3 gap-4 font-normal text-sm">
@@ -110,7 +106,7 @@ export default function FormFoundingInfo({
           <Input
             type="date"
             onChange={handleYearChange}
-            value={formattedYear}
+            value={yearOfEstablishment}
           />
         </div>
         <div>

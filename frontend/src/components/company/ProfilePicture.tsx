@@ -5,7 +5,7 @@ interface ProfilePictureProps {
   note: string;
   className: string;
   fileUrl?: string;
-  onFileChange: (file: File | null) => void;
+  onFileChange: (file: File) => void;
 }
 export default function ProfilePicture({
   title,
