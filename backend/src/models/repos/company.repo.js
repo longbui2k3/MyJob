@@ -1,6 +1,7 @@
 const companyModel = require("../company.model");
 const BaseRepo = require("./baseRepo");
 const { removeUndefinedInObject } = require("../../utils");
+const { Types } = require("mongoose");
 
 class CompanyRepo extends BaseRepo {
   constructor() {
@@ -10,83 +11,22 @@ class CompanyRepo extends BaseRepo {
   async findCompanyByUser(user_id) {
     return await this.findOne({ user: user_id });
   }
-
-  async updateCompany(
-    id,
-    {
-      companyName,
-      logo,
-      banner,
-      aboutUs,
-      organizationType,
-      industryType,
-      teamSize,
-      yearOfEstablishment,
-      companyWebsite,
-      companyVision,
-      socialMedias,
-      mapLocation,
-      phone,
-      email,
-    }
-  ) {
-    return await this.findByIdAndUpdate(
-      id,
-      removeUndefinedInObject({
-        companyName,
-        logo,
-        banner,
-        aboutUs,
-        organizationType,
-        industryType,
-        teamSize,
-        yearOfEstablishment,
-        companyWebsite,
-        companyVision,
-        socialMedias,
-        mapLocation,
-        phone,
-        email,
-      }),
-      { new: true }
-    );
+  async findCompanyById(id) {
+    return await this.findById(id);
   }
 
-  async createCompany({
-    companyName,
-    logo,
-    banner,
-    user,
-    aboutUs,
-    organizationType,
-    industryType,
-    teamSize,
-    yearOfEstablishment,
-    companyWebsite,
-    companyVision,
-    socialMedias,
-    mapLocation,
-    phone,
-    email,
-  }) {
-    return await this.create({
-      _id: user,
-      companyName,
-      user,
-      logo,
-      banner,
-      aboutUs,
-      organizationType,
-      industryType,
-      teamSize,
-      yearOfEstablishment,
-      companyWebsite,
-      companyVision,
-      socialMedias,
-      mapLocation,
-      phone,
-      email,
+  async deleteCompany(id) {
+    return await this.deleteOne({ _id: new Types.ObjectId(id) });
+  }
+
+  async updateCompany(id, data) {
+    return await this.findByIdAndUpdate(id, removeUndefinedInObject(data), {
+      new: true,
     });
+  }
+
+  async createCompany(data) {
+    return await this.create(data);
   }
 }
 

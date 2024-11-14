@@ -4,23 +4,18 @@ const express = require("express");
 const { asyncHandler } = require("../../helpers/asyncHandler");
 const { authentication } = require("../../auth/authUtils");
 const companyController = require("../../controllers/company.controller");
-const multer = require("multer");
-const { BadRequestError } = require("../../core/error.response");
-const upload = multer({
-  storage: multer.memoryStorage(),
-  fileFilter: function (req, file, callback) {
-    // Allowed file types
-    const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+const { uploadMulter } = require("../../helpers/uploadMulter");
 
-    if (allowedTypes.includes(file.mimetype)) {
-      callback(null, true);
-    } else {
-      throw new BadRequestError(
-        "Only .png, .jpg, .jpeg, .webp files are allowed."
-      );
-    }
+const upload = uploadMulter([
+  {
+    fieldname: "logo",
+    allowedTypes: ["image/png", "image/jpeg", "image/jpg", "image/webp"],
   },
-});
+  {
+    fieldname: "banner",
+    allowedTypes: ["image/png", "image/jpeg", "image/jpg", "image/webp"],
+  },
+]);
 const router = express.Router();
 
 router.route("/").get(
@@ -140,9 +135,112 @@ router.route("/:id").patch(
     { name: "logo", maxCount: 1 },
     { name: "banner", maxCount: 1 },
   ]),
+  // #swagger.tags = ['Company']
+  // #swagger.summary = 'Update company'
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "multipart/form-data": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "logo": {
+                "type": "string",
+                "format": "binary",
+                "allowEmptyValue": true
+              },
+              "banner": {
+                "type": "string",
+                "format": "binary"
+              },
+              "companyName": {
+                "type": "string",
+                "allowEmptyValue": true
+              },
+              "aboutUs": {
+                "type": "string"
+              },
+              "organizationType": {
+                "type": "string"
+              },
+              "industryType": {
+                "type": "string"
+              },
+              "teamSize": {
+                "type": "string"
+              },
+              "yearOfEstablishment": {
+                "type": "string",
+                "allowEmptyValue": true
+              },
+              "companyWebsite": {
+                "type": "string"
+              },
+              "companyVision": {
+                "type": "string"
+              },
+              "socialMedias": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "socialMedia": {
+                      "type": "string"
+                    },
+                    "linkUrl": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "mapLocation": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+        }
+      }
+    } 
+  */
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
   asyncHandler(companyController.updateCompany)
 );
 
-router.route("/mycompany").get(asyncHandler(companyController.getMyCompany));
+router.route("/mycompany").get(
+  // #swagger.tags = ['Company']
+  // #swagger.summary = 'Get my company'
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
+  asyncHandler(companyController.getMyCompany)
+);
+
+router.route("/:id").delete(
+  // #swagger.tags = ['Company']
+  // #swagger.summary = 'Delete my company'
+  /* #swagger.parameters['id'] = {
+       in: 'path',
+       required: true,
+       type: 'string'
+  } */
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
+  asyncHandler(companyController.delteteCompany)
+);
 
 module.exports = router;
