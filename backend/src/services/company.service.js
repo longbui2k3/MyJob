@@ -1,7 +1,7 @@
 "use strict";
 
 const userRepo = require("../models/repos/user.repo");
-const { UserType } = require("../helpers/constants");
+const { UserType, JobLevels } = require("../helpers/constants");
 const companyRepo = require("../models/repos/company.repo");
 const UploadFiles = require("../utils/uploadFiles");
 const { BadRequestError } = require("../core/error.response");
@@ -25,11 +25,15 @@ class CompanyService {
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
     ]);
+    let parseSocialMedias;
+    if (socialMedias) {
+      parseSocialMedias = JSON.parse(socialMedias);
+    }
     const updateCompany = await companyRepo.updateCompany(id, {
       ...otherData,
       logo: logoImg,
       banner: bannerImg,
-      socialMedias: socialMedias ? JSON.parse(socialMedias) : undefined,
+      socialMedias: parseSocialMedias,
     });
 
     if (!updateCompany)
@@ -43,11 +47,15 @@ class CompanyService {
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
     ]);
+    let parseSocialMedias;
+    if (socialMedias) {
+      parseSocialMedias = JSON.parse(socialMedias);
+    }
     return await companyRepo.createCompany({
       ...otherData,
       logo: logoImg,
       banner: bannerImg,
-      socialMedias: JSON.parse(socialMedias),
+      socialMedias: parseSocialMedias,
     });
   };
 

@@ -32,14 +32,14 @@ export default function Tabs() {
 
   // console.log(isSettings);
   // logo
-  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoFile, setLogoFile] = useState<File>();
   const [logoUrl, setLogoUrl] = useState<string>("");
-  const handleLogoChange = (file: File | null) => setLogoFile(file);
+  const handleLogoChange = (file: File) => setLogoFile(file);
 
   // banner
-  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [bannerFile, setBannerFile] = useState<File>();
   const [bannerUrl, setBannerUrl] = useState<string>("");
-  const handleBannerChange = (file: File | null) => setBannerFile(file);
+  const handleBannerChange = (file: File) => setBannerFile(file);
 
   // company name
   const [inputCompanyName, setInputCompanyName] = useState<string>("");
@@ -72,13 +72,12 @@ export default function Tabs() {
   };
 
   // year Of Establishment
-  const [yearOfEstablishment, setYearOfEstablishment] = useState<Date | null>(
-    null
-  );
+  const [yearOfEstablishment, setYearOfEstablishment] = useState<Date>();
   const [yearOfEstablishmentVal, setYearOfEstablishmentVal] =
     useState<string>("");
   const handleYearOfEstablishmentChange = (value: Date) => {
     setYearOfEstablishment(value);
+    setYearOfEstablishmentVal(value.toISOString().split("T")[0]);
   };
 
   // company Website
@@ -121,6 +120,8 @@ export default function Tabs() {
     setEmail(value);
   };
 
+  const [id, setId] = useState<string>("");
+
   const [companyData, setCompanyData] = useState<any>(null);
   useEffect(() => {
     const fetchCompanyData = async () => {
@@ -134,6 +135,7 @@ export default function Tabs() {
   useEffect(() => {
     if (companyData && companyData.metadata) {
       // Thiết lập giá trị ban đầu
+      setId(companyData.metadata._id);
       setLogoUrl(companyData.metadata.logo);
       setBannerUrl(companyData.metadata.banner);
       setInputCompanyName(companyData.metadata.companyName);
@@ -141,7 +143,9 @@ export default function Tabs() {
       setOrganizationType(companyData.metadata.organizationType);
       setIndustryType(companyData.metadata.industryType);
       setTeamSize(companyData.metadata.teamSize);
-      setYearOfEstablishmentVal(companyData.metadata.yearOfEstablishment);
+      setYearOfEstablishmentVal(
+        companyData.metadata.yearOfEstablishment.split("T")[0]
+      );
       setCompanyWebsite(companyData.metadata.companyWebsite);
       setCompanyVision(companyData.metadata.companyVision);
       setSocialMedias(companyData.metadata.socialMedias);
@@ -150,6 +154,8 @@ export default function Tabs() {
       setEmail(companyData.metadata.email);
     }
   }, [companyData]);
+
+  // console.log(id);
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
@@ -184,15 +190,8 @@ export default function Tabs() {
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-    if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment) {
-      console.log(inputCompanyName);
-      console.log(logoFile);
-      console.log(bannerFile);
-      console.log(yearOfEstablishment);
-      return;
-    }
 
-    const data = await UpdateCompanyAPI({
+    const data = await UpdateCompanyAPI(id, {
       companyName: inputCompanyName,
       logo: logoFile,
       banner: bannerFile,

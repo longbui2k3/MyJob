@@ -3,93 +3,34 @@
 const jobRepo = require("../models/repos/job.repo");
 const companyRepo = require("../models/repos/company.repo");
 const { convertToObjectId, removeUndefinedInObject } = require("../utils");
+const { BadRequestError } = require("../core/error.response");
 class JobService {
-  static updateJob = async (
-    id,
-    {
-      jobTitle,
-      status,
-      tags,
-      jobRole,
-      minSalary,
-      maxSalary,
-      salaryType,
-      education,
-      experience,
-      jobType,
-      vacancies,
-      expirationDate,
-      jobLevel,
-      applyJobOn,
-      jobDescription,
-      jobResponsibilities,
+  static deleteJob = async (id) => {
+    const checkJobExists = await jobRepo.findJobById(id);
+    if (!checkJobExists) {
+      throw new BadRequestError(`Job with id ${id} is not found!`);
     }
-  ) => {
-    return await jobRepo.createJob(id, {
-      jobTitle,
-      status,
-      tags,
-      jobRole,
-      minSalary,
-      maxSalary,
-      salaryType,
-      education,
-      experience,
-      jobType,
-      vacancies,
-      expirationDate,
-      jobLevel,
-      applyJobOn,
-      jobDescription,
-      jobResponsibilities,
-    });
+    return await jobRepo.deleteJob(id);
+  };
+  static updateJob = async (id, data) => {
+    const updateJob = await jobRepo.updateJob(id, data);
+    if (!updateJob)
+      throw new BadRequestError(`Job with id ${id} is not found!`);
+    return updateJob;
   };
 
-  static createJob = async (
-    userId,
-    {
-      jobTitle,
-      category,
-      tags,
-      jobRole,
-      minSalary,
-      maxSalary,
-      salaryType,
-      education,
-      experience,
-      jobType,
-      vacancies,
-      expirationDate,
-      jobLevel,
-      applyJobOn,
-      jobDescription,
-      jobResponsibilities,
-    }
-  ) => {
+  static createJob = async (userId, data) => {
     const company = await companyRepo.findOne({
       user: convertToObjectId(userId),
     });
+    if (!company) throw new BadRequestError("Company not found!");
 
     return await jobRepo.createJob({
-      jobTitle,
-      category,
+      ...data,
       company: company._id,
-      tags,
-      jobRole,
-      minSalary,
-      maxSalary,
-      salaryType,
-      education,
-      experience,
-      jobType,
-      vacancies,
-      expirationDate,
-      jobLevel,
-      applyJobOn,
-      jobDescription,
-      jobResponsibilities,
     });
   };
+
   static findJobs = async ({
     page,
     limit,

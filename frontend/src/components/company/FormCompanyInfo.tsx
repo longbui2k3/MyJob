@@ -10,8 +10,8 @@ interface FormCompanyInfoProps {
   aboutUs: string;
   onInputCompanyNameChange: (name: string) => void; // Hàm callback để gửi dữ liệu về cha
   onAboutUsChange: (value: string) => void;
-  onLogoChange: (file: File | null) => void;
-  onBannerChange: (file: File | null) => void;
+  onLogoChange: (file: File) => void;
+  onBannerChange: (file: File) => void;
 }
 
 export default function FormCompanyInfo({

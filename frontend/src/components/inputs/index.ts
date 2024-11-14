@@ -12,3 +12,4 @@ export { SearchInput_2, useSearchInput_2 } from "./SearchInput_2";
 export { SearchInput_3, useSearchInput_3 } from "./SearchInput_3";
 export { CategoryNameInput, useCategoryNameInput } from "./CategoryNameInput";
 export { CompanyNameInput } from "./CompanyNameInput";
+export { JobTittle } from "./JobInput";

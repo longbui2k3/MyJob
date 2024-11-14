@@ -82,5 +82,40 @@ router.route("/").post(
 );
 
 // update job
-router.route("/:id").post(asyncHandler(jobController.updateJob));
+router.route("/:id").patch(
+  // #swagger.tags = ['Job']
+  // #swagger.summary = 'Update job'
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+            schema: {
+                $ref: '#/components/schemas/jobBodySchema'
+            }
+        }
+      }
+    } 
+  */
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */ asyncHandler(jobController.updateJob)
+);
+
+router.route("/:id").delete(
+  // #swagger.tags = ['Job']
+  // #swagger.summary = 'Delete job'
+  /* #swagger.parameters['id'] = {
+       in: 'path',
+       required: true,
+       type: 'string'
+  } */
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
+  asyncHandler(jobController.deleteJob)
+);
 module.exports = router;
