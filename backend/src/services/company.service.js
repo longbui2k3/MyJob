@@ -42,15 +42,19 @@ class CompanyService {
   };
 
   static createCompany = async (data, files) => {
-    const { socialMedias, ...otherData } = data;
+    let { socialMedias, ...otherData } = data;
     const [logoImg, bannerImg] = await Promise.all([
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
     ]);
-    let parseSocialMedias;
+    let parseSocialMedias = [];
     if (socialMedias) {
       parseSocialMedias = JSON.parse(socialMedias);
     }
+    parseSocialMedias = parseSocialMedias.map((socialMedia) => {
+      if (typeof socialMedia === "string") return JSON.parse(socialMedia);
+      return socialMedia;
+    });
     return await companyRepo.createCompany({
       ...otherData,
       logo: logoImg,
