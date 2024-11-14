@@ -7,7 +7,12 @@ export {
 } from "./authenAPI";
 export { GetUser } from "./userAPI";
 
-export { CreateCompanyAPI, FindCompaniesAPI, UpdateCompanyAPI,
-  GetMyCompanyAPI } from "./companyAPI";
+export {
+  CreateCompanyAPI,
+  FindCompaniesAPI,
+  UpdateCompanyAPI,
+  GetMyCompanyAPI,
+} from "./companyAPI";
 export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";
+export { FindJobsAPI } from "./jobAPI";

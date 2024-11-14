@@ -2,33 +2,64 @@ import { Tag } from "@chakra-ui/react";
 import { Heading, Heading6 } from "../headings";
 import { LocationInfo, SalaryInfo } from "../company";
 import { CiBookmark } from "react-icons/ci";
+import { ButtonOutline } from "../buttons";
+import { FiArrowRight } from "react-icons/fi";
 
-export default function JobGrid() {
+interface JobGridProps {
+  _id?: string;
+  companyLogo?: string;
+  companyName?: string;
+  companyLocation?: string;
+  jobTitle?: string;
+  jobType?: string;
+  minSalary?: number;
+  maxSalary?: number;
+  isFeatured?: boolean;
+}
+export default function JobGrid({
+  _id = "",
+  companyLogo = "",
+  companyName = "",
+  companyLocation = "",
+  jobTitle = "",
+  jobType = "",
+  minSalary = 0,
+  maxSalary = 0,
+  isFeatured = false,
+}: JobGridProps) {
   return (
-    <div className="w-full p-5 border-[1px] border-[--gray-100] rounded-lg bg-gradient-to-r from-[--featured]">
+    <div
+      className={`w-full p-5 border-[1px] border-[--gray-100] rounded-lg bg-gradient-to-r ${
+        isFeatured ? "from-[--featured]" : ""
+      }`}
+    >
       <div className="flex justify-between">
         <div className="flex space-x-3">
           <img
-            src="/upwork.png"
+            src={companyLogo}
             width={"52px"}
             height={"52px"}
             className="rounded-md aspect-square"
           />
           <div className="flex flex-col justify-between ml-4">
             <div className="flex space-x-3">
-              <Heading6 name="Upwork" />
-              <Tag
-                bg="var(--danger-50)"
-                textColor={"var(--danger-500)"}
-                fontSize={"13px"}
-                paddingX={"8px"}
-                paddingY="4px"
-                marginY="auto"
-              >
-                Featured
-              </Tag>
+              <Heading6 name={companyName} />
+              {isFeatured ? (
+                <Tag
+                  bg="var(--danger-50)"
+                  textColor={"var(--danger-500)"}
+                  fontSize={"13px"}
+                  paddingX={"8px"}
+                  paddingY="4px"
+                  marginY="auto"
+                >
+                  Featured
+                </Tag>
+              ) : (
+                ""
+              )}
             </div>
-            <LocationInfo info={"China"} />
+            <LocationInfo info={companyLocation.split(",").slice(-1)[0]} />
           </div>
         </div>
         <CiBookmark
@@ -37,15 +68,29 @@ export default function JobGrid() {
           color="var(--primary-500)"
         />
       </div>
-
-      <div className="mt-4 space-y-2">
-        <Heading name="Senior UX Designer" size={17} />
-        <div className="flex space-x-2">
-          <div className="flex items-center space-x-2 text-[--gray-500] text-[13px]">
-            <div>{"Full Time"}</div>
-            <div>•</div>
+      <div className="flex justify-between">
+        <div className="mt-4 space-y-2">
+          <Heading name={jobTitle} size={17} />
+          <div className="flex space-x-2">
+            <div className="flex items-center space-x-2 text-[--gray-500] text-[13px]">
+              <div>{jobType}</div>
+              <div>•</div>
+            </div>
+            <SalaryInfo info={`$${minSalary}-$${maxSalary}`} />
           </div>
-          <SalaryInfo info={"$50K-$60K"} />
+        </div>
+        <div className="flex flex-col-reverse">
+          <ButtonOutline
+            children={
+              <div className="flex">
+                <div>Apply Now</div>
+                <FiArrowRight className="text-[14px] my-auto ml-2" />
+              </div>
+            }
+            border="0px"
+            isHover={false}
+            className="w-[100px]"
+          />
         </div>
       </div>
     </div>

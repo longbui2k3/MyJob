@@ -71,6 +71,9 @@ const companySchema = new mongoose.Schema(
       // require: true,
       default: "",
     },
+    provinceCode: {
+      type: Number,
+    },
     phone: {
       type: String,
       default: "",

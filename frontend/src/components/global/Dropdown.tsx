@@ -1,4 +1,4 @@
-import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";  
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 
 interface DropdownProps {
   Button?: JSX.Element | string;

@@ -4,11 +4,15 @@ import { IoIosSearch } from "react-icons/io";
 interface SearchJobInputProps {
   width?: string;
   height?: string;
+  search?: string | null;
+  setSearch?: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function SearchJobInput({
   width = "450px",
-  height
+  height,
+  search = "",
+  setSearch = () => {},
 }: SearchJobInputProps) {
   return (
     <InputGroup width={width} bg="white">
@@ -20,6 +24,10 @@ export default function SearchJobInput({
         placeholder="Job title, keyword, company,..."
         fontSize="14px"
         height={height}
+        value={search || ""}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
       />
     </InputGroup>
   );

@@ -58,6 +58,8 @@ class BaseRepo {
       select = [],
       unselect = [],
       populates = [],
+      populateSelects = [],
+      populateMatches = [],
       sort = [],
       page = PAGE,
       limit = LIMIT,
@@ -67,27 +69,32 @@ class BaseRepo {
       select: [],
       unselect: [],
       populates: [],
+      populateSelects: [],
+      populateMatches: [],
       sort: [],
       page: PAGE,
       limit: LIMIT,
       search: "",
     }
   ) {
-    const length = await this.model.countDocuments();
+    let length = 1;
     if (!search) {
       let result = this.model.find(obj);
+      length = (await this.model.find(obj)).length;
       result = this.#chaining(result, {
         addedFields,
         select,
         unselect,
         populates,
+        populateSelects,
+        populateMatches,
       });
       result = this.#chainingForList(result, { sort, page, limit });
       return {
         data: await result,
         meta: {
-          limit,
-          page,
+          limit: limit - 0,
+          page: page - 0,
           size:
             length % limit
               ? Math.floor(length / limit) + 1
@@ -97,38 +104,54 @@ class BaseRepo {
     }
 
     let result = this.model.findAndSearchFull(obj, search);
+    length = (await this.model.findAndSearchFull(obj, search)).length;
     result = this.#chaining(result, {
       addedFields,
       select,
       unselect,
       populates,
+      populateSelects,
+      populateMatches,
     });
     result = this.#chainingForList(result, { sort, page, limit });
+    return await result.then(async (data) => {
+      if (!data || !data.length) {
+        let result = this.model.findAndSearchPartial(obj, search);
+        length = (await this.model.findAndSearchPartial(obj, search)).length;
+        result = this.#chaining(result, {
+          addedFields,
+          select,
+          unselect,
+          populates,
+          populateSelects,
+          populateMatches,
+        });
+        result = this.#chainingForList(result, { sort, page, limit });
+        return {
+          data: await result,
+          meta: {
+            limit: limit - 0,
+            page: page - 0,
+            size:
+              length % limit
+                ? Math.floor(length / limit) + 1
+                : Math.floor(length / limit),
+          },
+        };
+      }
 
-    return {
-      data: await result.then((data) => {
-        if (!data || !data.length) {
-          let result = this.model.findAndSearchPartial(obj, search);
-          result = this.#chaining(result, {
-            addedFields,
-            select,
-            unselect,
-            populates,
-          });
-          result = this.#chainingForList(result, { sort, page, limit });
-          return result;
-        }
-        return data;
-      }),
-      meta: {
-        limit,
-        page,
-        size:
-          length % limit
-            ? Math.floor(length / limit) + 1
-            : Math.floor(length / limit),
-      },
-    };
+      return {
+        data,
+        meta: {
+          limit: limit - 0,
+          page: page - 0,
+          size:
+            length % limit
+              ? Math.floor(length / limit) + 1
+              : Math.floor(length / limit),
+        },
+      };
+    });
   }
 
   async create(obj) {
@@ -205,13 +228,31 @@ class BaseRepo {
 
   #chaining(
     result,
-    { addedFields = [], select = [], unselect = [], populates = [] } = {
+    {
+      addedFields = [],
+      select = [],
+      unselect = [],
+      populates = [],
+      populateSelects = [],
+      populateMatches = [],
+    } = {
       addedFields: [],
       select: [],
       unselect: [],
       populates: [],
+      populateSelects: [],
+      populateMatches: [],
     }
   ) {
+    populates.forEach((populate, i) => {
+      result = result.populate(
+        changePopulateStringToObject(
+          populate,
+          populateSelects[i],
+          populateMatches[i]
+        )
+      );
+    });
     let selectStr = "";
     if (unselect.length !== 0) {
       selectStr = selectStr + unselect.map((field) => "-" + field).join(" ");
@@ -230,9 +271,6 @@ class BaseRepo {
     ) {
       result = result.select(selectStr);
     }
-    populates.forEach((populate) => {
-      result = result.populate(changePopulateStringToObject(populate));
-    });
     return result;
   }
 

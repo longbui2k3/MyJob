@@ -27,7 +27,6 @@ export default async function BaseAPI({
     }
     return await axios.get(url);
   };
-  console.log(method);
   try {
     const res = await responses(method);
     return res.data;

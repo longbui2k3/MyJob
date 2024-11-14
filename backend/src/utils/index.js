@@ -25,19 +25,29 @@ const removeUndefinedInObject = (obj) => {
   });
   return obj;
 };
-const changePopulateStringToObject = (populateString) => {
+const changePopulateStringToObject = (
+  populateString,
+  selects = {},
+  matches = {}
+) => {
   // populateString: string  ex:user.job.abc.def
+
   const keys = populateString.split(".");
+  console.log(matches[keys[0]]);
   function recursion(i) {
     if (i === keys.length - 1) {
-      return {
+      return removeUndefinedInObject({
         path: keys[i],
-      };
+        match: matches[keys[i]] || undefined,
+        select: selects[keys[i]] || undefined,
+      });
     }
-    const object = {
+    const object = removeUndefinedInObject({
       path: keys[i],
       populate: recursion(i + 1),
-    };
+      match: matches[keys[i]] || undefined,
+      select: selects[keys[i]] || undefined,
+    });
     return object;
   }
   return recursion(0);

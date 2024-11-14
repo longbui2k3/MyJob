@@ -1,30 +1,34 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GoChevronDown, GoChevronUp, GoStack } from "react-icons/go";
-
+import { useFindCategories } from "../../../hooks";
 interface CategorySelectProps {
   width?: string;
   height?: string;
   className?: string;
+  category?: string;
+  setCategory?: React.Dispatch<React.SetStateAction<string>>;
+  onClick?: (e) => void;
 }
 
-const categories = [
-  { category: "Graphics & Design" },
-  { category: "Code & Programming" },
-  { category: "Digital Marketing" },
-  { category: "Video & Animation" },
-  { category: "Music & Audio" },
-  { category: "Account & Finance" },
-  { category: "Health & Care" },
-  { category: "Data & Science" },
-];
 export default function CategorySelect({
   width = "",
   height = "",
   className = "",
+  category = "",
+  setCategory = () => {},
+  onClick = (e) => {},
 }: CategorySelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [option, setOption] = useState("Select Category");
+  const [optionName, setOptionName] = useState("Select Category");
+  const { categories } = useFindCategories();
+
+  useEffect(() => {
+    setOptionName(
+      categories.find((cate: any) => cate._id === category)?.name ||
+        "Select Category"
+    );
+  }, [categories]);
   return (
     <Menu>
       <MenuButton
@@ -54,31 +58,34 @@ export default function CategorySelect({
         _active={{
           bg: "white",
         }}
-        onClick={() => {
+        onClick={(e) => {
           setIsOpen(!isOpen);
+          onClick(e);
         }}
       >
-        {option}
+        {optionName}
       </MenuButton>
       <MenuList>
         <MenuItem
           fontSize={"14px"}
           onClick={() => {
-            setOption("Select Category");
+            setOptionName("Select Category");
+            setCategory("");
           }}
         >
           {"Select Category"}
         </MenuItem>
         {categories.map((category) => (
           <MenuItem
-            value={category.category}
+            value={category.name}
             fontSize={"14px"}
             onClick={() => {
               setIsOpen(!isOpen);
-              setOption(category.category);
+              setOptionName(category.name);
+              setCategory(category._id);
             }}
           >
-            {category.category}
+            {category.name}
           </MenuItem>
         ))}
       </MenuList>

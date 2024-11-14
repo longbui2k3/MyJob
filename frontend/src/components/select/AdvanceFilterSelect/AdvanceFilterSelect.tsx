@@ -6,12 +6,14 @@ interface AdvanceFilterSelectProps {
   width?: string;
   height?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export default function AdvanceFilterSelect({
   width,
   height,
   className = "",
+  onClick = () => {},
 }: AdvanceFilterSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -45,6 +47,7 @@ export default function AdvanceFilterSelect({
         }}
         onClick={() => {
           setIsOpen(!isOpen);
+          onClick();
         }}
       >
         {"Advance Filter"}

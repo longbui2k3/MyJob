@@ -2,8 +2,12 @@ import { Tag, TagCloseButton, TagLabel } from "@chakra-ui/react";
 
 interface ActiveFilterProps {
   label?: string;
+  onDeleteClick?: () => void;
 }
-export default function ActiveFilter({ label = "" }: ActiveFilterProps) {
+export default function ActiveFilter({
+  label = "",
+  onDeleteClick = () => {},
+}: ActiveFilterProps) {
   return (
     <Tag
       size={"18px"}
@@ -20,7 +24,11 @@ export default function ActiveFilter({ label = "" }: ActiveFilterProps) {
       >
         {label}
       </TagLabel>
-      <TagCloseButton color={"var(--gray-900)"} bg={"white"} />
+      <TagCloseButton
+        color={"var(--gray-900)"}
+        bg={"white"}
+        onClick={onDeleteClick}
+      />
     </Tag>
   );
 }

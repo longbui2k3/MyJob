@@ -1,3 +1,4 @@
+const { JobStatuses } = require("../../helpers/constants");
 const { removeUndefinedInObject } = require("../../utils");
 const { convertToObjectId } = require("../../utils");
 const jobModel = require("../job.model");
@@ -56,8 +57,6 @@ class JobRepo extends BaseRepo {
     jobTitle,
     category,
     company,
-    createdBy,
-    status,
     tags,
     jobRole,
     minSalary,
@@ -77,8 +76,7 @@ class JobRepo extends BaseRepo {
       jobTitle,
       category,
       company,
-      createdBy,
-      status,
+      status: JobStatuses.PENDING,
       tags,
       jobRole,
       minSalary,

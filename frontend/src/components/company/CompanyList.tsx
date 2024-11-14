@@ -2,7 +2,7 @@ import { PiFaders } from "react-icons/pi";
 import { DEFAULT_PADDING_X, ViewTypes } from "../../helpers/constants";
 import { ButtonSolid } from "../buttons";
 import { Pagination, usePagination } from "../global";
-import { CreatedAtSelect } from "../select/CreatedAtSelect";
+import { LocationSelect } from "../select/LocationSelect";
 import { PageLimitSelect, usePageLimitSelect } from "../select/PageLimitSelect";
 import { useViewTypeSelect, ViewTypeSelect } from "../select/ViewTypeSelect";
 import CompanyGrid from "./CompanyGrid";
@@ -62,7 +62,7 @@ export default function CompanyList() {
           <ButtonSolid children={"Filter"} leftIcon={<PiFaders />} />
         </div>
         <div className="flex space-x-4">
-          <CreatedAtSelect height="40px" />
+          <LocationSelect height="40px" />
           <PageLimitSelect
             height="40px"
             width="200px"
@@ -78,11 +78,7 @@ export default function CompanyList() {
           <Companies.ROWS_FILL />
         )}
       </div>
-      <Pagination
-        curPage={curPage}
-        setCurPage={setCurPage}
-        size={size}
-      />
+      <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />
     </div>
   );
 }

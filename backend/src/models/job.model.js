@@ -24,14 +24,27 @@ const jobSchema = new mongoose.Schema(
       ref: "Category",
     },
     company: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: {
+        _id: { type: mongoose.Schema.Types.ObjectId, required: true },
+        logo: {
+          type: String,
+          // require: true,
+          default: "",
+        },
+        companyName: {
+          type: String,
+          required: true,
+        },
+        mapLocation: {
+          type: String,
+          // require: true,
+          default: "",
+        },
+        provinceCode: {
+          type: Number,
+        },
+      },
       required: true,
-      ref: "Company",
-    },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
     },
     status: {
       type: String,
@@ -40,8 +53,9 @@ const jobSchema = new mongoose.Schema(
       default: JobStatuses.PENDING,
     },
     tags: {
-      type: String,
+      type: [{ type: String }],
       required: true,
+      default: [],
     },
     jobRole: {
       type: String,
@@ -108,12 +122,12 @@ const jobSchema = new mongoose.Schema(
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );
-
+jobSchema.index({ jobTitle: "text" });
 jobSchema.statics = {
   findAndSearchPartial: function (obj, q) {
     return this.find({
       ...obj,
-      companyName: new RegExp(q, "gi"),
+      jobTitle: new RegExp(q, "gi"),
     });
   },
   findAndSearchFull: function (obj, q) {

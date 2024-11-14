@@ -1,6 +1,6 @@
 "use strict";
 
-const userRepo = require("../models/repos/userRepo");
+const userRepo = require("../models/repos/user.repo");
 const { UserType } = require("../helpers/constants");
 const companyRepo = require("../models/repos/company.repo");
 const UploadFiles = require("../utils/uploadFiles");
@@ -117,7 +117,7 @@ class CompanyService {
     return await companyRepo.find(
       {},
       {
-        page, 
+        page,
         limit,
         search,
       }

@@ -1,6 +1,12 @@
 export { UserTypes, ViewTypes, HttpMethods } from "./enums";
-export type { UserTypeKeys, UserTypeValues, HttpMethodsKeys, HttpMethodsValues } from "./enums";
+export type {
+  UserTypeKeys,
+  UserTypeValues,
+  HttpMethodsKeys,
+  HttpMethodsValues,
+} from "./enums";
 export { Navigations } from "./commons";
+
 export {
   getRoute,
   getBreadcrumb,
@@ -32,4 +38,43 @@ export {
 } from "./routes";
 export type { RouteItem } from "./routes";
 export const DEFAULT_PADDING_X = "200px";
+export const Experiences = [
+  "Intern",
+  "Fresher",
+  "Junior",
+  "Middle",
+  "Senior",
+  "Leader",
+  "Manager",
+];
 
+export const Salaries = [
+  { label: "$50 - $1000", from: 50, to: 1000 },
+  { label: "$1000 - $2000", from: 1000, to: 2000 },
+  { label: "$2000 - $3000", from: 2000, to: 3000 },
+  { label: "$3000 - $4000", from: 3000, to: 4000 },
+  { label: "$4000 - $6000", from: 4000, to: 6000 },
+  { label: "$6000 - $8000", from: 6000, to: 8000 },
+  { label: "$8000 - $10000", from: 8000, to: 10000 },
+  { label: "$10000 - $15000", from: 10000, to: 15000 },
+  { label: "$15000+", from: 15000, to: null },
+];
+
+export const JobTypes = [
+  "Full Time",
+  "Part Time",
+  "Internship",
+  "Remote",
+  "Temporary",
+  "Contract Base",
+];
+
+export const Educations = [
+  "High School",
+  "Intermediate",
+  "Graduation",
+  "Master Degree",
+  "Bachelor Degree",
+];
+
+export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];

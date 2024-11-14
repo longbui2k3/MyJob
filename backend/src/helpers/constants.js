@@ -72,6 +72,8 @@ const JobRoles = {
   PRODUCTMANAGER: "Product Manager",
   UXDESIGNER: "UX Designer",
   DEVOPSENGINEER: "DevOps Engineer",
+  DIGITALMARKETING: "Digital Marketing",
+  FINANCIALANALYST: "Financial Analyst",
   OTHERS: "Others",
 };
 
@@ -87,13 +89,11 @@ const Experiences = {
   EMPTY: "",
   INTERN: "Intern",
   FRESHER: "Fresher",
-  "1TO2YEARS": "1-2 Years",
-  "2TO4YEARS": "2-4 Years",
-  "4TO6YEARS": "4-6 Years",
-  "6TO8YEARS": "6-8 Years",
-  "8TO10YEARS": "8-10 Years",
-  "10TO15YEARS": "10-15 Years",
-  "15PLUSYEARS": "15+ Years",
+  JUNIOR: "Junior",
+  MIDDLE: "Middle",
+  SENIOR: "Senior",
+  LEADER: "Leader",
+  MANAGER: "Manager",
 };
 
 const JobTypes = {

@@ -172,6 +172,148 @@
         }
       }
     },
+    "/api/v1/company/{id}": {
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/company/mycompany": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/job/": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Find jobs",
+        "description": "",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Limit",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Search",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "provinceCode",
+            "in": "query",
+            "description": "Province Code",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "experiences",
+            "in": "query",
+            "description": "Experience",
+            "schema": {
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "Create job",
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": [],
+            "clientId": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/jobBodySchema"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/job/{id}": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/api/v1/category/": {
       "get": {
         "tags": [
@@ -856,6 +998,94 @@
         },
         "required": [
           "email"
+        ]
+      },
+      "jobBodySchema": {
+        "type": "object",
+        "properties": {
+          "jobTitle": {
+            "type": "string",
+            "example": "string"
+          },
+          "category": {
+            "type": "string",
+            "example": "string"
+          },
+          "tags": {
+            "type": "array",
+            "example": [],
+            "items": {}
+          },
+          "jobRole": {
+            "type": "string",
+            "example": "string"
+          },
+          "minSalary": {
+            "type": "number",
+            "example": 0
+          },
+          "maxSalary": {
+            "type": "number",
+            "example": 0
+          },
+          "salaryType": {
+            "type": "string",
+            "example": "string"
+          },
+          "education": {
+            "type": "string",
+            "example": "string"
+          },
+          "experience": {
+            "type": "string",
+            "example": "string"
+          },
+          "jobType": {
+            "type": "string",
+            "example": "string"
+          },
+          "vacancies": {
+            "type": "number",
+            "example": 0
+          },
+          "expirationDate": {
+            "type": "string",
+            "example": "string"
+          },
+          "jobLevel": {
+            "type": "string",
+            "example": "string"
+          },
+          "applyJobOn": {
+            "type": "string",
+            "example": "string"
+          },
+          "jobDescription": {
+            "type": "string",
+            "example": "string"
+          },
+          "jobResponsibilities": {
+            "type": "string",
+            "example": "string"
+          }
+        },
+        "required": [
+          "jobTitle",
+          "category",
+          "tags",
+          "jobRole",
+          "minSalary",
+          "maxSalary",
+          "salaryType",
+          "education",
+          "experience",
+          "jobType",
+          "vacancies",
+          "expirationDate",
+          "jobLevel",
+          "applyJobOn",
+          "jobDescription",
+          "jobResponsibilities"
         ]
       }
     },

@@ -1,3 +1,5 @@
+const { JobStatuses } = require("../src/helpers/constants");
+
 module.exports = {
   signUpBodySchema: {
     $name: "Your Name",
@@ -59,5 +61,23 @@ module.exports = {
   },
   resendOTPBodySchema: {
     $email: "string",
-  }
+  },
+  jobBodySchema: {
+    $jobTitle: "string",
+    $category: "string",
+    $tags: [],
+    $jobRole: "string",
+    $minSalary: 0,
+    $maxSalary: 0,
+    $salaryType: "string",
+    $education: "string",
+    $experience: "string",
+    $jobType: "string",
+    $vacancies: 0,
+    $expirationDate: "string",
+    $jobLevel: "string",
+    $applyJobOn: "string",
+    $jobDescription: "string",
+    $jobResponsibilities: "string",
+  },
 };

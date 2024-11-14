@@ -1,4 +1,3 @@
-import axios from "../configs/axios.config";
 import { HttpMethods } from "../helpers/constants";
 import BaseAPI from "./baseAPI";
 export const CreateCategoryAPI = async (body: {

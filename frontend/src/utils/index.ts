@@ -21,7 +21,27 @@ export function checkIsValidEmail(email: string) {
 }
 
 export function changeQueryObjToQueryStr(queryObj: { [key: string]: any }) {
+  queryObj = removeUndefinedInObject(queryObj);
   return Object.keys(queryObj)
     .map((key) => `${key}=${queryObj[key]}`)
     .join("&");
 }
+
+export function distanceBetweenTwoDates(date1: Date, date2: Date): string {
+  const seconds = Math.abs(date1.getTime() - date2.getTime()) / 1000;
+  if (seconds > 86400) {
+    return Math.floor(seconds / 86400) + " Days";
+  } else if (seconds > 3600) {
+    return Math.floor(seconds / 3600) + " Hours";
+  } else if (seconds > 60) {
+    return Math.floor(seconds / 60) + " Minutes";
+  }
+  return Math.floor(seconds) + " Seconds";
+}
+
+export const removeUndefinedInObject = (obj: { [key: string]: any }) => {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] === undefined) delete obj[key];
+  });
+  return obj;
+};
