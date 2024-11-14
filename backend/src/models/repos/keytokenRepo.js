@@ -1,6 +1,6 @@
 const { convertToObjectId } = require("../../utils");
 const keytokenModel = require("../keytoken.model");
-const BaseRepo = require("./baseRepo");
+const BaseRepo = require("./base.repo");
 
 class KeyTokenRepo extends BaseRepo {
   constructor() {

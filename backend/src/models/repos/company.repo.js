@@ -1,7 +1,8 @@
 const companyModel = require("../company.model");
-const BaseRepo = require("./baseRepo");
 const { removeUndefinedInObject } = require("../../utils");
 const { Types } = require("mongoose");
+const BaseRepo = require("./base.repo");
+const UploadFiles = require("../../utils/uploadFiles");
 
 class CompanyRepo extends BaseRepo {
   constructor() {

@@ -87,6 +87,16 @@ class JobService {
       jobResponsibilities,
     });
   };
+  static findJobs = async ({ page, limit, search, ...props }) => {
+    return await jobRepo.find(
+      {},
+      {
+        page,
+        limit,
+        search,
+      }
+    );
+  };
 }
 
 module.exports = JobService;
