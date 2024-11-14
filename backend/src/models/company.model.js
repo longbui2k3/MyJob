@@ -11,13 +11,11 @@ const companySchema = new mongoose.Schema(
   {
     logo: {
       type: String,
-      // require: true,
-      default: "",
+      require: true,
     },
     banner: {
       type: String,
-      // require: true,
-      default: "",
+      require: true,
     },
     companyName: {
       type: String,
@@ -25,7 +23,7 @@ const companySchema = new mongoose.Schema(
     },
     aboutUs: {
       type: String,
-      default: "",
+      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -35,32 +33,30 @@ const companySchema = new mongoose.Schema(
     },
     organizationType: {
       type: String,
-      enum: OrganizationTypes,
-      default: OrganizationTypes.EMPTY,
+      enum: Object.values(OrganizationTypes),
+      required: true,
     },
     industryType: {
       type: String,
-      enum: IndustryTypes,
-      default: IndustryTypes.EMPTY,
+      enum: Object.values(IndustryTypes),
+      required: true,
     },
     teamSize: {
       type: String,
-      enum: TeamSizes,
-      default: TeamSizes.EMPTY,
+      enum: Object.values(TeamSizes),
+      required: true,
     },
     yearOfEstablishment: {
       type: Date,
-      // require: true,
-      default: null,
+      required: true,
     },
     companyWebsite: {
       type: String,
-      // require: true,
-      default: "",
+      required: true,
     },
     companyVision: {
       type: String,
-      default: "",
+      required: true,
     },
     socialMedias: {
       type: [{ socialMedia: String, linkUrl: String }],
@@ -68,22 +64,18 @@ const companySchema = new mongoose.Schema(
     },
     mapLocation: {
       type: String,
-      // require: true,
-      default: "",
+      required: true,
     },
     provinceCode: {
       type: Number,
     },
     phone: {
       type: String,
-      default: "",
+      required: true,
     },
     email: {
       type: String,
-      // required: true,
-      // lowercase: true,
-      // unique: true,
-      default: "",
+      required: true,
     },
   },
   { timestamps: true, collection: COLLECTION_NAME }
@@ -101,7 +93,7 @@ companySchema.statics = {
       ...obj,
       $text: { $search: q, $caseSensitive: false },
     });
-  }
+  },
 };
 
 //Export the model
