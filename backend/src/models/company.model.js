@@ -11,11 +11,11 @@ const companySchema = new mongoose.Schema(
   {
     logo: {
       type: String,
-      require: true,
+      required: true,
     },
     banner: {
       type: String,
-      require: true,
+      required: true,
     },
     companyName: {
       type: String,

@@ -159,7 +159,8 @@ router.route("/:id").patch(
                 "format": "binary"
               },
               "companyName": {
-                "type": "string"
+                "type": "string",
+                "nullable": true
               }
             }
           },
