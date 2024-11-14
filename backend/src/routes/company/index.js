@@ -115,6 +115,9 @@ router.route("/").post(
               "mapLocation": {
                 "type": "string"
               },
+              "provinceCode": {
+                "type": " number"
+              },
               "phone": {
                 "type": "string"
               },
@@ -160,7 +163,7 @@ router.route("/:id").patch(
               },
               "companyName": {
                 "type": "string"
-              }
+              },
             }
           },
         }

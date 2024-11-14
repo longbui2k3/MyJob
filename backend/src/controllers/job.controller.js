@@ -25,7 +25,7 @@ class JobController {
   };
 
   updateJob = async (req, res, next) => {
-    const result = await JobService.updateJob(req.params.id);
+    const result = await JobService.updateJob(req.params.id, req.body);
 
     return new OK({
       message: "Update job successfully!",
