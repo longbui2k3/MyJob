@@ -1,7 +1,7 @@
 import ProfilePicture from "./ProfilePicture";
-import { CompanyNameInput } from "../inputs";
 import { Text } from "@chakra-ui/react";
 import { RichTextEditer } from "../inputs/RichTextEditer";
+import BaseInput from "../inputs/Input/BaseInput";
 
 interface FormCompanyInfoProps {
   inputCompanyName: string;
@@ -54,10 +54,14 @@ export default function FormCompanyInfo({
         />
       </div>
       <div className="border-[1px]"></div>
-      <CompanyNameInput
-        value={inputCompanyName}
-        onChange={handleInputCompanyNameChange}
-      />
+      <div>
+        <Text className="font-normal text-sm mb-2">Company name</Text>
+        <BaseInput
+          type="text"
+          value={inputCompanyName}
+          onChange={handleInputCompanyNameChange}
+        />
+      </div>
       <div>
         <Text className="font-normal text-sm mb-2">About Us</Text>
         <RichTextEditer

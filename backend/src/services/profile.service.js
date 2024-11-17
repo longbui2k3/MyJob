@@ -29,9 +29,21 @@ class ProfileService {
       "image",
       file
     ).uploadFileAndDownloadURL();
+    let parseSocialMedias = [];
+    if (socialMedias) {
+      parseSocialMedias = JSON.parse(socialMedias);
+    }
+    parseSocialMedias = parseSocialMedias.map((socialMedia) => {
+      if (typeof socialMedia === "string") return JSON.parse(socialMedia);
+      return socialMedia;
+    });
     return await profileRepo.updateProfile(
       userId,
-      removeUndefinedInObject({ avatar, ...body })
+      removeUndefinedInObject({
+        avatar,
+        ...body,
+        socialMedias: socialMedias ? parseSocialMedias : undefined,
+      })
     );
   };
 }

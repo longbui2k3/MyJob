@@ -15,7 +15,7 @@ const companySchema = new mongoose.Schema(
     },
     banner: {
       type: String,
-      required: true,
+      default: "",
     },
     companyName: {
       type: String,
@@ -23,7 +23,6 @@ const companySchema = new mongoose.Schema(
     },
     aboutUs: {
       type: String,
-      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -56,7 +55,6 @@ const companySchema = new mongoose.Schema(
     },
     companyVision: {
       type: String,
-      required: true,
     },
     socialMedias: {
       type: [{ socialMedia: String, linkUrl: String }],
@@ -65,6 +63,9 @@ const companySchema = new mongoose.Schema(
     mapLocation: {
       type: String,
       required: true,
+    },
+    address: {
+      type: String,
     },
     provinceCode: {
       type: Number,

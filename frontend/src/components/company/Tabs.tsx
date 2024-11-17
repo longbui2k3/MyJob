@@ -30,7 +30,6 @@ export default function Tabs() {
     }
   }, [user]);
 
-  // console.log(isSettings);
   // logo
   const [logoFile, setLogoFile] = useState<File>();
   const [logoUrl, setLogoUrl] = useState<string>("");
@@ -108,6 +107,18 @@ export default function Tabs() {
     setMapLocation(value);
   };
 
+  // address
+  const [address, setAddress] = useState<string>("");
+  const handleAddressChange = (value: string) => {
+    setAddress(value);
+  };
+
+  // address
+  const [provinceCode, setProvinceCode] = useState<number>(0);
+  const handleProvinceCode = (value: number) => {
+    setProvinceCode(value);
+  };
+
   // phone
   const [phone, setPhone] = useState<string>("");
   const handlePhoneChange = (value: string) => {
@@ -150,6 +161,7 @@ export default function Tabs() {
       setCompanyVision(companyData.metadata.companyVision);
       setSocialMedias(companyData.metadata.socialMedias);
       setMapLocation(companyData.metadata.mapLocation);
+      setAddress(companyData.metadata.address);
       setPhone(companyData.metadata.phone);
       setEmail(companyData.metadata.email);
     }
@@ -174,6 +186,8 @@ export default function Tabs() {
       companyVision: companyVision,
       socialMedias: socialMedias,
       mapLocation: mapLocation,
+      provinceCode: provinceCode,
+      address: address,
       phone: phone,
       email: email,
     });
@@ -204,6 +218,8 @@ export default function Tabs() {
       companyVision: companyVision,
       socialMedias: socialMedias,
       mapLocation: mapLocation,
+      provinceCode: provinceCode,
+      address: address,
       phone: phone,
       email: email,
     });
@@ -300,9 +316,12 @@ export default function Tabs() {
       content: (
         <FormContact
           mapLocation={mapLocation}
+          address={address}
           phone={phone}
           email={email}
           onMapLocationChange={handleMapLocationChange}
+          onProvinceCodeChange={handleProvinceCode}
+          onAddressChange={handleAddressChange}
           onPhoneChange={handlePhoneChange}
           onEmailChange={handleEmailChange}
         />

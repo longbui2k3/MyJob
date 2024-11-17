@@ -20,25 +20,30 @@ class CompanyService {
   };
 
   static updateCompany = async (id, data, files) => {
-    const { socialMedias, ...otherData } = data;
+    const { socialMedias, provinceCode, ...otherData } = data;
 
     const [logoImg, bannerImg] = await Promise.all([
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
     ]);
-    let parseSocialMedias = [];
+    // let parseSocialMedias = [];
+    // if (socialMedias) {
+    //   parseSocialMedias = JSON.parse(socialMedias);
+    // }
+    // parseSocialMedias = parseSocialMedias.map((socialMedia) => {
+    //   if (typeof socialMedia === "string") return JSON.parse(socialMedia);
+    //   return socialMedia;
+    // });
+    let parseSocialMedias;
     if (socialMedias) {
       parseSocialMedias = JSON.parse(socialMedias);
     }
-    parseSocialMedias = parseSocialMedias.map((socialMedia) => {
-      if (typeof socialMedia === "string") return JSON.parse(socialMedia);
-      return socialMedia;
-    });
     const updateCompany = await companyRepo.updateCompany(id, {
       ...otherData,
       logo: logoImg,
       banner: bannerImg,
-      socialMedias: socialMedias ? parseSocialMedias : undefined,
+      socialMedias: parseSocialMedias,
+      provinceCode: Number(provinceCode),
     });
 
     if (!updateCompany)
@@ -54,24 +59,29 @@ class CompanyService {
   };
 
   static createCompany = async (data, files) => {
-    let { socialMedias, ...otherData } = data;
+    let { socialMedias, provinceCode, ...otherData } = data;
     const [logoImg, bannerImg] = await Promise.all([
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
     ]);
-    let parseSocialMedias = [];
+    // let parseSocialMedias = [];
+    // if (socialMedias) {
+    //   parseSocialMedias = JSON.parse(socialMedias);
+    // }
+    // parseSocialMedias = parseSocialMedias.map((socialMedia) => {
+    //   if (typeof socialMedia === "string") return JSON.parse(socialMedia);
+    //   return socialMedia;
+    // });
+    let parseSocialMedias;
     if (socialMedias) {
       parseSocialMedias = JSON.parse(socialMedias);
     }
-    parseSocialMedias = parseSocialMedias.map((socialMedia) => {
-      if (typeof socialMedia === "string") return JSON.parse(socialMedia);
-      return socialMedia;
-    });
     return await companyRepo.createCompany({
       ...otherData,
       logo: logoImg,
       banner: bannerImg,
       socialMedias: parseSocialMedias,
+      provinceCode: Number(provinceCode),
     });
   };
 

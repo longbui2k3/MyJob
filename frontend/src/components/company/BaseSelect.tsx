@@ -4,7 +4,7 @@ interface BaseSelectProps {
   text?: string;
   options: string[];
   className?: string;
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
 }
 
