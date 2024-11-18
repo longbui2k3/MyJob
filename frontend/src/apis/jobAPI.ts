@@ -14,3 +14,28 @@ export const FindJobsAPI = async (query: {
     method: HttpMethods.GET,
   });
 };
+
+export const CreateJobAPI = async (body: {
+  jobTitle: string;
+  category: string;
+  tags: string[];
+  jobRole: string;
+  minSalary: number | null;
+  maxSalary: number | null;
+  salaryType: string;
+  education: string;
+  experience: string;
+  jobType: string;
+  vacancies: number | null;
+  expirationDate: string;
+  jobLevel: string;
+  applyJobOn: string;
+  jobDescription: string;
+  jobResponsibilities: string;
+}) => {
+  return await BaseAPI({
+    path: `/job`,
+    method: HttpMethods.POST,
+    body,
+  });
+};

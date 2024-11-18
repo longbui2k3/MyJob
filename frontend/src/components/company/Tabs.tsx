@@ -41,9 +41,9 @@ export default function Tabs() {
   const handleBannerChange = (file: File) => setBannerFile(file);
 
   // company name
-  const [inputCompanyName, setInputCompanyName] = useState<string>("");
-  const handleInputCompanyNameChange = (name: string) => {
-    setInputCompanyName(name);
+  const [companyName, setCompanyName] = useState<string>("");
+  const handleCompanyNameChange = (name: string) => {
+    setCompanyName(name);
   };
 
   // about us
@@ -149,7 +149,7 @@ export default function Tabs() {
       setId(companyData.metadata._id);
       setLogoUrl(companyData.metadata.logo);
       setBannerUrl(companyData.metadata.banner);
-      setInputCompanyName(companyData.metadata.companyName);
+      setCompanyName(companyData.metadata.companyName);
       setAboutUs(companyData.metadata.aboutUs);
       setOrganizationType(companyData.metadata.organizationType);
       setIndustryType(companyData.metadata.industryType);
@@ -171,10 +171,10 @@ export default function Tabs() {
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment)
+    if (!companyName || !logoFile || !bannerFile || !yearOfEstablishment)
       return;
     const data = await CreateCompanyAPI({
-      companyName: inputCompanyName,
+      companyName: companyName,
       logo: logoFile,
       banner: bannerFile,
       aboutUs: aboutUs,
@@ -206,7 +206,7 @@ export default function Tabs() {
     e.preventDefault();
 
     const data = await UpdateCompanyAPI(id, {
-      companyName: inputCompanyName,
+      companyName: companyData,
       logo: logoFile,
       banner: bannerFile,
       aboutUs: aboutUs,
@@ -245,11 +245,11 @@ export default function Tabs() {
       ),
       content: (
         <FormCompanyInfo
-          inputCompanyName={inputCompanyName}
+          companyName={companyName}
           aboutUs={aboutUs}
           logo={logoUrl}
           banner={bannerUrl}
-          onInputCompanyNameChange={handleInputCompanyNameChange}
+          onCompanyNameChange={handleCompanyNameChange}
           onAboutUsChange={handleAboutUsChange}
           onLogoChange={handleLogoChange}
           onBannerChange={handleBannerChange}
@@ -377,6 +377,7 @@ export default function Tabs() {
         textColor={"white"}
         bg={"var(--primary-500)"}
         width={"150px"}
+        height={"50px"}
         onClick={(e) => handleUpdateSubmit(e)}
       >
         Save Changes

@@ -1,7 +1,8 @@
-import BaseSelect from "./BaseSelect";
 import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import { RxLink2 } from "react-icons/rx";
 import { RichTextEditer } from "../inputs/RichTextEditer";
+import BaseInput from "../inputs/Input/BaseInput";
+import { BaseSelect } from "../select";
 
 interface FormFoundingInfoProps {
   organizationType: string;
@@ -51,7 +52,7 @@ export default function FormFoundingInfo({
     <div className="flex flex-col text-gray-900 space-y-4">
       <div className="grid grid-cols-3 gap-4 font-normal text-sm">
         <BaseSelect
-          text="Organization Type"
+          label="Organization Type"
           options={[
             "Public",
             "Private",
@@ -66,7 +67,7 @@ export default function FormFoundingInfo({
         />
 
         <BaseSelect
-          text="Industry Type"
+          label="Industry Type"
           options={[
             "Technology",
             "Finance",
@@ -84,7 +85,7 @@ export default function FormFoundingInfo({
         />
 
         <BaseSelect
-          text="Team Size"
+          label="Team Size"
           options={[
             "1-10",
             "11-50",
@@ -97,16 +98,12 @@ export default function FormFoundingInfo({
           value={teamSize}
           onChange={onTeamSizeChange}
         />
-
         <div>
-          <Text className="font-normal text-sm mb-2">
-            Year of Establishment
-          </Text>
-          {/* <BaseInput type="date" onChange={handleYearChange} /> */}
-          <Input
+          <BaseInput
+            label="Year of Establishment"
             type="date"
-            onChange={handleYearChange}
             value={yearOfEstablishment}
+            onChange={handleYearChange}
           />
         </div>
         <div>
@@ -125,8 +122,8 @@ export default function FormFoundingInfo({
         </div>
       </div>
       <div>
-        <Text className="font-normal text-sm mb-2">Company Vision</Text>
         <RichTextEditer
+          label="Company Vision"
           placeholder="Tell us about your company vision..."
           value={companyVision}
           onChange={handleCompanyVisionChange}

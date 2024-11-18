@@ -1,5 +1,5 @@
 import { Heading3 } from "../headings";
-import PostAJob from "../job/PostAJob/PostAJob";
+import { PostAJob } from "../job/PostAJob";
 
 export default function DashboardSettings() {
   return (

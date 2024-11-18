@@ -1,8 +1,8 @@
 import { GoMail } from "react-icons/go";
 import BaseInput from "../inputs/Input/BaseInput";
 import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
-import BaseSelect from "./BaseSelect";
 import provinces from "../../data/provinces.json";
+import { BaseSelect } from "../select";
 
 interface FormContactProps {
   mapLocation: string;
@@ -54,29 +54,28 @@ export default function FormContact({
     <div className="space-y-3 font-normal text-sm">
       <div className="flex flex-row space-x-3">
         <BaseSelect
-          text="Map Location"
+          label="Map Location"
           options={locations.map((location) => location.label)}
           value={mapLocation}
           onChange={handleMapLocationChange}
+          width="180px"
         />
         <div className="w-full">
-          <Text className="font-normal text-sm mb-2">Address</Text>
           <BaseInput
+            label="Address"
             type="text"
             value={address}
             onChange={handleAddressChange}
           />
         </div>
       </div>
-      <div>
-        <Text className="font-normal text-sm mb-2">Phone</Text>
-        <BaseInput
-          type="text"
-          placeholder="Phone number..."
-          value={phone}
-          onChange={handlePhoneChange}
-        />
-      </div>
+      <BaseInput
+        label="Phone"
+        type="text"
+        placeholder="Phone number..."
+        value={phone}
+        onChange={handlePhoneChange}
+      />
       <div>
         <Text className="font-normal text-sm mb-2">Email</Text>
         <InputGroup>

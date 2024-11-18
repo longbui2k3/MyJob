@@ -5,7 +5,7 @@ export default function DashboardSettings() {
   return (
     <div>
       <Heading3 name="Settings" className="mb-2" />
-      <Tabs />;
+      <Tabs />
     </div>
   );
 }

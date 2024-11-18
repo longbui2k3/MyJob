@@ -1,6 +1,6 @@
 export { default as TopCompanies } from "./TopCompanies";
 export { DeadlineInfo, LocationInfo, SalaryInfo } from "./CompanyInfos";
-export { default as BaseSelect } from "./BaseSelect";
+export { default as BaseSelect } from "../select/BaseSelect";
 export { default as CompletedCompany } from "./CompletedCompany";
 export { default as FormCompanyInfo } from "./FormCompanyInfo";
 export { default as FormContact } from "./FormContact";
