@@ -1,17 +1,19 @@
-import { Select, Text } from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
 
 interface BaseSelectProps {
-  text?: string;
+  width?: string;
+  label?: string;
   options: string[];
   className?: string;
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
 }
 
 export default function BaseSelect({
-  text,
+  width,
+  label,
   options,
-  className = "",
+  className,
   value,
   onChange,
 }: BaseSelectProps) {
@@ -19,9 +21,14 @@ export default function BaseSelect({
     onChange(e.target.value);
   };
   return (
-    <div>
-      <Text className={`mb-2 ${className}`}>{text}</Text>
-      <Select placeholder="Select..." onChange={handleChange} value={value}>
+    <div className={`${className}`}>
+      {label ? <div className="font-normal text-sm mb-2">{label}</div> : ""}
+      <Select
+        placeholder="Select..."
+        onChange={handleChange}
+        value={value}
+        width={width}
+      >
         {options.map((option) => (
           <option key={option} value={option}>
             {option}

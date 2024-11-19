@@ -1,18 +1,244 @@
-import { JobTittle, useJobTittle } from "../../inputs/JobInput";
+import BaseInput from "../../inputs/Input/BaseInput";
+import { BaseSelect } from "../../select";
+import AdvanceInformation from "./AdvanceInformation";
+import ApplyJobOn from "./ApplyJobOn";
+import DescriptionResponsibility from "./DescriptionResponsibility";
+import Salary from "./Salary";
+import { ButtonSubmit } from "../../buttons";
+import { useEffect, useState } from "react";
+import { FindAllCategoriesAPI } from "../../../apis";
+import { CreateJobAPI } from "../../../apis/jobAPI";
+import { Select } from "@chakra-ui/react";
 
 export default function PostAJob() {
-  const [inputJobTittle, handleInputJobTittle, isEmptyJobTittle] = useJobTittle(
-    {
-      defaultValue: null,
+  const [categories, setCategories] = useState<Array<any>>([]);
+  async function findAllCategories() {
+    const limit = 8;
+    const data = await FindAllCategoriesAPI(limit);
+    if (data.isSuccess) {
+      setCategories(data.metadata.categories);
     }
-  );
+  }
 
+  useEffect(() => {
+    findAllCategories();
+  }, []);
+
+  // job title
+  const [jobTitle, setJobTitle] = useState<string>("");
+  const handleJobTitleChange = (e) => {
+    setJobTitle(e.target.value);
+  };
+
+  // tags
+  const [tags, setTags] = useState<string[]>([]);
+  const handleTagsChange = (e) => {
+    const value = e.target.value;
+    setTags(
+      value
+        .split(",")
+        .map((tag: string) => tag.trim())
+        .filter((tag: string) => tag !== "")
+    );
+  };
+
+  // category
+  const [category, setCategory] = useState<string>("");
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
+
+  // job Role
+  const [jobRole, setJobRole] = useState<string>("");
+  const handleJobRoleChange = (value: string) => {
+    setJobRole(value);
+  };
+
+  // min Salary
+  const [minSalary, setMinSalary] = useState<number | null>(null);
+  const handleMinSalaryChange = (value: number) => {
+    setMinSalary(value);
+  };
+
+  // max Salary
+  const [maxSalary, setMaxSalary] = useState<number | null>(null);
+  const handleMaxSalaryChange = (value: number) => {
+    setMaxSalary(value);
+  };
+
+  // salary Type
+  const [salaryType, setSalaryType] = useState<string>("");
+  const handleSalaryTypeChange = (value: string) => {
+    setSalaryType(value);
+  };
+
+  // education
+  const [education, setEducation] = useState<string>("");
+  const handleEducationChange = (value: string) => {
+    setEducation(value);
+  };
+
+  // experience
+  const [experience, setExperience] = useState<string>("");
+  const handleExperienceChange = (value: string) => {
+    setExperience(value);
+  };
+
+  // jobType
+  const [jobType, setJobType] = useState<string>("");
+  const handleJobTypeChange = (value: string) => {
+    setJobType(value);
+  };
+
+  // vacancies
+  const [vacancies, setVacancies] = useState<number | null>(null);
+  const handleVacanciesChange = (value: number) => {
+    setVacancies(value);
+  };
+
+  // expiratio nDate
+  const [expirationDate, setExpirationDate] = useState<string>("");
+  const handleExpirationDateChange = (value: string) => {
+    setExpirationDate(value);
+  };
+
+  // jobLevel
+  const [jobLevel, setJobLevel] = useState<string>("");
+  const handleJobLevelChange = (value: string) => {
+    setJobLevel(value);
+  };
+
+  // applyJobOn
+  const [applyJobOn, setApplyJobOn] = useState<string>("website");
+  const handleApplyJobOnChange = (value: string) => {
+    setApplyJobOn(value);
+  };
+
+  // jobDescription
+  const [jobDescription, setJobDescription] = useState<string>("");
+  const handleJobDescriptionChange = (value: string) => {
+    setJobDescription(value);
+  };
+
+  //jobResponsibilities
+  const [jobResponsibilities, setJobResponsibilities] = useState<string>("");
+  const handleJobResponsibilitiesChange = (value: string) => {
+    setJobResponsibilities(value);
+  };
+
+  const handleCreateSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = await CreateJobAPI({
+      jobTitle,
+      category,
+      tags,
+      jobRole,
+      minSalary,
+      maxSalary,
+      salaryType,
+      education,
+      experience,
+      jobType,
+      vacancies,
+      expirationDate,
+      jobLevel,
+      applyJobOn,
+      jobDescription,
+      jobResponsibilities,
+    });
+    console.log(data);
+    if (data.isSuccess) {
+      console.log("create job thanh cong");
+    } else {
+      console.log("create job that bai");
+    }
+  };
   return (
-    <div className="relative w-full">
-      <JobTittle
-        value={inputJobTittle}
-        onChange={handleInputJobTittle}
-        isEmptyJobTittle={isEmptyJobTittle}
+    <div className="relative w-full space-y-4">
+      <div>
+        <BaseInput
+          label="Job Title"
+          type="text"
+          placeholder="Add job title, role, vacancies etc"
+          value={jobTitle}
+          onChange={handleJobTitleChange}
+        />
+        <div className="h-4" />
+        <BaseInput
+          label="Tags"
+          type="text"
+          placeholder="Job keyword, tags etc..."
+          value={tags.join(", ")}
+          onChange={handleTagsChange}
+        />
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <div className="font-normal text-sm mb-2">Category</div>
+          <Select
+            placeholder="Select..."
+            value={category}
+            onChange={handleCategoryChange}
+          >
+            {categories.map((category) => (
+              <option value={category._id}>{category.name}</option>
+            ))}
+          </Select>
+        </div>
+        <BaseSelect
+          label="Job Role"
+          options={[
+            "Software Engineer",
+            "Data Scientist",
+            "Product Manager",
+            "UX Designer",
+            "DevOps Engineer",
+            "Digital Marketing",
+            "Financial Analyst",
+            "Others",
+          ]}
+          value={jobRole}
+          onChange={handleJobRoleChange}
+        />
+      </div>
+
+      <Salary
+        minSalary={minSalary}
+        maxSalary={maxSalary}
+        salaryType={salaryType}
+        onMinSalaryChange={handleMinSalaryChange}
+        onMaxSalaryChange={handleMaxSalaryChange}
+        onSalaryTypeChange={handleSalaryTypeChange}
+      />
+      <AdvanceInformation
+        education={education}
+        experience={experience}
+        jobType={jobType}
+        vacancies={vacancies}
+        expirationDate={expirationDate}
+        jobLevel={jobLevel}
+        onEducationChange={handleEducationChange}
+        onExperienceChange={handleExperienceChange}
+        onJobTypeChange={handleJobTypeChange}
+        onVacanciesChange={handleVacanciesChange}
+        onExpirationDateChange={handleExpirationDateChange}
+        onJobLevelChange={handleJobLevelChange}
+      />
+      <ApplyJobOn
+        applyJobOn={applyJobOn}
+        onApplyJobOnChange={handleApplyJobOnChange}
+      />
+      <DescriptionResponsibility
+        jobDescription={jobDescription}
+        jobResponsibilities={jobResponsibilities}
+        onJobDescriptionChange={handleJobDescriptionChange}
+        onJobResponsibilitiesChange={handleJobResponsibilitiesChange}
+      />
+      <ButtonSubmit
+        label="Post Job"
+        width="150px"
+        onClick={(e) => handleCreateSubmit(e)}
       />
     </div>
   );

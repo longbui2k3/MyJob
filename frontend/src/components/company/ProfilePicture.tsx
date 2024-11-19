@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 interface ProfilePictureProps {
-  title: string;
+  label: string;
   note: string;
   className: string;
   fileUrl?: string;
   onFileChange: (file: File) => void;
 }
 export default function ProfilePicture({
-  title,
+  label,
   note,
   className,
   fileUrl,
@@ -39,7 +39,7 @@ export default function ProfilePicture({
 
   return (
     <div>
-      <div className="font-normal text-sm mb-2">{title}</div>
+      <div className="font-normal text-sm mb-2">{label}</div>
       <input
         type="file"
         ref={inputRef}

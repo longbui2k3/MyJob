@@ -106,10 +106,10 @@ const JobTypes = {
 };
 
 const JobStatuses = {
-  PENDING: "pending",
-  ACTIVE: "active",
-  REVOKED: "revoked",
-  EXPIRED: "expired",
+  //PENDING: "Pending",
+  ACTIVE: "Active",
+  //REVOKED: "Revoked",
+  EXPIRED: "Expired",
 };
 
 const Educations = {

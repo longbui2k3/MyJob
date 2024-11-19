@@ -4,7 +4,7 @@ interface InputBaseProps {
   label?: string;
   type?: string;
   placeholder?: string;
-  value?: string | null;
+  value?: string | number | null;
   onChange?: (e) => void;
   className?: string;
 }

@@ -21,6 +21,41 @@ export const FindJobsAPI = async (query: {
   });
 };
 
+export const FindJobsByCompanyAPI = async (query: {
+  page?: number;
+  limit?: number;
+  status?: string;
+}) => {
+  return await BaseAPI({
+    path: `/job/myjobs?${changeQueryObjToQueryStr(query)}`,
+    method: HttpMethods.GET,
+  });
+};
+
+export const CreateJobAPI = async (body: {
+  jobTitle: string;
+  category: string;
+  tags: string[];
+  jobRole: string;
+  minSalary: number | null;
+  maxSalary: number | null;
+  salaryType: string;
+  education: string;
+  experience: string;
+  jobType: string;
+  vacancies: number | null;
+  expirationDate: string;
+  jobLevel: string;
+  applyJobOn: string;
+  jobDescription: string;
+  jobResponsibilities: string;
+}) => {
+  return await BaseAPI({
+    path: `/job`,
+    method: HttpMethods.POST,
+    body,
+  });
+};
 export const FindJobAPI = async (id: string) => {
   return await BaseAPI({
     path: `/job/${id}`,

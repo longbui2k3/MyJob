@@ -1,7 +1,7 @@
 import { Button, HStack, IconButton, Input } from "@chakra-ui/react";
 import { IoIosAddCircleOutline, IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
-import BaseSelect from "./BaseSelect";
+import { BaseSelect } from "../select";
 
 interface FormSocialMediaInfoProps {
   socialMedias: { socialMedia: string; linkUrl: string }[];
@@ -46,13 +46,13 @@ export default function FormSocialMediaInfo({
     <div>
       {socialLinks.map((link, index) => (
         <div className="mb-4">
-          <div className="font-">Social Link {index + 1}</div>
+          <div className="font-normal text-sm">Social Link {index + 1}</div>
           <HStack className="mt-4" key={index}>
             <BaseSelect
-              className="hidden"
               options={["Facebook", "Twitter", "Instagram", "LinkedIn"]}
               value={link.socialMedia} // Gán giá trị ban đầu
               onChange={(value) => handleSocialMediaChange(index, value)}
+              width="130px"
             />
             <Input
               flex="4"

@@ -14,6 +14,8 @@ export const CreateCompanyAPI = async (body: {
   companyVision: string;
   socialMedias: { socialMedia: string; linkUrl: string }[];
   mapLocation: string;
+  address: string;
+  provinceCode: number;
   phone: string;
   email: string;
 }) => {
@@ -33,6 +35,8 @@ export const CreateCompanyAPI = async (body: {
   formData.append("companyVision", body.companyVision);
   formData.append("socialMedias", JSON.stringify(body.socialMedias));
   formData.append("mapLocation", body.mapLocation);
+  formData.append("address", body.address);
+  formData.append("provinceCode", body.provinceCode.toString());
   formData.append("phone", body.phone);
   formData.append("email", body.email);
   return await BaseAPI({
@@ -57,6 +61,8 @@ export const UpdateCompanyAPI = async (
     companyVision: string;
     socialMedias: { socialMedia: string; linkUrl: string }[];
     mapLocation: string;
+    address: string;
+    provinceCode: number;
     phone: string;
     email: string;
   }
@@ -78,6 +84,8 @@ export const UpdateCompanyAPI = async (
   formData.append("companyVision", body.companyVision);
   formData.append("socialMedias", JSON.stringify(body.socialMedias));
   formData.append("mapLocation", body.mapLocation);
+  formData.append("address", body.address);
+  formData.append("provinceCode", body.provinceCode.toString());
   formData.append("phone", body.phone);
   formData.append("email", body.email);
 

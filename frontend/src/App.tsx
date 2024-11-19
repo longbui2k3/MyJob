@@ -32,6 +32,7 @@ import {
   SIGN_UP_KEY,
   VERIFY_KEY,
   DASHBOARD_POST_A_JOB_KEY,
+  DASHBOARD_MY_JOBS_KEY,
 } from "./helpers/constants";
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
@@ -39,6 +40,7 @@ import { useEffect, useState } from "react";
 import { PageFindEmployers, PageJobDetail } from "./pages/home";
 import {
   DashboardCategory,
+  DashboardMyJobs,
   DashboardOverview,
   DashboardPostAJob,
   DashboardSettings,
@@ -116,6 +118,10 @@ const DashboardRoutes = [
   {
     route: getRoute(DASHBOARD_POST_A_JOB_KEY),
     element: <DashboardPostAJob />,
+  },
+  {
+    route: getRoute(DASHBOARD_MY_JOBS_KEY),
+    element: <DashboardMyJobs />,
   },
   {
     route: getRoute(DASHBOARD_SETTINGS_KEY),

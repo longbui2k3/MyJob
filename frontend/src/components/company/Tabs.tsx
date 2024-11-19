@@ -30,7 +30,6 @@ export default function Tabs() {
     }
   }, [user]);
 
-  // console.log(isSettings);
   // logo
   const [logoFile, setLogoFile] = useState<File>();
   const [logoUrl, setLogoUrl] = useState<string>("");
@@ -42,9 +41,9 @@ export default function Tabs() {
   const handleBannerChange = (file: File) => setBannerFile(file);
 
   // company name
-  const [inputCompanyName, setInputCompanyName] = useState<string>("");
-  const handleInputCompanyNameChange = (name: string) => {
-    setInputCompanyName(name);
+  const [companyName, setCompanyName] = useState<string>("");
+  const handleCompanyNameChange = (name: string) => {
+    setCompanyName(name);
   };
 
   // about us
@@ -108,6 +107,18 @@ export default function Tabs() {
     setMapLocation(value);
   };
 
+  // address
+  const [address, setAddress] = useState<string>("");
+  const handleAddressChange = (value: string) => {
+    setAddress(value);
+  };
+
+  // address
+  const [provinceCode, setProvinceCode] = useState<number>(0);
+  const handleProvinceCode = (value: number) => {
+    setProvinceCode(value);
+  };
+
   // phone
   const [phone, setPhone] = useState<string>("");
   const handlePhoneChange = (value: string) => {
@@ -138,7 +149,7 @@ export default function Tabs() {
       setId(companyData.metadata._id);
       setLogoUrl(companyData.metadata.logo);
       setBannerUrl(companyData.metadata.banner);
-      setInputCompanyName(companyData.metadata.companyName);
+      setCompanyName(companyData.metadata.companyName);
       setAboutUs(companyData.metadata.aboutUs);
       setOrganizationType(companyData.metadata.organizationType);
       setIndustryType(companyData.metadata.industryType);
@@ -150,6 +161,7 @@ export default function Tabs() {
       setCompanyVision(companyData.metadata.companyVision);
       setSocialMedias(companyData.metadata.socialMedias);
       setMapLocation(companyData.metadata.mapLocation);
+      setAddress(companyData.metadata.address);
       setPhone(companyData.metadata.phone);
       setEmail(companyData.metadata.email);
     }
@@ -159,10 +171,10 @@ export default function Tabs() {
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    if (!inputCompanyName || !logoFile || !bannerFile || !yearOfEstablishment)
+    if (!companyName || !logoFile || !bannerFile || !yearOfEstablishment)
       return;
     const data = await CreateCompanyAPI({
-      companyName: inputCompanyName,
+      companyName: companyName,
       logo: logoFile,
       banner: bannerFile,
       aboutUs: aboutUs,
@@ -174,11 +186,13 @@ export default function Tabs() {
       companyVision: companyVision,
       socialMedias: socialMedias,
       mapLocation: mapLocation,
+      provinceCode: provinceCode,
+      address: address,
       phone: phone,
       email: email,
     });
     console.log(data);
-    if (data.status === 201) {
+    if (data.isSuccess) {
       console.log("tao cong ty thanh cong");
       setTimeout(() => {
         navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
@@ -192,7 +206,7 @@ export default function Tabs() {
     e.preventDefault();
 
     const data = await UpdateCompanyAPI(id, {
-      companyName: inputCompanyName,
+      companyName: companyData,
       logo: logoFile,
       banner: bannerFile,
       aboutUs: aboutUs,
@@ -204,11 +218,13 @@ export default function Tabs() {
       companyVision: companyVision,
       socialMedias: socialMedias,
       mapLocation: mapLocation,
+      provinceCode: provinceCode,
+      address: address,
       phone: phone,
       email: email,
     });
     console.log(data);
-    if (data.status === 200) {
+    if (data.isSuccess) {
       console.log("cap nhat cong ty thanh cong");
     } else {
       console.log("cap nhat cong ty that bai");
@@ -229,11 +245,11 @@ export default function Tabs() {
       ),
       content: (
         <FormCompanyInfo
-          inputCompanyName={inputCompanyName}
+          companyName={companyName}
           aboutUs={aboutUs}
           logo={logoUrl}
           banner={bannerUrl}
-          onInputCompanyNameChange={handleInputCompanyNameChange}
+          onCompanyNameChange={handleCompanyNameChange}
           onAboutUsChange={handleAboutUsChange}
           onLogoChange={handleLogoChange}
           onBannerChange={handleBannerChange}
@@ -300,9 +316,12 @@ export default function Tabs() {
       content: (
         <FormContact
           mapLocation={mapLocation}
+          address={address}
           phone={phone}
           email={email}
           onMapLocationChange={handleMapLocationChange}
+          onProvinceCodeChange={handleProvinceCode}
+          onAddressChange={handleAddressChange}
           onPhoneChange={handlePhoneChange}
           onEmailChange={handleEmailChange}
         />
@@ -358,6 +377,7 @@ export default function Tabs() {
         textColor={"white"}
         bg={"var(--primary-500)"}
         width={"150px"}
+        height={"50px"}
         onClick={(e) => handleUpdateSubmit(e)}
       >
         Save Changes

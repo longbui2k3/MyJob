@@ -50,7 +50,7 @@ const jobSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(JobStatuses),
       required: true,
-      default: JobStatuses.PENDING,
+      default: JobStatuses.ACTIVE,
     },
     tags: {
       type: [{ type: String }],

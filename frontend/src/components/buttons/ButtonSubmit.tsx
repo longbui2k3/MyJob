@@ -24,8 +24,8 @@ export default function ButtonSubmit({
     <Button
       type="submit"
       className={`w-full rounded-[8px] bg-primary-500 text-white ${className}`}
-      height={height}
       width={width}
+      height={height}
       fontSize={fontSize}
       bg="--primary-500"
       color="--white"
