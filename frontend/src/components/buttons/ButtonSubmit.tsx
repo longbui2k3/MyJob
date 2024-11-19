@@ -16,7 +16,7 @@ export default function ButtonSubmit({
   isLoading = false,
   className,
   height = "44px",
-  width,
+  width = "100%",
   fontSize = "14px",
   onClick = () => {},
 }: ButtonSubmitProps) {

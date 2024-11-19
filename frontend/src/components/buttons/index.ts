@@ -8,3 +8,11 @@ export {
   ButtonSignUpFacebook,
   ButtonSignUpGoogle,
 } from "./ButtonThirdParty";
+
+export {
+  ButtonFacebook,
+  ButtonTwitter,
+  ButtonInstagram,
+  ButtonYoutube,
+  ButtonSocialMedia,
+} from "./ButtonSocialMedias";

@@ -4,6 +4,7 @@ import { LocationInfo, SalaryInfo } from "../company";
 import { CiBookmark } from "react-icons/ci";
 import { ButtonOutline } from "../buttons";
 import { FiArrowRight } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 interface JobGridProps {
   _id?: string;
@@ -27,6 +28,7 @@ export default function JobGrid({
   maxSalary = 0,
   isFeatured = false,
 }: JobGridProps) {
+  const navigate = useNavigate();
   return (
     <div
       className={`w-full p-5 border-[1px] border-[--gray-100] rounded-lg bg-gradient-to-r ${
@@ -90,6 +92,9 @@ export default function JobGrid({
             border="0px"
             isHover={false}
             className="w-[100px]"
+            onClick={() => {
+              navigate(`/jobs/${_id}`);
+            }}
           />
         </div>
       </div>

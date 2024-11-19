@@ -54,6 +54,12 @@ router.route("/").get(
   asyncHandler(jobController.findJobs)
 );
 
+router.route("/:id").get(
+  // #swagger.tags = ['Job']
+  // #swagger.summary = 'Find job'
+  asyncHandler(jobController.findJob)
+);
+
 // authentication
 router.use(authentication);
 //////////////////

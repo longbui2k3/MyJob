@@ -15,4 +15,4 @@ export {
 } from "./companyAPI";
 export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";
-export { FindJobsAPI } from "./jobAPI";
+export { FindJobsAPI, FindJobAPI } from "./jobAPI";

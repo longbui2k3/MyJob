@@ -1,5 +1,6 @@
 import { PiCurrencyDollarLight } from "react-icons/pi";
-import Info from "./Info";
+import { Info } from "../../global";
+
 interface SalaryInfoProps {
   info?: string;
 }

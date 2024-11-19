@@ -22,7 +22,7 @@ class BaseRepo {
       unselect,
       populates,
     });
-
+    result = result.lean();
     return await result;
   }
 

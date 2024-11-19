@@ -28,6 +28,16 @@ class JobController {
         jobs: result.data,
         meta: result.meta,
       },
+    });
+  };
+  findJob = async (req, res, next) => {
+    const result = await JobService.findJob(req.params.id);
+
+    return new OK({
+      message: "Find job successfully",
+      metadata: {
+        job: result,
+      },
     }).send(res);
   };
 
