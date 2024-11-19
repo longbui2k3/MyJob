@@ -4,6 +4,7 @@ const jobRepo = require("../models/repos/job.repo");
 const companyRepo = require("../models/repos/company.repo");
 const { convertToObjectId, removeUndefinedInObject } = require("../utils");
 const { BadRequestError } = require("../core/error.response");
+const jobModel = require("../models/job.model");
 class JobService {
   static deleteJob = async (id) => {
     const checkJobExists = await jobRepo.findJobById(id);
@@ -70,6 +71,22 @@ class JobService {
           },
         ],
         populateMatches: [],
+      }
+    );
+  };
+
+  static findJobsByCompany = async (userId, { page, limit, status }) => {
+    const company = await companyRepo.findOne({
+      user: convertToObjectId(userId),
+    });
+    if (!company) throw new BadRequestError("Company not found!");
+    await jobRepo.updateExpiredJobs();
+    return await jobRepo.find(
+      removeUndefinedInObject({ "company._id": company._id, status }),
+      {
+        page,
+        limit,
+        sort: ["createdAt"],
       }
     );
   };

@@ -23,6 +23,14 @@ class JobRepo extends BaseRepo {
       new: true,
     });
   }
+
+  async updateExpiredJobs() {
+    return await this.updateMany(
+      { expirationDate: { $lt: new Date() } },
+      { $set: { status: JobStatuses.EXPIRED } }
+    );
+  }
+
   async updateCompanyForJob(companyId, companyData) {
     return await this.updateMany(
       { "company._id": companyId },
@@ -40,7 +48,7 @@ class JobRepo extends BaseRepo {
   async createJob(data) {
     return await this.create({
       ...data,
-      status: JobStatuses.PENDING,
+      status: JobStatuses.ACTIVE,
     });
   }
 }

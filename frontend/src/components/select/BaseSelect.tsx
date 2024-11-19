@@ -13,6 +13,7 @@ export default function BaseSelect({
   width,
   label,
   options,
+  className,
   value,
   onChange,
 }: BaseSelectProps) {
@@ -20,7 +21,7 @@ export default function BaseSelect({
     onChange(e.target.value);
   };
   return (
-    <div>
+    <div className={`${className}`}>
       {label ? <div className="font-normal text-sm mb-2">{label}</div> : ""}
       <Select
         placeholder="Select..."

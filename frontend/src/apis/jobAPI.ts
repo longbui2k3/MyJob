@@ -15,6 +15,17 @@ export const FindJobsAPI = async (query: {
   });
 };
 
+export const FindJobsByCompanyAPI = async (query: {
+  page?: number;
+  limit?: number;
+  status?: string;
+}) => {
+  return await BaseAPI({
+    path: `/job/myjobs?${changeQueryObjToQueryStr(query)}`,
+    method: HttpMethods.GET,
+  });
+};
+
 export const CreateJobAPI = async (body: {
   jobTitle: string;
   category: string;

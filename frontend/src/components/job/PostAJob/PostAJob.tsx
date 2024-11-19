@@ -148,7 +148,7 @@ export default function PostAJob() {
       jobResponsibilities,
     });
     console.log(data);
-    if (data.status === 201) {
+    if (data.isSuccess) {
       console.log("create job thanh cong");
     } else {
       console.log("create job that bai");

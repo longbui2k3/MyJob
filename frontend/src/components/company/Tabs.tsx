@@ -192,7 +192,7 @@ export default function Tabs() {
       email: email,
     });
     console.log(data);
-    if (data.status === 201) {
+    if (data.isSuccess) {
       console.log("tao cong ty thanh cong");
       setTimeout(() => {
         navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
@@ -224,7 +224,7 @@ export default function Tabs() {
       email: email,
     });
     console.log(data);
-    if (data.status === 200) {
+    if (data.isSuccess) {
       console.log("cap nhat cong ty thanh cong");
     } else {
       console.log("cap nhat cong ty that bai");
