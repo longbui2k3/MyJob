@@ -15,6 +15,18 @@ class JobController {
       },
     }).send(res);
   };
+
+  findJob = async (req, res, next) => {
+    const result = await JobService.findJob(req.params.id);
+
+    return new OK({
+      message: "Find job successfully",
+      metadata: {
+        job: result,
+      },
+    }).send(res);
+  };
+
   deleteJob = async (req, res, next) => {
     const result = await JobService.deleteJob(req.params.id);
 

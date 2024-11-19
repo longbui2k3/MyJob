@@ -61,6 +61,12 @@ const hashString = (str) => {
 const createTokenString = (size) => {
   return crypto.randomBytes(size).toString("hex");
 };
+
+const flattenQueryArray = (query) => {
+  if (!query) return [];
+  if (!Array.isArray(query)) query = [query];
+  return query;
+};
 module.exports = {
   getInfoData,
   getSelectData,
@@ -70,4 +76,5 @@ module.exports = {
   changePopulateStringToObject,
   hashString,
   createTokenString,
+  flattenQueryArray,
 };

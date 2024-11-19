@@ -1,5 +1,5 @@
 import { CiLocationOn } from "react-icons/ci";
-import Info from "./Info";
+import { Info } from "../../global";
 interface LocationInfoProps {
   info?: string;
 }

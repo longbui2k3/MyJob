@@ -23,7 +23,15 @@ export function checkIsValidEmail(email: string) {
 export function changeQueryObjToQueryStr(queryObj: { [key: string]: any }) {
   queryObj = removeUndefinedInObject(queryObj);
   return Object.keys(queryObj)
-    .map((key) => `${key}=${queryObj[key]}`)
+    .map((key) => {
+      if (Array.isArray(queryObj[key])) {
+        if (queryObj[key].length === 1) {
+          return `${key}=${queryObj[key][0]}`;
+        }
+        return queryObj[key].map((value) => `${key}=${value}`).join("&");
+      }
+      return `${key}=${queryObj[key]}`;
+    })
     .join("&");
 }
 
@@ -44,4 +52,9 @@ export const removeUndefinedInObject = (obj: { [key: string]: any }) => {
     if (obj[key] === undefined) delete obj[key];
   });
   return obj;
+};
+
+export const changeDateToString = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return `${date.toDateString().split(" ").slice(1).join(" ")}`;
 };

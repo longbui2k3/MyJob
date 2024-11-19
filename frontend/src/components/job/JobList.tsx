@@ -24,6 +24,24 @@ export default function JobList() {
       search: searchParams.get("search") || undefined,
       provinceCode: provinceCode ? Number(provinceCode) : undefined,
       category: searchParams.get("category") || undefined,
+      experiences:
+        (searchParams.get("experiences") &&
+          searchParams.get("experiences")?.split("_")) ||
+        undefined,
+      educations:
+        (searchParams.get("educations") &&
+          searchParams.get("educations")?.split("_")) ||
+        undefined,
+      jobLevels:
+        (searchParams.get("jobLevels") &&
+          searchParams.get("jobLevels")?.split("_")) ||
+        undefined,
+      jobTypes:
+        (searchParams.get("jobTypes") &&
+          searchParams.get("jobTypes")?.split("_")) ||
+        undefined,
+      salaryMin: searchParams.get("salary_min") || undefined,
+      salaryMax: searchParams.get("salary_max") || undefined,
     });
     if (data.isSuccess) {
       setJobs(data.metadata.jobs);
@@ -33,18 +51,13 @@ export default function JobList() {
   useEffect(() => {
     setCurPage(1);
     findJobs(1);
-  }, [
-    limit,
-    searchParams.get("search"),
-    searchParams.get("provinceCode"),
-    searchParams.get("category"),
-  ]);
+  }, [limit]);
   useEffect(() => {
     findJobs(curPage);
   }, [curPage]);
   const Jobs = {
     GRID: () => (
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         {jobs.map((job) => (
           <JobGrid
             _id={job._id}

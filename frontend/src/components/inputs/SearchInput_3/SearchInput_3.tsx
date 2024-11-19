@@ -18,6 +18,16 @@ export default function SearchInput_3() {
     setProvinceCode,
     search,
     setSearch,
+    experiences,
+    setExperiences,
+    educations,
+    setEducations,
+    jobLevels,
+    setJobLevels,
+    jobTypes,
+    setJobTypes,
+    salary,
+    setSalary,
   } = useSearchInput_3();
   const [isOpenAdvanceFilter, setIsOpenAdvanceFilter] = useState(false);
   const searchRef = useRef<any>(null);
@@ -37,12 +47,16 @@ export default function SearchInput_3() {
 
   return (
     <div className="relative">
-      <div className="flex w-full bg-white rounded-[10px]" ref={searchRef}>
+      <div
+        className="search-input-3 flex w-full bg-white rounded-[10px]"
+        ref={searchRef}
+      >
         <SearchJobInput
           width="400px"
           height="50px"
           setSearch={setSearch}
           search={search}
+          placeholder="Job title"
         />
         <LocationSelect
           height="50px"
@@ -79,6 +93,16 @@ export default function SearchInput_3() {
             if (search) query["search"] = search;
             if (provinceCode) query["provinceCode"] = provinceCode;
             if (category) query["category"] = category;
+            if (experiences.length)
+              query["experiences"] = experiences.join("_");
+            if (educations.length) query["educations"] = educations.join("_");
+            if (salary) {
+              const [salary_min, salary_max] = salary.split("-");
+              query["salary_min"] = salary_min;
+              query["salary_max"] = salary_max;
+            }
+            if (jobTypes.length) query["jobTypes"] = jobTypes.join("_");
+            if (jobLevels.length) query["jobLevels"] = jobLevels.join("_");
             navigate(`?${changeQueryObjToQueryStr(query)}`);
             navigate(0);
           }}
@@ -87,6 +111,17 @@ export default function SearchInput_3() {
       <AdvanceFilter
         ref={advanceFilterRef}
         isOpenAdvanceFilter={isOpenAdvanceFilter}
+        setIsOpenAdvanceFilter={setIsOpenAdvanceFilter}
+        experiences={experiences}
+        setExperiences={setExperiences}
+        educations={educations}
+        setEducations={setEducations}
+        jobLevels={jobLevels}
+        setJobLevels={setJobLevels}
+        jobTypes={jobTypes}
+        setJobTypes={setJobTypes}
+        salary={salary}
+        setSalary={setSalary}
       />
     </div>
   );

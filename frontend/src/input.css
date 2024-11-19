@@ -27,4 +27,15 @@
   --danger-50: #fceeee;
   --danger-500: #e05151;
   --featured: #fff6e6;
+  --facebook: #0a65cc;
+  --twitter: #1da1f2;
+  --instagram: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
+  --youtube: #cd201f;
 }

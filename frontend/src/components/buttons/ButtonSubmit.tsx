@@ -6,6 +6,7 @@ interface ButtonSubmitProps {
   isLoading?: boolean;
   className?: string;
   height?: string;
+  width?: string;
   fontSize?: string;
   onClick?: (e) => void;
 }
@@ -15,6 +16,7 @@ export default function ButtonSubmit({
   isLoading = false,
   className,
   height = "44px",
+  width = "100%",
   fontSize = "14px",
   onClick = () => {},
 }: ButtonSubmitProps) {
@@ -23,6 +25,7 @@ export default function ButtonSubmit({
       type="submit"
       className={`w-full rounded-[8px] bg-primary-500 text-white ${className}`}
       height={height}
+      width={width}
       fontSize={fontSize}
       bg="--primary-500"
       color="--white"

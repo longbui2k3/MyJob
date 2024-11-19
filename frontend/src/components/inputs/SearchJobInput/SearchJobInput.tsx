@@ -6,6 +6,7 @@ interface SearchJobInputProps {
   height?: string;
   search?: string | null;
   setSearch?: React.Dispatch<React.SetStateAction<string | null>>;
+  placeholder?: string;
 }
 
 export default function SearchJobInput({
@@ -13,6 +14,7 @@ export default function SearchJobInput({
   height,
   search = "",
   setSearch = () => {},
+  placeholder = "Job title, keyword, company,...",
 }: SearchJobInputProps) {
   return (
     <InputGroup width={width} bg="white">
@@ -21,7 +23,7 @@ export default function SearchJobInput({
       </InputLeftElement>
       <Input
         type="text"
-        placeholder="Job title, keyword, company,..."
+        placeholder={placeholder}
         fontSize="14px"
         height={height}
         value={search || ""}

@@ -1,4 +1,4 @@
-export default function FacebookIcon(body: { className: string | undefined }) {
+export default function FacebookIcon(body: { className?: string | undefined }) {
   return (
     <span aria-hidden="true" className={body.className}>
       <svg

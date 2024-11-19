@@ -1,5 +1,5 @@
-import Info from "./Info";
 import { CiCalendar } from "react-icons/ci";
+import { Info } from "../../global";
 interface DeadlineInfoProps {
   info?: string;
 }
