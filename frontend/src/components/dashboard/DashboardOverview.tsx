@@ -1,5 +1,5 @@
 import { useAuthContext } from "../../context";
-import { CandidateOverview } from "../overview";
+import { CandidateOverview, EmployerOverview } from "../overview";
 
 export default function DashboardOverview() {
   const { user } = useAuthContext();
@@ -11,7 +11,9 @@ export default function DashboardOverview() {
           <CandidateOverview />
         </div>
       ) : (
-        <div>overview employer</div>
+        <div>
+          <EmployerOverview />
+        </div>
       )}
     </>
   );

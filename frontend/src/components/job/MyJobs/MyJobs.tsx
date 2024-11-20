@@ -25,7 +25,12 @@ import MyJobInfo from "./MyJobInfo";
 import MyJobStatus from "./MyJobStatus";
 import { FindJobsAPI, GetMyCompanyAPI } from "../../../apis";
 
-export default function MyJobs() {
+interface MyJobsProps {
+  isCheck?: boolean;
+  limit?: number;
+}
+
+export default function MyJobs({ isCheck, limit }: MyJobsProps) {
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
   const [status, setStatus] = useState<string | undefined>();
@@ -37,7 +42,7 @@ export default function MyJobs() {
     if (company.isSuccess) {
       const data = await FindJobsAPI({
         companyId: company.metadata._id,
-        limit: 6,
+        limit: limit,
         page: curPage,
         status,
       });
@@ -60,20 +65,27 @@ export default function MyJobs() {
   console.log(jobs);
   return (
     <>
-      <div className="flex justify-between mb-3">
-        <div className="flex space-x-2">
-          <Heading5 name="My Jobs"></Heading5>
-          <div className="font-normal text-xl text-gray-500">({jobsCount})</div>
+      {isCheck ? (
+        <div className="flex justify-between mb-3">
+          <div className="flex space-x-2">
+            <Heading5 name="My Jobs"></Heading5>
+            <div className="font-normal text-xl text-gray-500">
+              ({jobsCount})
+            </div>
+          </div>
+          <BaseSelect
+            label="Job status"
+            options={["Active", "Expired"]}
+            className="flex space-x-3 items-center"
+            width="120px"
+            value={status}
+            onChange={handleStatusChange}
+          />
         </div>
-        <BaseSelect
-          label="Job status"
-          options={["Active", "Expired"]}
-          className="flex space-x-3 items-center"
-          width="120px"
-          value={status}
-          onChange={handleStatusChange}
-        />
-      </div>
+      ) : (
+        ""
+      )}
+
       <div>
         <TableContainer>
           <Table variant="simple">
@@ -118,7 +130,7 @@ export default function MyJobs() {
                           <MenuItem icon={<MdOutlineModeEdit size={20} />}>
                             Edit Job
                           </MenuItem>
-                          <MenuItem icon={<CiCircleRemove size={20} onCl/>}>
+                          <MenuItem icon={<CiCircleRemove size={20} onCl />}>
                             Make it Expire
                           </MenuItem>
                         </MenuList>
@@ -130,8 +142,11 @@ export default function MyJobs() {
             </Tbody>
           </Table>
         </TableContainer>
-
-        <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />
+        {isCheck ? (
+          <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
