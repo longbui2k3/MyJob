@@ -38,7 +38,7 @@ export default function EmployerOverview() {
       </div>
       <div>
         <div className="flex items-center justify-between mb-2">
-          <Heading6 name="Recently Applied" />
+          <Heading6 name="Recently Posted Jobs" />
           <ButtonOutline
             children={"View all"}
             rightIcon={<FiArrowRight className="text-[18px]" />}

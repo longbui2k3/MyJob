@@ -130,7 +130,7 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
                           <MenuItem icon={<MdOutlineModeEdit size={20} />}>
                             Edit Job
                           </MenuItem>
-                          <MenuItem icon={<CiCircleRemove size={20} onCl />}>
+                          <MenuItem icon={<CiCircleRemove size={20} />}>
                             Make it Expire
                           </MenuItem>
                         </MenuList>

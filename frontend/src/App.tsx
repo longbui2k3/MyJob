@@ -44,11 +44,13 @@ import {
   DashboardMyJobs,
   DashboardOverview,
   DashboardPostAJob,
+  DashboardSavedCandidate,
   DashboardSettings,
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 import {
   DASHBOARD_APPLIED_JOBS_KEY,
+  DASHBOARD_SAVED_CANDIDATE_KEY,
   JOB_DETAIL_KEY,
 } from "./helpers/constants/routes";
 
@@ -126,6 +128,10 @@ const DashboardRoutes = [
   {
     route: getRoute(DASHBOARD_MY_JOBS_KEY),
     element: <DashboardMyJobs />,
+  },
+  {
+    route: getRoute(DASHBOARD_SAVED_CANDIDATE_KEY),
+    element: <DashboardSavedCandidate />,
   },
   {
     route: getRoute(DASHBOARD_APPLIED_JOBS_KEY),

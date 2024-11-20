@@ -120,7 +120,7 @@ class JobService {
         page,
         limit,
         search,
-        sort: ["createdAt"],
+        sort: ["-createdAt"],
         populates: ["category"],
         populateSelects: [
           {
