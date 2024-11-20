@@ -16,20 +16,6 @@ class JobController {
     }).send(res);
   };
 
-  findJobsByCompany = async (req, res, next) => {
-    const result = await JobService.findJobsByCompany(
-      req.user.userId,
-      req.query
-    );
-
-    return new OK({
-      message: "Find jobs successfully",
-      metadata: {
-        jobs: result.data,
-        meta: result.meta,
-      },
-    });
-  };
   findJob = async (req, res, next) => {
     const result = await JobService.findJob(req.params.id);
 

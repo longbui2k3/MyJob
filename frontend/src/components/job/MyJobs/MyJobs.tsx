@@ -14,16 +14,16 @@ import {
 } from "@chakra-ui/react";
 import { Heading5 } from "../../headings";
 import { BaseSelect } from "../../select";
-import JobInfo from "./JobInfo";
-import JobStatus from "./JobStatus";
 import { PiUsers } from "react-icons/pi";
 import { ButtonSolid_2 } from "../../buttons";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdOutlineModeEdit } from "react-icons/md";
-import { FindJobsByCompanyAPI } from "../../../apis/jobAPI";
 import { useEffect, useState } from "react";
 import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
+import MyJobInfo from "./MyJobInfo";
+import MyJobStatus from "./MyJobStatus";
+import { FindJobsAPI, GetMyCompanyAPI } from "../../../apis";
 
 export default function MyJobs() {
   const { curPage, setCurPage } = usePagination();
@@ -32,27 +32,32 @@ export default function MyJobs() {
   const [jobs, setJobs] = useState<Array<any>>([]);
   const [jobsCount, setJobsCount] = useState<number>(0);
 
-  async function findJobsbyCompany() {
-    const data = await FindJobsByCompanyAPI({
-      limit: jobsCount,
-      page: curPage,
-      status,
-    });
-    if (data.isSuccess) {
-      setJobs(data.metadata.jobs);
-      setSize(data.metadata.meta.size);
+  async function findJobs() {
+    const company = await GetMyCompanyAPI();
+    if (company.isSuccess) {
+      const data = await FindJobsAPI({
+        companyId: company.metadata._id,
+        limit: 6,
+        page: curPage,
+        status,
+      });
+      if (data.isSuccess) {
+        setJobs(data.metadata.jobs);
+        setSize(data.metadata.meta.size);
+      }
+      const jobsData = await FindJobsAPI({ companyId: company.metadata._id });
+      if (jobsData.isSuccess) setJobsCount(jobsData.metadata.jobs.length);
     }
-    const jobsData = await FindJobsByCompanyAPI({});
-    if (jobsData.isSuccess) setJobsCount(jobsData.metadata.jobs.length);
   }
   useEffect(() => {
-    findJobsbyCompany();
+    findJobs();
   }, [curPage, status]);
 
   const handleStatusChange = (value: string) => {
     if (value === "") setStatus(undefined);
     else setStatus(value);
   };
+  console.log(jobs);
   return (
     <>
       <div className="flex justify-between mb-3">
@@ -84,14 +89,14 @@ export default function MyJobs() {
               {jobs.map((job) => (
                 <Tr key={job.id}>
                   <Td>
-                    <JobInfo
+                    <MyJobInfo
                       jobTitle={job.jobTitle}
                       jobType={job.jobType}
                       expirationDate={job.expirationDate}
                     />
                   </Td>
                   <Td>
-                    <JobStatus status={job.status} />
+                    <MyJobStatus status={job.status} />
                   </Td>
                   <Td>
                     <div className="flex space-x-1 text-sm">

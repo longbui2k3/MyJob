@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-interface JobInfoProps {
+interface MyJobInfoProps {
   jobTitle?: string;
   jobType?: string;
   expirationDate?: string;
 }
-export default function JobInfo({
+export default function MyJobInfo({
   jobTitle,
   jobType,
   expirationDate,
-}: JobInfoProps) {
+}: MyJobInfoProps) {
   const [daysRemaining, setDaysRemaining] = useState<number>(0);
   const handleDaysRemaining = (date?: string): number => {
     if (!date) return 0;

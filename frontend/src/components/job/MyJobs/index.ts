@@ -1,3 +1,3 @@
 export { default as MyJobs } from "./MyJobs";
-export { default as JobInfo } from "./JobInfo";
-export { default as JobStatus } from "./JobStatus";
+export { default as MyJobInfo } from "./MyJobInfo";
+export { default as MyJobStatus } from "./MyJobStatus";

@@ -38,10 +38,24 @@ router.route("/").get(
     }
   */
   /*
+    #swagger.parameters["companyId"] = {
+      "in": "query",
+      "type": "string",
+      "description": "company Id"
+    }
+  */
+  /*
     #swagger.parameters["category"] = {
       "in": "query",
       "type": "string",
       "description": "Category"
+    }
+  */
+  /*
+    #swagger.parameters["status"] = {
+      "in": "query",
+      "type": "string",
+      "description": "Status"
     }
   */
   /*
@@ -125,34 +139,4 @@ router.route("/:id").delete(
   asyncHandler(jobController.deleteJob)
 );
 
-router.route("/myjobs").get(
-  // #swagger.tags = ['Job']
-  // #swagger.summary = 'Find jobs by company'
-  /* #swagger.parameters["page"] = {
-    "in": "query",
-    "type": "number",
-    "description": "Page"
-  }
-  */
-  /*
-    #swagger.parameters["limit"] = {
-      "in": "query",
-      "type": "number",
-      "description": "Limit"
-    }
-  */
-  /*
-    #swagger.parameters["status"] = {
-      "in": "query",
-      "type": "string",
-      "description": "Status"
-    }
-  */
-  /* #swagger.security = [{
-      "apiKeyAuth": [],
-      "clientId": []
-    }] 
-  */
-  asyncHandler(jobController.findJobsByCompany)
-);
 module.exports = router;
