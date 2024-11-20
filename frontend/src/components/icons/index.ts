@@ -8,3 +8,5 @@ export { default as GlobeSimpleIcon } from "./GlobeSimpleIcon";
 export { default as UserCircleIcon } from "./UserCircleIcon";
 export { default as UserIcon } from "./UserIcon";
 export { default as InstagramIcon } from "./InstagramIcon";
+export { default as JobIcon } from "./JobIcon";
+export { default as SavedIcon } from "./SavedIcon";

@@ -5,6 +5,7 @@ interface ButtonOutlineProps {
   className?: string;
   border?: string;
   leftIcon?: JSX.Element;
+  rightIcon?: JSX.Element;
   onClick?: (e) => void;
   isHover?: boolean;
 }
@@ -14,6 +15,7 @@ export default function ButtonOutline({
   className,
   border = "1px",
   leftIcon,
+  rightIcon,
   onClick = (e) => {},
   isHover = true,
 }: ButtonOutlineProps) {
@@ -30,6 +32,7 @@ export default function ButtonOutline({
           : { bg: "white", color: "var(--primary-500)" }
       }
       leftIcon={leftIcon}
+      rightIcon={rightIcon}
       onClick={onClick}
     >
       {children}

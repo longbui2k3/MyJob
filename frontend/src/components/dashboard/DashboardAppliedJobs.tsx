@@ -1,5 +1,5 @@
 import { AppliedJobs } from "../job/AppliedJobs";
 
 export default function DashboardAppliedJobs() {
-  return <AppliedJobs />;
+  return <AppliedJobs isCheck={true} />;
 }
