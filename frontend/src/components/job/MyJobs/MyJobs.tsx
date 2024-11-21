@@ -24,6 +24,9 @@ import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
 import MyJobStatus from "./MyJobStatus";
 import { FindJobsAPI, GetMyCompanyAPI } from "../../../apis";
+import { getRoute } from "../../../helpers/constants";
+import { useNavigate } from "react-router-dom";
+import { DASHBOARD_EDIT_JOB_KEY } from "../../../helpers/constants/routes";
 
 interface MyJobsProps {
   isCheck?: boolean;
@@ -31,6 +34,7 @@ interface MyJobsProps {
 }
 
 export default function MyJobs({ isCheck, limit }: MyJobsProps) {
+  const navigate = useNavigate();
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
   const [status, setStatus] = useState<string | undefined>();
@@ -127,7 +131,14 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
                           variant="outline"
                         />
                         <MenuList>
-                          <MenuItem icon={<MdOutlineModeEdit size={20} />}>
+                          <MenuItem
+                            onClick={() => {
+                              navigate(getRoute(DASHBOARD_EDIT_JOB_KEY).path, {
+                                replace: true,
+                              });
+                            }}
+                            icon={<MdOutlineModeEdit size={20} />}
+                          >
                             Edit Job
                           </MenuItem>
                           <MenuItem icon={<CiCircleRemove size={20} />}>
