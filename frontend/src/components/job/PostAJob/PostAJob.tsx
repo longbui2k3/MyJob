@@ -7,10 +7,14 @@ import Salary from "./Salary";
 import { ButtonSubmit } from "../../buttons";
 import { useEffect, useState } from "react";
 import { FindAllCategoriesAPI } from "../../../apis";
-import { CreateJobAPI } from "../../../apis/jobAPI";
+import { CreateJobAPI, FindJobAPI } from "../../../apis/jobAPI";
 import { Select } from "@chakra-ui/react";
 
-export default function PostAJob() {
+interface PostAJobProps {
+  jobId?: string;
+}
+
+export default function PostAJob({ jobId }: PostAJobProps) {
   const [categories, setCategories] = useState<Array<any>>([]);
   async function findAllCategories() {
     const limit = 8;
@@ -125,6 +129,47 @@ export default function PostAJob() {
   const handleJobResponsibilitiesChange = (value: string) => {
     setJobResponsibilities(value);
   };
+
+  const [jobData, setJobData] = useState<any>(null);
+
+  async function FindJob(id: string) {
+    const data = await FindJobAPI(id);
+
+    if (data.isSuccess) setJobData(data.metadata.job);
+  }
+
+  useEffect(() => {
+    if (jobId) FindJob(jobId);
+  }, []);
+
+  useEffect(() => {
+    if (jobData) {
+      setJobTitle(jobData.jobTitle);
+      // if (Array.isArray(jobData.tags)) {
+      //   setTags(jobData.join(", "));
+      // } else {
+      //   setTags([]);
+      // }
+      setCategory(jobData.category);
+      setJobRole(jobData.jobRole);
+      setMinSalary(jobData.minSalary);
+      setMaxSalary(jobData.maxSalary);
+      setSalaryType(jobData.salaryType);
+      setEducation(jobData.education);
+      setExperience(jobData.experience);
+      setJobType(jobData.jobType);
+      setVacancies(jobData.vacancies);
+      setExpirationDate(jobData.expirationDate);
+      setJobLevel(jobData.jobLevel);
+      setApplyJobOn(jobData.applyJobOn);
+      setJobDescription(jobData.jobDescription);
+      setJobResponsibilities(jobData.setJobResponsibilities);
+    }
+  }, [jobData]);
+
+  useEffect(() => {
+    console.log("jobTitle: ", jobData);
+  }, [jobData]);
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();

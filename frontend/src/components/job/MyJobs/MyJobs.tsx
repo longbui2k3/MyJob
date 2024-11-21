@@ -66,7 +66,6 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
     if (value === "") setStatus(undefined);
     else setStatus(value);
   };
-  console.log(jobs);
   return (
     <>
       {isCheck ? (
@@ -103,7 +102,7 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
             </Thead>
             <Tbody>
               {jobs.map((job) => (
-                <Tr key={job.id}>
+                <Tr key={job._id}>
                   <Td>
                     <MyJobInfo
                       jobTitle={job.jobTitle}
@@ -133,9 +132,15 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
                         <MenuList>
                           <MenuItem
                             onClick={() => {
-                              navigate(getRoute(DASHBOARD_EDIT_JOB_KEY).path, {
-                                replace: true,
-                              });
+                              navigate(
+                                getRoute(DASHBOARD_EDIT_JOB_KEY).path.replace(
+                                  ":jobId",
+                                  job._id
+                                ),
+                                {
+                                  replace: true,
+                                }
+                              );
                             }}
                             icon={<MdOutlineModeEdit size={20} />}
                           >

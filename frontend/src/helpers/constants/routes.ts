@@ -173,7 +173,7 @@ const ROUTES: Array<RouteItem> = [
               {
                 key: DASHBOARD_EDIT_JOB_KEY,
                 name: "Dashboard Edit Job ",
-                path: "/dashboard/my-jobs/edit-job",
+                path: "/dashboard/my-jobs/:jobId",
                 isPrivate: true,
               },
             ],
