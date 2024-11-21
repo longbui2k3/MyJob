@@ -43,6 +43,15 @@ router.route("/").get(
   */
   asyncHandler(companyController.findCompanies)
 );
+
+router.route("/:id").get(
+  asyncHandler(
+    // #swagger.tags = ['Company']
+    // #swagger.summary = 'Find company'
+    companyController.findCompany
+  )
+);
+
 // authentication
 router.use(authentication);
 //////////////////

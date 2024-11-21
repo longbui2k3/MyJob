@@ -61,7 +61,7 @@ export default function CompanyProfile({ job }: { job: any }) {
           <Info {...info} />
         ))}
       </div>
-      <div className="flex flex-col gap-3 mt-3">
+      <div className="flex flex-col gap-3 mt-2">
         <Text className="mt-[0px]">Social medias:</Text>
         <div className="grid grid-cols-3">
           {job?.company?.socialMedias.map((socialMedia: any) => (

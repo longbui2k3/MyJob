@@ -37,7 +37,11 @@ import {
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { PageFindEmployers, PageJobDetail } from "./pages/home";
+import {
+  PageEmployerDetail,
+  PageFindEmployers,
+  PageJobDetail,
+} from "./pages/home";
 import {
   DashboardAppliedJobs,
   DashboardCategory,
@@ -54,6 +58,7 @@ import {
   DASHBOARD_EDIT_JOB_KEY,
   DASHBOARD_FAVORITE_JOBS_KEY,
   DASHBOARD_SAVED_CANDIDATE_KEY,
+  EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
 } from "./helpers/constants/routes";
 import { EditJob } from "./components/job/MyJobs";
@@ -113,6 +118,10 @@ const OtherRoutes = [
   {
     route: getRoute(JOB_DETAIL_KEY),
     element: <PageJobDetail />,
+  },
+  {
+    route: getRoute(EMPLOYER_DETAIL_KEY),
+    element: <PageEmployerDetail />,
   },
 ];
 

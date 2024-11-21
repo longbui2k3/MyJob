@@ -9,6 +9,7 @@ const category = require("./category");
 const user = require("./user");
 const otp = require("./otp");
 const profile = require("./profile");
+const favoriteJob = require("./favoriteJob");
 const swagger = require("../../swagger-output.json");
 const router = express.Router();
 router.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swagger));
@@ -23,6 +24,7 @@ router.use("/api/v1/job", job);
 router.use("/api/v1/category", category);
 router.use("/api/v1/otp", otp);
 router.use("/api/v1/profile", profile);
+router.use("/api/v1/favoriteJob", favoriteJob);
 router.use("/api/v1", authen);
 
 module.exports = router;

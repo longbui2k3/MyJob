@@ -56,7 +56,7 @@ const AdvanceFilter = forwardRef<HTMLDivElement, AdvanceFilterProps>(
         className={`${
           isOpenAdvanceFilter
             ? "z-[2] visible transform opacity-100 scale-100"
-            : "z-[0] transform opacity-0 scale-95"
+            : "z-[-10] transform opacity-0 scale-95"
         } absolute flex top-[60px] bg-white h-[400px] border-[--gray-100] border-[1px] rounded-md transition ease-out duration-100`}
         ref={innerRef}
       >

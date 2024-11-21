@@ -77,10 +77,10 @@ class JobService {
     salaryMin = salaryMin ? Number(salaryMin) : undefined;
     salaryMax = salaryMax ? Number(salaryMax) : undefined;
     await jobRepo.updateExpiredJobs();
-    return await jobRepo.find(
+    const job = await jobRepo.find(
       removeUndefinedInObject({
         "company.provinceCode": provinceCode - 0 || undefined,
-        "company._id": companyId,
+        "company._id": companyId || undefined,
         category,
         status,
         experience: experiences.length
@@ -130,6 +130,7 @@ class JobService {
         populateMatches: [],
       }
     );
+    return job;
   };
 
   static findJob = async (id) => {

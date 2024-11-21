@@ -1,36 +1,35 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import provinces from "../../../data/provinces.json";
 import { useEffect, useState } from "react";
-import { GoChevronDown, GoChevronUp } from "react-icons/go";
-import { SlLocationPin } from "react-icons/sl";
-interface LocationSelectProps {
+import { GoChevronDown, GoChevronUp, GoOrganization } from "react-icons/go";
+import { OrganizationTypes } from "../../../helpers/constants";
+interface OrganizationTypeSelectProps {
   width?: string;
   height?: string;
   className?: string;
-  provinceCode?: number;
-  setProvinceCode?: React.Dispatch<React.SetStateAction<number>>;
+  organizationType?: number;
+  setOrganizationType?: React.Dispatch<React.SetStateAction<number>>;
   onClick?: (e) => void;
 }
-export default function LocationSelect({
+export default function OrganizationTypeSelect({
   width = "200px",
   height = "",
   className = "",
-  provinceCode = 0,
-  setProvinceCode = () => {},
+  organizationType = -1,
+  setOrganizationType = () => {},
   onClick = (e) => {},
-}: LocationSelectProps) {
+}: OrganizationTypeSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [optionName, setOptionName] = useState("Select Location");
-  const locations = provinces.map((province) => {
+  const [optionName, setOptionName] = useState("Select organization type");
+  const organizationTypes = OrganizationTypes.map((organizationType, i) => {
     return {
-      label: province.english_name,
-      value: province.code,
+      label: organizationType,
+      value: i,
     };
   });
   useEffect(() => {
     setOptionName(
-      provinces.find((province) => province.code === provinceCode)
-        ?.english_name || "Select Location"
+      OrganizationTypes.find((__, i) => i === organizationType) ||
+        "Select organization type"
     );
   }, []);
   return (
@@ -43,7 +42,7 @@ export default function LocationSelect({
         className={`${className}`}
         fontSize="14px"
         leftIcon={
-          <SlLocationPin size={"24px"} className="text-[--primary-500]" />
+          <GoOrganization size={"24px"} className="text-[--primary-500]" />
         }
         rightIcon={
           isOpen ? (
@@ -73,7 +72,7 @@ export default function LocationSelect({
       </MenuButton>
       <MenuList
         style={{
-          height: "360px",
+          height: "285px",
           width: `calc(${width} - 20px)`,
           overflowY: "auto",
         }}
@@ -81,23 +80,23 @@ export default function LocationSelect({
         <MenuItem
           fontSize={"14px"}
           onClick={() => {
-            setOptionName("Select Location");
-            setProvinceCode(0);
+            setOptionName("Select organization type");
+            setOrganizationType(-1);
           }}
         >
-          {"Select Location"}
+          {"Select organization type"}
         </MenuItem>
-        {locations.map((location) => (
+        {organizationTypes.map((organizationType) => (
           <MenuItem
-            value={location.value}
+            value={organizationType.value}
             fontSize={"14px"}
             onClick={() => {
               setIsOpen(!isOpen);
-              setOptionName(location.label);
-              setProvinceCode(location.value);
+              setOptionName(organizationType.label);
+              setOrganizationType(organizationType.value);
             }}
           >
-            {location.label}
+            {organizationType.label}
           </MenuItem>
         ))}
       </MenuList>

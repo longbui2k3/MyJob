@@ -5,6 +5,8 @@ const companyRepo = require("../models/repos/company.repo");
 const UploadFiles = require("../utils/uploadFiles");
 const { BadRequestError } = require("../core/error.response");
 const jobRepo = require("../models/repos/job.repo");
+const { removeUndefinedInObject } = require("../utils");
+const { OrganizationTypes } = require("../helpers/constants");
 
 class CompanyService {
   static getMyCompany = async (userId) => {
@@ -92,15 +94,33 @@ class CompanyService {
       file
     ).uploadFileAndDownloadURL();
   }
-  static findCompanies = async ({ page, limit, search, ...props }) => {
+  static findCompanies = async ({
+    page,
+    limit,
+    search,
+    provinceCode = 0,
+    organizationType,
+  }) => {
+    organizationType = Object.values(OrganizationTypes)[organizationType];
     return await companyRepo.find(
-      {},
+      removeUndefinedInObject({
+        provinceCode: provinceCode - 0 || undefined,
+        organizationType,
+      }),
       {
         page,
         limit,
         search,
       }
     );
+  };
+
+  static findCompany = async (id) => {
+    const company = await companyRepo.findById(id);
+    if (!company) {
+      throw new Error("Company not found!");
+    }
+    return company;
   };
 }
 

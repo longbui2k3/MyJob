@@ -8,6 +8,7 @@ interface ButtonOutlineProps {
   rightIcon?: JSX.Element;
   onClick?: (e) => void;
   isHover?: boolean;
+  bgColor?: string;
 }
 
 export default function ButtonOutline({
@@ -18,6 +19,7 @@ export default function ButtonOutline({
   rightIcon,
   onClick = (e) => {},
   isHover = true,
+  bgColor = "white",
 }: ButtonOutlineProps) {
   return (
     <Button
@@ -29,11 +31,12 @@ export default function ButtonOutline({
       _hover={
         isHover
           ? { bg: "var(--primary-500)", color: "white" }
-          : { bg: "white", color: "var(--primary-500)" }
+          : { bg: "transparent", color: "var(--primary-500)" }
       }
       leftIcon={leftIcon}
       rightIcon={rightIcon}
       onClick={onClick}
+      bgColor={bgColor}
     >
       {children}
     </Button>

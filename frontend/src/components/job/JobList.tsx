@@ -61,6 +61,7 @@ export default function JobList() {
         {jobs.map((job) => (
           <JobGrid
             _id={job._id}
+            companyId={job.company._id}
             companyLogo={job.company.logo}
             companyName={job.company.companyName}
             companyLocation={job.company.mapLocation}
@@ -68,6 +69,7 @@ export default function JobList() {
             jobType={job.jobType}
             minSalary={job.minSalary}
             maxSalary={job.maxSalary}
+            expirationDate={job.expirationDate}
           />
         ))}
       </div>
@@ -77,6 +79,7 @@ export default function JobList() {
         {jobs.map((job) => (
           <JobRowsFill
             _id={job._id}
+            companyId={job.company._id}
             companyLogo={job.company.logo}
             companyLocation={job.company.mapLocation}
             jobTitle={job.jobTitle}

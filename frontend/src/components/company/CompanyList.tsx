@@ -9,15 +9,27 @@ import CompanyGrid from "./CompanyGrid";
 import CompanyRowsFill from "./CompanyRowsFill";
 import { useEffect, useState } from "react";
 import { FindCompaniesAPI } from "../../apis";
+import { useSearchParams } from "react-router-dom";
 
 export default function CompanyList() {
+  const [searchParams, __] = useSearchParams();
   const { viewType, setViewType } = useViewTypeSelect();
   const { curPage, setCurPage } = usePagination();
   const { limit, handleLimitChange } = usePageLimitSelect();
   const [size, setSize] = useState(1);
   const [companies, setCompanies] = useState<Array<any>>([]);
   async function findCompanies() {
-    const data = await FindCompaniesAPI({ limit, page: curPage });
+    const provinceCode = searchParams.get("provinceCode");
+    const data = await FindCompaniesAPI({
+      limit,
+      page: curPage,
+      search: searchParams.get("search") || undefined,
+      organizationType:
+        (searchParams.get("org_type") &&
+          Number(searchParams.get("org_type"))) ||
+        undefined,
+      provinceCode: provinceCode ? Number(provinceCode) : undefined,
+    });
     if (data.isSuccess) {
       setCompanies(data.metadata.companies);
       setSize(data.metadata.meta.size);
@@ -57,12 +69,8 @@ export default function CompanyList() {
 
   return (
     <div style={{ padding: `20px ${DEFAULT_PADDING_X}` }}>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center flex-row-reverse">
         <div className="flex space-x-4">
-          <ButtonSolid children={"Filter"} leftIcon={<PiFaders />} />
-        </div>
-        <div className="flex space-x-4">
-          <LocationSelect height="40px" />
           <PageLimitSelect
             height="40px"
             width="200px"

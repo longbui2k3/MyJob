@@ -56,7 +56,7 @@ export default function SearchInput_3() {
           height="50px"
           setSearch={setSearch}
           search={search}
-          placeholder="Job title"
+          placeholder="Job title, keyword"
         />
         <LocationSelect
           height="50px"

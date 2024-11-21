@@ -55,6 +55,16 @@ class CompanyController {
       },
     }).send(res);
   };
+
+  findCompany = async (req, res, next) => {
+    const result = await CompanyService.findCompany(req.params.id);
+    return new OK({
+      message: "Find company successfully",
+      metadata: {
+        company: result,
+      },
+    }).send(res);
+  };
 }
 
 module.exports = new CompanyController();
