@@ -187,17 +187,6 @@ router.route("/:id").patch(
   asyncHandler(companyController.updateCompany)
 );
 
-router.route("/mycompany").get(
-  // #swagger.tags = ['Company']
-  // #swagger.summary = 'Get my company'
-  /* #swagger.security = [{
-      "apiKeyAuth": [],
-      "clientId": []
-    }] 
-  */
-  asyncHandler(companyController.getMyCompany)
-);
-
 router.route("/:id").delete(
   // #swagger.tags = ['Company']
   // #swagger.summary = 'Delete my company'

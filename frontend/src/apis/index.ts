@@ -11,7 +11,7 @@ export {
   CreateCompanyAPI,
   FindCompaniesAPI,
   UpdateCompanyAPI,
-  GetMyCompanyAPI,
+  FindCompanyAPI,
 } from "./companyAPI";
 export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";

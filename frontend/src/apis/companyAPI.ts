@@ -96,12 +96,12 @@ export const UpdateCompanyAPI = async (
   });
 };
 
-export const GetMyCompanyAPI = async () => {
-  return await BaseAPI({
-    path: "/company/mycompany",
-    method: HttpMethods.GET,
-  });
-};
+// export const GetMyCompanyAPI = async () => {
+//   return await BaseAPI({
+//     path: "/company/mycompany",
+//     method: HttpMethods.GET,
+//   });
+// };
 
 export const FindCompaniesAPI = async (query: {
   page?: number;

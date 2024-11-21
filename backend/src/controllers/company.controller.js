@@ -4,14 +4,6 @@ const { CREATED, OK } = require("../core/success.response");
 const CompanyService = require("../services/company.service");
 
 class CompanyController {
-  getMyCompany = async (req, res, next) => {
-    const result = await CompanyService.getMyCompany(req.user.userId);
-
-    return new OK({
-      message: "Get my company successfully",
-      metadata: result,
-    }).send(res);
-  };
   delteteCompany = async (req, res, next) => {
     const result = await CompanyService.deleteCompany(req.params.id);
     return new OK({
@@ -60,9 +52,7 @@ class CompanyController {
     const result = await CompanyService.findCompany(req.params.id);
     return new OK({
       message: "Find company successfully",
-      metadata: {
-        company: result,
-      },
+      metadata: result,
     }).send(res);
   };
 }
