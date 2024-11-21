@@ -7,7 +7,9 @@ export const FindJobsAPI = async (query: {
   limit?: number;
   search?: string;
   provinceCode?: number;
+  companyId?: string;
   category?: string;
+  status?: string;
   experiences?: Array<string>;
   educations?: Array<string>;
   jobLevels?: Array<string>;
@@ -17,17 +19,6 @@ export const FindJobsAPI = async (query: {
 }) => {
   return await BaseAPI({
     path: `/job?${changeQueryObjToQueryStr(query)}`,
-    method: HttpMethods.GET,
-  });
-};
-
-export const FindJobsByCompanyAPI = async (query: {
-  page?: number;
-  limit?: number;
-  status?: string;
-}) => {
-  return await BaseAPI({
-    path: `/job/myjobs?${changeQueryObjToQueryStr(query)}`,
     method: HttpMethods.GET,
   });
 };

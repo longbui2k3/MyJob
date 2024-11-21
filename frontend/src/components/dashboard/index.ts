@@ -4,3 +4,6 @@ export { default as DashboardOverview } from "./DashboardOverview";
 export { default as DashboardSettings } from "./DashboardSettings";
 export { default as DashboardPostAJob } from "./DashboardPostAJob";
 export { default as DashboardMyJobs } from "./DashboardMyJobs";
+export { default as DashboardSavedCandidate } from "./DashboardSavedCandidate";
+export { default as DashboardAppliedJobs } from "./DashboardAppliedJobs";
+export { default as DashboardFavoriteJobs } from "./DashboardFavoriteJobs";

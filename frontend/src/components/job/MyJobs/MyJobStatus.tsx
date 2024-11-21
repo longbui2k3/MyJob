@@ -1,10 +1,10 @@
 import { CiCircleRemove } from "react-icons/ci";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
-interface JobStatusProps {
+interface MyJobStatusProps {
   status?: string;
 }
-export default function JobStatus({ status }: JobStatusProps) {
+export default function MyJobStatus({ status }: MyJobStatusProps) {
   return (
     <div className="flex space-x-1 ">
       {status === "Active" ? (

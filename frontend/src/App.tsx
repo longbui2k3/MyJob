@@ -43,17 +43,25 @@ import {
   PageJobDetail,
 } from "./pages/home";
 import {
+  DashboardAppliedJobs,
   DashboardCategory,
+  DashboardFavoriteJobs,
   DashboardMyJobs,
   DashboardOverview,
   DashboardPostAJob,
+  DashboardSavedCandidate,
   DashboardSettings,
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 import {
+  DASHBOARD_APPLIED_JOBS_KEY,
+  DASHBOARD_EDIT_JOB_KEY,
+  DASHBOARD_FAVORITE_JOBS_KEY,
+  DASHBOARD_SAVED_CANDIDATE_KEY,
   EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
 } from "./helpers/constants/routes";
+import { EditJob } from "./components/job/MyJobs";
 
 const AuthenRoutes = [
   {
@@ -133,6 +141,22 @@ const DashboardRoutes = [
   {
     route: getRoute(DASHBOARD_MY_JOBS_KEY),
     element: <DashboardMyJobs />,
+  },
+  {
+    route: getRoute(DASHBOARD_EDIT_JOB_KEY),
+    element: <EditJob />,
+  },
+  {
+    route: getRoute(DASHBOARD_SAVED_CANDIDATE_KEY),
+    element: <DashboardSavedCandidate />,
+  },
+  {
+    route: getRoute(DASHBOARD_APPLIED_JOBS_KEY),
+    element: <DashboardAppliedJobs />,
+  },
+  {
+    route: getRoute(DASHBOARD_FAVORITE_JOBS_KEY),
+    element: <DashboardFavoriteJobs />,
   },
   {
     route: getRoute(DASHBOARD_SETTINGS_KEY),

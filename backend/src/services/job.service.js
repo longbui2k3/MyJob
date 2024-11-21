@@ -52,14 +52,15 @@ class JobService {
     limit,
     search,
     provinceCode = 0,
+    companyId,
     category,
+    status,
     experiences = [],
     salaryMin,
     salaryMax,
     educations,
     jobTypes,
     jobLevels,
-    company,
   }) => {
     experiences = flattenQueryArray(experiences);
     educations = flattenQueryArray(educations);
@@ -75,11 +76,13 @@ class JobService {
     jobLevels = jobLevels.map((jobLevel) => Object.values(JobLevels)[jobLevel]);
     salaryMin = salaryMin ? Number(salaryMin) : undefined;
     salaryMax = salaryMax ? Number(salaryMax) : undefined;
+    await jobRepo.updateExpiredJobs();
     const job = await jobRepo.find(
       removeUndefinedInObject({
-        "company._id": company || undefined,
         "company.provinceCode": provinceCode - 0 || undefined,
+        "company._id": companyId || undefined,
         category,
+        status,
         experience: experiences.length
           ? {
               $in: experiences,
@@ -117,7 +120,7 @@ class JobService {
         page,
         limit,
         search,
-        sort: ["createdAt"],
+        sort: ["-createdAt"],
         populates: ["category"],
         populateSelects: [
           {
@@ -130,21 +133,6 @@ class JobService {
     return job;
   };
 
-  static findJobsByCompany = async (userId, { page, limit, status }) => {
-    const company = await companyRepo.findOne({
-      user: convertToObjectId(userId),
-    });
-    if (!company) throw new BadRequestError("Company not found!");
-    await jobRepo.updateExpiredJobs();
-    return await jobRepo.find(
-      removeUndefinedInObject({ "company._id": company._id, status }),
-      {
-        page,
-        limit,
-        sort: ["createdAt"],
-      }
-    );
-  };
   static findJob = async (id) => {
     const job = await jobRepo.findById(id);
     if (!job) {

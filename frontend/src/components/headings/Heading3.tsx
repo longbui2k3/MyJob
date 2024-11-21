@@ -1,7 +1,7 @@
 import Heading from "./Heading";
 
 interface Heading3Props {
-  name: string;
+  name?: string;
   className?: string;
 }
 export default function Heading3({ name, className }: Heading3Props) {

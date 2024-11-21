@@ -6,6 +6,7 @@ import {
   DASHBOARD_JOB_ALERT_KEY,
   DASHBOARD_KEY,
   DASHBOARD_MY_JOBS_KEY,
+  DASHBOARD_EDIT_JOB_KEY,
   DASHBOARD_OVERVIEW_KEY,
   DASHBOARD_PLANS_AND_BILLING_KEY,
   DASHBOARD_POST_A_JOB_KEY,
@@ -119,6 +120,11 @@ export const Navigations = {
     label: "My Jobs",
     href: getRoute(DASHBOARD_MY_JOBS_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
+  },
+  DASHBOARD_EDIT_JOB: {
+    label: "Edit Job",
+    href: getRoute(DASHBOARD_EDIT_JOB_KEY).path,
+    pattern: getRoute(DASHBOARD_MY_JOBS_KEY).path,
   },
   DASHBOARD_SAVED_CANDIDATE: {
     label: "Saved Candidate",
