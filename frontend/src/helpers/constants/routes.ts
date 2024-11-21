@@ -18,6 +18,7 @@ export const DASHBOARD_KEY = "DASHBOARD";
 export const FIND_JOBS_KEY = "FIND_JOBS";
 export const JOB_DETAIL_KEY = "JOB_DETAIL";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
+export const EMPLOYER_DETAIL_KEY = "EMPLOYER_DETAIL";
 export const COMPANY_KEY = "COMPANY";
 export const CREATE_COMPANY_KEY = "CREATE_COMPANY";
 export const COMPLETED_COMPANY_KEY = "COMPLETED_COMPANY";
@@ -94,6 +95,14 @@ const ROUTES: Array<RouteItem> = [
         key: FIND_EMPLOYERS_KEY,
         name: "Find Employers",
         path: "/employers",
+        children: [
+          {
+            key: EMPLOYER_DETAIL_KEY,
+            name: "Single Employer",
+            path: "/employers/:id",
+            isPrivate: false,
+          },
+        ],
         isPrivate: false,
       },
       {

@@ -53,6 +53,9 @@ const companySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    companyBenefits: {
+      type: String,
+    },
     companyVision: {
       type: String,
     },

@@ -6,13 +6,14 @@ import { SearchInput_1 } from "../inputs";
 import Logo from "./Logo";
 import Navigation from "./Navigation";
 import { Avatar } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { LogoutAPI } from "../../apis";
 import { CookieSetOptions } from "universal-cookie";
 import { useCookies } from "react-cookie";
 import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import { header } from "framer-motion/m";
 
 interface SubNavigationProps {
   user: string | User | null;
@@ -192,7 +193,7 @@ const subNavigationRoles = {
 
 export default function Header() {
   const { user } = useAuthContext();
-
+  const headerRef = useRef<HTMLDivElement>(null);
   const [SubNavigation, setSubNavigation] =
     useState<({ user }: SubNavigationProps) => JSX.Element>();
   useEffect(() => {
@@ -203,11 +204,27 @@ export default function Header() {
       setSubNavigation(subNavigationRoles["normal"]);
     }
   }, [user]);
+
+  useEffect(() => {
+    const cur = headerRef.current;
+    if (!headerRef || !cur) return;
+    let prevScrollpos = window.scrollY;
+    window.onscroll = function () {
+      const currentScrollPos = window.scrollY;
+      if (prevScrollpos > currentScrollPos) {
+        cur.style.display = "";
+      } else {
+        cur.style.display = "none";
+      }
+      prevScrollpos = currentScrollPos;
+    };
+  }, [headerRef]);
   return (
     <div className="fixed top-0 w-full z-[1000]">
       <Navigation />
       <div
         className={`flex flex-col justify-center w-full h-[80px] bg-white`}
+        ref={headerRef}
         style={{
           padding: `0px ${DEFAULT_PADDING_X}`,
         }}

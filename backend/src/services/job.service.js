@@ -59,6 +59,7 @@ class JobService {
     educations,
     jobTypes,
     jobLevels,
+    company,
   }) => {
     experiences = flattenQueryArray(experiences);
     educations = flattenQueryArray(educations);
@@ -74,8 +75,9 @@ class JobService {
     jobLevels = jobLevels.map((jobLevel) => Object.values(JobLevels)[jobLevel]);
     salaryMin = salaryMin ? Number(salaryMin) : undefined;
     salaryMax = salaryMax ? Number(salaryMax) : undefined;
-    return await jobRepo.find(
+    const job = await jobRepo.find(
       removeUndefinedInObject({
+        "company._id": company || undefined,
         "company.provinceCode": provinceCode - 0 || undefined,
         category,
         experience: experiences.length
@@ -125,6 +127,7 @@ class JobService {
         populateMatches: [],
       }
     );
+    return job;
   };
 
   static findJobsByCompany = async (userId, { page, limit, status }) => {

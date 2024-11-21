@@ -32,8 +32,8 @@ export const Navigations = {
   },
   EMPLOYERS: {
     label: "Employers",
-    href: "#",
-    pattern: "#",
+    href: getRoute(FIND_EMPLOYERS_KEY).path,
+    pattern: getRoute(FIND_EMPLOYERS_KEY).path,
   },
   CANDIDATES: {
     label: "Candidates",

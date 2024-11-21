@@ -17,7 +17,7 @@ function Info({ Icon = CiCalendar, title = "", info = "" }: InfoProps) {
   return (
     <div>
       <Icon size={30} color="var(--primary-500)" />
-      <Text className="text-[11px] mt-[8px]">{title}</Text>
+      <Text className="text-[10px] mt-[8px]">{title}</Text>
       <Heading size={14} name={info} />
     </div>
   );

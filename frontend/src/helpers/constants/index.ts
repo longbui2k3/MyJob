@@ -77,4 +77,14 @@ export const Educations = [
   "Bachelor Degree",
 ];
 
+export const OrganizationTypes = [
+  "Public",
+  "Private",
+  "Non-Profit",
+  "Government",
+  "Partnership",
+  "Sole Proprietorship",
+  "Corporation",
+];
+
 export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];

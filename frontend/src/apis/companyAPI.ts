@@ -107,9 +107,18 @@ export const FindCompaniesAPI = async (query: {
   page?: number;
   limit?: number;
   search?: string;
+  organizationType?: number;
+  provinceCode?: number;
 }) => {
   return await BaseAPI({
     path: `/company?${changeQueryObjToQueryStr(query)}`,
+    method: HttpMethods.GET,
+  });
+};
+
+export const FindCompanyAPI = async (id: string) => {
+  return await BaseAPI({
+    path: `/company/${id}`,
     method: HttpMethods.GET,
   });
 };

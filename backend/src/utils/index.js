@@ -33,7 +33,6 @@ const changePopulateStringToObject = (
   // populateString: string  ex:user.job.abc.def
 
   const keys = populateString.split(".");
-  console.log(matches[keys[0]]);
   function recursion(i) {
     if (i === keys.length - 1) {
       return removeUndefinedInObject({
