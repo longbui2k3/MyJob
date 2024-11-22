@@ -7,6 +7,7 @@ interface BaseSelectProps {
   className?: string;
   value?: string;
   onChange: (value: string) => void;
+  placeholder?: string;
 }
 
 export default function BaseSelect({
@@ -16,6 +17,7 @@ export default function BaseSelect({
   className,
   value,
   onChange,
+  placeholder = "Select...",
 }: BaseSelectProps) {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
@@ -24,7 +26,7 @@ export default function BaseSelect({
     <div className={`${className}`}>
       {label ? <div className="font-normal text-sm mb-2">{label}</div> : ""}
       <Select
-        placeholder="Select..."
+        placeholder={placeholder}
         onChange={handleChange}
         value={value}
         width={width}

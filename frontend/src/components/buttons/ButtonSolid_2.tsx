@@ -6,6 +6,8 @@ interface ButtonSolid_2Props {
   leftIcon?: JSX.Element;
   rightIcon?: JSX.Element;
   onClick?: (e) => void;
+  width?: string;
+  height?: string;
 }
 
 export default function ButtonSolid_2({
@@ -14,6 +16,8 @@ export default function ButtonSolid_2({
   leftIcon,
   rightIcon,
   onClick,
+  width,
+  height,
 }: ButtonSolid_2Props) {
   return (
     <Button
@@ -25,6 +29,8 @@ export default function ButtonSolid_2({
       leftIcon={leftIcon}
       rightIcon={rightIcon}
       onClick={onClick}
+      width={width}
+      height={height}
     >
       {children}
     </Button>

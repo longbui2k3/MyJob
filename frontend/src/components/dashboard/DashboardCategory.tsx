@@ -2,7 +2,7 @@ import { IconButton } from "@chakra-ui/react";
 import { Heading5 } from "../headings";
 import { GoPlus } from "react-icons/go";
 import { useDispatch } from "react-redux";
-import { openForm } from "../../features";
+import { openFormCategory } from "../../features";
 import { CustomTooltip } from "../global";
 import { useEffect, useState } from "react";
 import { FindAllCategoriesAPI } from "../../apis";
@@ -38,7 +38,7 @@ export default function DashboardCategory() {
               color: "var(--primary-500)",
             }}
             onClick={() => {
-              dispatch(openForm());
+              dispatch(openFormCategory());
             }}
           />
         </CustomTooltip>

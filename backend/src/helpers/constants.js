@@ -22,11 +22,11 @@ const UserType = {
   EMPLOYER: "employer",
 };
 
-const UserGender = {
+const UserGenders = {
   EMPTY: "",
-  MALE: "male",
-  FEMALE: "female",
-  UNDEFINED: "undefined",
+  MALE: "Male",
+  FEMALE: "Female",
+  UNDEFINED: "Undefined",
 };
 
 const OrganizationTypes = {
@@ -156,7 +156,7 @@ module.exports = {
   UserStatus,
   UserRole,
   UserType,
-  UserGender,
+  UserGenders,
   OrganizationTypes,
   IndustryTypes,
   TeamSizes,

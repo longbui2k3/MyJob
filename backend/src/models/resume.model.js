@@ -20,7 +20,7 @@ const resumeSchema = new mongoose.Schema(
       required: true,
     },
     resume: {
-      type: Schema.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: function () {
         if (this.type === ResumeTypes.CREATED_RESUME) return "CreatedResume";
         else return "UploadedResume";

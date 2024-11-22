@@ -5,7 +5,7 @@ export default function DashboardFavoriteJobs() {
   return (
     <>
       <Heading5 name="Favorite Jobs" />
-      <FavoriteJobs />
+      {/* <FavoriteJobs /> */}
     </>
   );
 }

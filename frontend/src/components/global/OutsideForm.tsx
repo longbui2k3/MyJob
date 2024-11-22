@@ -1,27 +1,38 @@
 import { useDispatch } from "react-redux";
-import { closeForm } from "../../features";
 import { FaXmark } from "react-icons/fa6";
 import { Heading5 } from "../headings";
 
 interface OutsideFormProps {
   children?: JSX.Element | string;
   onSubmit?: (e) => void;
+  outsideWidth?: string;
+  outsideHeight?: string;
   width?: string;
   height?: string;
+  closeForm: any;
+  header?: string;
 }
 
 export default function OutsideForm({
   children = <></>,
   onSubmit = () => {},
+  outsideWidth = "100%",
+  outsideHeight = "100%",
   width = "500px",
   height = "550px",
+  closeForm = () => {},
+  header = "Create Category",
 }: OutsideFormProps) {
   const dispatch = useDispatch();
   return (
     <div
-      className="absolute backdrop-brightness-[0.6] w-full h-full z-[1001] flex flex-col justify-center"
+      className="absolute backdrop-brightness-[0.6] z-[1001] flex flex-col justify-center"
       onClick={() => {
         dispatch(closeForm());
+      }}
+      style={{
+        width: outsideWidth,
+        height: outsideHeight,
       }}
     >
       <form
@@ -35,7 +46,7 @@ export default function OutsideForm({
         }}
         onSubmit={onSubmit}
       >
-        <Heading5 name="Create Category" />
+        <Heading5 name={header} />
         <FaXmark
           className="absolute right-[26px] top-[16px] text-[20px] text-[--gray-200]"
           onClick={function (e) {
