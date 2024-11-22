@@ -26,6 +26,7 @@ class JobService {
     const updateJob = await jobRepo.updateJob(id, data);
     if (!updateJob)
       throw new BadRequestError(`Job with id ${id} is not found!`);
+    await jobRepo.updateActiveJob(id);
     return updateJob;
   };
 

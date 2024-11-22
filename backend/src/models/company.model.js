@@ -23,6 +23,7 @@ const companySchema = new mongoose.Schema(
     },
     aboutUs: {
       type: String,
+      default: "",
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -55,9 +56,11 @@ const companySchema = new mongoose.Schema(
     },
     companyBenefits: {
       type: String,
+      default: "",
     },
     companyVision: {
       type: String,
+      default: "",
     },
     socialMedias: {
       type: [{ socialMedia: String, linkUrl: String }],
@@ -69,6 +72,7 @@ const companySchema = new mongoose.Schema(
     },
     address: {
       type: String,
+      default: "",
     },
     provinceCode: {
       type: Number,
