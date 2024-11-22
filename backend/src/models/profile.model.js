@@ -1,10 +1,10 @@
 "use strict";
 const mongoose = require("mongoose");
 const {
-  UserGender,
   Experiences,
   Educations,
   MaritalStatus,
+  UserGenders,
 } = require("../helpers/constants");
 const COLLECTION_NAME = "profiles";
 const DOCUMENT_NAME = "Profile";
@@ -25,8 +25,8 @@ const profileSchema = new mongoose.Schema(
     mapLocation: { type: String, default: "" },
     gender: {
       type: String,
-      enum: Object.values(UserGender),
-      default: UserGender.EMPTY,
+      enum: Object.values(UserGenders),
+      default: UserGenders.EMPTY,
     },
     nationality: { type: String, default: "" },
     dateOfBirth: { type: Date, default: null },
@@ -40,6 +40,9 @@ const profileSchema = new mongoose.Schema(
     socialMedias: {
       type: [{ type: { socialMedia: String, linkUrl: String } }],
       default: [],
+    },
+    provinceCode: {
+      type: Number,
     },
     isPrivacy: {
       type: Boolean,

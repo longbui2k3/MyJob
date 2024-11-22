@@ -5,7 +5,7 @@ import { CategoryNameInput, useCategoryNameInput } from "../inputs";
 import { FileInput, useFileInput } from "../inputs/FileInput";
 import { CreateCategoryAPI } from "../../apis";
 import { useDispatch } from "react-redux";
-import { closeForm } from "../../features";
+import { closeFormCategory } from "../../features";
 
 export default function FormCategory() {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ export default function FormCategory() {
         message: data.message,
       });
       setTimeout(() => {
-        dispatch(closeForm());
+        dispatch(closeFormCategory());
       }, 1000);
     } else {
       setMessage({
@@ -55,7 +55,11 @@ export default function FormCategory() {
     setIsLoading(false);
   };
   return (
-    <OutsideForm onSubmit={handleSubmit} height="75%">
+    <OutsideForm
+      onSubmit={handleSubmit}
+      height="75%"
+      closeForm={closeFormCategory}
+    >
       <>
         <CategoryNameInput
           value={inputCategoryName}

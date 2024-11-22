@@ -5,7 +5,7 @@ const COLLECTION_NAME = "uploaded_resumes";
 const DOCUMENT_NAME = "UploadedResume";
 const uploadedResumeSchema = new mongoose.Schema(
   {
-    file_url: {
+    fileUrl: {
       type: String,
       required: true,
     },

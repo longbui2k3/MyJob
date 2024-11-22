@@ -3,16 +3,28 @@ import { createSlice } from "@reduxjs/toolkit";
 export const openFormSlice = createSlice({
   name: "openForm",
   initialState: {
-    isOpenForm: false,
+    isOpenFormCategory: false,
+    isOpenFormResume: false,
   },
   reducers: {
-    openForm(state) {
-      state.isOpenForm = true;
+    openFormCategory(state) {
+      state.isOpenFormCategory = true;
     },
-    closeForm(state) {
-      state.isOpenForm = false;
+    closeFormCategory(state) {
+      state.isOpenFormCategory = false;
+    },
+    openFormResume(state) {
+      state.isOpenFormResume = true;
+    },
+    closeFormResume(state) {
+      state.isOpenFormResume = false;
     },
   },
 });
-export const { openForm, closeForm } = openFormSlice.actions;
+export const {
+  openFormCategory,
+  closeFormCategory,
+  openFormResume,
+  closeFormResume,
+} = openFormSlice.actions;
 export default openFormSlice.reducer;

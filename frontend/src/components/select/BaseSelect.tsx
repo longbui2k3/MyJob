@@ -9,6 +9,7 @@ interface BaseSelectProps {
   value?: string;
   required?: boolean;
   onChange: (value: string) => void;
+  placeholder?: string;
 }
 
 export default function BaseSelect({
@@ -19,6 +20,7 @@ export default function BaseSelect({
   value,
   required = true,
   onChange,
+  placeholder = "Select...",
 }: BaseSelectProps) {
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onChange(e.target.value);
@@ -36,7 +38,7 @@ export default function BaseSelect({
         ""
       )}
       <Select
-        placeholder="Select..."
+        placeholder={placeholder}
         onChange={handleChange}
         value={value}
         width={width}

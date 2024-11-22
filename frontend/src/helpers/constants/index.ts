@@ -88,3 +88,7 @@ export const OrganizationTypes = [
 ];
 
 export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];
+
+export const UserGenders = ["Male", "Female", "Undefined"];
+
+export const MaritalStatus = ["Single", "Married", "Divorced", "Widowed"];
