@@ -90,6 +90,7 @@ class BaseRepo {
         populateMatches,
       });
       result = this.#chainingForList(result, { sort, page, limit });
+      result = result.lean();
       return {
         data: await result,
         meta: {
@@ -114,6 +115,7 @@ class BaseRepo {
       populateMatches,
     });
     result = this.#chainingForList(result, { sort, page, limit });
+    result = result.lean();
     return await result.then(async (data) => {
       if (!data || !data.length) {
         let result = this.model.findAndSearchPartial(obj, search);
@@ -127,6 +129,7 @@ class BaseRepo {
           populateMatches,
         });
         result = this.#chainingForList(result, { sort, page, limit });
+        result = result.lean();
         return {
           data: await result,
           meta: {

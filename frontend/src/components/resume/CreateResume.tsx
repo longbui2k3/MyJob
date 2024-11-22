@@ -2,7 +2,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { Heading6 } from "../headings";
 import { Text } from "../text";
 import { useDispatch } from "react-redux";
-import { openFormResume } from "../../features";
+import { openFormResume, setType } from "../../features";
 
 export default function CreateResume() {
   const dispatch = useDispatch();
@@ -10,6 +10,7 @@ export default function CreateResume() {
     <div
       className="bg-[--gray-100] h-[70px] flex justify-between items-center p-[20px] rounded-sm cursor-pointer"
       onClick={() => {
+        dispatch(setType("create"));
         dispatch(openFormResume());
       }}
     >

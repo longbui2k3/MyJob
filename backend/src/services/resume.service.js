@@ -52,7 +52,7 @@ class ResumeService {
       }
     }
 
-    const uploadResumes = await resumeRepo.find(
+    const uploadedResumes = await resumeRepo.find(
       removeUndefinedInObject({ user: userId, type }),
       {
         page,
@@ -60,8 +60,16 @@ class ResumeService {
         populates: ["resume"],
       }
     );
-
-    return uploadResumes;
+    for (let i = 0; i < uploadedResumes.data.length; i++) {
+      uploadedResumes.data[i].file_size = (
+        (
+          await new UploadFiles().getFileInfo(
+            uploadedResumes.data[i].resume.fileUrl
+          )
+        ).size / 1024
+      ).toFixed(1);
+    }
+    return uploadedResumes;
   };
 
   static findResumeById = async (resumeId) => {

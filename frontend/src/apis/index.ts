@@ -16,3 +16,10 @@ export {
 export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";
 export { FindJobsAPI, FindJobAPI } from "./jobAPI";
+export {
+  FindResumesAPI,
+  FindResumeByIdAPI,
+  CreateResumeAPI,
+  UpdateResumeAPI,
+  DeleteResumeAPI,
+} from "./resumeAPI";

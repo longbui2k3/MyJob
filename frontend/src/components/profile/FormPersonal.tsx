@@ -9,8 +9,26 @@ import {
 } from "../select/ExperienceSelect";
 import { ButtonSolid } from "../buttons";
 import { CreateResume, ResumeInfo } from "../resume";
+import { useEffect, useState } from "react";
+import { FindResumesAPI } from "../../apis";
+import { useAuthContext } from "../../context";
 
 export default function FormPersonal() {
+  const { user, userId } = useAuthContext();
+  const [resumes, setResumes] = useState<Array<any>>([]);
+  const findResumes = async () => {
+    const data = await FindResumesAPI({
+      user: userId || undefined,
+    });
+    if (data.isSuccess) {
+      setResumes(data.metadata.resumes);
+    }
+  };
+
+  useEffect(() => {
+    findResumes();
+  }, [userId]);
+
   const { fileUrl: avatar, handleFileChange: handleAvatarChange } =
     useUploadFileInput();
   const { handleInput: handleFullNameChange, input: fullName } = useInput({
@@ -83,8 +101,8 @@ export default function FormPersonal() {
       <div className="flex flex-col text-gray-900 space-y-4">
         <div className="font-medium text-lg leading-7">Your CV/Resume</div>
         <div className="grid grid-cols-2 gap-4">
-          {new Array(5).fill(0).map((v) => (
-            <ResumeInfo title="Long" />
+          {resumes.map((resume) => (
+            <ResumeInfo title={resume.name} file_size={resume.file_size}/>
           ))}
           <CreateResume />
         </div>

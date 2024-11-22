@@ -2,7 +2,7 @@ import { HttpMethods } from "../helpers/constants";
 import { changeQueryObjToQueryStr } from "../utils";
 import BaseAPI from "./baseAPI";
 
-export const FindResumes = async (query: {
+export const FindResumesAPI = async (query: {
   user?: string;
   page?: string;
   limit?: string;
@@ -14,21 +14,46 @@ export const FindResumes = async (query: {
   });
 };
 
-export const FindResumeById = async (id: string) => {
+export const FindResumeByIdAPI = async (id: string) => {
   return await BaseAPI({
     path: `/resume/${id}`,
     method: HttpMethods.GET,
   });
 };
 
-export const DeleteResume = async (id: string) => {
+export const DeleteResumeAPI = async (id: string) => {
   return await BaseAPI({
     path: `/resume/${id}`,
     method: HttpMethods.DELETE,
   });
 };
 
-// export const CreateResume = async ({}) => {
+export const CreateResumeAPI = async (body: {
+  name: string;
+  resumeFile: File;
+}) => {
+  const formData = new FormData();
+  formData.append("name", body.name);
+  formData.append("resumeFile", body.resumeFile);
 
-// }
+  return await BaseAPI({
+    path: `/resume/uploaded`,
+    method: HttpMethods.POST,
+    body: formData,
+  });
+};
 
+export const UpdateResumeAPI = async (
+  id: string,
+  body: { name: string; resumeFile: File }
+) => {
+  const formData = new FormData();
+  formData.append("name", body.name);
+  formData.append("resumeFile", body.resumeFile);
+
+  return await BaseAPI({
+    path: `/resume/${id}`,
+    method: HttpMethods.PATCH,
+    body: formData,
+  });
+};

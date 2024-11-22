@@ -14,9 +14,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface ResumeInfoProps {
   title?: string;
+  file_size?: string;
 }
 
-export default function ResumeInfo({ title = "" }: ResumeInfoProps) {
+export default function ResumeInfo({
+  title = "",
+  file_size = "0",
+}: ResumeInfoProps) {
   return (
     <div className="bg-[--gray-100] h-[70px] flex justify-between items-center p-[20px] rounded-sm">
       <div className="flex justify-between items-center">
@@ -24,7 +28,7 @@ export default function ResumeInfo({ title = "" }: ResumeInfoProps) {
           <IoDocumentTextOutline size={30} color={"var(--primary-500)"} />
           <div className="flex flex-col space-y-1 justify-between ml-[10px]">
             <Heading6 name={title} />
-            <Text className="mt-[0px]">1.5 MB</Text>
+            <Text className="mt-[0px]">{file_size} MB</Text>
           </div>
         </div>
       </div>

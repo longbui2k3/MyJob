@@ -4,6 +4,7 @@ const {
   ref,
   getDownloadURL,
   uploadBytesResumable,
+  getMetadata,
 } = require("firebase/storage");
 const firebaseConfig = require("../config/firebase");
 initializeApp(firebaseConfig);
@@ -34,6 +35,11 @@ class UploadFiles {
       return downloadURL;
     }
     return undefined;
+  }
+
+  async getFileInfo(fileUrl) {
+    const storageRef = ref(storage, fileUrl);
+    return await getMetadata(storageRef);
   }
 }
 

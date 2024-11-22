@@ -4,4 +4,6 @@ export {
   closeFormCategory,
   openFormResume,
   closeFormResume,
+  setId,
+  setType,
 } from "./openForm/openFormSlice";
