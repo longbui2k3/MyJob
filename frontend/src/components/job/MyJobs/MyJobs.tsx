@@ -23,10 +23,11 @@ import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
 import MyJobStatus from "./MyJobStatus";
-import { FindJobsAPI, GetMyCompanyAPI } from "../../../apis";
+import { FindCompanyAPI, FindJobsAPI } from "../../../apis";
 import { getRoute } from "../../../helpers/constants";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD_EDIT_JOB_KEY } from "../../../helpers/constants/routes";
+import { useCookies } from "react-cookie";
 
 interface MyJobsProps {
   isCheck?: boolean;
@@ -40,9 +41,11 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
   const [status, setStatus] = useState<string | undefined>();
   const [jobs, setJobs] = useState<Array<any>>([]);
   const [jobsCount, setJobsCount] = useState<number>(0);
+  const [cookie] = useCookies();
 
   async function findJobs() {
-    const company = await GetMyCompanyAPI();
+    const company = await FindCompanyAPI(cookie.user);
+    console.log("data:", company);
     if (company.isSuccess) {
       const data = await FindJobsAPI({
         companyId: company.metadata._id,

@@ -31,6 +31,22 @@ class JobRepo extends BaseRepo {
     );
   }
 
+  async updateActiveJob(id) {
+    const today = new Date();
+
+    const update = await this.findOneAndUpdate(
+      {
+        _id: id,
+        expirationDate: { $gte: today },
+      },
+      {
+        $set: { status: JobStatuses.ACTIVE },
+      },
+      { new: true }
+    );
+    return update;
+  }
+
   async updateCompanyForJob(companyId, companyData) {
     return await this.updateMany(
       { "company._id": companyId },

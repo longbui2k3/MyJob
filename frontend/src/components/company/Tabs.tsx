@@ -9,13 +9,14 @@ import { GrLinkNext } from "react-icons/gr";
 import { Button } from "@chakra-ui/react";
 import {
   CreateCompanyAPI,
-  GetMyCompanyAPI,
+  FindCompanyAPI,
   UpdateCompanyAPI,
 } from "../../apis/companyAPI";
 import { useNavigate } from "react-router-dom";
 import { COMPLETED_COMPANY_KEY, getRoute } from "../../helpers/constants";
 import { useAuthContext } from "../../context";
 import GearSixIcon from "../icons/GearSixIcon";
+import { useCookies } from "react-cookie";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
@@ -23,6 +24,7 @@ export default function Tabs() {
   const navigate = useNavigate();
   const [isSettings, setIsSettings] = useState<boolean>(false);
   const { user } = useAuthContext();
+  const [cookie] = useCookies();
 
   useEffect(() => {
     if (typeof user !== "string" && user?.hasCompany !== false) {
@@ -85,6 +87,12 @@ export default function Tabs() {
     setCompanyWebsite(value);
   };
 
+  // company Benefits
+  const [companyBenefits, setCompanyBenefits] = useState<string>("");
+  const handleCompanyBenefitsChange = (value: string) => {
+    setCompanyBenefits(value);
+  };
+
   // company Vision
   const [companyVision, setCompanyVision] = useState<string>("");
   const handleCompanyVisionChange = (value: string) => {
@@ -136,7 +144,7 @@ export default function Tabs() {
   const [companyData, setCompanyData] = useState<any>(null);
   useEffect(() => {
     const fetchCompanyData = async () => {
-      const data = await GetMyCompanyAPI();
+      const data = await FindCompanyAPI(cookie.user);
       setCompanyData(data); // Lưu dữ liệu vào state
     };
 
@@ -158,6 +166,7 @@ export default function Tabs() {
         companyData.metadata.yearOfEstablishment.split("T")[0]
       );
       setCompanyWebsite(companyData.metadata.companyWebsite);
+      setCompanyBenefits(companyData.metadata.companyBenefits);
       setCompanyVision(companyData.metadata.companyVision);
       setSocialMedias(companyData.metadata.socialMedias);
       setMapLocation(companyData.metadata.mapLocation);
@@ -166,8 +175,6 @@ export default function Tabs() {
       setEmail(companyData.metadata.email);
     }
   }, [companyData]);
-
-  // console.log(id);
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
@@ -206,7 +213,7 @@ export default function Tabs() {
     e.preventDefault();
 
     const data = await UpdateCompanyAPI(id, {
-      companyName: companyData,
+      companyName: companyName,
       logo: logoFile,
       banner: bannerFile,
       aboutUs: aboutUs,
@@ -274,12 +281,14 @@ export default function Tabs() {
           teamSize={teamSize}
           yearOfEstablishment={yearOfEstablishmentVal}
           companyWebsite={companyWebsite}
+          companyBenefits={companyBenefits}
           companyVision={companyVision}
           onIndustryTypeChange={handleIndustryTypeChange}
           onOrganizationTypeChange={handleOrganizationTypeChange}
           onTeamSizeChange={handleTeamSizeChange}
           onYearOfEstablishmentChange={handleYearOfEstablishmentChange}
           onCompanyWebsiteChange={handleCompanyWebsiteChange}
+          onCompanyBenefitsChange={handleCompanyBenefitsChange}
           onCompanyVisionChange={handleCompanyVisionChange}
         />
       ),

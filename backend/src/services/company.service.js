@@ -9,9 +9,6 @@ const { removeUndefinedInObject } = require("../utils");
 const { OrganizationTypes } = require("../helpers/constants");
 
 class CompanyService {
-  static getMyCompany = async (userId) => {
-    return await companyRepo.findCompanyByUser(userId);
-  };
   static deleteCompany = async (id) => {
     const checkCompanyExists = await companyRepo.findCompanyById(id);
     if (!checkCompanyExists) {
@@ -61,7 +58,7 @@ class CompanyService {
   };
 
   static createCompany = async (data, files) => {
-    let { socialMedias, provinceCode, ...otherData } = data;
+    let { user, socialMedias, provinceCode, ...otherData } = data;
     const [logoImg, bannerImg] = await Promise.all([
       this.uploadFile(files?.logo?.[0]),
       this.uploadFile(files?.banner?.[0]),
@@ -80,6 +77,7 @@ class CompanyService {
     }
     return await companyRepo.createCompany({
       ...otherData,
+      _id: user,
       logo: logoImg,
       banner: bannerImg,
       socialMedias: parseSocialMedias,

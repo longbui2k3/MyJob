@@ -10,12 +10,14 @@ interface FormFoundingInfoProps {
   teamSize: string;
   yearOfEstablishment: string;
   companyWebsite: string;
+  companyBenefits: string;
   companyVision: string;
   onOrganizationTypeChange: (value: string) => void;
   onIndustryTypeChange: (value: string) => void;
   onTeamSizeChange: (value: string) => void;
   onYearOfEstablishmentChange: (value: Date) => void;
   onCompanyWebsiteChange: (value: string) => void;
+  onCompanyBenefitsChange: (value: string) => void;
   onCompanyVisionChange: (value: string) => void;
 }
 
@@ -25,12 +27,14 @@ export default function FormFoundingInfo({
   teamSize,
   yearOfEstablishment,
   companyWebsite,
+  companyBenefits,
   companyVision,
   onOrganizationTypeChange,
   onIndustryTypeChange,
   onTeamSizeChange,
   onYearOfEstablishmentChange,
   onCompanyWebsiteChange,
+  onCompanyBenefitsChange,
   onCompanyVisionChange,
 }: FormFoundingInfoProps) {
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +46,10 @@ export default function FormFoundingInfo({
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     onCompanyWebsiteChange(e.target.value);
+  };
+
+  const handleCompanyBenefitsChange = (content: string) => {
+    onCompanyBenefitsChange(content);
   };
 
   const handleCompanyVisionChange = (content: string) => {
@@ -123,11 +131,19 @@ export default function FormFoundingInfo({
       </div>
       <div>
         <RichTextEditer
+          label="Company Benefits"
+          placeholder="Describe the benefits and perks your company offers to employees."
+          value={companyBenefits}
+          onChange={handleCompanyBenefitsChange}
+        />
+      </div>
+      <div>
+        <RichTextEditer
           label="Company Vision"
           placeholder="Tell us about your company vision..."
           value={companyVision}
           onChange={handleCompanyVisionChange}
-        ></RichTextEditer>
+        />
       </div>
     </div>
   );

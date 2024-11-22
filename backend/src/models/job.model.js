@@ -54,7 +54,7 @@ const jobSchema = new mongoose.Schema(
     },
     tags: {
       type: [{ type: String }],
-      required: true,
+      // required: true,
       default: [],
     },
     jobRole: {
@@ -113,11 +113,13 @@ const jobSchema = new mongoose.Schema(
     },
     jobDescription: {
       type: String,
-      required: true,
+      // required: true,
+      default: "",
     },
     jobResponsibilities: {
       type: String,
-      required: true,
+      // required: true,
+      default: "",
     },
   },
   { timestamps: true, collection: COLLECTION_NAME }
