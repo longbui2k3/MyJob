@@ -24,6 +24,9 @@ const applicationSchema = new mongoose.Schema(
       ref: "Resume",
       required: true,
     },
+    coverLetter: {
+      type: String,
+    },
     postedAt: {
       type: Date,
       default: Date.now(),
