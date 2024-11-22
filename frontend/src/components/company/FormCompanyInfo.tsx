@@ -51,18 +51,22 @@ export default function FormCompanyInfo({
         />
       </div>
       <div className="border-[1px]"></div>
-      <BaseInput
-        label="Company name"
-        type="text"
-        value={companyName}
-        onChange={handleCompanyNameChange}
-      />
-      <RichTextEditer
-        label="About Us"
-        placeholder="Write down about your company here. Let the candidate know who we are..."
-        value={aboutUs}
-        onChange={handleAboutUsChange}
-      ></RichTextEditer>
+      <div>
+        <BaseInput
+          label="Company name"
+          type="text"
+          value={companyName}
+          onChange={handleCompanyNameChange}
+        />
+      </div>
+      <div>
+        <RichTextEditer
+          label="About Us"
+          placeholder="Write down about your company here. Let the candidate know who we are..."
+          value={aboutUs}
+          onChange={handleAboutUsChange}
+        ></RichTextEditer>
+      </div>
     </div>
   );
 }

@@ -23,7 +23,7 @@ import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
 import MyJobStatus from "./MyJobStatus";
-import { FindCompanyAPI, FindJobsAPI } from "../../../apis";
+import { FindCompanyAPI, FindJobsAPI, UpdateJobAPI } from "../../../apis";
 import { getRoute } from "../../../helpers/constants";
 import { useNavigate } from "react-router-dom";
 import { DASHBOARD_EDIT_JOB_KEY } from "../../../helpers/constants/routes";
@@ -41,6 +41,7 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
   const [status, setStatus] = useState<string | undefined>();
   const [jobs, setJobs] = useState<Array<any>>([]);
   const [jobsCount, setJobsCount] = useState<number>(0);
+  const [refresh, setRefresh] = useState<number>(0);
   const [cookie] = useCookies();
 
   async function findJobs() {
@@ -63,7 +64,7 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
   }
   useEffect(() => {
     findJobs();
-  }, [curPage, status]);
+  }, [curPage, status, refresh]);
 
   const handleStatusChange = (value: string) => {
     if (value === "") setStatus(undefined);
@@ -149,7 +150,17 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
                           >
                             Edit Job
                           </MenuItem>
-                          <MenuItem icon={<CiCircleRemove size={20} />}>
+                          <MenuItem
+                            onClick={async (e) => {
+                              const response = await UpdateJobAPI(job._id, {
+                                expirationDate: new Date().toISOString(),
+                              });
+                              if (response.isSuccess) {
+                                setRefresh((prev) => prev + 1);
+                              }
+                            }}
+                            icon={<CiCircleRemove size={20} />}
+                          >
                             Make it Expire
                           </MenuItem>
                         </MenuList>

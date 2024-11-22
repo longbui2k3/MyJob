@@ -373,6 +373,8 @@ export default function Tabs() {
         <Button
           textColor={"white"}
           bg={"var(--primary-500)"}
+          width={"150px"}
+          height={"50px"}
           rightIcon={<GrLinkNext />}
           onClick={(e) => handleCreateSubmit(e)}
           //onClick={() => handelClick(activeIndex + 1)}

@@ -1,8 +1,8 @@
-import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import { RxLink2 } from "react-icons/rx";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 import BaseInput from "../inputs/Input/BaseInput";
 import { BaseSelect } from "../select";
+import BaseInputGroup from "../inputs/Input/BaseInputGroup";
 
 interface FormFoundingInfoProps {
   organizationType: string;
@@ -115,18 +115,14 @@ export default function FormFoundingInfo({
           />
         </div>
         <div>
-          <Text className="font-normal text-sm mb-2">Company Website</Text>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <RxLink2 size={22} color="var(--primary-500)" />
-            </InputLeftElement>
-            <Input
-              type="url"
-              placeholder="Website url..."
-              value={companyWebsite}
-              onChange={handleCompanyWebsiteChange}
-            />
-          </InputGroup>
+          <BaseInputGroup
+            icon={<RxLink2 size={22} color="var(--primary-500)" />}
+            label="Company Website"
+            type="url"
+            placeholder="Website url..."
+            value={companyWebsite}
+            onChange={handleCompanyWebsiteChange}
+          />
         </div>
       </div>
       <div>

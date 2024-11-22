@@ -3,6 +3,7 @@ import BaseInput from "../inputs/Input/BaseInput";
 import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import provinces from "../../data/provinces.json";
 import { BaseSelect } from "../select";
+import BaseInputGroup from "../inputs/Input/BaseInputGroup";
 
 interface FormContactProps {
   mapLocation: string;
@@ -66,29 +67,29 @@ export default function FormContact({
             type="text"
             value={address}
             onChange={handleAddressChange}
+            required={false}
           />
         </div>
       </div>
-      <BaseInput
-        label="Phone"
-        type="text"
-        placeholder="Phone number..."
-        value={phone}
-        onChange={handlePhoneChange}
-      />
       <div>
-        <Text className="font-normal text-sm mb-2">Email</Text>
-        <InputGroup>
-          <InputLeftElement pointerEvents="none">
-            <GoMail size={22} color="var(--primary-500)" />
-          </InputLeftElement>
-          <Input
-            type="url"
-            placeholder="Email address"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </InputGroup>
+        <BaseInput
+          label="Phone"
+          type="text"
+          placeholder="Phone number..."
+          value={phone}
+          onChange={handlePhoneChange}
+        />
+      </div>
+
+      <div>
+        <BaseInputGroup
+          icon={<GoMail size={22} color="var(--primary-500)" />}
+          label="Email"
+          type="text"
+          placeholder="Email address"
+          value={email}
+          onChange={handleEmailChange}
+        />
       </div>
     </div>
   );

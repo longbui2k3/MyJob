@@ -94,7 +94,7 @@ export default function AdvanceInformation({
           <BaseInput
             label="Expiration Date"
             type="date"
-            value={expirationDate}
+            value={expirationDate.split("T")[0]}
             onChange={handleExpirationDateChange}
           />
         </div>

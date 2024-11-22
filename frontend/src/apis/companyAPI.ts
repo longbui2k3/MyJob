@@ -47,7 +47,7 @@ export const CreateCompanyAPI = async (body: {
 };
 
 export const UpdateCompanyAPI = async (
-  id,
+  id: string,
   body: {
     logo: File | undefined;
     banner: File | undefined;

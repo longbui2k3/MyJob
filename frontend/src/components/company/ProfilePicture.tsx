@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { MessageError } from "../global";
 
 interface ProfilePictureProps {
   label: string;
   note: string;
   className: string;
   fileUrl?: string;
+  required?: boolean;
   onFileChange: (file: File) => void;
 }
 export default function ProfilePicture({
@@ -12,6 +14,7 @@ export default function ProfilePicture({
   note,
   className,
   fileUrl,
+  required = true,
   onFileChange,
 }: ProfilePictureProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -39,7 +42,12 @@ export default function ProfilePicture({
 
   return (
     <div>
-      <div className="font-normal text-sm mb-2">{label}</div>
+      <div className="flex space-x-2">
+        <div className="font-normal text-sm mb-2 whitespace-nowrap">
+          {label}
+        </div>
+        {required ? <MessageError content="*" /> : ""}
+      </div>
       <input
         type="file"
         ref={inputRef}

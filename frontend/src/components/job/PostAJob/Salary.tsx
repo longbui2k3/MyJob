@@ -1,6 +1,7 @@
 import { Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
 import { BaseSelect } from "../../select";
 import { Heading5 } from "../../headings";
+import BaseInputGroup from "../../inputs/Input/BaseInputGroup";
 
 interface SalaryProps {
   minSalary: number | null;
@@ -31,32 +32,24 @@ export default function Salary({
       <Heading5 name="Salary" />
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <Text className="font-normal text-sm mb-2">Min Salary</Text>
-          <InputGroup>
-            <Input
-              type="number"
-              placeholder="Minimum salary..."
-              value={minSalary}
-              onChange={handleMinSalaryChange}
-            />
-            <InputRightAddon pointerEvents="none" color="var(--gray-600)">
-              VND
-            </InputRightAddon>
-          </InputGroup>
+          <BaseInputGroup
+            label="Min Salary"
+            type="number"
+            placeholder="Minimum salary..."
+            value={minSalary}
+            onChange={handleMinSalaryChange}
+            currency="VND"
+          />
         </div>
         <div>
-          <Text className="font-normal text-sm mb-2">Max Salary</Text>
-          <InputGroup>
-            <Input
-              type="number"
-              placeholder="Maximum salary..."
-              value={maxSalary}
-              onChange={handleMaxSalaryChange}
-            />
-            <InputRightAddon pointerEvents="none" color="var(--gray-600)">
-              VND
-            </InputRightAddon>
-          </InputGroup>
+          <BaseInputGroup
+            label="Max Salary"
+            type="number"
+            placeholder="Maximum salary..."
+            value={maxSalary}
+            onChange={handleMaxSalaryChange}
+            currency="VND"
+          />
         </div>
         <BaseSelect
           label="Salary Type"
