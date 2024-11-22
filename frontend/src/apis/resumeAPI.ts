@@ -28,7 +28,7 @@ export const DeleteResume = async (id: string) => {
   });
 };
 
-export const CreateResume = async ({}) => {
-    
-}
+// export const CreateResume = async ({}) => {
+
+// }
 
