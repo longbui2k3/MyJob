@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { FindAllCategoriesAPI } from "../../../apis";
 import { CreateJobAPI, FindJobAPI } from "../../../apis/jobAPI";
 import { Select } from "@chakra-ui/react";
+import { toastError, toastSuccess } from "../../toast";
 
 interface PostAJobProps {
   jobId?: string;
@@ -194,8 +195,10 @@ export default function PostAJob({ jobId }: PostAJobProps) {
     });
     console.log(data);
     if (data.isSuccess) {
+      toastSuccess(data.message);
       console.log("create job thanh cong");
     } else {
+      toastError(data.message);
       console.log("create job that bai");
     }
   };

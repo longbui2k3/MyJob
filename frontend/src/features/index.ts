@@ -6,4 +6,5 @@ export {
   closeFormResume,
   setId,
   setType,
+  setDataChange,
 } from "./openForm/openFormSlice";

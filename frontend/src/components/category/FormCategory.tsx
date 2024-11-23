@@ -6,6 +6,7 @@ import { FileInput, useFileInput } from "../inputs/FileInput";
 import { CreateCategoryAPI } from "../../apis";
 import { useDispatch } from "react-redux";
 import { closeFormCategory } from "../../features";
+import { toastError, toastSuccess } from "../toast";
 
 export default function FormCategory() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ export default function FormCategory() {
       iconUrl: fileIcon,
     });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setMessage({
         isShow: true,
         type: "success",
@@ -46,6 +48,7 @@ export default function FormCategory() {
         dispatch(closeFormCategory());
       }, 1000);
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",

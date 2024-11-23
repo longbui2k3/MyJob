@@ -8,13 +8,19 @@ import {
   useExperienceSelect,
 } from "../select/ExperienceSelect";
 import { ButtonSolid } from "../buttons";
-import { CreateResume, ResumeInfo } from "../resume";
+import { CreateResume, UploadedResumeInfo } from "../resume";
 import { useEffect, useState } from "react";
-import { FindResumesAPI } from "../../apis";
+import { DeleteResumeAPI, FindResumesAPI } from "../../apis";
 import { useAuthContext } from "../../context";
+import { formatFileSize } from "../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import { openFormResume, setDataChange, setId, setType } from "../../features";
+import { toastError, toastSuccess } from "../toast";
 
 export default function FormPersonal() {
-  const { user, userId } = useAuthContext();
+  const dispatch = useDispatch();
+  const isDataChange = useSelector((state: any) => state.openForm.isDataChange);
+  const { userId } = useAuthContext();
   const [resumes, setResumes] = useState<Array<any>>([]);
   const findResumes = async () => {
     const data = await FindResumesAPI({
@@ -25,9 +31,23 @@ export default function FormPersonal() {
     }
   };
 
+  const deleteResume = async (id: string) => {
+    const data = await DeleteResumeAPI(id);
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+      dispatch(setDataChange());
+    } else {
+      toastError(data.message);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(setDataChange());
+  }, []);
+
   useEffect(() => {
     findResumes();
-  }, [userId]);
+  }, [userId, isDataChange]);
 
   const { fileUrl: avatar, handleFileChange: handleAvatarChange } =
     useUploadFileInput();
@@ -102,7 +122,18 @@ export default function FormPersonal() {
         <div className="font-medium text-lg leading-7">Your CV/Resume</div>
         <div className="grid grid-cols-2 gap-4">
           {resumes.map((resume) => (
-            <ResumeInfo title={resume.name} file_size={resume.file_size}/>
+            <UploadedResumeInfo
+              title={resume.name}
+              file_size={formatFileSize(resume.resume.fileSize)}
+              onDelete={() => {
+                deleteResume(resume._id);
+              }}
+              onEdit={() => {
+                dispatch(openFormResume());
+                dispatch(setType("update"));
+                dispatch(setId(resume._id));
+              }}
+            />
           ))}
           <CreateResume />
         </div>

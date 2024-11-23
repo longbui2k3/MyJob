@@ -33,6 +33,7 @@ import { Select } from "@chakra-ui/react";
 import { SignUpAPI } from "../../apis";
 import { useNavigate } from "react-router-dom";
 import { getRoute, VERIFY_KEY } from "../../helpers/constants";
+import { toastError, toastSuccess } from "../../components/toast";
 
 export default function PageSignup() {
   const navigate = useNavigate();
@@ -95,6 +96,7 @@ export default function PageSignup() {
       userType: selectedUserType,
     });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setMessage({
         isShow: true,
         type: "success",
@@ -111,6 +113,7 @@ export default function PageSignup() {
         );
       }, 1000);
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",

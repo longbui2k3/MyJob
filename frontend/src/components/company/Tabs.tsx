@@ -17,6 +17,7 @@ import { COMPLETED_COMPANY_KEY, getRoute } from "../../helpers/constants";
 import { useAuthContext } from "../../context";
 import GearSixIcon from "../icons/GearSixIcon";
 import { useCookies } from "react-cookie";
+import { toastError, toastSuccess } from "../toast";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
@@ -145,34 +146,35 @@ export default function Tabs() {
   useEffect(() => {
     const fetchCompanyData = async () => {
       const data = await FindCompanyAPI(cookie.user);
-      setCompanyData(data); // Lưu dữ liệu vào state
+      console.log(data.metadata.company);
+      setCompanyData(data.metadata.company); // Lưu dữ liệu vào state
     };
 
     fetchCompanyData();
   }, []);
 
   useEffect(() => {
-    if (companyData && companyData.metadata) {
+    if (companyData) {
       // Thiết lập giá trị ban đầu
-      setId(companyData.metadata._id);
-      setLogoUrl(companyData.metadata.logo);
-      setBannerUrl(companyData.metadata.banner);
-      setCompanyName(companyData.metadata.companyName);
-      setAboutUs(companyData.metadata.aboutUs);
-      setOrganizationType(companyData.metadata.organizationType);
-      setIndustryType(companyData.metadata.industryType);
-      setTeamSize(companyData.metadata.teamSize);
+      setId(companyData._id);
+      setLogoUrl(companyData.logo);
+      setBannerUrl(companyData.banner);
+      setCompanyName(companyData.companyName);
+      setAboutUs(companyData.aboutUs);
+      setOrganizationType(companyData.organizationType);
+      setIndustryType(companyData.industryType);
+      setTeamSize(companyData.teamSize);
       setYearOfEstablishmentVal(
-        companyData.metadata.yearOfEstablishment.split("T")[0]
+        companyData.yearOfEstablishment.split("T")[0]
       );
-      setCompanyWebsite(companyData.metadata.companyWebsite);
-      setCompanyBenefits(companyData.metadata.companyBenefits);
-      setCompanyVision(companyData.metadata.companyVision);
-      setSocialMedias(companyData.metadata.socialMedias);
-      setMapLocation(companyData.metadata.mapLocation);
-      setAddress(companyData.metadata.address);
-      setPhone(companyData.metadata.phone);
-      setEmail(companyData.metadata.email);
+      setCompanyWebsite(companyData.companyWebsite);
+      setCompanyBenefits(companyData.companyBenefits);
+      setCompanyVision(companyData.companyVision);
+      setSocialMedias(companyData.socialMedias);
+      setMapLocation(companyData.mapLocation);
+      setAddress(companyData.address);
+      setPhone(companyData.phone);
+      setEmail(companyData.email);
     }
   }, [companyData]);
 
@@ -200,11 +202,13 @@ export default function Tabs() {
     });
     console.log(data);
     if (data.isSuccess) {
+      toastSuccess(data.message);
       console.log("tao cong ty thanh cong");
       setTimeout(() => {
         navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
       }, 500);
     } else {
+      toastError(data.message);
       console.log("tao cong ty that bai");
     }
   };
@@ -232,8 +236,10 @@ export default function Tabs() {
     });
     console.log(data);
     if (data.isSuccess) {
+      toastSuccess(data.message);
       console.log("cap nhat cong ty thanh cong");
     } else {
+      toastError(data.message);
       console.log("cap nhat cong ty that bai");
     }
   };

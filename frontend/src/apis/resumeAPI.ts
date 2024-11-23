@@ -29,12 +29,12 @@ export const DeleteResumeAPI = async (id: string) => {
 };
 
 export const CreateResumeAPI = async (body: {
-  name: string;
-  resumeFile: File;
+  name?: string;
+  resumeFile?: File;
 }) => {
   const formData = new FormData();
-  formData.append("name", body.name);
-  formData.append("resumeFile", body.resumeFile);
+  if (body.name) formData.append("name", body.name);
+  if (body.resumeFile) formData.append("resumeFile", body.resumeFile);
 
   return await BaseAPI({
     path: `/resume/uploaded`,
@@ -45,11 +45,11 @@ export const CreateResumeAPI = async (body: {
 
 export const UpdateResumeAPI = async (
   id: string,
-  body: { name: string; resumeFile: File }
+  body: { name?: string | null; resumeFile?: File | null }
 ) => {
   const formData = new FormData();
-  formData.append("name", body.name);
-  formData.append("resumeFile", body.resumeFile);
+  if (body.name) formData.append("name", body.name);
+  if (body.resumeFile) formData.append("resumeFile", body.resumeFile);
 
   return await BaseAPI({
     path: `/resume/${id}`,

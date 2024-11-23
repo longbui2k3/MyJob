@@ -10,7 +10,8 @@ import { useEffect } from "react";
 export default function PageDashboard() {
   const navigate = useNavigate();
   useEffect(() => {
-    navigate(getRoute(DASHBOARD_OVERVIEW_KEY).path);
+    if (window.location.pathname.split("/").length === 2)
+      navigate(getRoute(DASHBOARD_OVERVIEW_KEY).path);
   }, []);
   return (
     <div

@@ -52,7 +52,9 @@ class CompanyController {
     const result = await CompanyService.findCompany(req.params.id);
     return new OK({
       message: "Find company successfully",
-      metadata: result,
+      metadata: {
+        company: result,
+      },
     }).send(res);
   };
 }

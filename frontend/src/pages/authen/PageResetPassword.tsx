@@ -13,6 +13,7 @@ import { ResetPasswordAPI } from "../../apis/authenAPI";
 import { MessageError, MessageSuccess } from "../../components/global";
 import { Text } from "../../components/text";
 import { getRoute, SIGN_IN_KEY } from "../../helpers/constants";
+import { toastError, toastSuccess } from "../../components/toast";
 
 export default function PageResetPassword() {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ export default function PageResetPassword() {
       passwordConfirm: inputPasswordConfirm,
     });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setMessage({
         isShow: true,
         type: "success",
@@ -49,6 +51,7 @@ export default function PageResetPassword() {
         navigate(getRoute(SIGN_IN_KEY).path);
       }, 500);
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",

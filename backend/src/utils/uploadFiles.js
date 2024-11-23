@@ -37,7 +37,7 @@ class UploadFiles {
     return undefined;
   }
 
-  async getFileInfo(fileUrl) {
+  static async getFileInfo(fileUrl) {
     const storageRef = ref(storage, fileUrl);
     return await getMetadata(storageRef);
   }

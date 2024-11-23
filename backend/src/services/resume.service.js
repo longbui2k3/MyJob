@@ -25,8 +25,12 @@ class ResumeService {
       ).uploadFileAndDownloadURL();
     }
 
+    const fileInfo = await UploadFiles.getFileInfo(fileUrl);
+
     const uploadedResume = await uploadedResumeRepo.create({
       fileUrl,
+      fileName: fileInfo.name,
+      fileSize: fileInfo.size,
     });
 
     const resume = await resumeRepo.create({
@@ -60,15 +64,6 @@ class ResumeService {
         populates: ["resume"],
       }
     );
-    for (let i = 0; i < uploadedResumes.data.length; i++) {
-      uploadedResumes.data[i].file_size = (
-        (
-          await new UploadFiles().getFileInfo(
-            uploadedResumes.data[i].resume.fileUrl
-          )
-        ).size / 1024
-      ).toFixed(1);
-    }
     return uploadedResumes;
   };
 
@@ -95,17 +90,23 @@ class ResumeService {
     }
 
     let fileUrl = undefined;
+    let fileInfo = undefined;
     if (file) {
       fileUrl = await new UploadFiles(
         "resumes",
         "documents",
         file
       ).uploadFileAndDownloadURL();
+      fileInfo = await UploadFiles.getFileInfo(fileUrl);
     }
 
     const uploadedResume = await uploadedResumeRepo.findByIdAndUpdate(
       resume.resume,
-      removeUndefinedInObject({ fileUrl })
+      removeUndefinedInObject({
+        fileUrl,
+        fileName: fileInfo?.name || undefined,
+        fileSize: fileInfo?.size || undefined,
+      })
     );
 
     const updatedResume = await resumeRepo.findByIdAndUpdate(

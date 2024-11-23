@@ -9,6 +9,14 @@ const uploadedResumeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    fileName: {
+      type: String,
+      required: true,
+    },
+    fileSize: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );

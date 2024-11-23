@@ -15,6 +15,7 @@ import {
 } from "../../components/buttons/ButtonThirdParty";
 import { ForgotPasswordAPI } from "../../apis";
 import { MessageError, MessageSuccess } from "../../components/global";
+import { toastError, toastSuccess } from "../../components/toast";
 
 export default function PageForgotPassword() {
   const [isLoading, setIsLoading] = useState(false);
@@ -34,12 +35,14 @@ export default function PageForgotPassword() {
     if (!inputEmail) return;
     const data = await ForgotPasswordAPI({ email: inputEmail });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setMessage({
         isShow: true,
         type: "success",
         message: data.message,
       });
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",

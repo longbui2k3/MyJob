@@ -10,6 +10,7 @@ export default function useInput({ defaultValue }: UseInputProps) {
   const isEmpty = input === "";
   return {
     input,
+    setInput,
     handleInput,
     isEmpty,
   };
