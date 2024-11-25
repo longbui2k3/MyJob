@@ -32,23 +32,28 @@ export default function FormCompanyInfo({
   };
 
   return (
-    <div className="flex flex-col text-gray-900 space-y-4">
+    <div className="text-gray-900 space-y-4">
       <div className="font-medium text-lg leading-7">Logo & Banner Image</div>
       <div className="flex justify-between">
-        <ProfilePicture
-          label="Upload document"
-          note="A photo larger than 400 pixels work best. Max photo size 5 MB."
-          className="w-60"
-          fileUrl={logo}
-          onFileChange={onLogoChange}
-        />
-        <ProfilePicture
-          label="Banner image"
-          note="Bannar images optical dimension 1520x400. Supported format JPEG, PNG. Max photo size 5 MB."
-          className="w-[720px]"
-          fileUrl={banner}
-          onFileChange={onBannerChange}
-        />
+        <div className="w-[24.5%]">
+          <ProfilePicture
+            label="Upload document"
+            note="A photo larger than 400 pixels work best. Max photo size 5 MB."
+            className="aspect-square"
+            fileUrl={logo}
+            onFileChange={onLogoChange}
+          />
+        </div>
+        <div className="w-[73.5%]">
+          <ProfilePicture
+            label="Banner image"
+            note="Bannar images optical dimension 1520x400. Supported format JPEG, PNG. Max photo size 5 MB."
+            className="aspect-[3/1]"
+            fileUrl={banner}
+            onFileChange={onBannerChange}
+            required={false}
+          />
+        </div>
       </div>
       <div className="border-[1px]"></div>
       <div>

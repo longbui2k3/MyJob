@@ -1,7 +1,7 @@
-import { Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
 import { BaseSelect } from "../../select";
 import { Heading5 } from "../../headings";
-import BaseInputGroup from "../../inputs/Input/BaseInputGroup";
+import BaseInput from "../../inputs/Input/BaseInput";
+import { SalaryTypes } from "../../../helpers/constants";
 
 interface SalaryProps {
   minSalary: number | null;
@@ -32,7 +32,7 @@ export default function Salary({
       <Heading5 name="Salary" />
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <BaseInputGroup
+          <BaseInput
             label="Min Salary"
             type="number"
             placeholder="Minimum salary..."
@@ -42,7 +42,7 @@ export default function Salary({
           />
         </div>
         <div>
-          <BaseInputGroup
+          <BaseInput
             label="Max Salary"
             type="number"
             placeholder="Maximum salary..."
@@ -53,7 +53,7 @@ export default function Salary({
         </div>
         <BaseSelect
           label="Salary Type"
-          options={["Hour", "Week", "Month", "Year"]}
+          options={SalaryTypes}
           value={salaryType}
           onChange={onSalaryTypeChange}
         />

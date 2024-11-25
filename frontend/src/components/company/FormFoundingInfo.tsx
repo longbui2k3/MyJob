@@ -2,7 +2,11 @@ import { RxLink2 } from "react-icons/rx";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 import BaseInput from "../inputs/Input/BaseInput";
 import { BaseSelect } from "../select";
-import BaseInputGroup from "../inputs/Input/BaseInputGroup";
+import {
+  IndustryTypes,
+  OrganizationTypes,
+  TeamSizes,
+} from "../../helpers/constants";
 
 interface FormFoundingInfoProps {
   organizationType: string;
@@ -61,48 +65,21 @@ export default function FormFoundingInfo({
       <div className="grid grid-cols-3 gap-4 font-normal text-sm">
         <BaseSelect
           label="Organization Type"
-          options={[
-            "Public",
-            "Private",
-            "Non-Profit",
-            "Government",
-            "Partnership",
-            "Sole Proprietorship",
-            "Corporation",
-          ]}
+          options={OrganizationTypes}
           value={organizationType}
           onChange={onOrganizationTypeChange}
         />
 
         <BaseSelect
           label="Industry Type"
-          options={[
-            "Technology",
-            "Finance",
-            "Healthcare",
-            "Manufacturing",
-            "Retail",
-            "Education",
-            "Real Estate",
-            "Hospitality",
-            "Consulting",
-            "Transportation",
-          ]}
+          options={IndustryTypes}
           value={industryType}
           onChange={onIndustryTypeChange}
         />
 
         <BaseSelect
           label="Team Size"
-          options={[
-            "1-10",
-            "11-50",
-            "51-200",
-            "201-500",
-            "501-1000",
-            "1001-5000",
-            "5001+",
-          ]}
+          options={TeamSizes}
           value={teamSize}
           onChange={onTeamSizeChange}
         />
@@ -115,8 +92,8 @@ export default function FormFoundingInfo({
           />
         </div>
         <div>
-          <BaseInputGroup
-            icon={<RxLink2 size={22} color="var(--primary-500)" />}
+          <BaseInput
+            LeftIcon={RxLink2}
             label="Company Website"
             type="url"
             placeholder="Website url..."

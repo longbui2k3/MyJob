@@ -1,9 +1,7 @@
 import { GoMail } from "react-icons/go";
 import BaseInput from "../inputs/Input/BaseInput";
-import { Input, InputGroup, InputLeftElement, Text } from "@chakra-ui/react";
 import provinces from "../../data/provinces.json";
 import { BaseSelect } from "../select";
-import BaseInputGroup from "../inputs/Input/BaseInputGroup";
 
 interface FormContactProps {
   mapLocation: string;
@@ -82,8 +80,8 @@ export default function FormContact({
       </div>
 
       <div>
-        <BaseInputGroup
-          icon={<GoMail size={22} color="var(--primary-500)" />}
+        <BaseInput
+          LeftIcon={GoMail}
           label="Email"
           type="text"
           placeholder="Email address"

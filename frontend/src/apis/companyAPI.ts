@@ -3,7 +3,7 @@ import { changeQueryObjToQueryStr } from "../utils";
 import BaseAPI from "./baseAPI";
 export const CreateCompanyAPI = async (body: {
   logo: File;
-  banner: File;
+  banner: File | undefined;
   companyName: string;
   aboutUs: string;
   organizationType: string;
@@ -11,6 +11,7 @@ export const CreateCompanyAPI = async (body: {
   teamSize: string;
   yearOfEstablishment: Date;
   companyWebsite: string;
+  companyBenefits: string;
   companyVision: string;
   socialMedias: { socialMedia: string; linkUrl: string }[];
   mapLocation: string;
@@ -21,7 +22,7 @@ export const CreateCompanyAPI = async (body: {
 }) => {
   const formData = new FormData();
   formData.append("logo", body.logo);
-  formData.append("banner", body.banner);
+  if (body.banner) formData.append("banner", body.banner);
   formData.append("companyName", body.companyName);
   formData.append("aboutUs", body.aboutUs);
   formData.append("organizationType", body.organizationType);
@@ -32,6 +33,7 @@ export const CreateCompanyAPI = async (body: {
     body.yearOfEstablishment.toISOString()
   );
   formData.append("companyWebsite", body.companyWebsite);
+  formData.append("companyBenefits", body.companyBenefits);
   formData.append("companyVision", body.companyVision);
   formData.append("socialMedias", JSON.stringify(body.socialMedias));
   formData.append("mapLocation", body.mapLocation);
@@ -58,6 +60,7 @@ export const UpdateCompanyAPI = async (
     teamSize: string;
     yearOfEstablishment: Date | undefined;
     companyWebsite: string;
+    companyBenefits: string;
     companyVision: string;
     socialMedias: { socialMedia: string; linkUrl: string }[];
     mapLocation: string;
@@ -81,6 +84,7 @@ export const UpdateCompanyAPI = async (
       body.yearOfEstablishment.toISOString()
     );
   formData.append("companyWebsite", body.companyWebsite);
+  formData.append("companyBenefits", body.companyBenefits);
   formData.append("companyVision", body.companyVision);
   formData.append("socialMedias", JSON.stringify(body.socialMedias));
   formData.append("mapLocation", body.mapLocation);

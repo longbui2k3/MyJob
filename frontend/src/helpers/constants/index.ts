@@ -47,6 +47,16 @@ export const Experiences = [
   "Leader",
   "Manager",
 ];
+export const JobRoles = [
+  "Software Engineer",
+  "Data Scientist",
+  "Product Manager",
+  "UX Designer",
+  "DevOps Engineer",
+  "Digital Marketing",
+  "Financial Analyst",
+  "Others",
+];
 
 export const Salaries = [
   { label: "$50 - $1000", from: 50, to: 1000 },
@@ -59,6 +69,8 @@ export const Salaries = [
   { label: "$10000 - $15000", from: 10000, to: 15000 },
   { label: "$15000+", from: 15000, to: null },
 ];
+
+export const SalaryTypes = ["Hour", "Week", "Month", "Year"];
 
 export const JobTypes = [
   "Full Time",
@@ -85,6 +97,29 @@ export const OrganizationTypes = [
   "Partnership",
   "Sole Proprietorship",
   "Corporation",
+];
+
+export const IndustryTypes = [
+  "Technology",
+  "Finance",
+  "Healthcare",
+  "Manufacturing",
+  "Retail",
+  "Education",
+  "Real Estate",
+  "Hospitality",
+  "Consulting",
+  "Transportation",
+];
+
+export const TeamSizes = [
+  "1-10",
+  "11-50",
+  "51-200",
+  "201-500",
+  "501-1000",
+  "1001-5000",
+  "5001+",
 ];
 
 export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];

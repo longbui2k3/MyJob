@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { Input, InputRightAddon } from "@chakra-ui/react";
 import { MessageError } from "../../global";
 import { InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { IconType } from "react-icons";
@@ -12,6 +12,7 @@ interface InputBaseProps {
   className?: string;
   required?: boolean;
   LeftIcon?: IconType;
+  currency?: string;
 }
 
 export default function BaseInput({
@@ -23,6 +24,7 @@ export default function BaseInput({
   className,
   required = true,
   LeftIcon,
+  currency,
 }: InputBaseProps) {
   return (
     <>
@@ -51,6 +53,13 @@ export default function BaseInput({
           onChange={onChange}
           className={`${className}`}
         />
+        {currency ? (
+          <InputRightAddon pointerEvents="none" color="var(--gray-600)">
+            VND
+          </InputRightAddon>
+        ) : (
+          ""
+        )}
       </InputGroup>
     </>
   );

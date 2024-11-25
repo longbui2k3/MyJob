@@ -5,8 +5,6 @@ import FormCompanyInfo from "./FormCompanyInfo";
 import FormFoundingInfo from "./FormFoundingInfo";
 import FormSocialMediaInfo from "./FormSocialMediaInfo";
 import FormContact from "./FormContact";
-import { GrLinkNext } from "react-icons/gr";
-import { Button } from "@chakra-ui/react";
 import {
   CreateCompanyAPI,
   FindCompanyAPI,
@@ -17,6 +15,7 @@ import { COMPLETED_COMPANY_KEY, getRoute } from "../../helpers/constants";
 import { useAuthContext } from "../../context";
 import GearSixIcon from "../icons/GearSixIcon";
 import { useCookies } from "react-cookie";
+import { ButtonSubmit } from "../buttons";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
@@ -178,8 +177,21 @@ export default function Tabs() {
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    if (!companyName || !logoFile || !bannerFile || !yearOfEstablishment)
+    if (
+      !companyName ||
+      !logoFile ||
+      !yearOfEstablishment ||
+      !organizationType ||
+      !industryType ||
+      !teamSize ||
+      !yearOfEstablishment ||
+      !companyWebsite ||
+      !mapLocation ||
+      !phone ||
+      !email
+    ) {
       return;
+    }
     const data = await CreateCompanyAPI({
       companyName: companyName,
       logo: logoFile,
@@ -190,6 +202,7 @@ export default function Tabs() {
       teamSize: teamSize,
       yearOfEstablishment: yearOfEstablishment,
       companyWebsite: companyWebsite,
+      companyBenefits: companyBenefits,
       companyVision: companyVision,
       socialMedias: socialMedias,
       mapLocation: mapLocation,
@@ -198,7 +211,6 @@ export default function Tabs() {
       phone: phone,
       email: email,
     });
-    console.log(data);
     if (data.isSuccess) {
       console.log("tao cong ty thanh cong");
       setTimeout(() => {
@@ -222,6 +234,7 @@ export default function Tabs() {
       teamSize: teamSize,
       yearOfEstablishment: yearOfEstablishment,
       companyWebsite: companyWebsite,
+      companyBenefits: companyBenefits,
       companyVision: companyVision,
       socialMedias: socialMedias,
       mapLocation: mapLocation,
@@ -361,38 +374,22 @@ export default function Tabs() {
           {item.content}
         </div>
       ))}
-
-      <div className={`flex ${isSettings ? "hidden" : "block"}`}>
-        {/* <Button
-          className="mr-3"
-          display={activeIndex === 1 ? "none" : "block"}
-          onClick={() => handelClick(activeIndex - 1)}
-        >
-          Previous
-        </Button> */}
-        <Button
-          textColor={"white"}
-          bg={"var(--primary-500)"}
-          width={"150px"}
-          height={"50px"}
-          rightIcon={<GrLinkNext />}
+      <div className={`${isSettings ? "hidden" : "block"}`}>
+        <ButtonSubmit
+          label="Save"
+          width="150px"
+          height="50px"
           onClick={(e) => handleCreateSubmit(e)}
-          //onClick={() => handelClick(activeIndex + 1)}
-        >
-          {/* {activeIndex === 4 ? "Finish Editing" : "Save & Next"} */}
-          Save
-        </Button>
+        />
       </div>
-      <Button
-        display={isSettings ? "block" : "none"}
-        textColor={"white"}
-        bg={"var(--primary-500)"}
-        width={"150px"}
-        height={"50px"}
-        onClick={(e) => handleUpdateSubmit(e)}
-      >
-        Save Changes
-      </Button>
+      <div className={`${isSettings ? "block" : "hidden"}`}>
+        <ButtonSubmit
+          label="Save Changes"
+          width="150px"
+          height="50px"
+          onClick={(e) => handleUpdateSubmit(e);}
+        />
+      </div>
     </div>
   );
 }

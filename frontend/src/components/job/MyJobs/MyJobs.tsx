@@ -83,10 +83,12 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
           <BaseSelect
             label="Job status"
             options={["Active", "Expired"]}
+            placeholder="All Jobs"
             className="flex space-x-3 items-center"
             width="120px"
             value={status}
             onChange={handleStatusChange}
+            required={false}
           />
         </div>
       ) : (

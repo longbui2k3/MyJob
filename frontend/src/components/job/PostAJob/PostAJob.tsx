@@ -14,7 +14,11 @@ import {
 } from "../../../apis";
 import { Select } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD_MY_JOBS_KEY, getRoute } from "../../../helpers/constants";
+import {
+  DASHBOARD_MY_JOBS_KEY,
+  getRoute,
+  JobRoles,
+} from "../../../helpers/constants";
 import { MessageError } from "../../global";
 
 interface PostAJobProps {
@@ -271,16 +275,7 @@ export default function PostAJob({ jobId }: PostAJobProps) {
         </div>
         <BaseSelect
           label="Job Role"
-          options={[
-            "Software Engineer",
-            "Data Scientist",
-            "Product Manager",
-            "UX Designer",
-            "DevOps Engineer",
-            "Digital Marketing",
-            "Financial Analyst",
-            "Others",
-          ]}
+          options={JobRoles}
           value={jobRole}
           onChange={handleJobRoleChange}
         />
