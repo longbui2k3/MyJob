@@ -58,3 +58,13 @@ export const changeDateToString = (dateStr: string) => {
   const date = new Date(dateStr);
   return `${date.toDateString().split(" ").slice(1).join(" ")}`;
 };
+
+export function formatFileSize(bytes: number) {
+  if (bytes === 0) return "0 Bytes";
+
+  const units = ["Bytes", "KB", "MB", "GB", "TB"];
+  const k = 1024;
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + units[i];
+}

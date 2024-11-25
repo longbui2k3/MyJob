@@ -111,7 +111,7 @@ class AuthenService {
     };
   };
   static forgotPassword = async ({ email }) => {
-    const user = await userRepo.findByEmailAndActiveStatus(email);
+    const user = await userRepo.findByEmail(email);
     if (!user) {
       throw new BadRequestError("There is no user with email address!");
     }
@@ -144,7 +144,9 @@ class AuthenService {
   static logOut = async (keyStore) => {
     const delKey = await KeyTokenService.removeKeyById(keyStore._id);
     console.log({ delKey });
-    return delKey;
+    return {
+      message: "Log out successfully!",
+    };
   };
   static signUp = async ({
     userType,

@@ -6,10 +6,11 @@ interface UseResumeNameInputProps {
 export default function useResumeNameInput({
   defaultValue = null,
 }: UseResumeNameInputProps) {
-  const { input, handleInput, isEmpty } = useInput({ defaultValue });
+  const { input, handleInput, isEmpty, setInput } = useInput({ defaultValue });
 
   return {
     inputResumeName: input,
+    setInputResumeName: setInput,
     handleInputResumeName: handleInput,
     isEmptyResumeName: isEmpty,
   };

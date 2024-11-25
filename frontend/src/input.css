@@ -38,4 +38,8 @@
     #285aeb 90%
   );
   --youtube: #cd201f;
+  --toastify-color-success: rgba(10, 101, 204, 1);
+  --toastify-color-error: #e05151;
+  --toastify-text-color-success: rgba(10, 101, 204, 1);
+  --toastify-text-color-warning: #e05151;
 }

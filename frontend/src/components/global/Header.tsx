@@ -14,6 +14,7 @@ import { CookieSetOptions } from "universal-cookie";
 import { useCookies } from "react-cookie";
 import { DEFAULT_PADDING_X } from "../../helpers/constants";
 import { header } from "framer-motion/m";
+import { toastError, toastSuccess } from "../toast";
 
 interface SubNavigationProps {
   user: string | User | null;
@@ -29,6 +30,7 @@ const logOut = async (
 ) => {
   const data = await LogoutAPI();
   if (data.isSuccess) {
+    toastSuccess(data.message);
     setCookie("jwt", "", {
       path: "/",
     });
@@ -36,6 +38,8 @@ const logOut = async (
       path: "/",
     });
     navigate(0);
+  } else {
+    toastError(data.message);
   }
 };
 

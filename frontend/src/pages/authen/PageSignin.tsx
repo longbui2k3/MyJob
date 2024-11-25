@@ -28,10 +28,8 @@ import {
 } from "../../components/inputs";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context";
-import {
-  DEFAULT_KEY,
-  getRoute,
-} from "../../helpers/constants";
+import { DEFAULT_KEY, getRoute } from "../../helpers/constants";
+import { toastError, toastSuccess } from "../../components/toast";
 export default function PageSignin() {
   const { setUserId } = useAuthContext();
   const navigate = useNavigate();
@@ -58,6 +56,7 @@ export default function PageSignin() {
     if (!inputEmail || !inputPassword) return;
     const data = await LoginAPI({ email: inputEmail, password: inputPassword });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setCookie("remember", isChecked ? inputEmail : "", {});
       setCookie("jwt", data.metadata.tokens.accessToken, {
         path: "/",
@@ -75,6 +74,7 @@ export default function PageSignin() {
         navigate(getRoute(DEFAULT_KEY).path, { replace: true });
       }, 500);
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",

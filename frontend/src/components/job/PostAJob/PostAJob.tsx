@@ -20,6 +20,7 @@ import {
   JobRoles,
 } from "../../../helpers/constants";
 import { MessageError } from "../../global";
+import { toastError, toastSuccess } from "../../toast";
 
 interface PostAJobProps {
   jobId: string;
@@ -205,7 +206,10 @@ export default function PostAJob({ jobId }: PostAJobProps) {
     console.log(data);
     if (data.isSuccess) {
       navigate(getRoute(DASHBOARD_MY_JOBS_KEY).path, { replace: true });
+      toastSuccess(data.message);
+      console.log("create job thanh cong");
     } else {
+      toastError(data.message);
       console.log("create job that bai");
     }
   };

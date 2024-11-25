@@ -32,17 +32,17 @@ export default function CompanyOverview({ company }: { company: any }) {
     {
       Icon: GoOrganization,
       title: "ORGANIZATION TYPE",
-      info: company.organizationType,
+      info: company?.organizationType,
     },
     {
       Icon: AiOutlineTeam,
       title: "TEAM SIZE",
-      info: company.teamSize,
+      info: company?.teamSize,
     },
     {
       Icon: PiBriefcaseLight,
       title: "INDUSTRY TYPE",
-      info: company.industryType,
+      info: company?.industryType,
     },
   ];
   return (

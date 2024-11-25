@@ -5,6 +5,9 @@ export const openFormSlice = createSlice({
   initialState: {
     isOpenFormCategory: false,
     isOpenFormResume: false,
+    id: "",
+    type: "",
+    isDataChange: false,
   },
   reducers: {
     openFormCategory(state) {
@@ -19,6 +22,15 @@ export const openFormSlice = createSlice({
     closeFormResume(state) {
       state.isOpenFormResume = false;
     },
+    setId(state, action) {
+      state.id = action.payload;
+    },
+    setType(state, action) {
+      state.type = action.payload;
+    },
+    setDataChange(state) {
+      state.isDataChange = !state.isDataChange
+    },
   },
 });
 export const {
@@ -26,5 +38,8 @@ export const {
   closeFormCategory,
   openFormResume,
   closeFormResume,
+  setId,
+  setType,
+  setDataChange
 } = openFormSlice.actions;
 export default openFormSlice.reducer;

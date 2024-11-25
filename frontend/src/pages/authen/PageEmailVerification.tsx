@@ -8,6 +8,7 @@ import { ResendOtpAPI, VerifyCodeAPI } from "../../apis";
 import { MessageError, MessageSuccess } from "../../components/global";
 import { Text } from "../../components/text";
 import { getRoute, SIGN_IN_KEY } from "../../helpers/constants";
+import { toastError, toastSuccess } from "../../components/toast";
 
 export default function PageEmailVerification() {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ export default function PageEmailVerification() {
       OTP: inputVerifyCode,
     });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setMessage({
         isShow: true,
         type: "success",
@@ -40,6 +42,7 @@ export default function PageEmailVerification() {
         navigate(getRoute(SIGN_IN_KEY).path);
       }, 500);
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",
@@ -54,6 +57,7 @@ export default function PageEmailVerification() {
     if (!email) return "";
     const data = await ResendOtpAPI({ email });
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setMessage({
         isShow: true,
         type: "success",
@@ -61,6 +65,7 @@ export default function PageEmailVerification() {
       });
       window.location.reload();
     } else {
+      toastError(data.message);
       setMessage({
         isShow: true,
         type: "error",

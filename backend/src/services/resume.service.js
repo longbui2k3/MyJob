@@ -25,8 +25,12 @@ class ResumeService {
       ).uploadFileAndDownloadURL();
     }
 
+    const fileInfo = await UploadFiles.getFileInfo(fileUrl);
+
     const uploadedResume = await uploadedResumeRepo.create({
       fileUrl,
+      fileName: fileInfo.name,
+      fileSize: fileInfo.size,
     });
 
     const resume = await resumeRepo.create({
@@ -52,7 +56,7 @@ class ResumeService {
       }
     }
 
-    const uploadResumes = await resumeRepo.find(
+    const uploadedResumes = await resumeRepo.find(
       removeUndefinedInObject({ user: userId, type }),
       {
         page,
@@ -60,8 +64,7 @@ class ResumeService {
         populates: ["resume"],
       }
     );
-
-    return uploadResumes;
+    return uploadedResumes;
   };
 
   static findResumeById = async (resumeId) => {
@@ -87,17 +90,23 @@ class ResumeService {
     }
 
     let fileUrl = undefined;
+    let fileInfo = undefined;
     if (file) {
       fileUrl = await new UploadFiles(
         "resumes",
         "documents",
         file
       ).uploadFileAndDownloadURL();
+      fileInfo = await UploadFiles.getFileInfo(fileUrl);
     }
 
     const uploadedResume = await uploadedResumeRepo.findByIdAndUpdate(
       resume.resume,
-      removeUndefinedInObject({ fileUrl })
+      removeUndefinedInObject({
+        fileUrl,
+        fileName: fileInfo?.name || undefined,
+        fileSize: fileInfo?.size || undefined,
+      })
     );
 
     const updatedResume = await resumeRepo.findByIdAndUpdate(

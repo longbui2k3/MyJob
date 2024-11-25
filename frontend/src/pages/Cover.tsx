@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { FormCategory } from "../components/category";
 import { FormResume } from "../components/resume";
 import { useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Cover() {
   const isOpenFormCategory = useSelector(
@@ -23,6 +25,7 @@ export default function Cover() {
       <div className="pt-[130px]">
         <Outlet />
       </div>
+      <ToastContainer />
       <Footer />
     </div>
   );
