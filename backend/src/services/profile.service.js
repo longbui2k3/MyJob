@@ -10,7 +10,7 @@ class ProfileService {
       fullName,
       title,
       experience,
-      educations,
+      education,
       personalWebsite,
       mobile,
       mapLocation,
@@ -45,6 +45,14 @@ class ProfileService {
         socialMedias: socialMedias ? parseSocialMedias : undefined,
       })
     );
+  };
+
+  static findProfileByUserId = async (userId) => {
+    const profile = await profileRepo.findOne({
+      user: userId,
+    });
+
+    return profile;
   };
 }
 

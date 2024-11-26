@@ -5,6 +5,7 @@ interface ButtonSolidProps {
   className?: string;
   leftIcon?: JSX.Element;
   onClick?: (e) => void;
+  isLoading?: boolean;
 }
 
 export default function ButtonSolid({
@@ -12,6 +13,7 @@ export default function ButtonSolid({
   className,
   leftIcon,
   onClick = (e) => {},
+  isLoading = false,
 }: ButtonSolidProps) {
   return (
     <Button
@@ -22,6 +24,7 @@ export default function ButtonSolid({
       _hover={{ bg: "var(--primary-500)", color: "white" }}
       leftIcon={leftIcon}
       onClick={onClick}
+      isLoading={isLoading}
     >
       {children}
     </Button>

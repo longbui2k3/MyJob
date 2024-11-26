@@ -2,8 +2,12 @@ import { Button, HStack, IconButton, Input } from "@chakra-ui/react";
 import { IoIosAddCircleOutline, IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { BaseSelect } from "../select";
+import { ButtonSolid } from "../buttons";
+import { FindProfileAPI, UpdateProfileAPI } from "../../apis";
+import { toastError, toastSuccess } from "../toast";
 
 export default function FormSocialMediaInfo() {
+  const [isLoading, setIsLoading] = useState(false);
   const [socialMedias, onSocialMediaChange] = useState<
     { socialMedia: string; linkUrl: string }[]
   >([]);
@@ -33,6 +37,34 @@ export default function FormSocialMediaInfo() {
     const updatedLinks = [...socialLinks];
     updatedLinks[index].linkUrl = newLinkUrl;
     updateSocialLinks(updatedLinks);
+  };
+
+  const findProfile = async () => {
+    const data = await FindProfileAPI();
+    if (data.isSuccess) {
+      setSocialLinks(data.metadata.profile.socialMedias);
+    }
+  };
+
+  useEffect(() => {
+    findProfile();
+  }, []);
+
+  const updateProfile = async () => {
+    setIsLoading(true);
+    const data = await UpdateProfileAPI({
+      socialMedias,
+    });
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+    } else {
+      toastError(data.message);
+    }
+    setIsLoading(false);
+  };
+
+  const handleSubmit = async () => {
+    await updateProfile();
   };
 
   return (
@@ -73,6 +105,12 @@ export default function FormSocialMediaInfo() {
       >
         Add New Social Link
       </Button>
+      <ButtonSolid
+        children={"Save Changes"}
+        className="mt-4"
+        isLoading={isLoading}
+        onClick={handleSubmit}
+      />
     </div>
   );
 }

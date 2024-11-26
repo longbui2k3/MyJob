@@ -6,6 +6,7 @@ import { FormResume } from "../components/resume";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormApplyJob } from "../components/application";
 
 export default function Cover() {
   const isOpenFormCategory = useSelector(
@@ -14,6 +15,10 @@ export default function Cover() {
   const isOpenFormResume = useSelector(
     (state: any) => state.openForm.isOpenFormResume
   );
+  const isOpenFormApplyJob = useSelector(
+    (state: any) => state.openForm.isOpenFormApplyJob
+  );
+
   useEffect(() => {
     if (isOpenFormCategory || isOpenFormResume) window.scrollTo(0, 0);
   }, [isOpenFormCategory, isOpenFormResume]);
@@ -21,6 +26,7 @@ export default function Cover() {
     <div className="relative w-full">
       {isOpenFormCategory ? <FormCategory /> : ""}
       {isOpenFormResume ? <FormResume /> : ""}
+      {isOpenFormApplyJob ? <FormApplyJob /> : ""}
       <Header />
       <div className="pt-[130px]">
         <Outlet />

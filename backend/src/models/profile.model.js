@@ -19,7 +19,7 @@ const profileSchema = new mongoose.Schema(
     fullName: { type: String, default: "" },
     title: { type: String, default: "" },
     experience: { type: String, enum: Experiences, default: Experiences.EMPTY },
-    educations: { type: String, enum: Educations, default: Educations.EMPTY },
+    education: { type: String, enum: Educations, default: Educations.EMPTY },
     personalWebsite: { type: String, default: "" },
     mobile: { type: String, default: "" },
     mapLocation: { type: String, default: "" },
@@ -28,7 +28,7 @@ const profileSchema = new mongoose.Schema(
       enum: Object.values(UserGenders),
       default: UserGenders.EMPTY,
     },
-    nationality: { type: String, default: "" },
+    // nationality: { type: String, default: "" },
     dateOfBirth: { type: Date, default: null },
     maritalStatus: {
       type: String,

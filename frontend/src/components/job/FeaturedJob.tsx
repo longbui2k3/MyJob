@@ -3,8 +3,23 @@ import { ButtonOutline } from "../buttons";
 import { Heading3 } from "../headings";
 import JobRowsFill from "./JobRowsFill";
 import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import { FindJobsAPI } from "../../apis";
+import { useEffect, useState } from "react";
 
 export default function FeaturedJob() {
+  const [jobs, setJobs] = useState<Array<any>>([]);
+  async function findJobs() {
+    const data = await FindJobsAPI({
+      limit: 6,
+      page: 1,
+    });
+    if (data.isSuccess) {
+      setJobs(data.metadata.jobs);
+    }
+  }
+  useEffect(() => {
+    findJobs();
+  }, []);
   return (
     <div
       className={`w-full`}
@@ -25,8 +40,18 @@ export default function FeaturedJob() {
         />
       </div>
       <div className="mt-8 flex flex-col space-y-4">
-        {new Array(5).fill(0).map(() => (
-          <JobRowsFill />
+        {jobs.map((job) => (
+          <JobRowsFill
+            _id={job._id}
+            companyId={job.company._id}
+            companyLogo={job.company.logo}
+            companyLocation={job.company.mapLocation}
+            jobTitle={job.jobTitle}
+            jobType={job.jobType}
+            minSalary={job.minSalary}
+            maxSalary={job.maxSalary}
+            expirationDate={job.expirationDate}
+          />
         ))}
       </div>
     </div>

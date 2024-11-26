@@ -10,7 +10,12 @@ import {
 import { ButtonSolid } from "../buttons";
 import { CreateResume, UploadedResumeInfo } from "../resume";
 import { useEffect, useState } from "react";
-import { DeleteResumeAPI, FindResumesAPI } from "../../apis";
+import {
+  DeleteResumeAPI,
+  FindProfileAPI,
+  FindResumesAPI,
+  UpdateProfileAPI,
+} from "../../apis";
 import { useAuthContext } from "../../context";
 import { formatFileSize } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,9 +24,72 @@ import { toastError, toastSuccess } from "../toast";
 
 export default function FormPersonal() {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const isDataChange = useSelector((state: any) => state.openForm.isDataChange);
   const { userId } = useAuthContext();
   const [resumes, setResumes] = useState<Array<any>>([]);
+
+  const {
+    fileUrl: avatar,
+    file: avatarFile,
+    handleFileChange: handleAvatarChange,
+    setFileUrl: setAvatar,
+  } = useUploadFileInput();
+  const {
+    handleInput: handleFullNameChange,
+    input: fullName,
+    setInput: setFullName,
+  } = useInput({
+    defaultValue: "",
+  });
+  const {
+    handleInput: handleTitleChange,
+    input: title,
+    setInput: setTitle,
+  } = useInput({
+    defaultValue: "",
+  });
+  const { experience, setExperience } = useExperienceSelect();
+
+  const { education, setEducation } = useEducationSelect();
+  const {
+    handleInput: handlePersonalWebsiteChange,
+    input: personalWebsite,
+    setInput: setPersonalWebsite,
+  } = useInput({
+    defaultValue: "",
+  });
+
+  const findProfile = async () => {
+    const data = await FindProfileAPI();
+    if (data.isSuccess) {
+      setAvatar(data.metadata.profile.avatar);
+      setFullName(data.metadata.profile.fullName);
+      setTitle(data.metadata.profile.title);
+      setExperience(data.metadata.profile.experience);
+      setEducation(data.metadata.profile.education);
+      setPersonalWebsite(data.metadata.profile.personalWebsite);
+    }
+  };
+
+  const updateProfile = async () => {
+    setIsLoading(true);
+    const data = await UpdateProfileAPI({
+      avatar: avatarFile,
+      fullName,
+      title,
+      experience,
+      education,
+      personalWebsite,
+    });
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+    } else {
+      toastError(data.message);
+    }
+    setIsLoading(false);
+  };
+
   const findResumes = async () => {
     const data = await FindResumesAPI({
       user: userId || undefined,
@@ -46,24 +114,17 @@ export default function FormPersonal() {
   }, []);
 
   useEffect(() => {
+    findProfile();
+  }, []);
+
+  useEffect(() => {
     findResumes();
   }, [userId, isDataChange]);
 
-  const { fileUrl: avatar, handleFileChange: handleAvatarChange } =
-    useUploadFileInput();
-  const { handleInput: handleFullNameChange, input: fullName } = useInput({
-    defaultValue: "",
-  });
-  const { handleInput: handleTitleChange, input: title } = useInput({
-    defaultValue: "",
-  });
-  const { experience, handleExperienceChange } = useExperienceSelect();
+  async function handleSubmit() {
+    await updateProfile();
+  }
 
-  const { education, handleEducationChange } = useEducationSelect();
-  const { handleInput: handlePersonalWebsiteChange, input: personalWebsite } =
-    useInput({
-      defaultValue: "",
-    });
   return (
     <>
       <div className="flex flex-col text-gray-900 space-y-4">
@@ -96,13 +157,13 @@ export default function FormPersonal() {
             <div>
               <ExperienceSelect
                 experience={experience}
-                handleExperienceChange={handleExperienceChange}
+                handleExperienceChange={setExperience}
               />
             </div>
             <div>
               <EducationSelect
                 education={education}
-                handleEducationChange={handleEducationChange}
+                handleEducationChange={setEducation}
               />
             </div>
             <div className="col-span-2">
@@ -114,7 +175,11 @@ export default function FormPersonal() {
                 LeftIcon={BiLinkAlt}
               />
             </div>
-            <ButtonSolid children={"Save Changes"} />
+            <ButtonSolid
+              children={"Save Changes"}
+              isLoading={isLoading}
+              onClick={handleSubmit}
+            />
           </div>
         </div>
       </div>

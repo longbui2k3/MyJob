@@ -80,4 +80,9 @@ module.exports = {
     $jobDescription: "string",
     $jobResponsibilities: "string",
   },
+  applicationBodySchema: {
+    $job: "string",
+    $resume: "string",
+    $coverLetter: "string",
+  },
 };

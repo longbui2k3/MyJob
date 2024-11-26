@@ -9,11 +9,6 @@ const applicationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    profile: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Profile",
-      required: true,
-    },
     job: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Job",
@@ -27,7 +22,7 @@ const applicationSchema = new mongoose.Schema(
     coverLetter: {
       type: String,
     },
-    postedAt: {
+    appliedAt: {
       type: Date,
       default: Date.now(),
     },

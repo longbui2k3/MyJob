@@ -5,5 +5,5 @@ export default function useEducationSelect() {
   const handleEducationChange = (e) => {
     setEducation(e.target.value);
   };
-  return { education, handleEducationChange };
+  return { education, setEducation, handleEducationChange };
 }

@@ -68,3 +68,5 @@ export function formatFileSize(bytes: number) {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + units[i];
 }
+
+export { StatusCodes } from "./statusCodes";

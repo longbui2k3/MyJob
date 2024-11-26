@@ -4,6 +4,8 @@ export {
   closeFormCategory,
   openFormResume,
   closeFormResume,
+  openFormApplyJob,
+  closeFormApplyJob,
   setId,
   setType,
   setDataChange,

@@ -8,11 +8,15 @@ import { getRoute } from "../../helpers/constants";
 import {
   EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
+  SIGN_IN_KEY,
 } from "../../helpers/constants/routes";
 import { FindFavoriteJobAPI } from "../../apis/favoriteJobAPI";
 import { useEffect, useState } from "react";
 import UnfavoriteJobIcon from "./UnfavoriteJobIcon";
 import FavoriteJobIcon from "./FavoriteJobIcon";
+import { useDispatch } from "react-redux";
+import { openFormApplyJob } from "../../features";
+import { useAuthContext } from "../../context";
 
 interface JobRowsFillProps {
   _id?: string;
@@ -39,7 +43,9 @@ export default function JobRowsFill({
   expirationDate = new Date(Date.now()),
   isFeatured = false,
 }: JobRowsFillProps) {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isFavoriteJob, setIsFavoriteJob] = useState(false);
   async function findFavoriteJob() {
     const data = await FindFavoriteJobAPI(_id);
@@ -123,6 +129,11 @@ export default function JobRowsFill({
           height="40px"
           fontSize="13px"
           onClick={() => {
+            if (!user) {
+              navigate(getRoute(SIGN_IN_KEY).path);
+              navigate(0);
+              return;
+            }
             navigate(
               getRoute(JOB_DETAIL_KEY, {
                 param: {
@@ -130,6 +141,7 @@ export default function JobRowsFill({
                 },
               }).path
             );
+            dispatch(openFormApplyJob());
           }}
         />
       </div>

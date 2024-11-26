@@ -5,5 +5,5 @@ export default function useGenderSelect() {
   const handleGenderChange = (e) => {
     setGender(e.target.value);
   };
-  return { gender, handleGenderChange };
+  return { gender, setGender, handleGenderChange };
 }
