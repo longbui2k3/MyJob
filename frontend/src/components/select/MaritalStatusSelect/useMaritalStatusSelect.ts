@@ -5,5 +5,5 @@ export default function useMaritalStatusSelect() {
   const handleMaritalStatusChange = (e) => {
     setMaritalStatus(e.target.value);
   };
-  return { maritalStatus, handleMaritalStatusChange };
+  return { maritalStatus, setMaritalStatus, handleMaritalStatusChange };
 }

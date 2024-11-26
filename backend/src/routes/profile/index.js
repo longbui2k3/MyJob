@@ -5,6 +5,7 @@ const { authentication } = require("../../auth/authUtils");
 const { asyncHandler } = require("../../helpers/asyncHandler");
 const { updateProfile } = require("../../controllers/profile.controller");
 const { uploadMulter } = require("../../helpers/uploadMulter");
+const profileController = require("../../controllers/profile.controller");
 const router = express.Router();
 
 const upload = uploadMulter([
@@ -15,11 +16,18 @@ const upload = uploadMulter([
 ]);
 
 router.use(authentication);
-router.route("/").patch(
-  upload.single("avatar"),
-  // #swagger.tags = ['Profile']
-  // #swagger.summary = 'Update profile'
-  /* #swagger.requestBody = {
+router
+  .route("/")
+  .get(
+    // #swagger.tags = ['Profile']
+    // #swagger.summary = 'Find profile'
+    asyncHandler(profileController.findProfileByUserId)
+  )
+  .patch(
+    upload.single("avatar"),
+    // #swagger.tags = ['Profile']
+    // #swagger.summary = 'Update profile'
+    /* #swagger.requestBody = {
       required: true,
       content: {
         "multipart/form-data": {
@@ -97,12 +105,12 @@ router.route("/").patch(
       }
     } 
   */
-  /* #swagger.security = [{
+    /* #swagger.security = [{
       "apiKeyAuth": [],
       "clientId": []
     }] 
   */
-  asyncHandler(updateProfile)
-);
+    asyncHandler(updateProfile)
+  );
 
 module.exports = router;

@@ -18,5 +18,16 @@ class ProfileController {
       },
     }).send(res);
   };
+
+  findProfileByUserId = async (req, res, next) => {
+    const result = await ProfileService.findProfileByUserId(req.user.userId);
+
+    return new OK({
+      message: "Find profile successfully",
+      metadata: {
+        profile: result,
+      },
+    }).send(res);
+  };
 }
 module.exports = new ProfileController();

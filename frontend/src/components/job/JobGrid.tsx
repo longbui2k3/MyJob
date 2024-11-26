@@ -9,11 +9,15 @@ import { getRoute } from "../../helpers/constants";
 import {
   EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
+  SIGN_IN_KEY,
 } from "../../helpers/constants/routes";
 import { useEffect, useState } from "react";
 import { FindFavoriteJobAPI } from "../../apis/favoriteJobAPI";
 import UnfavoriteJobIcon from "./UnfavoriteJobIcon";
 import FavoriteJobIcon from "./FavoriteJobIcon";
+import { useDispatch } from "react-redux";
+import { openFormApplyJob } from "../../features";
+import { useAuthContext } from "../../context";
 
 interface JobGridProps {
   _id?: string;
@@ -41,6 +45,8 @@ export default function JobGrid({
   isFeatured = false,
   expirationDate = new Date(Date.now()),
 }: JobGridProps) {
+  const { user } = useAuthContext();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isFavoriteJob, setIsFavoriteJob] = useState(false);
   async function findFavoriteJob() {
@@ -161,6 +167,11 @@ export default function JobGrid({
             isHover={false}
             className="w-[100px]"
             onClick={() => {
+              if (!user) {
+                navigate(getRoute(SIGN_IN_KEY).path);
+                navigate(0);
+                return;
+              }
               navigate(
                 getRoute(JOB_DETAIL_KEY, {
                   param: {
@@ -168,6 +179,7 @@ export default function JobGrid({
                   },
                 }).path
               );
+              dispatch(openFormApplyJob());
             }}
             bgColor="transparent"
           />

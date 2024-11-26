@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import {
+  DEFAULT_PADDING_X,
+  getRoute,
+  SIGN_IN_KEY,
+} from "../../helpers/constants";
 import { FindJobAPI } from "../../apis";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Heading, Heading5 } from "../headings";
 import { Tag } from "@chakra-ui/react";
 import { LinkInfo, MailInfo, PhoneInfo } from "./JobInfos";
 import { ButtonSubmit } from "../buttons";
-import { CiBookmark } from "react-icons/ci";
 import { Text } from "../text";
 import { changeDateToString } from "../../utils";
 import JobOverview from "./JobOverview";
@@ -14,8 +17,14 @@ import CompanyProfile from "./CompanyProfile";
 import { FindFavoriteJobAPI } from "../../apis/favoriteJobAPI";
 import UnfavoriteJobIcon from "./UnfavoriteJobIcon";
 import FavoriteJobIcon from "./FavoriteJobIcon";
+import { useDispatch } from "react-redux";
+import { openFormApplyJob, setId } from "../../features";
+import { useAuthContext } from "../../context";
 
 export default function JobDetail() {
+  const { user } = useAuthContext();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [job, setJob] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
@@ -102,6 +111,15 @@ export default function JobDetail() {
               height="45px"
               width="200px"
               fontSize="14px"
+              onClick={() => {
+                if (!user) {
+                  navigate(getRoute(SIGN_IN_KEY).path);
+                  navigate(0);
+                  return;
+                }
+                dispatch(openFormApplyJob());
+                dispatch(setId(job._id));
+              }}
             />
           </div>
           <div className="flex flex-row-reverse">

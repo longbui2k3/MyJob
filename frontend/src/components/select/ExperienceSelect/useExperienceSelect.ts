@@ -5,5 +5,5 @@ export default function useExperienceSelect() {
   const handleExperienceChange = (e) => {
     setExperience(e.target.value);
   };
-  return { experience, handleExperienceChange };
+  return { experience, setExperience, handleExperienceChange };
 }
