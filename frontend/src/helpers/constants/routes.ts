@@ -31,6 +31,7 @@ export const DASHBOARD_EMPLOYERS_PROFILE_KEY = "DASHBOARD_EMPLOYERS_PROFILE";
 export const DASHBOARD_POST_A_JOB_KEY = "DASHBOARD_POST_A_JOB";
 export const DASHBOARD_MY_JOBS_KEY = "DASHBOARD_MY_JOBS";
 export const DASHBOARD_EDIT_JOB_KEY = "DASHBOARD_EDIT_JOB";
+export const DASHBOARD_APPLICATIONS_KEY = "DASHBOARD_APPLICATIONS";
 export const DASHBOARD_SAVED_CANDIDATE_KEY = "DASHBOARD_SAVED_CANDIDATE";
 export const DASHBOARD_PLANS_AND_BILLING_KEY = "DASHBOARD_PLANS_AND_BILLING";
 export const DASHBOARD_CATEGORIES_KEY = "DASHBOARD_CATEGORIES";
@@ -183,6 +184,12 @@ const ROUTES: Array<RouteItem> = [
                 key: DASHBOARD_EDIT_JOB_KEY,
                 name: "Dashboard Edit Job ",
                 path: "/dashboard/my-jobs/:jobId",
+                isPrivate: true,
+              },
+              {
+                key: DASHBOARD_APPLICATIONS_KEY,
+                name: "Dashboard Applications",
+                path: "/dashboard/my-jobs/applications/:jobId",
                 isPrivate: true,
               },
             ],

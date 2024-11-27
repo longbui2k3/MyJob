@@ -6,6 +6,32 @@ const { asyncHandler } = require("../../helpers/asyncHandler");
 const applicationController = require("../../controllers/application.controller");
 const router = express.Router();
 
+router.route("/").get(
+  // #swagger.tags = ['Application']
+  // #swagger.summary = 'Find applications'
+  /* #swagger.parameters["page"] = {
+    "in": "query",
+    "type": "number",
+    "description": "Page"
+  }
+  */
+  /*
+    #swagger.parameters["limit"] = {
+      "in": "query",
+      "type": "number",
+      "description": "Limit"
+    }
+  */
+  /*
+    #swagger.parameters["job"] = {
+      "in": "query",
+      "type": "string",
+      "description": "Job"
+    }
+  */
+  asyncHandler(applicationController.findApplications)
+);
+
 router.use(authentication);
 
 router.route("/").post(

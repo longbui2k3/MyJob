@@ -9,6 +9,11 @@ const applicationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile",
+      required: true,
+    },
     job: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Job",

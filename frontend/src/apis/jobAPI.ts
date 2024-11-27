@@ -7,7 +7,7 @@ export const FindJobsAPI = async (query: {
   limit?: number;
   search?: string;
   provinceCode?: number;
-  companyId?: string;
+  company?: string;
   category?: string;
   status?: string;
   experiences?: Array<string>;
