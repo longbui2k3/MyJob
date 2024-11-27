@@ -6,16 +6,28 @@ import DescriptionResponsibility from "./DescriptionResponsibility";
 import Salary from "./Salary";
 import { ButtonSubmit } from "../../buttons";
 import { useEffect, useState } from "react";
-import { FindAllCategoriesAPI } from "../../../apis";
-import { CreateJobAPI, FindJobAPI } from "../../../apis/jobAPI";
+import {
+  CreateJobAPI,
+  FindAllCategoriesAPI,
+  FindJobAPI,
+  UpdateJobAPI,
+} from "../../../apis";
 import { Select } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import {
+  DASHBOARD_MY_JOBS_KEY,
+  getRoute,
+  JobRoles,
+} from "../../../helpers/constants";
+import { MessageError } from "../../global";
 import { toastError, toastSuccess } from "../../toast";
 
 interface PostAJobProps {
-  jobId?: string;
+  jobId: string;
 }
 
 export default function PostAJob({ jobId }: PostAJobProps) {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<Array<any>>([]);
   async function findAllCategories() {
     const limit = 8;
@@ -36,16 +48,16 @@ export default function PostAJob({ jobId }: PostAJobProps) {
   };
 
   // tags
-  const [tags, setTags] = useState<string[]>([]);
-  const handleTagsChange = (e) => {
-    const value = e.target.value;
-    setTags(
-      value
-        .split(",")
-        .map((tag: string) => tag.trim())
-        .filter((tag: string) => tag !== "")
-    );
-  };
+  // const [tags, setTags] = useState<string[]>([]);
+  // const handleTagsChange = (e) => {
+  //   const value = e.target.value;
+  //   setTags(
+  //     value
+  //       .split(",")
+  //       .map((tag: string) => tag.trim())
+  //       .filter((tag: string) => tag !== "")
+  //   );
+  // };
 
   // category
   const [category, setCategory] = useState<string>("");
@@ -140,7 +152,9 @@ export default function PostAJob({ jobId }: PostAJobProps) {
   }
 
   useEffect(() => {
-    if (jobId) FindJob(jobId);
+    if (jobId) {
+      FindJob(jobId);
+    }
   }, []);
 
   useEffect(() => {
@@ -164,12 +178,8 @@ export default function PostAJob({ jobId }: PostAJobProps) {
       setJobLevel(jobData.jobLevel);
       setApplyJobOn(jobData.applyJobOn);
       setJobDescription(jobData.jobDescription);
-      setJobResponsibilities(jobData.setJobResponsibilities);
+      setJobResponsibilities(jobData.jobResponsibilities);
     }
-  }, [jobData]);
-
-  useEffect(() => {
-    console.log("jobTitle: ", jobData);
   }, [jobData]);
 
   const handleCreateSubmit = async (e) => {
@@ -178,7 +188,7 @@ export default function PostAJob({ jobId }: PostAJobProps) {
     const data = await CreateJobAPI({
       jobTitle,
       category,
-      tags,
+      // tags,
       jobRole,
       minSalary,
       maxSalary,
@@ -195,11 +205,41 @@ export default function PostAJob({ jobId }: PostAJobProps) {
     });
     console.log(data);
     if (data.isSuccess) {
+      navigate(getRoute(DASHBOARD_MY_JOBS_KEY).path, { replace: true });
       toastSuccess(data.message);
       console.log("create job thanh cong");
     } else {
       toastError(data.message);
       console.log("create job that bai");
+    }
+  };
+
+  const handleUpdateSubmit = async (e) => {
+    e.preventDefault();
+
+    const data = await UpdateJobAPI(jobId, {
+      jobTitle,
+      category,
+      // tags,
+      jobRole,
+      minSalary,
+      maxSalary,
+      salaryType,
+      education,
+      experience,
+      jobType,
+      vacancies,
+      expirationDate,
+      jobLevel,
+      applyJobOn,
+      jobDescription,
+      jobResponsibilities,
+    });
+    console.log(data);
+    if (data.isSuccess) {
+      navigate(getRoute(DASHBOARD_MY_JOBS_KEY).path, { replace: true });
+    } else {
+      console.log("update job that bai");
     }
   };
   return (
@@ -212,18 +252,21 @@ export default function PostAJob({ jobId }: PostAJobProps) {
           value={jobTitle}
           onChange={handleJobTitleChange}
         />
-        <div className="h-4" />
+        {/* <div className="h-4" />
         <BaseInput
           label="Tags"
           type="text"
           placeholder="Job keyword, tags etc..."
           value={tags.join(", ")}
           onChange={handleTagsChange}
-        />
+        /> */}
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <div className="font-normal text-sm mb-2">Category</div>
+          <div className="flex space-x-2">
+            <div className="font-normal text-sm mb-2">Category</div>
+            <MessageError content="*" />
+          </div>
           <Select
             placeholder="Select..."
             value={category}
@@ -236,16 +279,7 @@ export default function PostAJob({ jobId }: PostAJobProps) {
         </div>
         <BaseSelect
           label="Job Role"
-          options={[
-            "Software Engineer",
-            "Data Scientist",
-            "Product Manager",
-            "UX Designer",
-            "DevOps Engineer",
-            "Digital Marketing",
-            "Financial Analyst",
-            "Others",
-          ]}
+          options={JobRoles}
           value={jobRole}
           onChange={handleJobRoleChange}
         />
@@ -283,11 +317,19 @@ export default function PostAJob({ jobId }: PostAJobProps) {
         onJobDescriptionChange={handleJobDescriptionChange}
         onJobResponsibilitiesChange={handleJobResponsibilitiesChange}
       />
-      <ButtonSubmit
-        label="Post Job"
-        width="150px"
-        onClick={(e) => handleCreateSubmit(e)}
-      />
+      {jobId ? (
+        <ButtonSubmit
+          label="Save changes"
+          width="150px"
+          onClick={(e) => handleUpdateSubmit(e)}
+        />
+      ) : (
+        <ButtonSubmit
+          label="Post Job"
+          width="150px"
+          onClick={(e) => handleCreateSubmit(e)}
+        />
+      )}
     </div>
   );
 }

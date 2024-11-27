@@ -5,6 +5,8 @@ const applicationRepo = require("../models/repos/application.repo");
 const jobRepo = require("../models/repos/job.repo");
 const resumeRepo = require("../models/repos/resume.repo");
 const userRepo = require("../models/repos/user.repo");
+const profileRepo = require("../models/repos/profile.repo");
+const { removeUndefinedInObject } = require("../utils");
 class ApplicationService {
   static createApplication = async (
     userId,
@@ -14,7 +16,10 @@ class ApplicationService {
     if (!user) {
       throw new BadRequestError("User not found!");
     }
-
+    const profile = await profileRepo.findProfileByUser(userId);
+    if (!profile) {
+      throw new BadRequestError("Profile not found!");
+    }
     const job = await jobRepo.findById(jobId);
     if (!job) {
       throw new BadRequestError("Job not found!");
@@ -33,11 +38,26 @@ class ApplicationService {
 
     const application = await applicationRepo.create({
       user: userId,
+      profile: profile._id,
       job: jobId,
       resume: resumeId,
       coverLetter,
     });
     return application;
+  };
+
+  static findApplications = async ({ job, page, limit }) => {
+    return await applicationRepo.find(removeUndefinedInObject({ job }), {
+      page,
+      limit,
+      sort: ["createdAt"],
+      populates: ["profile"],
+      populateSelects: [
+        {
+          profile: "avatar fullName",
+        },
+      ],
+    });
   };
 }
 

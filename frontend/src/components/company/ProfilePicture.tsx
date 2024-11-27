@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { MessageError } from "../global";
 
 interface ProfilePictureProps {
-  label: string;
-  note: string;
+  label?: string;
+  note?: string;
   className: string;
   fileUrl?: string;
+  required?: boolean;
   onFileChange: (file: File) => void;
 }
 export default function ProfilePicture({
@@ -12,6 +14,7 @@ export default function ProfilePicture({
   note,
   className,
   fileUrl,
+  required = true,
   onFileChange,
 }: ProfilePictureProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -38,8 +41,13 @@ export default function ProfilePicture({
   };
 
   return (
-    <div>
-      <div className="font-normal text-sm mb-2">{label}</div>
+    <div className=" relative w-full">
+      <div className="flex space-x-2">
+        <div className="font-normal text-sm mb-2 whitespace-nowrap">
+          {label}
+        </div>
+        {required ? <MessageError content="*" /> : ""}
+      </div>
       <input
         type="file"
         ref={inputRef}
@@ -49,7 +57,7 @@ export default function ProfilePicture({
       />
       <div
         onClick={handleClick}
-        className={`${className} h-60 rounded-md border-2 border-dashed border-gray-300 bg-gray-100`}
+        className={`${className} rounded-md border-2 border-dashed border-gray-300 bg-gray-100`}
       >
         {imageUrl ? (
           <img
@@ -99,9 +107,9 @@ export default function ProfilePicture({
               <span className="font-medium">Browse photo</span>
               <span className="text-gray-500"> or drop here</span>
             </p>
-            <p className="font-normal text-xs text-gray-500 text-center">
+            <div className="font-normal text-xs text-gray-500 text-center">
               {note}
-            </p>
+            </div>
           </div>
         )}
       </div>

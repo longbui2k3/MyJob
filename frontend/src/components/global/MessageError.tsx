@@ -9,7 +9,7 @@ export default function MessageError({
 }: MessageErrorProps) {
   return (
     <div
-      className={`mt-2 text-[--error] text-[14px] font-[450] w-full ${className}`}
+      className={`mt-1 text-[--error] text-[14px] font-[450] w-full ${className}`}
     >
       {content}
     </div>

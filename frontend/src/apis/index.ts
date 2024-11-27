@@ -15,7 +15,7 @@ export {
 } from "./companyAPI";
 export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";
-export { FindJobsAPI, FindJobAPI } from "./jobAPI";
+export { FindJobsAPI, FindJobAPI, UpdateJobAPI, CreateJobAPI } from "./jobAPI";
 export {
   FindResumesAPI,
   FindResumeByIdAPI,
@@ -24,4 +24,4 @@ export {
   DeleteResumeAPI,
 } from "./resumeAPI";
 export { FindProfileAPI, UpdateProfileAPI } from "./profileAPI";
-export { CreateApplicationAPI } from "./applicationAPI";
+export { CreateApplicationAPI, FindApplicationsAPI } from "./applicationAPI";

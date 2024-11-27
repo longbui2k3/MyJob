@@ -1,3 +1,9 @@
+import {
+  Educations,
+  Experiences,
+  JobLevels,
+  JobTypes,
+} from "../../../helpers/constants";
 import { Heading5 } from "../../headings";
 import BaseInput from "../../inputs/Input/BaseInput";
 import { BaseSelect } from "../../select";
@@ -44,40 +50,19 @@ export default function AdvanceInformation({
       <div className="grid grid-cols-3 gap-4">
         <BaseSelect
           label="Education"
-          options={[
-            "High School",
-            "Intermediate",
-            "Graduation",
-            "Master Degree",
-            "Bachelor Degree",
-          ]}
+          options={Educations}
           value={education}
           onChange={onEducationChange}
         />
         <BaseSelect
           label="Experience"
-          options={[
-            "Intern",
-            "Fresher",
-            "Junior",
-            "Middle",
-            "Senior",
-            "Leader",
-            "Manager",
-          ]}
+          options={Experiences}
           value={experience}
           onChange={onExperienceChange}
         />
         <BaseSelect
           label="Job Type"
-          options={[
-            "Full Time",
-            "Part Time",
-            "Internship",
-            "Remote",
-            "Temporary",
-            "Contract Base",
-          ]}
+          options={JobTypes}
           value={jobType}
           onChange={onJobTypeChange}
         />
@@ -94,13 +79,13 @@ export default function AdvanceInformation({
           <BaseInput
             label="Expiration Date"
             type="date"
-            value={expirationDate}
+            value={expirationDate.split("T")[0]}
             onChange={handleExpirationDateChange}
           />
         </div>
         <BaseSelect
           label="Job Level"
-          options={["Entry Level", "Mid Level", "Expert Level"]}
+          options={JobLevels}
           value={jobLevel}
           onChange={onJobLevelChange}
         />

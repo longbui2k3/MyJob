@@ -5,7 +5,7 @@ export default function DashboardSettings() {
   return (
     <div>
       <Heading5 name="Post a job" className="mb-2" />
-      <PostAJob />
+      <PostAJob jobId="" />
     </div>
   );
 }

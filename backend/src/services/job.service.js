@@ -54,7 +54,7 @@ class JobService {
     limit,
     search,
     provinceCode = 0,
-    companyId,
+    company,
     category,
     status,
     experiences = [],
@@ -82,7 +82,7 @@ class JobService {
     const job = await jobRepo.find(
       removeUndefinedInObject({
         "company.provinceCode": provinceCode - 0 || undefined,
-        "company._id": companyId || undefined,
+        "company._id": company || undefined,
         category,
         status,
         experience: experiences.length

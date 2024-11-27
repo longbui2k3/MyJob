@@ -55,6 +55,7 @@ import {
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 import {
+  DASHBOARD_APPLICATIONS_KEY,
   DASHBOARD_APPLIED_JOBS_KEY,
   DASHBOARD_EDIT_JOB_KEY,
   DASHBOARD_FAVORITE_JOBS_KEY,
@@ -63,7 +64,7 @@ import {
   FIND_CANDIDATES_KEY,
   JOB_DETAIL_KEY,
 } from "./helpers/constants/routes";
-import { EditJob } from "./components/job/MyJobs";
+import { Applications, EditJob } from "./components/job/MyJobs";
 
 const AuthenRoutes = [
   {
@@ -155,6 +156,10 @@ const DashboardRoutes = [
   {
     route: getRoute(DASHBOARD_EDIT_JOB_KEY),
     element: <EditJob />,
+  },
+  {
+    route: getRoute(DASHBOARD_APPLICATIONS_KEY),
+    element: <Applications />,
   },
   {
     route: getRoute(DASHBOARD_SAVED_CANDIDATE_KEY),

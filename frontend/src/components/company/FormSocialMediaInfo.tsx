@@ -1,7 +1,8 @@
-import { Button, HStack, IconButton, Input } from "@chakra-ui/react";
+import { Button, HStack, IconButton } from "@chakra-ui/react";
 import { IoIosAddCircleOutline, IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { BaseSelect } from "../select";
+import BaseInput from "../inputs/Input/BaseInput";
 
 interface FormSocialMediaInfoProps {
   socialMedias: { socialMedia: string; linkUrl: string }[];
@@ -54,10 +55,10 @@ export default function FormSocialMediaInfo({
               onChange={(value) => handleSocialMediaChange(index, value)}
               width="130px"
             />
-            <Input
-              flex="4"
+            <BaseInput
+              type="text"
               placeholder="Profile link/url..."
-              value={link.linkUrl} // Gán giá trị ban đầu
+              value={link.linkUrl}
               onChange={(e) => handleLinkUrlChange(index, e.target.value)}
             />
             <IconButton

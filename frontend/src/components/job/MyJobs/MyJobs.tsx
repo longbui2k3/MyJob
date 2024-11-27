@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import { Heading5 } from "../../headings";
 import { BaseSelect } from "../../select";
-import { PiUsers } from "react-icons/pi";
 import { ButtonSolid_2 } from "../../buttons";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdOutlineModeEdit } from "react-icons/md";
@@ -23,11 +22,15 @@ import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
 import MyJobStatus from "./MyJobStatus";
-import { FindCompanyAPI, FindJobsAPI } from "../../../apis";
+import { FindCompanyAPI, FindJobsAPI, UpdateJobAPI } from "../../../apis";
 import { getRoute } from "../../../helpers/constants";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD_EDIT_JOB_KEY } from "../../../helpers/constants/routes";
+import {
+  DASHBOARD_APPLICATIONS_KEY,
+  DASHBOARD_EDIT_JOB_KEY,
+} from "../../../helpers/constants/routes";
 import { useCookies } from "react-cookie";
+import NumberOfApplications from "./NumberOfApplications";
 
 interface MyJobsProps {
   isCheck?: boolean;
@@ -41,14 +44,14 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
   const [status, setStatus] = useState<string | undefined>();
   const [jobs, setJobs] = useState<Array<any>>([]);
   const [jobsCount, setJobsCount] = useState<number>(0);
+  const [refresh, setRefresh] = useState<number>(0);
   const [cookie] = useCookies();
 
   async function findJobs() {
     const company = await FindCompanyAPI(cookie.user);
-    console.log("data:", company);
     if (company.isSuccess) {
       const data = await FindJobsAPI({
-        companyId: company.metadata._id,
+        company: company.metadata._id,
         limit: limit,
         page: curPage,
         status,
@@ -57,13 +60,14 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
         setJobs(data.metadata.jobs);
         setSize(data.metadata.meta.size);
       }
-      const jobsData = await FindJobsAPI({ companyId: company.metadata._id });
+      const jobsData = await FindJobsAPI({ company: company.metadata._id });
       if (jobsData.isSuccess) setJobsCount(jobsData.metadata.jobs.length);
     }
   }
+
   useEffect(() => {
     findJobs();
-  }, [curPage, status]);
+  }, [curPage, status, refresh]);
 
   const handleStatusChange = (value: string) => {
     if (value === "") setStatus(undefined);
@@ -82,10 +86,12 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
           <BaseSelect
             label="Job status"
             options={["Active", "Expired"]}
+            placeholder="All Jobs"
             className="flex space-x-3 items-center"
             width="120px"
             value={status}
             onChange={handleStatusChange}
+            required={false}
           />
         </div>
       ) : (
@@ -117,14 +123,24 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
                     <MyJobStatus status={job.status} />
                   </Td>
                   <Td>
-                    <div className="flex space-x-1 text-sm">
-                      <PiUsers size={22} />
-                      <div>798 Applications</div>
-                    </div>
+                    <NumberOfApplications job={job._id} />
                   </Td>
                   <Td>
                     <div className="space-x-1">
-                      <ButtonSolid_2 children={"View Applications"} />
+                      <ButtonSolid_2
+                        children={"View Applications"}
+                        onClick={() => {
+                          navigate(
+                            getRoute(DASHBOARD_APPLICATIONS_KEY).path.replace(
+                              ":jobId",
+                              job._id
+                            ),
+                            {
+                              replace: true,
+                            }
+                          );
+                        }}
+                      />
                       <Menu>
                         <MenuButton
                           as={IconButton}
@@ -149,7 +165,17 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
                           >
                             Edit Job
                           </MenuItem>
-                          <MenuItem icon={<CiCircleRemove size={20} />}>
+                          <MenuItem
+                            onClick={async (e) => {
+                              const response = await UpdateJobAPI(job._id, {
+                                expirationDate: new Date().toISOString(),
+                              });
+                              if (response.isSuccess) {
+                                setRefresh((prev) => prev + 1);
+                              }
+                            }}
+                            icon={<CiCircleRemove size={20} />}
+                          >
                             Make it Expire
                           </MenuItem>
                         </MenuList>
