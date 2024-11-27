@@ -13,6 +13,7 @@ export {
   PageEmployerDetail,
   PageFindEmployers,
   PageMyCV,
+  PageFindCandidates,
 } from "./home";
 export { default as Cover } from "./Cover";
 

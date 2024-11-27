@@ -40,7 +40,7 @@ export default function UploadedResumeList() {
   }, [userId, isDataChange]);
   return (
     <div className="flex flex-col text-gray-900 space-y-4">
-      <div className="font-medium text-lg leading-7">Your CV/Resume</div>
+      <div className="font-medium text-lg leading-7">Uploaded CV/Resume</div>
       <div className="grid grid-cols-2 gap-4">
         {resumes.map((resume) => (
           <UploadedResumeInfo

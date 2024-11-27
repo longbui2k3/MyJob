@@ -16,6 +16,7 @@ import {
   PageMyCV,
   PageJobDetail,
   PageEmployerDetail,
+  PageFindCandidates,
 } from "./pages";
 import {
   CREATE_COMPANY_KEY,
@@ -59,6 +60,7 @@ import {
   DASHBOARD_FAVORITE_JOBS_KEY,
   DASHBOARD_SAVED_CANDIDATE_KEY,
   EMPLOYER_DETAIL_KEY,
+  FIND_CANDIDATES_KEY,
   JOB_DETAIL_KEY,
 } from "./helpers/constants/routes";
 import { EditJob } from "./components/job/MyJobs";
@@ -110,6 +112,10 @@ const OtherRoutes = [
   {
     route: getRoute(FIND_EMPLOYERS_KEY),
     element: <PageFindEmployers />,
+  },
+  {
+    route: getRoute(FIND_CANDIDATES_KEY),
+    element: <PageFindCandidates />,
   },
   {
     route: getRoute(MY_CV_KEY),

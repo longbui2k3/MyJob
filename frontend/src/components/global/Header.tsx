@@ -69,13 +69,13 @@ const subNavigationRoles = {
         {
           item: "My profile",
           onClick: (e) => {
-            navigate("/#");
+            navigate(`/dashboard/settings`);
           },
         },
         {
           item: "Settings",
           onClick: (e) => {
-            navigate("/#");
+            navigate(`/dashboard/settings`);
           },
         },
         {
@@ -91,7 +91,7 @@ const subNavigationRoles = {
           <Dropdown
             Button={
               <Avatar
-                name={user.name}
+                name={user.fullName}
                 src={user.avatar}
                 width={"40px"}
                 height={"40px"}
@@ -133,12 +133,18 @@ const subNavigationRoles = {
         <div className="flex space-x-4 items-center">
           <IoNotificationsOutline size="22px" />
           <a href="/post">
-            <ButtonOutline children={"Post A Job"} />
+            <ButtonOutline
+              children={"Post A Job"}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("dashboard/post-a-job");
+              }}
+            />
           </a>
           <Dropdown
             Button={
               <Avatar
-                name={user.name}
+                name={user.fullName}
                 src={user.avatar}
                 width={"40px"}
                 height={"40px"}
@@ -182,7 +188,7 @@ const subNavigationRoles = {
           <Dropdown
             Button={
               <Avatar
-                name={user.name}
+                name={user.fullName}
                 src={user.avatar}
                 width={"40px"}
                 height={"40px"}
