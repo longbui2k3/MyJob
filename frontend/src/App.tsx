@@ -17,6 +17,9 @@ import {
   PageJobDetail,
   PageEmployerDetail,
   PageFindCandidates,
+  PageCandidateDetail,
+  PageFindApplications,
+  PageApplicationDetail,
 } from "./pages";
 import {
   CREATE_COMPANY_KEY,
@@ -39,6 +42,17 @@ import {
   VERIFY_KEY,
   DASHBOARD_POST_A_JOB_KEY,
   DASHBOARD_MY_JOBS_KEY,
+  FIND_CANDIDATES_KEY,
+  CANDIDATE_DETAIL_KEY,
+  JOB_DETAIL_KEY,
+  EMPLOYER_DETAIL_KEY,
+  DASHBOARD_EDIT_JOB_KEY,
+  DASHBOARD_APPLICATIONS_KEY,
+  DASHBOARD_SAVED_CANDIDATE_KEY,
+  DASHBOARD_APPLIED_JOBS_KEY,
+  DASHBOARD_FAVORITE_JOBS_KEY,
+  FIND_APPLICATIONS_KEY,
+  APPLICATION_DETAIL_KEY,
 } from "./helpers/constants";
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
@@ -54,16 +68,6 @@ import {
   DashboardSettings,
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
-import {
-  DASHBOARD_APPLICATIONS_KEY,
-  DASHBOARD_APPLIED_JOBS_KEY,
-  DASHBOARD_EDIT_JOB_KEY,
-  DASHBOARD_FAVORITE_JOBS_KEY,
-  DASHBOARD_SAVED_CANDIDATE_KEY,
-  EMPLOYER_DETAIL_KEY,
-  FIND_CANDIDATES_KEY,
-  JOB_DETAIL_KEY,
-} from "./helpers/constants/routes";
 import { Applications, EditJob } from "./components/job/MyJobs";
 
 const AuthenRoutes = [
@@ -119,6 +123,10 @@ const OtherRoutes = [
     element: <PageFindCandidates />,
   },
   {
+    route: getRoute(FIND_APPLICATIONS_KEY),
+    element: <PageFindApplications />,
+  },
+  {
     route: getRoute(MY_CV_KEY),
     element: <PageMyCV />,
   },
@@ -133,6 +141,14 @@ const OtherRoutes = [
   {
     route: getRoute(EMPLOYER_DETAIL_KEY),
     element: <PageEmployerDetail />,
+  },
+  {
+    route: getRoute(CANDIDATE_DETAIL_KEY),
+    element: <PageCandidateDetail />,
+  },
+  {
+    route: getRoute(APPLICATION_DETAIL_KEY),
+    element: <PageApplicationDetail />,
   },
 ];
 

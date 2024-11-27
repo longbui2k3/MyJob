@@ -6,6 +6,14 @@ const { asyncHandler } = require("../../helpers/asyncHandler");
 const applicationController = require("../../controllers/application.controller");
 const router = express.Router();
 
+router.use(authentication);
+
+router.route("/:id").get(
+  // #swagger.tags = ['Application']
+  // #swagger.summary = 'Find application'
+  asyncHandler(applicationController.findApplication)
+);
+
 router.route("/").get(
   // #swagger.tags = ['Application']
   // #swagger.summary = 'Find applications'
@@ -31,8 +39,6 @@ router.route("/").get(
   */
   asyncHandler(applicationController.findApplications)
 );
-
-router.use(authentication);
 
 router.route("/").post(
   // #swagger.tags = ['Application']

@@ -3,7 +3,7 @@ import { IoIosAddCircleOutline, IoIosCloseCircleOutline } from "react-icons/io";
 import { useEffect, useState } from "react";
 import { BaseSelect } from "../select";
 import { ButtonSolid } from "../buttons";
-import { FindProfileAPI, UpdateProfileAPI } from "../../apis";
+import { FindProfileByUserAPI, UpdateProfileAPI } from "../../apis";
 import { toastError, toastSuccess } from "../toast";
 
 export default function FormSocialMediaInfo() {
@@ -40,7 +40,7 @@ export default function FormSocialMediaInfo() {
   };
 
   const findProfile = async () => {
-    const data = await FindProfileAPI();
+    const data = await FindProfileByUserAPI();
     if (data.isSuccess) {
       setSocialLinks(data.metadata.profile.socialMedias);
     }

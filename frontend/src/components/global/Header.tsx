@@ -12,7 +12,11 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { LogoutAPI } from "../../apis";
 import { CookieSetOptions } from "universal-cookie";
 import { useCookies } from "react-cookie";
-import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import {
+  DASHBOARD_SETTINGS_KEY,
+  DEFAULT_PADDING_X,
+  getRoute,
+} from "../../helpers/constants";
 import { header } from "framer-motion/m";
 import { toastError, toastSuccess } from "../toast";
 
@@ -69,13 +73,13 @@ const subNavigationRoles = {
         {
           item: "My profile",
           onClick: (e) => {
-            navigate(`/dashboard/settings`);
+            navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
           },
         },
         {
           item: "Settings",
           onClick: (e) => {
-            navigate(`/dashboard/settings`);
+            navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
           },
         },
         {
@@ -113,13 +117,13 @@ const subNavigationRoles = {
         {
           item: "My profile",
           onClick: (e) => {
-            navigate("/");
+            navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
           },
         },
         {
           item: "Settings",
           onClick: (e) => {
-            navigate("/");
+            navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
           },
         },
         {

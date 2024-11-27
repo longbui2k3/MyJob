@@ -14,6 +14,9 @@ export {
   PageFindEmployers,
   PageMyCV,
   PageFindCandidates,
+  PageCandidateDetail,
+  PageFindApplications,
+  PageApplicationDetail,
 } from "./home";
 export { default as Cover } from "./Cover";
 

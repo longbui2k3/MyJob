@@ -6,6 +6,8 @@ interface ButtonSolidProps {
   leftIcon?: JSX.Element;
   onClick?: (e) => void;
   isLoading?: boolean;
+  width?: string;
+  height?: string;
 }
 
 export default function ButtonSolid({
@@ -14,6 +16,8 @@ export default function ButtonSolid({
   leftIcon,
   onClick = (e) => {},
   isLoading = false,
+  width,
+  height,
 }: ButtonSolidProps) {
   return (
     <Button
@@ -25,6 +29,8 @@ export default function ButtonSolid({
       leftIcon={leftIcon}
       onClick={onClick}
       isLoading={isLoading}
+      width={width}
+      height={height}
     >
       {children}
     </Button>

@@ -7,6 +7,7 @@ const {
   findAppliedJobsByUser,
   statisticizeJobs,
   findFavoriteJobsByUser,
+  findProfileByUserId,
 } = require("../../controllers/user.controller");
 const { asyncHandler } = require("../../helpers/asyncHandler");
 const router = express.Router();
@@ -55,5 +56,7 @@ router.route("/job-statistics").get(
   */
   asyncHandler(statisticizeJobs)
 );
+
+router.route("/profile").get(asyncHandler(findProfileByUserId));
 
 module.exports = router;

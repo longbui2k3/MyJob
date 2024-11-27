@@ -44,10 +44,10 @@ const navigationRoles = {
       Icon: GoStack,
       navigation: Navigations.DASHBOARD_OVERVIEW,
     },
-    {
-      Icon: CgProfile,
-      navigation: Navigations.DASHBOARD_EMPLOYERS_PROFILE,
-    },
+    // {
+    //   Icon: CgProfile,
+    //   navigation: Navigations.DASHBOARD_EMPLOYERS_PROFILE,
+    // },
     {
       Icon: FiPlusCircle,
       navigation: Navigations.DASHBOARD_POST_A_JOB,

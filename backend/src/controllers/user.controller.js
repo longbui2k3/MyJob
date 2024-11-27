@@ -1,4 +1,5 @@
 const { OK } = require("../core/success.response");
+const ProfileService = require("../services/profile.service");
 const UserService = require("../services/user.service");
 
 class UserController {
@@ -11,6 +12,17 @@ class UserController {
       message: "Get me successfully",
       metadata: {
         user: result,
+      },
+    }).send(res);
+  };
+
+  findProfileByUserId = async (req, res, next) => {
+    const result = await ProfileService.findProfileByUserId(req.user.userId);
+
+    return new OK({
+      message: "Find profile by user successfully",
+      metadata: {
+        profile: result,
       },
     }).send(res);
   };

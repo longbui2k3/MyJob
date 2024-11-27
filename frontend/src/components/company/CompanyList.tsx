@@ -1,8 +1,5 @@
-import { PiFaders } from "react-icons/pi";
 import { DEFAULT_PADDING_X, ViewTypes } from "../../helpers/constants";
-import { ButtonSolid } from "../buttons";
 import { Pagination, usePagination } from "../global";
-import { LocationSelect } from "../select/LocationSelect";
 import { PageLimitSelect, usePageLimitSelect } from "../select/PageLimitSelect";
 import { useViewTypeSelect, ViewTypeSelect } from "../select/ViewTypeSelect";
 import CompanyGrid from "./CompanyGrid";
