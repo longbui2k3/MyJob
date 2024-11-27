@@ -55,7 +55,7 @@ export default function BaseInput({
         />
         {currency ? (
           <InputRightAddon pointerEvents="none" color="var(--gray-600)">
-            VND
+            {currency}
           </InputRightAddon>
         ) : (
           ""

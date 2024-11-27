@@ -18,9 +18,21 @@ export const FindApplicationsAPI = async (query: {
   page?: number;
   limit?: number;
   job?: string;
+  status?: string;
 }) => {
   return await BaseAPI({
     path: `/application?${changeQueryObjToQueryStr(query)}`,
     method: HttpMethods.GET,
+  });
+};
+
+export const UpdateApplicationAPI = async (
+  id: string,
+  body: { status: string }
+) => {
+  return await BaseAPI({
+    path: `/application/${id}`,
+    method: HttpMethods.PATCH,
+    body,
   });
 };

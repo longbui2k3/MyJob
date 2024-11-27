@@ -46,18 +46,31 @@ class ApplicationService {
     return application;
   };
 
-  static findApplications = async ({ job, page, limit }) => {
-    return await applicationRepo.find(removeUndefinedInObject({ job }), {
-      page,
-      limit,
-      sort: ["createdAt"],
-      populates: ["profile"],
-      populateSelects: [
-        {
-          profile: "avatar fullName",
-        },
-      ],
-    });
+  static findApplications = async ({ job, status, page, limit }) => {
+    return await applicationRepo.find(
+      removeUndefinedInObject({ job, status }),
+      {
+        page,
+        limit,
+        sort: ["createdAt"],
+        populates: ["profile"],
+        populateSelects: [
+          {
+            profile: "avatar fullName title education experience",
+          },
+        ],
+      }
+    );
+  };
+
+  static updateApplication = async (id, data) => {
+    const update = await applicationRepo.findByIdAndUpdate(
+      id,
+      removeUndefinedInObject(data),
+      { new: true }
+    );
+    if (!update) throw BadRequestError(`Application with ${id} not found!`);
+    return update;
   };
 }
 

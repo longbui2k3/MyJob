@@ -17,6 +17,7 @@ export const HOME_KEY = "HOME";
 export const DASHBOARD_KEY = "DASHBOARD";
 export const FIND_JOBS_KEY = "FIND_JOBS";
 export const FIND_CANDIDATES_KEY = "FIND_CANDIDATES";
+export const MY_JOBS_KEY = "MY_JOBS"
 export const MY_CV_KEY = "MY_CV";
 export const JOB_DETAIL_KEY = "JOB_DETAIL";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
@@ -114,6 +115,12 @@ const ROUTES: Array<RouteItem> = [
         name: "Find Candidates",
         path: "/candidates",
         isPrivate: false,
+      },
+      {
+        key: MY_JOBS_KEY,
+        name: "My Jobs",
+        path: "/my-jobs",
+        isPrivate: true,
       },
       {
         key: MY_CV_KEY,

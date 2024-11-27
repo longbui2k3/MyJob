@@ -24,8 +24,8 @@ class UserService {
       _id: user._id,
       userType: user.userType,
       username: user.username,
-      fullName: profile ? profile.fullName : "",
-      avatar: profile ? profile.avatar : "",
+      fullName: profile ? profile.fullName : company ? company.companyName : "",
+      avatar: profile ? profile.avatar : company ? company.logo : "",
       ...(user.userType === UserType.EMPLOYER
         ? { hasCompany: Boolean(company) }
         : {}),

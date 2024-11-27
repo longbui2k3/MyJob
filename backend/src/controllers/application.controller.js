@@ -29,5 +29,20 @@ class ApplicationController {
       },
     }).send(res);
   };
+
+  updateApplication = async (req, res, next) => {
+    const result = await applicationService.updateApplication(
+      req.params.id,
+      req.body
+    );
+
+    return new OK({
+      message: "update application successfully",
+      metadata: {
+        applications: result.data,
+        meta: result.meta,
+      },
+    }).send(res);
+  };
 }
 module.exports = new ApplicationController();

@@ -24,4 +24,8 @@ export {
   DeleteResumeAPI,
 } from "./resumeAPI";
 export { FindProfileAPI, UpdateProfileAPI } from "./profileAPI";
-export { CreateApplicationAPI, FindApplicationsAPI } from "./applicationAPI";
+export {
+  CreateApplicationAPI,
+  FindApplicationsAPI,
+  UpdateApplicationAPI,
+} from "./applicationAPI";

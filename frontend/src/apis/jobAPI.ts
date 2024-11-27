@@ -4,6 +4,7 @@ import BaseAPI from "./baseAPI";
 
 export const FindJobsAPI = async (query: {
   page?: number;
+  limit?: number;
   search?: string;
   provinceCode?: number;
   company?: string;

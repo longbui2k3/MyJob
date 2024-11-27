@@ -124,6 +124,8 @@ export const TeamSizes = [
   "5001+",
 ];
 
+export const ApplicationStatuses = ["submitted", "accepted", "rejected"];
+
 export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];
 
 export const UserGenders = ["Male", "Female", "Undefined"];

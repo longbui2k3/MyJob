@@ -49,7 +49,7 @@ export default function CandidateOverview() {
       </div>
       <div className="flex space-x-4">
         <FunFacts
-          quantity={statistics.applicationsNum}
+          number={statistics.applicationsNum}
           title="Applied jobs"
           onClick={() => {
             navigate(getRoute(DASHBOARD_APPLIED_JOBS_KEY).path, {
@@ -60,7 +60,7 @@ export default function CandidateOverview() {
           icon={<JobIcon />}
         />
         <FunFacts
-          quantity={statistics.applicationsNum}
+          number={statistics.applicationsNum}
           title="Favorite jobs"
           classname="bg-[#FFF6E6]"
           icon={<SavedIcon />}

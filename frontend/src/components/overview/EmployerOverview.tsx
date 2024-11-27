@@ -1,5 +1,9 @@
 import { FiArrowRight } from "react-icons/fi";
-import { DASHBOARD_MY_JOBS_KEY, getRoute } from "../../helpers/constants";
+import {
+  DASHBOARD_MY_JOBS_KEY,
+  DASHBOARD_SAVED_CANDIDATE_KEY,
+  getRoute,
+} from "../../helpers/constants";
 import { ButtonOutline } from "../buttons";
 import { Heading5, Heading6 } from "../headings";
 import FunFacts from "./FunFacts";
@@ -7,9 +11,28 @@ import { JobIcon, SavedIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
 import { MyJobs } from "../job/MyJobs";
 import { useAuthContext } from "../../context";
+import { FindCompanyAPI, FindJobsAPI } from "../../apis";
+import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
 
 export default function EmployerOverview() {
   const { user } = useAuthContext();
+  const [cookie] = useCookies();
+  const [jobsNum, setJobsNum] = useState<number>(0);
+
+  async function statisticize() {
+    const company = await FindCompanyAPI(cookie.user);
+    if (company.isSuccess) {
+      const jobsData = await FindJobsAPI({
+        company: company.metadata.company._id,
+      });
+      if (jobsData.isSuccess) setJobsNum(jobsData.metadata.jobs.length);
+    }
+  }
+
+  useEffect(() => {
+    statisticize();
+  }, []);
   const navigate = useNavigate();
   return (
     <div className="space-y-7">
@@ -25,7 +48,7 @@ export default function EmployerOverview() {
       </div>
       <div className="flex space-x-4">
         <FunFacts
-          quantity="589"
+          number={jobsNum}
           title="Open Jobs"
           onClick={() => {
             navigate(getRoute(DASHBOARD_MY_JOBS_KEY).path, {
@@ -36,8 +59,13 @@ export default function EmployerOverview() {
           icon={<JobIcon />}
         />
         <FunFacts
-          quantity="238"
+          number={jobsNum}
           title="Saved Candidates"
+          onClick={() => {
+            navigate(getRoute(DASHBOARD_SAVED_CANDIDATE_KEY).path, {
+              replace: true,
+            });
+          }}
           classname="bg-[#FFF6E6]"
           icon={<SavedIcon />}
         />

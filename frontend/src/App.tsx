@@ -63,8 +63,10 @@ import {
   EMPLOYER_DETAIL_KEY,
   FIND_CANDIDATES_KEY,
   JOB_DETAIL_KEY,
+  MY_JOBS_KEY,
 } from "./helpers/constants/routes";
 import { Applications, EditJob } from "./components/job/MyJobs";
+import PageMyJobs from "./pages/home/PageMyJobs";
 
 const AuthenRoutes = [
   {
@@ -117,6 +119,10 @@ const OtherRoutes = [
   {
     route: getRoute(FIND_CANDIDATES_KEY),
     element: <PageFindCandidates />,
+  },
+  {
+    route: getRoute(MY_JOBS_KEY),
+    element: <PageMyJobs />,
   },
   {
     route: getRoute(MY_CV_KEY),

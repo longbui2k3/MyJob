@@ -1,6 +1,5 @@
 "use strict";
 
-const userRepo = require("../models/repos/user.repo");
 const companyRepo = require("../models/repos/company.repo");
 const UploadFiles = require("../utils/uploadFiles");
 const { BadRequestError } = require("../core/error.response");
