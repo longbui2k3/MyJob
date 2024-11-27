@@ -10,7 +10,7 @@ import ProvinceSelect from "../select/ProvinceSelect/ProvinceSelect";
 import useProvinceCodeSelect from "../select/ProvinceSelect/useProvinceSelect";
 import { RichTextEditer } from "../inputs/RichTextEditer";
 import { ButtonSolid } from "../buttons";
-import { FindProfileAPI, UpdateProfileAPI } from "../../apis";
+import { FindProfileByUserAPI, UpdateProfileAPI } from "../../apis";
 import { toastError, toastSuccess } from "../toast";
 
 export default function FormProfile() {
@@ -27,7 +27,7 @@ export default function FormProfile() {
   const [biography, setBiography] = useState();
 
   const findProfile = async () => {
-    const data = await FindProfileAPI();
+    const data = await FindProfileByUserAPI();
     if (data.isSuccess) {
       setProvinceCode(data.metadata.profile.provinceCode);
       setDateOfBirth(data.metadata.profile.dateOfBirth.split("T")[0]);

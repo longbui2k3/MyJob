@@ -34,3 +34,10 @@ export const StatisticizeJobsAPI = async () => {
     method: HttpMethods.GET,
   });
 };
+
+export const FindProfileByUserAPI = async () => {
+  return await BaseAPI({
+    path: `/user/profile`,
+    method: HttpMethods.GET,
+  });
+};

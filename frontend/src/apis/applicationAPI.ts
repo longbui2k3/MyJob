@@ -36,3 +36,10 @@ export const UpdateApplicationAPI = async (
     body,
   });
 };
+
+export const FindApplicationAPI = async (id: string) => {
+  return await BaseAPI({
+    path: `/application/${id}`,
+    method: HttpMethods.GET,
+  });
+};

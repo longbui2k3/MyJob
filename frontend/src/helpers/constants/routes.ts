@@ -18,6 +18,9 @@ export const DASHBOARD_KEY = "DASHBOARD";
 export const FIND_JOBS_KEY = "FIND_JOBS";
 export const FIND_CANDIDATES_KEY = "FIND_CANDIDATES";
 export const MY_JOBS_KEY = "MY_JOBS"
+export const CANDIDATE_DETAIL_KEY = "CANDIDATE_DETAIL";
+export const FIND_APPLICATIONS_KEY = "FIND_APPLICATIONS";
+export const APPLICATION_DETAIL_KEY = "APPLICATION_DETAIL";
 export const MY_CV_KEY = "MY_CV";
 export const JOB_DETAIL_KEY = "JOB_DETAIL";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
@@ -108,12 +111,34 @@ const ROUTES: Array<RouteItem> = [
             isPrivate: false,
           },
         ],
-        isPrivate: false,
+        isPrivate: true,
       },
       {
         key: FIND_CANDIDATES_KEY,
         name: "Find Candidates",
         path: "/candidates",
+        children: [
+          {
+            key: CANDIDATE_DETAIL_KEY,
+            name: "Candidate Detail",
+            path: "/candidates/:id",
+            isPrivate: true,
+          },
+        ],
+        isPrivate: false,
+      },
+      {
+        key: FIND_APPLICATIONS_KEY,
+        name: "Find Applications",
+        path: "/applications",
+        children: [
+          {
+            key: APPLICATION_DETAIL_KEY,
+            name: "Application Detail",
+            path: "/applications/:id",
+            isPrivate: true,
+          },
+        ],
         isPrivate: false,
       },
       {

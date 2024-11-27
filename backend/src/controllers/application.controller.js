@@ -19,7 +19,10 @@ class ApplicationController {
   };
 
   findApplications = async (req, res, next) => {
-    const result = await applicationService.findApplications(req.query);
+    const result = await applicationService.findApplications(
+      req.user.userId,
+      req.query
+    );
 
     return new OK({
       message: "Find applications successfully",
@@ -41,6 +44,17 @@ class ApplicationController {
       metadata: {
         applications: result.data,
         meta: result.meta,
+      },
+    });
+  };
+
+  findApplication = async (req, res, next) => {
+    const result = await applicationService.findApplication(req.params.id);
+
+    return new OK({
+      message: "Find application successfully",
+      metadata: {
+        application: result,
       },
     }).send(res);
   };

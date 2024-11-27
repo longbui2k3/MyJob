@@ -7,6 +7,7 @@ const resumeRepo = require("../models/repos/resume.repo");
 const userRepo = require("../models/repos/user.repo");
 const profileRepo = require("../models/repos/profile.repo");
 const { removeUndefinedInObject } = require("../utils");
+const companyRepo = require("../models/repos/company.repo");
 class ApplicationService {
   static createApplication = async (
     userId,
@@ -40,23 +41,35 @@ class ApplicationService {
       user: userId,
       profile: profile._id,
       job: jobId,
+      company: job.company._id,
       resume: resumeId,
       coverLetter,
     });
     return application;
   };
 
-  static findApplications = async ({ job, status, page, limit }) => {
+  static findApplications = async (userId, { job, page, limit }) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+    const company = await companyRepo.findOne({
+      user: userId,
+    });
+    if (!company) {
+      throw new BadRequestError("Company not found!");
+    }
+
     return await applicationRepo.find(
-      removeUndefinedInObject({ job, status }),
+      removeUndefinedInObject({ job, company: company._id }),
       {
         page,
         limit,
         sort: ["createdAt"],
-        populates: ["profile"],
+        populates: ["profile", "job"],
         populateSelects: [
           {
-            profile: "avatar fullName title education experience",
+            profile: "avatar fullName provinceCode experience title education",
           },
         ],
       }
@@ -71,6 +84,13 @@ class ApplicationService {
     );
     if (!update) throw BadRequestError(`Application with ${id} not found!`);
     return update;
+  };
+
+  static findApplication = async (applicationId) => {
+    const application = await applicationRepo.findById(applicationId, {
+      populates: ["profile", "resume", "resume.resume", "job"],
+    });
+    return application;
   };
 }
 

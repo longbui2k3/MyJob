@@ -9,7 +9,7 @@ import {
 } from "../select/ExperienceSelect";
 import { ButtonSolid } from "../buttons";
 import { useEffect, useState } from "react";
-import { FindProfileAPI, UpdateProfileAPI } from "../../apis";
+import { FindProfileByUserAPI, UpdateProfileAPI } from "../../apis";
 import { useDispatch } from "react-redux";
 import { setDataChange } from "../../features";
 import { toastError, toastSuccess } from "../toast";
@@ -51,7 +51,7 @@ export default function FormPersonal() {
   });
 
   const findProfile = async () => {
-    const data = await FindProfileAPI();
+    const data = await FindProfileByUserAPI();
     if (data.isSuccess) {
       setAvatar(data.metadata.profile.avatar);
       setFullName(data.metadata.profile.fullName);

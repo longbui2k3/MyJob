@@ -21,6 +21,7 @@ import {
   HOME_KEY,
   FIND_CANDIDATES_KEY,
   MY_JOBS_KEY,
+  FIND_APPLICATIONS_KEY,
 } from "./routes";
 
 export const Navigations = {
@@ -87,8 +88,8 @@ export const Navigations = {
   },
   APPLICATIONS: {
     label: "Applications",
-    href: "#",
-    pattern: "#",
+    href: getRoute(FIND_APPLICATIONS_KEY).path,
+    pattern: getRoute(FIND_APPLICATIONS_KEY).path,
   },
   DASHBOARD_OVERVIEW: {
     label: "Overview",

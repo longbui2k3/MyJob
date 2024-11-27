@@ -6,3 +6,6 @@ export { default as PageJobDetail } from "./PageJobDetail";
 export { default as PageEmployerDetail } from "./PageEmployerDetail";
 export { default as PageMyCV } from "./PageMyCV";
 export { default as PageFindCandidates } from "./PageFindCandidates";
+export { default as PageCandidateDetail } from "./PageCandidateDetail";
+export { default as PageFindApplications } from "./PageFindApplications";
+export { default as PageApplicationDetail } from "./PageApplicationDetail";

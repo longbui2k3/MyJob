@@ -16,7 +16,7 @@ export default function FavoriteJobIcon({
 }: FavoriteJobIcon) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  async function favoriteJob(e: any) {
+  async function unfavoriteJob(e: any) {
     e.preventDefault();
     const data = await UnfavoriteJobAPI(jobId);
     if (data.isSuccess) {
@@ -36,7 +36,7 @@ export default function FavoriteJobIcon({
       fontSize={"25px"}
       className="my-auto"
       color="var(--primary-500)"
-      onClick={favoriteJob}
+      onClick={unfavoriteJob}
     />
   );
 }

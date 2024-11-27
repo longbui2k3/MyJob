@@ -18,11 +18,11 @@ const upload = uploadMulter([
 router.use(authentication);
 router
   .route("/")
-  .get(
-    // #swagger.tags = ['Profile']
-    // #swagger.summary = 'Find profile'
-    asyncHandler(profileController.findProfileByUserId)
-  )
+  // .get(
+  //   // #swagger.tags = ['Profile']
+  //   // #swagger.summary = 'Find profile'
+  //   asyncHandler(profileController.findProfileByUserId)
+  // )
   .patch(
     upload.single("avatar"),
     // #swagger.tags = ['Profile']
