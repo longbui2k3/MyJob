@@ -14,6 +14,7 @@ const {
   JobTypes,
   JobLevels,
 } = require("../helpers/constants");
+const applicationRepo = require("../models/repos/application.repo");
 class JobService {
   static deleteJob = async (id) => {
     const checkJobExists = await jobRepo.findJobById(id);

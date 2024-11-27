@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   DEFAULT_PADDING_X,
   getRoute,
+  JobStatuses,
   SIGN_IN_KEY,
 } from "../../helpers/constants";
 import { FindJobAPI } from "../../apis";
@@ -9,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Heading, Heading5 } from "../headings";
 import { Tag } from "@chakra-ui/react";
 import { LinkInfo, MailInfo, PhoneInfo } from "./JobInfos";
-import { ButtonSubmit } from "../buttons";
+import { ButtonDisabled, ButtonSubmit } from "../buttons";
 import { Text } from "../text";
 import { changeDateToString } from "../../utils";
 import JobOverview from "./JobOverview";
@@ -82,6 +83,21 @@ export default function JobDetail() {
               >
                 {job?.jobType}
               </Tag>
+              {new Date(job.expirationDate) < new Date(Date.now()) ||
+              job.status === JobStatuses.EXPIRED ? (
+                <Tag
+                  bg="var(--danger-50)"
+                  textColor={"var(--danger-500)"}
+                  fontSize={"13px"}
+                  paddingX={"8px"}
+                  paddingY="4px"
+                  marginY="auto"
+                >
+                  {job.status}
+                </Tag>
+              ) : (
+                ""
+              )}
             </div>
             <div className="flex space-x-5">
               <LinkInfo info={job?.company?.companyWebsite} />
@@ -105,22 +121,29 @@ export default function JobDetail() {
                 />
               )}
             </div>
-            <ButtonSubmit
-              label="Apply Now"
-              className="my-auto"
-              height="45px"
-              width="200px"
-              fontSize="14px"
-              onClick={() => {
-                if (!user) {
-                  navigate(getRoute(SIGN_IN_KEY).path);
-                  navigate(0);
-                  return;
-                }
-                dispatch(openFormApplyJob());
-                dispatch(setId(job._id));
-              }}
-            />
+            {new Date(job.expirationDate) < new Date(Date.now()) ||
+            job.status === JobStatuses.EXPIRED ? (
+              <ButtonDisabled width="200px" fontSize="14px">
+                {"Deadline Expired"}
+              </ButtonDisabled>
+            ) : (
+              <ButtonSubmit
+                label="Apply Now"
+                className="my-auto"
+                height="45px"
+                width="200px"
+                fontSize="14px"
+                onClick={() => {
+                  if (!user) {
+                    navigate(getRoute(SIGN_IN_KEY).path);
+                    navigate(0);
+                    return;
+                  }
+                  dispatch(openFormApplyJob());
+                  dispatch(setId(job._id));
+                }}
+              />
+            )}
           </div>
           <div className="flex flex-row-reverse">
             <Text>

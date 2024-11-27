@@ -5,7 +5,7 @@ export {
   VerifyCodeAPI,
   ForgotPasswordAPI,
 } from "./authenAPI";
-export { GetUser } from "./userAPI";
+export { GetUser, FindAppliedJobByUser, StatisticizeJobsAPI } from "./userAPI";
 
 export {
   CreateCompanyAPI,

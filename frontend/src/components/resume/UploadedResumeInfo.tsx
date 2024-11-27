@@ -15,6 +15,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 interface UploadedResumeInfoProps {
   title?: string;
   file_size?: string;
+  file_url?: string;
   type?: string;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -23,6 +24,7 @@ interface UploadedResumeInfoProps {
 export default function UploadedResumeInfo({
   title = "",
   file_size = "0",
+  file_url,
   type = "view", //upload, view
   onEdit = () => {},
   onDelete = () => {},
@@ -33,7 +35,12 @@ export default function UploadedResumeInfo({
         <div className="flex items-center">
           <IoDocumentTextOutline size={30} color={"var(--primary-500)"} />
           <div className="flex flex-col space-y-1 justify-between ml-[10px]">
-            <Heading6 name={title} />
+            <a href={file_url}>
+              <Heading6
+                name={title}
+                className="hover:text-[--primary-500] hover:underline cursor-pointer"
+              />
+            </a>
             <Text className="mt-[0px]">{file_size}</Text>
           </div>
         </div>

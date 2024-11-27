@@ -4,3 +4,4 @@ export { default as PageFindJobs } from "./PageFindJobs";
 export { default as PageFindEmployers } from "./PageFindEmployers";
 export { default as PageJobDetail } from "./PageJobDetail";
 export { default as PageEmployerDetail } from "./PageEmployerDetail";
+export { default as PageMyCV } from "./PageMyCV";

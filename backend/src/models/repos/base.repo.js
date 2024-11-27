@@ -99,6 +99,7 @@ class BaseRepo {
             length % limit
               ? Math.floor(length / limit) + 1
               : Math.floor(length / limit),
+          length,
         },
       };
     }
@@ -136,6 +137,7 @@ class BaseRepo {
               length % limit
                 ? Math.floor(length / limit) + 1
                 : Math.floor(length / limit),
+            length,
           },
         };
       }
@@ -149,6 +151,7 @@ class BaseRepo {
             length % limit
               ? Math.floor(length / limit) + 1
               : Math.floor(length / limit),
+          length,
         },
       };
     });
@@ -224,6 +227,10 @@ class BaseRepo {
   async deleteMany(obj = {}) {
     let result = this.model.deleteMany(obj);
     return await result;
+  }
+
+  async countDocuments(obj = {}) {
+    return await this.model.countDocuments(obj);
   }
 
   #chaining(

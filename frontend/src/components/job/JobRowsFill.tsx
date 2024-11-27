@@ -1,10 +1,10 @@
 import { Tag } from "@chakra-ui/react";
 import { Heading6 } from "../headings";
-import { ButtonSubmit } from "../buttons";
+import { ButtonDisabled, ButtonSubmit } from "../buttons";
 import { DeadlineInfo, LocationInfo, SalaryInfo } from "../company";
 import { distanceBetweenTwoDates } from "../../utils";
 import { useNavigate } from "react-router-dom";
-import { getRoute } from "../../helpers/constants";
+import { getRoute, JobStatuses } from "../../helpers/constants";
 import {
   EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
@@ -29,6 +29,7 @@ interface JobRowsFillProps {
   maxSalary?: number;
   expirationDate?: Date;
   isFeatured?: boolean;
+  status?: string;
 }
 
 export default function JobRowsFill({
@@ -42,6 +43,7 @@ export default function JobRowsFill({
   maxSalary = 0,
   expirationDate = new Date(Date.now()),
   isFeatured = false,
+  status = "Active",
 }: JobRowsFillProps) {
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -104,6 +106,21 @@ export default function JobRowsFill({
             >
               {jobType}
             </Tag>
+            {new Date(expirationDate) < new Date(Date.now()) ||
+            status === JobStatuses.EXPIRED ? (
+              <Tag
+                bg="var(--danger-50)"
+                textColor={"var(--danger-500)"}
+                fontSize={"13px"}
+                paddingX={"8px"}
+                paddingY="4px"
+                marginY="auto"
+              >
+                {status}
+              </Tag>
+            ) : (
+              ""
+            )}
           </div>
           <div className="flex space-x-2">
             <LocationInfo info={companyLocation.split(",").slice(-1)[0]} />
@@ -123,27 +140,35 @@ export default function JobRowsFill({
         ) : (
           <FavoriteJobIcon jobId={_id} setIsFavoriteJob={setIsFavoriteJob} />
         )}
-        <ButtonSubmit
-          label="Apply Now"
-          className="my-auto transition-all duration-500 ease-in-out hover:scale-[1.05]"
-          height="40px"
-          fontSize="13px"
-          onClick={() => {
-            if (!user) {
-              navigate(getRoute(SIGN_IN_KEY).path);
-              navigate(0);
-              return;
-            }
-            navigate(
-              getRoute(JOB_DETAIL_KEY, {
-                param: {
-                  id: _id,
-                },
-              }).path
-            );
-            dispatch(openFormApplyJob());
-          }}
-        />
+        {new Date(expirationDate) < new Date(Date.now()) ||
+        status === JobStatuses.EXPIRED ? (
+          <ButtonDisabled width="150px" fontSize="13px">
+            {"Deadline Expired"}
+          </ButtonDisabled>
+        ) : (
+          <ButtonSubmit
+            label="Apply Now"
+            className="my-auto transition-all duration-500 ease-in-out hover:scale-[1.05]"
+            height="40px"
+            width="150px"
+            fontSize="13px"
+            onClick={() => {
+              if (!user) {
+                navigate(getRoute(SIGN_IN_KEY).path);
+                navigate(0);
+                return;
+              }
+              navigate(
+                getRoute(JOB_DETAIL_KEY, {
+                  param: {
+                    id: _id,
+                  },
+                }).path
+              );
+              dispatch(openFormApplyJob());
+            }}
+          />
+        )}
       </div>
     </div>
   );

@@ -20,6 +20,12 @@ class ApplicationService {
       throw new BadRequestError("Job not found!");
     }
 
+    if (new Date(job.expirationDate) < new Date(Date.now())) {
+      throw new BadRequestError(
+        "Job has expired! Please apply for another job!"
+      );
+    }
+
     const resume = await resumeRepo.findById(resumeId);
     if (!resume) {
       throw new BadRequestError("Resume not found!");

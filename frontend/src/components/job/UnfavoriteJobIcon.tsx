@@ -3,6 +3,7 @@ import { FavoriteJobAPI } from "../../apis/favoriteJobAPI";
 import { StatusCodes } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { getRoute, SIGN_IN_KEY } from "../../helpers/constants";
+import { toastError, toastSuccess } from "../toast";
 interface FavoriteJobIcon {
   jobId?: string;
   setIsFavoriteJob: (isFavoriteJob: boolean) => void;
@@ -16,8 +17,10 @@ export default function UnfavoriteJobIcon({
     e.preventDefault();
     const data = await FavoriteJobAPI(jobId);
     if (data.isSuccess) {
+      toastSuccess(data.message);
       setIsFavoriteJob(true);
     } else {
+      toastError(data.message);
       if (data.status === StatusCodes.UNAUTHORIZED) {
         navigate(getRoute(SIGN_IN_KEY).path);
         navigate(0);

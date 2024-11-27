@@ -8,5 +8,9 @@ export {
   closeFormApplyJob,
   setId,
   setType,
-  setDataChange,
 } from "./openForm/openFormSlice";
+
+export {
+  default as changeDataSlice,
+  setDataChange,
+} from "./changeData/changeDataSlice";

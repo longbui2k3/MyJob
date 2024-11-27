@@ -14,6 +14,7 @@ import {
   DASHBOARD_SETTINGS_KEY,
   DEFAULT_KEY,
   FIND_EMPLOYERS_KEY,
+  MY_CV_KEY,
   FIND_JOBS_KEY,
   getRoute,
   HOME_KEY,
@@ -55,6 +56,11 @@ export const Navigations = {
     label: "Find Employers",
     href: getRoute(FIND_EMPLOYERS_KEY).path,
     pattern: getRoute(FIND_EMPLOYERS_KEY).path,
+  },
+  MY_CV: {
+    label: "My CV",
+    href: getRoute(MY_CV_KEY).path,
+    pattern: getRoute(MY_CV_KEY).path,
   },
   DASHBOARD: {
     label: "Dashboard",

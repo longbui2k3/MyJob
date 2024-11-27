@@ -70,6 +70,7 @@ export default function JobList() {
             minSalary={job.minSalary}
             maxSalary={job.maxSalary}
             expirationDate={job.expirationDate}
+            status={job.status}
           />
         ))}
       </div>
@@ -87,6 +88,7 @@ export default function JobList() {
             minSalary={job.minSalary}
             maxSalary={job.maxSalary}
             expirationDate={job.expirationDate}
+            status={job.status}
           />
         ))}
       </div>

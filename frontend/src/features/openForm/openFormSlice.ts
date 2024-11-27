@@ -8,7 +8,6 @@ export const openFormSlice = createSlice({
     isOpenFormApplyJob: false,
     id: "",
     type: "",
-    isDataChange: false,
   },
   reducers: {
     openFormCategory(state) {
@@ -34,10 +33,7 @@ export const openFormSlice = createSlice({
     },
     setType(state, action) {
       state.type = action.payload;
-    },
-    setDataChange(state) {
-      state.isDataChange = !state.isDataChange;
-    },
+    }
   },
 });
 export const {
@@ -49,6 +45,5 @@ export const {
   closeFormApplyJob,
   setId,
   setType,
-  setDataChange,
 } = openFormSlice.actions;
 export default openFormSlice.reducer;

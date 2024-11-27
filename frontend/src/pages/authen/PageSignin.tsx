@@ -72,6 +72,7 @@ export default function PageSignin() {
       });
       setTimeout(() => {
         navigate(getRoute(DEFAULT_KEY).path, { replace: true });
+        navigate(0);
       }, 500);
     } else {
       toastError(data.message);

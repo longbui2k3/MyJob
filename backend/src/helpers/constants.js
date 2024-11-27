@@ -145,6 +145,12 @@ const ResumeTypes = {
   UPLOADED_RESUME: "uploaded_resume",
 };
 
+const ApplicationStatuses = {
+  SUBMITTED: "submitted",
+  REJECTED: "rejected",
+  ACCEPTED: "accepted",
+};
+
 module.exports = {
   PAGE: 1,
   LIMIT: 20,
@@ -171,4 +177,5 @@ module.exports = {
   JobStatuses,
   HEADER,
   ResumeTypes,
+  ApplicationStatuses,
 };

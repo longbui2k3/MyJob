@@ -2,6 +2,8 @@
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { UserType } = require("../helpers/constants");
+const applicationRepo = require("../models/repos/application.repo");
+const favoriteJobRepo = require("../models/repos/favoriteJob.repo");
 const companyRepo = require("../models/repos/company.repo");
 const profileRepo = require("../models/repos/profile.repo");
 const userRepo = require("../models/repos/user.repo");
@@ -21,6 +23,7 @@ class UserService {
     return {
       _id: user._id,
       userType: user.userType,
+      username: user.username,
       fullName: profile ? profile.fullName : "",
       avatar: profile ? profile.avatar : "",
       ...(user.userType === UserType.EMPLOYER
@@ -28,6 +31,64 @@ class UserService {
         : {}),
     };
   }
+
+  static statisticizeJobs = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const [applicationsNum, favoritedJobsNum] = await Promise.all([
+      applicationRepo.countDocuments({
+        user: userId,
+      }),
+      favoriteJobRepo.countDocuments({ user: userId }),
+    ]);
+
+    return {
+      applicationsNum,
+      favoritedJobsNum,
+    };
+  };
+
+  static findAppliedJobsByUser = async (userId, { page = 1, limit = 10 }) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const applications = await applicationRepo.find(
+      {
+        user: user._id,
+      },
+      {
+        populates: ["job"],
+        page,
+        limit,
+      }
+    );
+    return applications;
+  };
+
+  static findFavoriteJobsByUser = async (userId, { page = 1, limit = 10 }) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const favoriteJobs = await favoriteJobRepo.find(
+      {
+        user: user._id,
+      },
+      {
+        populates: ["job"],
+        page,
+        limit,
+      }
+    );
+    favoriteJobs.data = favoriteJobs.data.map((job) => job.job);
+    return favoriteJobs;
+  };
 }
 
 module.exports = UserService;

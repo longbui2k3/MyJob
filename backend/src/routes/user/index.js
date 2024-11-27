@@ -2,7 +2,12 @@
 
 const express = require("express");
 const { authentication } = require("../../auth/authUtils");
-const { getMe } = require("../../controllers/user.controller");
+const {
+  getMe,
+  findAppliedJobsByUser,
+  statisticizeJobs,
+  findFavoriteJobsByUser,
+} = require("../../controllers/user.controller");
 const { asyncHandler } = require("../../helpers/asyncHandler");
 const router = express.Router();
 
@@ -16,6 +21,39 @@ router.route("/me").get(
     }] 
   */
   asyncHandler(getMe)
+);
+
+router.route("/applied-jobs").get(
+  // #swagger.tags = ['User']
+  // #swagger.summary = 'Find Applied Jobs By User'
+  /* #swagger.security = [{
+    "apiKeyAuth": [],
+    "clientId": []
+  }] 
+  */
+  asyncHandler(findAppliedJobsByUser)
+);
+
+router.route("/favorite-jobs").get(
+  // #swagger.tags = ['User']
+  // #swagger.summary = 'Find Favorite Jobs By User'
+  /* #swagger.security = [{
+    "apiKeyAuth": [],
+    "clientId": []
+  }] 
+  */
+  asyncHandler(findFavoriteJobsByUser)
+);
+
+router.route("/job-statistics").get(
+  // #swagger.tags = ['User']
+  // #swagger.summary = 'Statisticize jobs'
+  /* #swagger.security = [{
+    "apiKeyAuth": [],
+    "clientId": []
+  }] 
+  */
+  asyncHandler(statisticizeJobs)
 );
 
 module.exports = router;

@@ -30,10 +30,10 @@ const navigationRoles = {
       Icon: GoBookmark,
       navigation: Navigations.DASHBOARD_FAVORITE_JOBS,
     },
-    {
-      Icon: IoNotificationsOutline,
-      navigation: Navigations.DASHBOARD_JOB_ALERT,
-    },
+    // {
+    //   Icon: IoNotificationsOutline,
+    //   navigation: Navigations.DASHBOARD_JOB_ALERT,
+    // },
     {
       Icon: IoSettingsOutline,
       navigation: Navigations.DASHBOARD_SETTINGS,
@@ -60,10 +60,10 @@ const navigationRoles = {
       Icon: GoBookmark,
       navigation: Navigations.DASHBOARD_SAVED_CANDIDATE,
     },
-    {
-      Icon: PiNotebookLight,
-      navigation: Navigations.DASHBOARD_PLANS_AND_BILLING,
-    },
+    // {
+    //   Icon: PiNotebookLight,
+    //   navigation: Navigations.DASHBOARD_PLANS_AND_BILLING,
+    // },
     {
       Icon: IoSettingsOutline,
       navigation: Navigations.DASHBOARD_SETTINGS,

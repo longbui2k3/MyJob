@@ -1,5 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
+const { ApplicationStatuses } = require("../helpers/constants");
 const COLLECTION_NAME = "applications";
 const DOCUMENT_NAME = "Application";
 const applicationSchema = new mongoose.Schema(
@@ -25,6 +26,11 @@ const applicationSchema = new mongoose.Schema(
     appliedAt: {
       type: Date,
       default: Date.now(),
+    },
+    status: {
+      type: String,
+      enum: Object.values(ApplicationStatuses),
+      default: ApplicationStatuses.SUBMITTED,
     },
   },
   { timestamps: true, collection: COLLECTION_NAME }

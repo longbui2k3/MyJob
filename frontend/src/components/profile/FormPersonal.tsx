@@ -8,26 +8,16 @@ import {
   useExperienceSelect,
 } from "../select/ExperienceSelect";
 import { ButtonSolid } from "../buttons";
-import { CreateResume, UploadedResumeInfo } from "../resume";
 import { useEffect, useState } from "react";
-import {
-  DeleteResumeAPI,
-  FindProfileAPI,
-  FindResumesAPI,
-  UpdateProfileAPI,
-} from "../../apis";
-import { useAuthContext } from "../../context";
-import { formatFileSize } from "../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import { openFormResume, setDataChange, setId, setType } from "../../features";
+import { FindProfileAPI, UpdateProfileAPI } from "../../apis";
+import { useDispatch } from "react-redux";
+import { setDataChange } from "../../features";
 import { toastError, toastSuccess } from "../toast";
+import { UploadedResumeList } from "../resume";
 
 export default function FormPersonal() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const isDataChange = useSelector((state: any) => state.openForm.isDataChange);
-  const { userId } = useAuthContext();
-  const [resumes, setResumes] = useState<Array<any>>([]);
 
   const {
     fileUrl: avatar,
@@ -90,25 +80,6 @@ export default function FormPersonal() {
     setIsLoading(false);
   };
 
-  const findResumes = async () => {
-    const data = await FindResumesAPI({
-      user: userId || undefined,
-    });
-    if (data.isSuccess) {
-      setResumes(data.metadata.resumes);
-    }
-  };
-
-  const deleteResume = async (id: string) => {
-    const data = await DeleteResumeAPI(id);
-    if (data.isSuccess) {
-      toastSuccess(data.message);
-      dispatch(setDataChange());
-    } else {
-      toastError(data.message);
-    }
-  };
-
   useEffect(() => {
     dispatch(setDataChange());
   }, []);
@@ -116,10 +87,6 @@ export default function FormPersonal() {
   useEffect(() => {
     findProfile();
   }, []);
-
-  useEffect(() => {
-    findResumes();
-  }, [userId, isDataChange]);
 
   async function handleSubmit() {
     await updateProfile();
@@ -183,26 +150,7 @@ export default function FormPersonal() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col text-gray-900 space-y-4">
-        <div className="font-medium text-lg leading-7">Your CV/Resume</div>
-        <div className="grid grid-cols-2 gap-4">
-          {resumes.map((resume) => (
-            <UploadedResumeInfo
-              title={resume.name}
-              file_size={formatFileSize(resume.resume.fileSize)}
-              onDelete={() => {
-                deleteResume(resume._id);
-              }}
-              onEdit={() => {
-                dispatch(openFormResume());
-                dispatch(setType("update"));
-                dispatch(setId(resume._id));
-              }}
-            />
-          ))}
-          <CreateResume />
-        </div>
-      </div>
+      <UploadedResumeList />
     </>
   );
 }

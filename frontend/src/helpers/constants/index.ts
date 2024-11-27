@@ -21,6 +21,7 @@ export {
   VERIFY_KEY,
   FIND_JOBS_KEY,
   FIND_EMPLOYERS_KEY,
+  MY_CV_KEY,
   COMPANY_KEY,
   CREATE_COMPANY_KEY,
   COMPLETED_COMPANY_KEY,
@@ -92,3 +93,8 @@ export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];
 export const UserGenders = ["Male", "Female", "Undefined"];
 
 export const MaritalStatus = ["Single", "Married", "Divorced", "Widowed"];
+
+export const JobStatuses = {
+  ACTIVE: "Active",
+  EXPIRED: "Expired",
+};

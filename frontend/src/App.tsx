@@ -12,6 +12,10 @@ import {
   PageSignup,
   PageCreateCompany,
   PrivateRoutes,
+  PageFindEmployers,
+  PageMyCV,
+  PageJobDetail,
+  PageEmployerDetail,
 } from "./pages";
 import {
   CREATE_COMPANY_KEY,
@@ -23,6 +27,7 @@ import {
   DEFAULT_KEY,
   FIND_EMPLOYERS_KEY,
   FIND_JOBS_KEY,
+  MY_CV_KEY,
   FORGOT_PASSWORD_KEY,
   getRoute,
   HOME_KEY,
@@ -37,11 +42,6 @@ import {
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import {
-  PageEmployerDetail,
-  PageFindEmployers,
-  PageJobDetail,
-} from "./pages/home";
 import {
   DashboardAppliedJobs,
   DashboardCategory,
@@ -110,6 +110,10 @@ const OtherRoutes = [
   {
     route: getRoute(FIND_EMPLOYERS_KEY),
     element: <PageFindEmployers />,
+  },
+  {
+    route: getRoute(MY_CV_KEY),
+    element: <PageMyCV />,
   },
   {
     route: getRoute(DASHBOARD_KEY),

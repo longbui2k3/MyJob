@@ -5,7 +5,7 @@ import { ButtonOutline } from "../buttons";
 import { FiArrowRight } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { distanceBetweenTwoDates } from "../../utils";
-import { getRoute } from "../../helpers/constants";
+import { getRoute, JobStatuses } from "../../helpers/constants";
 import {
   EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
@@ -31,6 +31,7 @@ interface JobGridProps {
   maxSalary?: number;
   expirationDate?: Date;
   isFeatured?: boolean;
+  status?: string;
 }
 export default function JobGrid({
   _id = "",
@@ -44,6 +45,7 @@ export default function JobGrid({
   maxSalary = 0,
   isFeatured = false,
   expirationDate = new Date(Date.now()),
+  status = "Active",
 }: JobGridProps) {
   const { user } = useAuthContext();
   const dispatch = useDispatch();
@@ -114,6 +116,21 @@ export default function JobGrid({
               ) : (
                 ""
               )}
+              {new Date(expirationDate) < new Date(Date.now()) ||
+              status === JobStatuses.EXPIRED ? (
+                <Tag
+                  bg="var(--danger-50)"
+                  textColor={"var(--danger-500)"}
+                  fontSize={"13px"}
+                  paddingX={"8px"}
+                  paddingY="4px"
+                  marginY="auto"
+                >
+                  {status}
+                </Tag>
+              ) : (
+                ""
+              )}
             </div>
             <LocationInfo info={companyLocation.split(",").slice(-1)[0]} />
           </div>
@@ -156,33 +173,38 @@ export default function JobGrid({
           </div>
         </div>
         <div className="flex flex-col-reverse">
-          <ButtonOutline
-            children={
-              <div className="flex items-center transition-all duration-500 ease-in-out hover:scale-105 bg-none">
-                <div>Apply Now</div>
-                <FiArrowRight className="text-[16px] ml-2" />
-              </div>
-            }
-            border="0px"
-            isHover={false}
-            className="w-[100px]"
-            onClick={() => {
-              if (!user) {
-                navigate(getRoute(SIGN_IN_KEY).path);
-                navigate(0);
-                return;
+          {new Date(expirationDate) < new Date(Date.now()) ||
+          status === JobStatuses.EXPIRED ? (
+            ""
+          ) : (
+            <ButtonOutline
+              children={
+                <div className="flex items-center transition-all duration-500 ease-in-out hover:scale-105 bg-none">
+                  <div>Apply Now</div>
+                  <FiArrowRight className="text-[16px] ml-2" />
+                </div>
               }
-              navigate(
-                getRoute(JOB_DETAIL_KEY, {
-                  param: {
-                    id: _id,
-                  },
-                }).path
-              );
-              dispatch(openFormApplyJob());
-            }}
-            bgColor="transparent"
-          />
+              border="0px"
+              isHover={false}
+              className="w-[100px]"
+              onClick={() => {
+                if (!user) {
+                  navigate(getRoute(SIGN_IN_KEY).path);
+                  navigate(0);
+                  return;
+                }
+                navigate(
+                  getRoute(JOB_DETAIL_KEY, {
+                    param: {
+                      id: _id,
+                    },
+                  }).path
+                );
+                dispatch(openFormApplyJob());
+              }}
+              bgColor="transparent"
+            />
+          )}
         </div>
       </div>
     </div>

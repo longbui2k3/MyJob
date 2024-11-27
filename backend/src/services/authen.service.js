@@ -204,7 +204,7 @@ class AuthenService {
       ));
 
     const otp = generateOTPConfig(OTP_LENGTH);
-    await OTPService.createOTP({ email, otp });
+    await OTPService.createOTP({ email, otp, otpExpires: Date.now() });
 
     await profileRepo.createProfile({
       userId: newUser._id,

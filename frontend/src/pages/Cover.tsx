@@ -28,7 +28,7 @@ export default function Cover() {
       {isOpenFormResume ? <FormResume /> : ""}
       {isOpenFormApplyJob ? <FormApplyJob /> : ""}
       <Header />
-      <div className="pt-[130px]">
+      <div className="pt-[130px]" style={{ minHeight: "800px" }}>
         <Outlet />
       </div>
       <ToastContainer />

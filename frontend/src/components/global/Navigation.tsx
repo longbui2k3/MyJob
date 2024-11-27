@@ -42,19 +42,18 @@ const navigationRoles = {
     Navigations.FIND_JOB,
     Navigations.FIND_EMPLOYERS,
     Navigations.DASHBOARD,
-    Navigations.JOB_ALERTS,
-    Navigations.CUSTOMER_SUPPORTS,
+    Navigations.MY_CV,
+    // Navigations.JOB_ALERTS,
+    // Navigations.CUSTOMER_SUPPORTS,
   ],
   employer: [
     Navigations.FIND_CANDIDATES,
     Navigations.DASHBOARD,
     Navigations.MY_JOBS,
     Navigations.APPLICATIONS,
-    Navigations.CUSTOMER_SUPPORTS,
+    // Navigations.CUSTOMER_SUPPORTS,
   ],
-  admin: [
-    Navigations.DASHBOARD
-  ]
+  admin: [Navigations.DASHBOARD],
 };
 export default function Navigation() {
   const { user } = useAuthContext();

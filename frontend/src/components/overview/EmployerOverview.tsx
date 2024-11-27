@@ -6,13 +6,19 @@ import FunFacts from "./FunFacts";
 import { JobIcon, SavedIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
 import { MyJobs } from "../job/MyJobs";
+import { useAuthContext } from "../../context";
 
 export default function EmployerOverview() {
+  const { user } = useAuthContext();
   const navigate = useNavigate();
   return (
     <div className="space-y-7">
       <div>
-        <Heading5 name="Hello, Esther Howard," />
+        <Heading5
+          name={`Hello, ${
+            typeof user !== "string" ? user?.fullName || user?.username : ""
+          }`}
+        />
         <p className="text-gray-500">
           Here is your daily activities and job alerts
         </p>

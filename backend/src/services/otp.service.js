@@ -16,11 +16,22 @@ class OTPService {
   static async createOTP({ otp, email }) {
     const salt = await bcrypt.genSalt(10);
     const hashedOTP = await bcrypt.hash(otp, salt);
-    return await otpRepo.create({ otp: hashedOTP, email });
+    return await otpRepo.create({
+      otp: hashedOTP,
+      email,
+      otpExpires: Date.now(),
+    });
   }
 
   static async verifyOTP({ email, otp }) {
-    const otpHolders = await otpRepo.find({ email });
+    const otpHolders = (
+      await otpRepo.find(
+        { email },
+        {
+          sort: ["createdAt"],
+        }
+      )
+    ).data;
     if (!otpHolders.length) {
       throw new BadRequestError("Expired OTP");
     }

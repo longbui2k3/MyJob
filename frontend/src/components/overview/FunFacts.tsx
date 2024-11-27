@@ -4,7 +4,7 @@ interface FunFactsProps {
   classname?: string;
   icon?: JSX.Element;
   onClick?: (e) => void;
-  quantity?: string;
+  quantity?: number;
   title?: string;
 }
 export default function FunFacts({
@@ -20,7 +20,7 @@ export default function FunFacts({
       className={`flex items-center justify-between p-5 w-[33%] h-[100px] rounded-lg ${classname}`}
     >
       <div>
-        <Heading3 name={quantity} />
+        <Heading3 name={`${quantity}`} />
         <p className="text-gray-600 mt-[-5px]">{title}</p>
       </div>
       {icon}
