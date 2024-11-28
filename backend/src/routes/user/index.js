@@ -8,6 +8,7 @@ const {
   statisticizeJobs,
   findFavoriteJobsByUser,
   findProfileByUserId,
+  findSavedCandidatesByUser,
 } = require("../../controllers/user.controller");
 const { asyncHandler } = require("../../helpers/asyncHandler");
 const router = express.Router();
@@ -44,6 +45,17 @@ router.route("/favorite-jobs").get(
   }] 
   */
   asyncHandler(findFavoriteJobsByUser)
+);
+
+router.route("/saved-candidates").get(
+  // #swagger.tags = ['User']
+  // #swagger.summary = 'Find Saved Candidates By User'
+  /* #swagger.security = [{
+    "apiKeyAuth": [],
+    "clientId": []
+  }] 
+  */
+  asyncHandler(findSavedCandidatesByUser)
 );
 
 router.route("/job-statistics").get(

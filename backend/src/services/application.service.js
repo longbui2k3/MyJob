@@ -69,11 +69,21 @@ class ApplicationService {
         populates: ["profile", "job"],
         populateSelects: [
           {
-            profile: "avatar fullName provinceCode experience title",
+            profile: "avatar fullName provinceCode experience title education",
           },
         ],
       }
     );
+  };
+
+  static updateApplication = async (id, data) => {
+    const update = await applicationRepo.findByIdAndUpdate(
+      id,
+      removeUndefinedInObject(data),
+      { new: true }
+    );
+    if (!update) throw BadRequestError(`Application with ${id} not found!`);
+    return update;
   };
 
   static findApplication = async (applicationId) => {

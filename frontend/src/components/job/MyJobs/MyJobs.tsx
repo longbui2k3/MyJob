@@ -37,13 +37,13 @@ interface MyJobsProps {
   limit?: number;
 }
 
-export default function MyJobs({ isCheck, limit }: MyJobsProps) {
+export default function MyJobs({ isCheck = true, limit }: MyJobsProps) {
   const navigate = useNavigate();
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
   const [status, setStatus] = useState<string | undefined>();
   const [jobs, setJobs] = useState<Array<any>>([]);
-  const [jobsCount, setJobsCount] = useState<number>(0);
+  const [jobsNum, setJobsNum] = useState<number>(0);
   const [refresh, setRefresh] = useState<number>(0);
   const [cookie] = useCookies();
 
@@ -51,7 +51,7 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
     const company = await FindCompanyAPI(cookie.user);
     if (company.isSuccess) {
       const data = await FindJobsAPI({
-        company: company.metadata._id,
+        company: company.metadata.company._id,
         limit: limit,
         page: curPage,
         status,
@@ -60,8 +60,10 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
         setJobs(data.metadata.jobs);
         setSize(data.metadata.meta.size);
       }
-      const jobsData = await FindJobsAPI({ company: company.metadata._id });
-      if (jobsData.isSuccess) setJobsCount(jobsData.metadata.jobs.length);
+      const jobsData = await FindJobsAPI({
+        company: company.metadata.company._id,
+      });
+      if (jobsData.isSuccess) setJobsNum(jobsData.metadata.jobs.length);
     }
   }
 
@@ -79,9 +81,7 @@ export default function MyJobs({ isCheck, limit }: MyJobsProps) {
         <div className="flex justify-between mb-3">
           <div className="flex space-x-2">
             <Heading5 name="My Jobs"></Heading5>
-            <div className="font-normal text-xl text-gray-500">
-              ({jobsCount})
-            </div>
+            <div className="font-normal text-xl text-gray-500">({jobsNum})</div>
           </div>
           <BaseSelect
             label="Job status"

@@ -38,10 +38,10 @@ router.route("/").get(
     }
   */
   /*
-    #swagger.parameters["companyId"] = {
+    #swagger.parameters["company"] = {
       "in": "query",
       "type": "string",
-      "description": "company Id"
+      "description": "company"
     }
   */
   /*

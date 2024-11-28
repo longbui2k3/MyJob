@@ -1,5 +1,6 @@
 "use strict";
 
+const { BadRequestError } = require("../core/error.response");
 const profileRepo = require("../models/repos/profile.repo");
 const { removeUndefinedInObject } = require("../utils");
 const UploadFiles = require("../utils/uploadFiles");
@@ -52,6 +53,18 @@ class ProfileService {
       user: userId,
     });
 
+    return profile;
+  };
+
+  static findProfiles = async ({ page, limit }) => {
+    return profileRepo.find({}, { page, limit });
+  };
+
+  static findProfile = async (id) => {
+    const profile = profileRepo.findById(id);
+    if (!profile) {
+      throw new BadRequestError(`Profile with ${id} not found!`);
+    }
     return profile;
   };
 }

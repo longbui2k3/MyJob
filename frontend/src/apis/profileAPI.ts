@@ -1,9 +1,20 @@
 import { HttpMethods } from "../helpers/constants";
+import { changeQueryObjToQueryStr } from "../utils";
 import BaseAPI from "./baseAPI";
 
-export const FindProfileAPI = async () => {
+export const FindProfilesAPI = async (query: {
+  page?: number;
+  limit?: number;
+}) => {
   return await BaseAPI({
-    path: `/profile`,
+    path: `/profile?${changeQueryObjToQueryStr(query)}`,
+    method: HttpMethods.GET,
+  });
+};
+
+export const FindProfileAPI = async (id: string) => {
+  return await BaseAPI({
+    path: `/profile/${id}`,
     method: HttpMethods.GET,
   });
 };

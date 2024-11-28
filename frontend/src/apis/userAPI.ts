@@ -35,6 +35,16 @@ export const StatisticizeJobsAPI = async () => {
   });
 };
 
+export const FindSavedCandidatesByUser = async (query: {
+  page?: number;
+  limit?: number;
+}) => {
+  return await BaseAPI({
+    path: `/user/saved-candidates?${changeQueryObjToQueryStr(query)}`,
+    method: HttpMethods.GET,
+  });
+};
+
 export const FindProfileByUserAPI = async () => {
   return await BaseAPI({
     path: `/user/profile`,

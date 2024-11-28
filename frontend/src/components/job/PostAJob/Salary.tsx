@@ -38,7 +38,7 @@ export default function Salary({
             placeholder="Minimum salary..."
             value={minSalary}
             onChange={handleMinSalaryChange}
-            currency="VND"
+            currency="USD"
           />
         </div>
         <div>
@@ -48,7 +48,7 @@ export default function Salary({
             placeholder="Maximum salary..."
             value={maxSalary}
             onChange={handleMaxSalaryChange}
-            currency="VND"
+            currency="USD"
           />
         </div>
         <BaseSelect

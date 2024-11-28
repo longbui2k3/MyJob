@@ -72,7 +72,11 @@ import {
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 import { Applications, EditJob } from "./components/job/MyJobs";
+
+import PageMyJobs from "./pages/home/PageMyJobs";
+import { MY_JOBS_KEY } from "./helpers/constants/routes";
 import { PageUpdateCV } from "./pages/home";
+
 
 const AuthenRoutes = [
   {
@@ -125,6 +129,10 @@ const OtherRoutes = [
   {
     route: getRoute(FIND_CANDIDATES_KEY),
     element: <PageFindCandidates />,
+  },
+  {
+    route: getRoute(MY_JOBS_KEY),
+    element: <PageMyJobs />,
   },
   {
     route: getRoute(FIND_APPLICATIONS_KEY),

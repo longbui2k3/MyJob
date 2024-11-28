@@ -37,6 +37,13 @@ router.route("/").get(
       "description": "Job"
     }
   */
+  /*
+    #swagger.parameters["status"] = {
+      "in": "query",
+      "type": "string",
+      "description": "Status"
+    }
+  */
   asyncHandler(applicationController.findApplications)
 );
 
@@ -60,5 +67,27 @@ router.route("/").post(
     }] 
   */
   asyncHandler(applicationController.createApplication)
+);
+
+router.route("/:id").patch(
+  // #swagger.tags = ['Application']
+  // #swagger.summary = 'update application'
+  /* #swagger.requestBody = {
+      required: true,
+      content: {
+        "application/json": {
+            schema: {
+                $ref: '#/components/schemas/applicationBodySchema'
+            }
+        }
+      }
+    } 
+  */
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
+  asyncHandler(applicationController.updateApplication)
 );
 module.exports = router;
