@@ -7,6 +7,7 @@ const userRepo = require("../models/repos/user.repo");
 const resumeRepo = require("../models/repos/resume.repo");
 const UploadFiles = require("../utils/uploadFiles");
 const { removeUndefinedInObject } = require("../utils");
+const createdResumeRepo = require("../models/repos/createdResume.repo");
 class ResumeService {
   static createUploadedResume = async (userId, { name }, file) => {
     const user = await userRepo.findById(userId);
@@ -38,6 +39,26 @@ class ResumeService {
       name,
       type: ResumeTypes.UPLOADED_RESUME,
       resume: uploadedResume._id,
+    });
+
+    return resume;
+  };
+
+  static createCreatedResume = async (userId, body) => {
+    if (!body.name) {
+      throw new BadRequestError("Please fill your CV name!");
+    }
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const createdResume = await createdResumeRepo.create(body);
+    const resume = await resumeRepo.create({
+      user: userId,
+      name: body.name,
+      type: ResumeTypes.CREATED_RESUME,
+      resume: createdResume._id,
     });
 
     return resume;
@@ -113,6 +134,32 @@ class ResumeService {
       resumeId,
       removeUndefinedInObject({
         name,
+      })
+    );
+
+    return updatedResume;
+  };
+
+  static updateCreatedResume = async (userId, resumeId, body) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const resume = await resumeRepo.findById(resumeId);
+    if (!resume) {
+      throw new BadRequestError("Resume not found!");
+    }
+
+    const createdResume = await createdResumeRepo.findByIdAndUpdate(
+      resume.resume,
+      removeUndefinedInObject(body)
+    );
+
+    const updatedResume = await resumeRepo.findByIdAndUpdate(
+      resumeId,
+      removeUndefinedInObject({
+        name: body.name,
       })
     );
 

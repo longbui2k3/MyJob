@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UploadedResumeInfo } from "../../resume";
+import { UploadedResumeInfo } from "../../uploaded_resume";
 import { formatFileSize } from "../../../utils";
 import { MessageError } from "../../global";
 

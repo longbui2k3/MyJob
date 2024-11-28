@@ -20,6 +20,7 @@ import {
   PageCandidateDetail,
   PageFindApplications,
   PageApplicationDetail,
+  PageCreateCV,
 } from "./pages";
 import {
   CREATE_COMPANY_KEY,
@@ -53,6 +54,8 @@ import {
   DASHBOARD_FAVORITE_JOBS_KEY,
   FIND_APPLICATIONS_KEY,
   APPLICATION_DETAIL_KEY,
+  CREATE_CV_KEY,
+  UPDATE_CV_KEY,
 } from "./helpers/constants";
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
@@ -69,6 +72,7 @@ import {
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 import { Applications, EditJob } from "./components/job/MyJobs";
+import { PageUpdateCV } from "./pages/home";
 
 const AuthenRoutes = [
   {
@@ -129,6 +133,14 @@ const OtherRoutes = [
   {
     route: getRoute(MY_CV_KEY),
     element: <PageMyCV />,
+  },
+  {
+    route: getRoute(CREATE_CV_KEY),
+    element: <PageCreateCV />,
+  },
+  {
+    route: getRoute(UPDATE_CV_KEY),
+    element: <PageUpdateCV />,
   },
   {
     route: getRoute(DASHBOARD_KEY),

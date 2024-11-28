@@ -44,6 +44,8 @@ export {
   DASHBOARD_EDIT_JOB_KEY,
   EMPLOYER_DETAIL_KEY,
   JOB_DETAIL_KEY,
+  CREATE_CV_KEY,
+  UPDATE_CV_KEY,
 } from "./routes";
 export type { RouteItem } from "./routes";
 export const DEFAULT_PADDING_X = "200px";

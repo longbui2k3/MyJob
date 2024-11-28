@@ -92,6 +92,10 @@ router.route("/uploaded").post(
 );
 
 router
+  .route("/created")
+  .post(asyncHandler(resumeController.createCreatedResume));
+
+router
   .route("/:id")
   .patch(
     upload.single("resumeFile"),
@@ -130,4 +134,7 @@ router
     asyncHandler(resumeController.deleteResume)
   );
 
+router
+  .route("/:id/created")
+  .patch(asyncHandler(resumeController.updateCreatedResume));
 module.exports = router;

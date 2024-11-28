@@ -17,6 +17,7 @@ export {
   PageCandidateDetail,
   PageFindApplications,
   PageApplicationDetail,
+  PageCreateCV,
 } from "./home";
 export { default as Cover } from "./Cover";
 

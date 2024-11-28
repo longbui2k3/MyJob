@@ -14,3 +14,9 @@ export {
   default as changeDataSlice,
   setDataChange,
 } from "./changeData/changeDataSlice";
+
+export {
+  default as createCVSlice,
+  setSelectedElement,
+  setState,
+} from "./createCV/createCVSlice";

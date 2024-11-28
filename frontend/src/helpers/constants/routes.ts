@@ -21,6 +21,8 @@ export const CANDIDATE_DETAIL_KEY = "CANDIDATE_DETAIL";
 export const FIND_APPLICATIONS_KEY = "FIND_APPLICATIONS";
 export const APPLICATION_DETAIL_KEY = "APPLICATION_DETAIL";
 export const MY_CV_KEY = "MY_CV";
+export const CREATE_CV_KEY = "CREATE_CV";
+export const UPDATE_CV_KEY = "UPDATE_CV_KEY";
 export const JOB_DETAIL_KEY = "JOB_DETAIL";
 export const FIND_EMPLOYERS_KEY = "FIND_EMPLOYERS";
 export const EMPLOYER_DETAIL_KEY = "EMPLOYER_DETAIL";
@@ -144,6 +146,20 @@ const ROUTES: Array<RouteItem> = [
         key: MY_CV_KEY,
         name: "My CV & Resumes",
         path: "/my-cv",
+        children: [
+          {
+            key: CREATE_CV_KEY,
+            name: "Create My CV & Resumes",
+            path: "/my-cv/create-cv",
+            isPrivate: true,
+          },
+          {
+            key: UPDATE_CV_KEY,
+            name: "Edit My CV & Resumes",
+            path: "/my-cv/edit-cv/:id",
+            isPrivate: true,
+          },
+        ],
         isPrivate: true,
       },
       {
