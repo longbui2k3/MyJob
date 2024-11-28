@@ -43,6 +43,17 @@ export const CreateResumeAPI = async (body: {
   });
 };
 
+export const CreateCreatedResumeAPI = async (body: any) => {
+  // const formData = new FormData();
+  // if (body.name) formData.append("name", body.name);
+
+  return await BaseAPI({
+    path: `/resume/created`,
+    method: HttpMethods.POST,
+    body,
+  });
+};
+
 export const UpdateResumeAPI = async (
   id: string,
   body: { name?: string | null; resumeFile?: File | null }
@@ -55,5 +66,13 @@ export const UpdateResumeAPI = async (
     path: `/resume/${id}`,
     method: HttpMethods.PATCH,
     body: formData,
+  });
+};
+
+export const UpdateCreatedResumeAPI = async (id: string, body: any) => {
+  return await BaseAPI({
+    path: `/resume/${id}/created`,
+    method: HttpMethods.PATCH,
+    body,
   });
 };

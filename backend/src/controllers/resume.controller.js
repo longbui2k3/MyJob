@@ -12,7 +12,21 @@ class ResumeController {
     );
 
     return new CREATED({
-      message: "Create profile successfully",
+      message: "Create resume successfully",
+      metadata: {
+        resume: result,
+      },
+    }).send(res);
+  };
+
+  createCreatedResume = async (req, res, next) => {
+    const result = await ResumeService.createCreatedResume(
+      req.user.userId,
+      req.body
+    );
+
+    return new CREATED({
+      message: "Create resume successfully",
       metadata: {
         resume: result,
       },
@@ -47,6 +61,21 @@ class ResumeController {
       req.params.id,
       req.body,
       req.file
+    );
+
+    return new OK({
+      message: "Update resume successfully",
+      metadata: {
+        resume: result,
+      },
+    }).send(res);
+  };
+
+  updateCreatedResume = async (req, res, next) => {
+    const result = await ResumeService.updateCreatedResume(
+      req.user.userId,
+      req.params.id,
+      req.body,
     );
 
     return new OK({

@@ -35,7 +35,7 @@ export default function UploadedResumeInfo({
         <div className="flex items-center">
           <IoDocumentTextOutline size={30} color={"var(--primary-500)"} />
           <div className="flex flex-col space-y-1 justify-between ml-[10px]">
-            <a href={file_url}>
+            <a href={file_url} target="_blank">
               <Heading6
                 name={title}
                 className="hover:text-[--primary-500] hover:underline cursor-pointer"

@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Footer, Header } from "../components/global";
 import { useSelector } from "react-redux";
 import { FormCategory } from "../components/category";
-import { FormResume } from "../components/resume";
+import { FormResume } from "../components/uploaded_resume";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,7 +28,15 @@ export default function Cover() {
       {isOpenFormResume ? <FormResume /> : ""}
       {isOpenFormApplyJob ? <FormApplyJob /> : ""}
       <Header />
-      <div className="pt-[130px]" style={{ minHeight: "800px" }}>
+      <div
+        className="pt-[130px]"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "800px",
+          height: "100%",
+        }}
+      >
         <Outlet />
       </div>
       <ToastContainer />

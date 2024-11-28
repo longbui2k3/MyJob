@@ -10,3 +10,5 @@ export { default as PageMyJobs } from "./PageMyJobs";
 export { default as PageCandidateDetail } from "./PageCandidateDetail";
 export { default as PageFindApplications } from "./PageFindApplications";
 export { default as PageApplicationDetail } from "./PageApplicationDetail";
+export { default as PageCreateCV } from "./PageCreateCV";
+export { default as PageUpdateCV } from "./PageUpdateCV";

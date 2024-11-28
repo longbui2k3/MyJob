@@ -29,6 +29,8 @@ export {
   CreateResumeAPI,
   UpdateResumeAPI,
   DeleteResumeAPI,
+  CreateCreatedResumeAPI,
+  UpdateCreatedResumeAPI,
 } from "./resumeAPI";
 export {
   FindProfilesAPI,

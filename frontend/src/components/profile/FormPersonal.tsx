@@ -13,7 +13,7 @@ import { FindProfileByUserAPI, UpdateProfileAPI } from "../../apis";
 import { useDispatch } from "react-redux";
 import { setDataChange } from "../../features";
 import { toastError, toastSuccess } from "../toast";
-import { UploadedResumeList } from "../resume";
+import { UploadedResumeList } from "../uploaded_resume";
 
 export default function FormPersonal() {
   const dispatch = useDispatch();

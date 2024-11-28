@@ -7,22 +7,28 @@ const createdResumeSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
-      required: true,
+      // required: true,
+      default: "",
     },
     avatar: {
       type: String,
+      default: "",
     },
-    jobPosition: {
+    position: {
       type: String,
+      default: "",
     },
-    phoneNumber: {
+    phone: {
       type: String,
+      default: "",
     },
     email: {
       type: String,
+      default: "",
     },
-    address: {
+    location: {
       type: String,
+      default: "",
     },
     objective: {
       type: {
@@ -183,6 +189,13 @@ const createdResumeSchema = new mongoose.Schema(
         name: "Additional Information",
         content: "",
       },
+    },
+    information: {
+      type: String,
+      default: "",
+    },
+    template: {
+      type: Array,
     },
   },
   { timestamps: true, collection: COLLECTION_NAME }
