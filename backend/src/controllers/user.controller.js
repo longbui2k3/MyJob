@@ -57,6 +57,21 @@ class UserController {
     }).send(res);
   };
 
+  findSavedCandidatesByUser = async (req, res, next) => {
+    const result = await UserService.findSavedCandidatesByUser(
+      req.user.userId,
+      req.query
+    );
+
+    return new OK({
+      message: "Find saves candidates successfully",
+      metadata: {
+        savedCandidates: result.data,
+        meta: result.meta,
+      },
+    }).send(res);
+  };
+
   statisticizeJobs = async (req, res, next) => {
     const result = await UserService.statisticizeJobs(req.user.userId);
 

@@ -4,6 +4,7 @@ const { BadRequestError, NotFoundError } = require("../core/error.response");
 const { UserType } = require("../helpers/constants");
 const applicationRepo = require("../models/repos/application.repo");
 const favoriteJobRepo = require("../models/repos/favoriteJob.repo");
+const savedCandidateRepo = require("../models/repos/savedCandidate.repo");
 const companyRepo = require("../models/repos/company.repo");
 const profileRepo = require("../models/repos/profile.repo");
 const userRepo = require("../models/repos/user.repo");
@@ -88,6 +89,31 @@ class UserService {
     );
     favoriteJobs.data = favoriteJobs.data.map((job) => job.job);
     return favoriteJobs;
+  };
+
+  static findSavedCandidatesByUser = async (
+    userId,
+    { page = 1, limit = 10 }
+  ) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const savedCandidates = await savedCandidateRepo.find(
+      {
+        user: user._id,
+      },
+      {
+        populates: ["candidate"],
+        page,
+        limit,
+      }
+    );
+    savedCandidates.data = savedCandidates.data.map(
+      (candidate) => candidate.candidate
+    );
+    return savedCandidates;
   };
 }
 

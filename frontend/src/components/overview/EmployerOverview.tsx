@@ -11,7 +11,11 @@ import { JobIcon, SavedIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
 import { MyJobs } from "../job/MyJobs";
 import { useAuthContext } from "../../context";
-import { FindCompanyAPI, FindJobsAPI } from "../../apis";
+import {
+  FindCompanyAPI,
+  FindJobsAPI,
+  FindSavedCandidatesByUser,
+} from "../../apis";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 
@@ -19,14 +23,19 @@ export default function EmployerOverview() {
   const { user } = useAuthContext();
   const [cookie] = useCookies();
   const [jobsNum, setJobsNum] = useState<number>(0);
+  const [savedCandidatesNum, setSavedCandidatesNum] = useState<number>(0);
 
   async function statisticize() {
     const company = await FindCompanyAPI(cookie.user);
     if (company.isSuccess) {
-      const jobsData = await FindJobsAPI({
+      const jobs = await FindJobsAPI({
         company: company.metadata.company._id,
       });
-      if (jobsData.isSuccess) setJobsNum(jobsData.metadata.jobs.length);
+      const savedCandidates = await FindSavedCandidatesByUser({});
+      if (jobs.isSuccess && savedCandidates.isSuccess) {
+        setJobsNum(jobs.metadata.jobs.length);
+        setSavedCandidatesNum(savedCandidates.metadata.savedCandidates.length);
+      }
     }
   }
 
@@ -59,7 +68,7 @@ export default function EmployerOverview() {
           icon={<JobIcon />}
         />
         <FunFacts
-          number={jobsNum}
+          number={savedCandidatesNum}
           title="Saved Candidates"
           onClick={() => {
             navigate(getRoute(DASHBOARD_SAVED_CANDIDATE_KEY).path, {

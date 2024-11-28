@@ -4,7 +4,7 @@ import { Pagination, usePagination } from "../global";
 import { PageLimitSelect, usePageLimitSelect } from "../select/PageLimitSelect";
 import { useViewTypeSelect, ViewTypeSelect } from "../select/ViewTypeSelect";
 import CandidateRowsFill from "./CandidateRowsFill";
-import { FindApplicationsAPI } from "../../apis";
+import { FindProfilesAPI } from "../../apis";
 import CandidateGrid from "./CandidateGrid";
 
 export default function CandidateList() {
@@ -12,14 +12,16 @@ export default function CandidateList() {
   const { curPage, setCurPage } = usePagination();
   const { limit, handleLimitChange } = usePageLimitSelect();
   const [size, setSize] = useState(1);
-  const [applications, setApplications] = useState<Array<any>>([]);
+  const [candidates, setCandidates] = useState<Array<any>>([]);
   async function findCandidates(page: number) {
-    const data = await FindApplicationsAPI({
+    const data = await FindProfilesAPI({
       page,
       limit,
     });
+    console.log("data", data);
+
     if (data.isSuccess) {
-      setApplications(data.metadata.applications);
+      setCandidates(data.metadata.profiles);
       setSize(data.metadata.meta.size);
     }
   }
@@ -30,34 +32,32 @@ export default function CandidateList() {
   useEffect(() => {
     findCandidates(curPage);
   }, [curPage]);
+
   const Candidates = {
     GRID: () => (
       <div className="grid grid-cols-2 gap-4">
-        {applications.map((application) => (
+        {candidates.map((candidate) => (
           <CandidateGrid
-            _id={application._id}
-            avatar={application.profile.avatar}
-            fullName={application.profile.fullName}
-            jobId={application.job._id}
-            jobTitle={application.job.jobTitle}
-            provinceCode={application.profile.provinceCode}
-            experience={application.profile.experience}
-            companyName={application.job.company.companyName}
+            _id={candidate._id}
+            avatar={candidate.avatar}
+            fullName={candidate.fullName}
+            title={candidate.title}
+            provinceCode={candidate.provinceCode}
+            experience={candidate.experience}
           />
         ))}
       </div>
     ),
     ROWS_FILL: () => (
       <div className="flex flex-col space-y-4">
-        {applications.map((application) => (
+        {candidates.map((candidate) => (
           <CandidateRowsFill
-            _id={application._id}
-            avatar={application.profile.avatar}
-            fullName={application.profile.fullName}
-            jobTitle={application.job.jobTitle}
-            jobId={application.job._id}
-            provinceCode={application.profile.provinceCode}
-            experience={application.profile.experience}
+            _id={candidate._id}
+            avatar={candidate.avatar}
+            fullName={candidate.fullName}
+            title={candidate.title}
+            provinceCode={candidate.provinceCode}
+            experience={candidate.experience}
           />
         ))}
       </div>

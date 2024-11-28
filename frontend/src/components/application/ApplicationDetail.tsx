@@ -1,27 +1,35 @@
 import { useParams } from "react-router-dom";
 import { DEFAULT_PADDING_X } from "../../helpers/constants";
-import { FindApplicationAPI } from "../../apis";
+import { FindApplicationAPI, FindSavedCandidateAPI } from "../../apis";
 import { useEffect, useState } from "react";
 import { Heading, Heading5 } from "../headings";
 import { Text } from "../text";
-import { FavoriteCandidateIcon, UnfavoriteCandidateIcon } from "../candidate";
-import { ButtonSolid, ButtonSubmit } from "../buttons";
+import { SavedCandidateIcon, UnsavedCandidateIcon } from "../candidate";
 import { TfiEmail } from "react-icons/tfi";
-import ApplicationOverview from "../profile/ProfileOverview";
 import DownloadMyResume from "./DownloadMyResume";
 import ProfileOverview from "../profile/ProfileOverview";
 import { ContactInformation } from "../profile";
+import { ButtonSolid } from "../buttons";
 
 export default function ApplicationDetail() {
   const { id } = useParams();
   const [application, setApplication] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
-  const [isFavoriteCandidate, setIsFavoriteCandidate] = useState(false);
+  const [isSavedCandidate, setIsSavedCandidate] = useState(false);
+
   async function findApplication() {
     if (!id) return;
     const data = await FindApplicationAPI(id);
     if (data.isSuccess) {
       setApplication(data.metadata.application);
+    }
+  }
+  async function findSavedCandidate() {
+    const data = await FindSavedCandidateAPI(application.profile._id);
+    if (data.isSuccess) {
+      setIsSavedCandidate(true);
+    } else {
+      setIsSavedCandidate(false);
     }
   }
 
@@ -30,6 +38,12 @@ export default function ApplicationDetail() {
     findApplication();
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (application?.profile?._id) {
+      findSavedCandidate();
+    }
+  }, [application]);
 
   return (
     <div
@@ -61,15 +75,15 @@ export default function ApplicationDetail() {
         <div>
           <div className="flex space-x-4 items-center">
             <div className="flex justify-center items-center h-[45px] w-[45px] bg-[--primary-100] rounded-md">
-              {isFavoriteCandidate ? (
-                <FavoriteCandidateIcon
-                  candidateId={application.user}
-                  setIsFavoriteCandidate={setIsFavoriteCandidate}
+              {isSavedCandidate ? (
+                <SavedCandidateIcon
+                  candidateId={application?.profile?._id}
+                  setIsSavedCandidate={setIsSavedCandidate}
                 />
               ) : (
-                <UnfavoriteCandidateIcon
-                  candidateId={application.user}
-                  setIsFavoriteCandidate={setIsFavoriteCandidate}
+                <UnsavedCandidateIcon
+                  candidateId={application?.profile?._id}
+                  setIsSavedCandidate={setIsSavedCandidate}
                 />
               )}
             </div>

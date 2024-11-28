@@ -15,19 +15,37 @@ const upload = uploadMulter([
   },
 ]);
 
+router.route("/").get(
+  // #swagger.tags = ['Profile']
+  // #swagger.summary = 'find profiles'
+  /* #swagger.parameters["page"] = {
+    "in": "query",
+    "type": "number",
+    "description": "Page"
+  }
+  */
+  /*
+    #swagger.parameters["limit"] = {
+      "in": "query",
+      "type": "number",
+      "description": "Limit"
+    }
+  */
+  asyncHandler(profileController.findProfiles)
+);
+
+router.route("/:id").get(
+  // #swagger.tags = ['Profile']
+  // #swagger.summary = 'find profile'
+  asyncHandler(profileController.findProfile)
+);
+
 router.use(authentication);
-router
-  .route("/")
-  // .get(
-  //   // #swagger.tags = ['Profile']
-  //   // #swagger.summary = 'Find profile'
-  //   asyncHandler(profileController.findProfileByUserId)
-  // )
-  .patch(
-    upload.single("avatar"),
-    // #swagger.tags = ['Profile']
-    // #swagger.summary = 'Update profile'
-    /* #swagger.requestBody = {
+router.route("/").patch(
+  upload.single("avatar"),
+  // #swagger.tags = ['Profile']
+  // #swagger.summary = 'Update profile'
+  /* #swagger.requestBody = {
       required: true,
       content: {
         "multipart/form-data": {
@@ -105,12 +123,12 @@ router
       }
     } 
   */
-    /* #swagger.security = [{
+  /* #swagger.security = [{
       "apiKeyAuth": [],
       "clientId": []
     }] 
   */
-    asyncHandler(updateProfile)
-  );
+  asyncHandler(updateProfile)
+);
 
 module.exports = router;

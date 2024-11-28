@@ -2,74 +2,77 @@ import { LocationInfo } from "../company";
 import { Heading, Heading6 } from "../headings";
 import provinces from "../../data/provinces.json";
 import { ExperienceInfo } from "../company/CompanyInfos";
-import { Text } from "../text";
 import { ButtonOutline } from "../buttons";
 import { FiArrowRight } from "react-icons/fi";
 import { getRoute } from "../../helpers/constants";
-import {
-  CANDIDATE_DETAIL_KEY,
-  JOB_DETAIL_KEY,
-} from "../../helpers/constants/routes";
+import { CANDIDATE_DETAIL_KEY } from "../../helpers/constants/routes";
 import { useNavigate } from "react-router-dom";
+import UnsavedCandidateIcon from "./UnsavedCandidateIcon";
+import SavedCandidateIcon from "./SavedCandidateIcon";
+import { useEffect, useState } from "react";
+import { FindSavedCandidateAPI } from "../../apis";
 
 interface CandidateGridProps {
   _id?: string;
   avatar?: string;
   fullName?: string;
-  jobTitle?: string;
-  jobId?: string;
+  title?: string;
   provinceCode?: number;
   experience?: string;
-  companyName?: string;
 }
 
 export default function CandidateGrid({
   _id = "",
   avatar = "",
   fullName = "",
-  jobTitle = "",
-  jobId = "",
+  title = "",
   provinceCode = 0,
   experience = "",
-  companyName = "",
 }: CandidateGridProps) {
   const navigate = useNavigate();
+  const [isSavedCandidate, setIsSavedCandidate] = useState(false);
+  async function findSavedCandidate() {
+    const data = await FindSavedCandidateAPI(_id);
+    if (data.isSuccess) {
+      setIsSavedCandidate(true);
+    } else {
+      setIsSavedCandidate(false);
+    }
+  }
+  useEffect(() => {
+    findSavedCandidate();
+  }, []);
   return (
-    <div className="w-full p-5 border-[1px] border-[--gray-100] rounded-lg">
-      <div className="flex justify-between">
-        <div className="flex space-x-3">
+    <div className="w-full p-5 border-2 border-[--gray-100] rounded-lg">
+      <div className="flex justify-between items-center space-x-3">
+        <div className="flex">
           <img
             src={avatar}
             width={"52px"}
             height={"52px"}
             className="rounded-md aspect-square"
           />
-          <div className="flex flex-col justify-between ml-4">
-            <div className="flex space-x-3">
-              <a
-                href={
-                  getRoute(JOB_DETAIL_KEY, {
-                    param: {
-                      id: jobId,
-                    },
-                  }).path
-                }
-              >
-                <Heading6
-                  name={jobTitle}
-                  className="hover:text-[--primary-500] hover:underline cursor-pointer"
-                />
-              </a>
-            </div>
-            <div className="flex space-x-2">
-              <Text className="mt-[0px]" children={companyName} />
-            </div>
+          <div className="ml-4">
+            <Heading name={fullName} size={17} className="" />
+            <Heading6 name={title} />
           </div>
+        </div>
+        <div>
+          {!isSavedCandidate ? (
+            <UnsavedCandidateIcon
+              candidateId={_id}
+              setIsSavedCandidate={setIsSavedCandidate}
+            />
+          ) : (
+            <SavedCandidateIcon
+              candidateId={_id}
+              setIsSavedCandidate={setIsSavedCandidate}
+            />
+          )}
         </div>
       </div>
       <div className="flex justify-between">
         <div className="mt-4 space-y-2">
-          <Heading name={fullName} size={17} className="" />
           <div className="flex space-x-2">
             <LocationInfo
               info={

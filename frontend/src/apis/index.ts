@@ -8,8 +8,10 @@ export {
 export {
   GetUser,
   FindAppliedJobByUser,
+  FindFavoriteJobByUser,
   StatisticizeJobsAPI,
   FindProfileByUserAPI,
+  FindSavedCandidatesByUser,
 } from "./userAPI";
 
 export {
@@ -28,11 +30,25 @@ export {
   UpdateResumeAPI,
   DeleteResumeAPI,
 } from "./resumeAPI";
-export { FindProfileAPI, UpdateProfileAPI } from "./profileAPI";
+export {
+  FindProfilesAPI,
+  FindProfileAPI,
+  UpdateProfileAPI,
+} from "./profileAPI";
 
 export {
   CreateApplicationAPI,
   FindApplicationsAPI,
   FindApplicationAPI,
-  UpdateApplicationAPI
+  UpdateApplicationAPI,
 } from "./applicationAPI";
+export {
+  FindSavedCandidateAPI,
+  SavedCandidateAPI,
+  UnsavedCandidateAPI,
+} from "./savedCandidateAPI";
+export {
+  FindFavoriteJobAPI,
+  FavoriteJobAPI,
+  UnfavoriteJobAPI,
+} from "./favoriteJobAPI";
