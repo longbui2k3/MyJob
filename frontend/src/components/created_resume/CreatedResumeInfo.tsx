@@ -12,6 +12,10 @@ import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { getRoute, UPDATE_CV_KEY } from "../../helpers/constants";
+import { DeleteResumeAPI } from "../../apis";
+import { toastError, toastSuccess } from "../toast";
+import { useDispatch } from "react-redux";
+import { setDataChange } from "../../features";
 
 interface CreatedResumeInfoProps {
   _id?: string;
@@ -22,6 +26,7 @@ export default function CreatedResumeInfo({
   _id = "",
   name = "",
 }: CreatedResumeInfoProps) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   function onEdit() {
     navigate(
@@ -32,7 +37,18 @@ export default function CreatedResumeInfo({
       }).path
     );
   }
-  function onDelete() {}
+  const deleteResume = async (id: string) => {
+    const data = await DeleteResumeAPI(id);
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+      dispatch(setDataChange());
+    } else {
+      toastError(data.message);
+    }
+  };
+  function onDelete() {
+    deleteResume(_id);
+  }
   return (
     <div
       className="relative bg-[--gray-100] h-[150px] flex justify-center items-center p-[20px] rounded-sm cursor-pointer"

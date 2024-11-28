@@ -3,9 +3,13 @@ import { FindResumesAPI } from "../../apis";
 import CreateResume from "./CreateResume";
 import { useAuthContext } from "../../context";
 import CreatedResumeInfo from "./CreatedResumeInfo";
+import { useSelector } from "react-redux";
 
 export default function CreatedResumeList() {
   const { userId } = useAuthContext();
+  const isDataChange = useSelector(
+    (state: any) => state.changeData.isDataChange
+  );
   const [resumes, setResumes] = useState<Array<any>>([]);
   async function findCreatedResume() {
     const data = await FindResumesAPI({
@@ -19,7 +23,7 @@ export default function CreatedResumeList() {
 
   useEffect(() => {
     findCreatedResume();
-  }, [userId]);
+  }, [userId, isDataChange]);
 
   return (
     <div className="flex flex-col text-gray-900 space-y-4">

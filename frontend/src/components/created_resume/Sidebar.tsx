@@ -54,7 +54,7 @@ export default function Sidebar(props) {
   return (
     <div
       key={fieldsRegKey}
-      className="sidebar grid grid-cols-2 gap-2 p-[20px] h-full"
+      className="sidebar grid grid-cols-3 gap-2 p-[20px] h-full"
     >
       {fields.map((f) => (
         <DraggableSidebarField key={f.type} field={f} />
