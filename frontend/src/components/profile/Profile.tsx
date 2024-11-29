@@ -6,6 +6,7 @@ import FormPersonal from "./FormPersonal";
 import FormProfile from "./FormProfile";
 import FormSocialMediaInfo from "./FormSocialMediaInfo";
 import FormAccountSettings from "./FormAccountSettings";
+import FormContact from "./FormContact";
 
 export default function Profile() {
   const [activeIndex, setActiveIndex] = useState(1);
@@ -61,7 +62,7 @@ export default function Profile() {
           }`}
         />
       ),
-      content: <FormAccountSettings />,
+      content: <FormContact />,
     },
   ];
 

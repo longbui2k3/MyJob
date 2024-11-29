@@ -1,12 +1,14 @@
 import { useSelector } from "react-redux";
 import {
   BusinessCardFormProperties,
+  OverviewProperties,
   PersonalInformationProperties,
 } from "./FormProperties";
 
 const properties: { [key: string]: JSX.Element } = {
   business_card: <BusinessCardFormProperties />,
   personal_information: <PersonalInformationProperties />,
+  objective: <OverviewProperties />,
 };
 
 export default function Properties() {
