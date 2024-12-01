@@ -72,9 +72,9 @@ export default function Applications() {
   const handleApplicationStatus = async (id: string, status: string) => {
     const data = await UpdateApplicationAPI(id, { status });
     if (data.isSuccess) {
-      toastSuccess(data.message);
+      toastSuccess("update status successfully!");
     } else {
-      toastError(data.message);
+      toastError("update status failed!");
     }
   };
   return (
