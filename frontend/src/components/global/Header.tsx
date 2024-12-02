@@ -235,10 +235,10 @@ export default function Header() {
   }, [headerRef]);
   return (
     <div className="fixed top-0 w-full z-[1000]">
-      {typeof user !== "string" && user?.userType === UserTypes.EMPLOYEE ? (
-        <Navigation />
-      ) : (
+      {typeof user !== "string" && user?.userType === UserTypes.EMPLOYER ? (
         ""
+      ) : (
+        <Navigation />
       )}
       <div
         className={`flex flex-col justify-center w-full h-[80px] bg-white`}
@@ -252,7 +252,12 @@ export default function Header() {
             <a href="/">
               <Logo />
             </a>
-            <SearchInput_1 />
+            {typeof user !== "string" &&
+            user?.userType === UserTypes.EMPLOYER ? (
+              ""
+            ) : (
+              <SearchInput_1 />
+            )}
           </div>
           {SubNavigation && <SubNavigation user={user} />}
         </div>

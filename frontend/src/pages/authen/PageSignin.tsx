@@ -81,7 +81,7 @@ export default function PageSignin() {
           navigate(getRoute(DEFAULT_KEY).path, { replace: true });
         else navigate(getRoute(DASHBOARD_OVERVIEW_KEY).path, { replace: true });
         navigate(0);
-      }, 500);
+      }, 1000);
     } else {
       toastError(data.message);
       setMessage({
