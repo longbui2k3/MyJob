@@ -18,9 +18,10 @@ export const createCVSlice = createSlice({
       state.selectedElement = action.payload;
     },
     setState(state, action) {
-      if (action.payload.key)
+      if (action.payload.key) {
+        const keys = action.payload.key.split(".");
         state.state[action.payload.key] = action.payload.value;
-      else state.state = action.payload;
+      } else state.state = action.payload;
     },
   },
 });

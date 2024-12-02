@@ -46,8 +46,8 @@ const createdResumeSchema = new mongoose.Schema(
         content: [
           {
             companyName: String,
-            from: Date,
-            to: Date,
+            from: String,
+            to: String,
             position: String,
             experienceDescription: String,
           },
@@ -55,7 +55,15 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Work Experience",
-        content: [],
+        content: [
+          {
+            companyName: "",
+            from: "",
+            to: "",
+            position: "",
+            experienceDescription: "",
+          },
+        ],
       },
     },
     projects: {
@@ -76,7 +84,18 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Projects",
-        content: [],
+        content: [
+          {
+            projectName: "",
+            from: "",
+            to: "",
+            nameOfCustomer: "",
+            teamSize: "",
+            position: "",
+            responsibility: "",
+            technologies: "",
+          },
+        ],
       },
     },
     education: {
@@ -94,7 +113,15 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Education",
-        content: [],
+        content: [
+          {
+            from: "",
+            to: "",
+            courses: "",
+            schoolName: "",
+            educationDescription: "",
+          },
+        ],
       },
     },
     skills: {
@@ -109,7 +136,12 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Skills",
-        content: [],
+        content: [
+          {
+            skillName: "",
+            skillDescription: "",
+          },
+        ],
       },
     },
     awards: {
@@ -124,7 +156,12 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Awards",
-        content: [],
+        content: [
+          {
+            time: "",
+            awardName: "",
+          },
+        ],
       },
     },
     certifications: {
@@ -139,7 +176,12 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Certifications",
-        content: [],
+        content: [
+          {
+            time: "",
+            certificationName: "",
+          },
+        ],
       },
     },
     references: {
@@ -167,7 +209,15 @@ const createdResumeSchema = new mongoose.Schema(
       },
       default: {
         name: "Activities",
-        content: [],
+        content: [
+          {
+            from: "",
+            to: "",
+            organizationName: "",
+            position: "",
+            activityDescription: "",
+          },
+        ],
       },
     },
     interests: {

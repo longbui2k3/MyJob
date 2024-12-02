@@ -46,13 +46,13 @@ const navigationRoles = {
     // Navigations.JOB_ALERTS,
     // Navigations.CUSTOMER_SUPPORTS,
   ],
-  employer: [
-    Navigations.FIND_CANDIDATES,
-    Navigations.DASHBOARD,
-    Navigations.MY_JOBS,
-    Navigations.APPLICATIONS,
-    // Navigations.CUSTOMER_SUPPORTS,
-  ],
+  // employer: [
+  //   Navigations.FIND_CANDIDATES,
+  //   Navigations.DASHBOARD,
+  //   Navigations.MY_JOBS,
+  //   Navigations.APPLICATIONS,
+  //   // Navigations.CUSTOMER_SUPPORTS,
+  // ],
   admin: [Navigations.DASHBOARD],
 };
 export default function Navigation() {

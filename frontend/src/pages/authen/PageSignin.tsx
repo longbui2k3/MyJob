@@ -28,10 +28,15 @@ import {
 } from "../../components/inputs";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context";
-import { DEFAULT_KEY, getRoute } from "../../helpers/constants";
+import {
+  DASHBOARD_OVERVIEW_KEY,
+  DEFAULT_KEY,
+  getRoute,
+  UserTypes,
+} from "../../helpers/constants";
 import { toastError, toastSuccess } from "../../components/toast";
 export default function PageSignin() {
-  const { setUserId } = useAuthContext();
+  const { setUserId, user } = useAuthContext();
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["jwt", "remember", "user"]);
   const { inputEmail, handleInputEmail, isValidEmail, isEmptyEmail } =
@@ -71,9 +76,12 @@ export default function PageSignin() {
         message: data.message,
       });
       setTimeout(() => {
-        navigate(getRoute(DEFAULT_KEY).path, { replace: true });
+        if (typeof user === "string") return;
+        if (user?.userType === UserTypes.EMPLOYEE)
+          navigate(getRoute(DEFAULT_KEY).path, { replace: true });
+        else navigate(getRoute(DASHBOARD_OVERVIEW_KEY).path, { replace: true });
         navigate(0);
-      }, 500);
+      }, 1000);
     } else {
       toastError(data.message);
       setMessage({

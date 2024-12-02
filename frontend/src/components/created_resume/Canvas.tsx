@@ -14,7 +14,7 @@ function getRenderer(type) {
       return (
         <div
           id="space"
-          className="spacer bg-[black] w-[full] h-full opacity-20"
+          className="spacer bg-[--gray-100] w-[full] h-full"
         ></div>
       );
     };
@@ -28,6 +28,7 @@ function getRenderer(type) {
           <div
             ref={divRef}
             onClick={(e: any) => {
+              e.preventDefault();
               if (!divRef) return;
               const selectedElement = divRef.current.childNodes[0];
               if (selectedElement) {
@@ -40,6 +41,7 @@ function getRenderer(type) {
                 dispatch(setSelectedElement(null));
               }
             }}
+            className="h-full"
           >
             {renderers[type]}
           </div>
@@ -60,7 +62,7 @@ export function Field(props) {
   }
 
   return (
-    <div className={className}>
+    <div className={className} style={{ height: "100%" }}>
       <Component {...rest} />
     </div>
   );
@@ -82,6 +84,7 @@ function SortableField(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    height: "100%",
   };
 
   return (

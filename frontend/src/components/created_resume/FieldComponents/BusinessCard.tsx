@@ -1,29 +1,26 @@
-import { Input } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setState } from "../../../features";
+import ReactQuill from "react-quill";
 
 export default function BusinessCard() {
   const state = useSelector((state: any) => state.createCV.state);
+  const dispatch = useDispatch();
 
   return (
     <div id="business_card">
-      <Input
-        type="text"
+      <ReactQuill
         placeholder="Full Name"
-        style={{
-          fontWeight: 500,
-          fontSize: "30px",
-        }}
         value={state?.fullName || ""}
-        border={"0px"}
-      />
-      <Input
-        type="text"
-        placeholder="Position"
-        style={{
-          fontSize: "13px",
+        modules={{
+          toolbar: false,
         }}
+        onChange={(value) => dispatch(setState({ key: "fullName", value }))}
+      />
+      <ReactQuill
+        placeholder="Position"
         value={state?.position || ""}
-        border={"0px"}
+        modules={{ toolbar: false }}
+        onChange={(value) => dispatch(setState({ key: "position", value }))}
       />
     </div>
   );
