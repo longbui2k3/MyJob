@@ -3,7 +3,7 @@ interface ComponentProps {
 }
 function Component({ children = <></> }: ComponentProps) {
   return (
-    <div className="w-full h-full border-[1px] border-[--gray-100] p-[10px] min-h-[100px]">
+    <div className="w-full h-full border-[1px] border-[--gray-100] p-[10px] min-h-[120px]">
       {children}
     </div>
   );
@@ -20,9 +20,15 @@ export default function LayoutCV({ items = [] }: LayoutCVProps) {
         <Component>{items[0] ? items[0] : <></>}</Component>
         <Component>{items[1] ? items[1] : <></>}</Component>
       </div>
-      <Component>{items[2] ? items[2] : <></>}</Component>
-      <Component>{items[3] ? items[3] : <></>}</Component>
-      <Component>{items[4] ? items[4] : <></>}</Component>
+      <div className="flex h-full">
+        <Component>{items[2] ? items[2] : <></>}</Component>
+      </div>
+      <div className="flex h-full">
+        <Component>{items[3] ? items[3] : <></>}</Component>
+      </div>
+      <div className="flex h-full">
+        <Component>{items[4] ? items[4] : <></>}</Component>
+      </div>
       <div className="flex h-full">
         <Component>{items[5] ? items[5] : <></>}</Component>
         <Component>{items[6] ? items[6] : <></>}</Component>

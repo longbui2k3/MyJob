@@ -16,8 +16,8 @@ import {
   DASHBOARD_SETTINGS_KEY,
   DEFAULT_PADDING_X,
   getRoute,
+  UserTypes,
 } from "../../helpers/constants";
-import { header } from "framer-motion/m";
 import { toastError, toastSuccess } from "../toast";
 
 interface SubNavigationProps {
@@ -235,7 +235,11 @@ export default function Header() {
   }, [headerRef]);
   return (
     <div className="fixed top-0 w-full z-[1000]">
-      <Navigation />
+      {typeof user !== "string" && user?.userType === UserTypes.EMPLOYEE ? (
+        <Navigation />
+      ) : (
+        ""
+      )}
       <div
         className={`flex flex-col justify-center w-full h-[80px] bg-white`}
         ref={headerRef}

@@ -7,8 +7,10 @@ import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FormApplyJob } from "../components/application";
+import { useAuthContext } from "../context";
 
 export default function Cover() {
+  const { user } = useAuthContext();
   const isOpenFormCategory = useSelector(
     (state: any) => state.openForm.isOpenFormCategory
   );

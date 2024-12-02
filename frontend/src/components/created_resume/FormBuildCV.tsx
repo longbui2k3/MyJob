@@ -16,7 +16,6 @@ import {
 import {
   Canvas,
   Field,
-  Properties,
   Sidebar,
   SidebarField,
 } from "../../components/created_resume";
@@ -188,12 +187,12 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
       updateData((draft) => {
         const spacerIndex = draft.fields.findIndex((f) => f.type === "spacer");
         draft.fields.splice(spacerIndex, 1, nextField);
-
-        draft.fields = arrayMove(
-          draft.fields,
-          activeData.index || 0,
-          overData.index || 0
-        );
+        if (activeData.index !== undefined && overData.index !== undefined)
+          draft.fields = arrayMove(
+            draft.fields,
+            activeData.index || 0,
+            overData.index || 0
+          );
       });
     }
 
@@ -340,14 +339,6 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
             </DragOverlay>
           </Panel>
           <PanelResizeHandle />
-          <Panel
-            defaultSize={25}
-            maxSize={30}
-            minSize={15}
-            className="border-[1px] border-[--gray-100]"
-          >
-            <Properties />
-          </Panel>
         </PanelGroup>
       </DndContext>
     </>

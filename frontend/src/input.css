@@ -46,3 +46,20 @@
   --submitted: #ffaa00;
   --rejected: #ff4f4f;
 }
+
+.canvas-field .ql-editor {
+  min-height: 20px;
+  height: auto;
+}
+.canvas-field .ql-container.ql-snow {
+  border: 0;
+}
+.canvas-field .ql-container {
+  height: auto;
+}
+
+.canvas-field .ql-editor:focus {
+  outline: 1px solid rgba(10, 101, 204, 1) !important;
+  outline-offset: 0;
+  border-radius: 4px;
+}
