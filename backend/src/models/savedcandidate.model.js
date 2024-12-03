@@ -11,7 +11,7 @@ const savedcandidateSchema = new mongoose.Schema(
     },
     candidate: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Profile",
+      ref: "Application",
       required: true,
     },
   },

@@ -6,7 +6,7 @@ import { BsDownload } from "react-icons/bs";
 
 export default function DownloadMyResume({ resume }: { resume: any }) {
   return (
-    <div className="border-[1px] border-[--gray-100] rounded-md w-full p-5">
+    <div className="border-2 border-[--gray-100] rounded-md w-full p-5">
       <Heading size={18} name="Download Resume" />
       <div className="mt-6 flex justify-between items-center h-[50px]">
         <div className="flex items-center">

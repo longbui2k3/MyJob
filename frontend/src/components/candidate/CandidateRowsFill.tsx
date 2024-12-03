@@ -11,6 +11,8 @@ import UnsavedCandidateIcon from "./UnsavedCandidateIcon";
 import SavedCandidateIcon from "./SavedCandidateIcon";
 import { useEffect, useState } from "react";
 import { FindSavedCandidateAPI } from "../../apis";
+import { useDispatch } from "react-redux";
+import { openFormApplicationDetail, setId } from "../../features";
 interface CandidateRowsFillProps {
   _id?: string;
   avatar?: string;
@@ -28,7 +30,7 @@ export default function CandidateRowsFill({
   provinceCode = 0,
   experience = "",
 }: CandidateRowsFillProps) {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSavedCandidate, setIsSavedCandidate] = useState(false);
   async function findSavedCandidate() {
     const data = await FindSavedCandidateAPI(_id);
@@ -79,15 +81,9 @@ export default function CandidateRowsFill({
         <ButtonSolid_2
           children={"View Profile"}
           rightIcon={<FiArrowRight className="text-[18px]" />}
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(
-              getRoute(CANDIDATE_DETAIL_KEY, {
-                param: {
-                  id: _id,
-                },
-              }).path
-            );
+          onClick={() => {
+            dispatch(openFormApplicationDetail());
+            dispatch(setId(_id));
           }}
         />
       </div>

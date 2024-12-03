@@ -57,7 +57,7 @@ export default function ContactInformation({ profile }: { profile: any }) {
     },
   ];
   return (
-    <div className="border-[1px] border-[--gray-100] rounded-md w-full p-5">
+    <div className="border-2 border-[--gray-100] rounded-md w-full p-5">
       <Heading size={18} name="Contact Information" />
       <div className="mt-6 flex flex-col gap-8">
         {contacts.map((contact, i) => (

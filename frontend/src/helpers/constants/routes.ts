@@ -16,11 +16,6 @@ export const DEFAULT_KEY = "__";
 export const HOME_KEY = "HOME";
 export const DASHBOARD_KEY = "DASHBOARD";
 export const FIND_JOBS_KEY = "FIND_JOBS";
-export const FIND_CANDIDATES_KEY = "FIND_CANDIDATES";
-export const MY_JOBS_KEY = "MY_JOBS"
-export const CANDIDATE_DETAIL_KEY = "CANDIDATE_DETAIL";
-export const FIND_APPLICATIONS_KEY = "FIND_APPLICATIONS";
-export const APPLICATION_DETAIL_KEY = "APPLICATION_DETAIL";
 export const MY_CV_KEY = "MY_CV";
 export const CREATE_CV_KEY = "CREATE_CV";
 export const UPDATE_CV_KEY = "UPDATE_CV_KEY";
@@ -116,40 +111,6 @@ const ROUTES: Array<RouteItem> = [
         isPrivate: true,
       },
       {
-        key: FIND_CANDIDATES_KEY,
-        name: "Find Candidates",
-        path: "/candidates",
-        children: [
-          {
-            key: CANDIDATE_DETAIL_KEY,
-            name: "Candidate Detail",
-            path: "/candidates/:id",
-            isPrivate: true,
-          },
-        ],
-        isPrivate: false,
-      },
-      {
-        key: FIND_APPLICATIONS_KEY,
-        name: "Find Applications",
-        path: "/applications",
-        children: [
-          {
-            key: APPLICATION_DETAIL_KEY,
-            name: "Application Detail",
-            path: "/applications/:id",
-            isPrivate: true,
-          },
-        ],
-        isPrivate: false,
-      },
-      {
-        key: MY_JOBS_KEY,
-        name: "My Jobs",
-        path: "/my-jobs",
-        isPrivate: true,
-      },
-      {
         key: MY_CV_KEY,
         name: "My CV & Resumes",
         path: "/my-cv",
@@ -212,24 +173,24 @@ const ROUTES: Array<RouteItem> = [
             path: "/dashboard/favorite-jobs",
             isPrivate: true,
           },
-          {
-            key: DASHBOARD_JOB_ALERT_KEY,
-            name: "Dashboard Job Alert",
-            path: "/dashboard/job-alert",
-            isPrivate: true,
-          },
+          // {
+          //   key: DASHBOARD_JOB_ALERT_KEY,
+          //   name: "Dashboard Job Alert",
+          //   path: "/dashboard/job-alert",
+          //   isPrivate: true,
+          // },
           {
             key: DASHBOARD_SETTINGS_KEY,
             name: "Dashboard Settings",
             path: "/dashboard/settings",
             isPrivate: true,
           },
-          {
-            key: DASHBOARD_EMPLOYERS_PROFILE_KEY,
-            name: "Dashboard Employers Profile",
-            path: "/dashboard/employers-profile",
-            isPrivate: true,
-          },
+          // {
+          //   key: DASHBOARD_EMPLOYERS_PROFILE_KEY,
+          //   name: "Dashboard Employers Profile",
+          //   path: "/dashboard/employers-profile",
+          //   isPrivate: true,
+          // },
           {
             key: DASHBOARD_POST_A_JOB_KEY,
             name: "Dashboard Post A Job",
@@ -251,7 +212,7 @@ const ROUTES: Array<RouteItem> = [
               {
                 key: DASHBOARD_APPLICATIONS_KEY,
                 name: "Dashboard Applications",
-                path: "/dashboard/my-jobs/applications/:jobId",
+                path: "/dashboard/my-jobs/job/:jobId",
                 isPrivate: true,
               },
             ],
@@ -262,12 +223,12 @@ const ROUTES: Array<RouteItem> = [
             path: "/dashboard/saved-candidate",
             isPrivate: true,
           },
-          {
-            key: DASHBOARD_PLANS_AND_BILLING_KEY,
-            name: "Dashboard Plans And Billing",
-            path: "/dashboard/plans-and-billing",
-            isPrivate: true,
-          },
+          // {
+          //   key: DASHBOARD_PLANS_AND_BILLING_KEY,
+          //   name: "Dashboard Plans And Billing",
+          //   path: "/dashboard/plans-and-billing",
+          //   isPrivate: true,
+          // },
           {
             key: DASHBOARD_CATEGORIES_KEY,
             name: "Dashboard Categories",

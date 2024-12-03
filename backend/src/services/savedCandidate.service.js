@@ -4,10 +4,10 @@ const { BadRequestError } = require("../core/error.response");
 const savedCandidateRepo = require("../models/repos/savedCandidate.repo");
 
 class SavedCandidateService {
-  static findSavedCandidate = async (userId, profileId) => {
+  static findSavedCandidate = async (userId, applicationId) => {
     const savedCandidate = await savedCandidateRepo.findOne({
       user: userId,
-      candidate: profileId,
+      candidate: applicationId,
     });
     if (!savedCandidate) {
       throw new BadRequestError(
@@ -17,10 +17,10 @@ class SavedCandidateService {
     return savedCandidate;
   };
 
-  static savedCandidate = async (userId, profileId) => {
+  static savedCandidate = async (userId, applicationId) => {
     const savedCandidate = await savedCandidateRepo.findOne({
       user: userId,
-      candidate: profileId,
+      candidate: applicationId,
     });
     if (savedCandidate) {
       throw new BadRequestError(
@@ -29,14 +29,14 @@ class SavedCandidateService {
     }
     return await savedCandidateRepo.create({
       user: userId,
-      candidate: profileId,
+      candidate: applicationId,
     });
   };
 
-  static unsavedCandidate = async (userId, profileId) => {
+  static unsavedCandidate = async (userId, applicationId) => {
     const savedCandidate = await savedCandidateRepo.findOne({
       user: userId,
-      candidate: profileId,
+      candidate: applicationId,
     });
     if (!savedCandidate) {
       throw new BadRequestError(
@@ -45,7 +45,7 @@ class SavedCandidateService {
     }
     return await savedCandidateRepo.deleteOne({
       user: userId,
-      candidate: profileId,
+      candidate: applicationId,
     });
   };
 }

@@ -40,6 +40,9 @@ export default function OutsideForm({
         style={{
           width,
           height,
+          maxHeight: "95vh",
+          overflowY: "auto",
+          clipPath: "inset(0 round 1rem)",
         }}
         onClick={(e) => {
           e.stopPropagation();

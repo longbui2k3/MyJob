@@ -6,6 +6,8 @@ export {
   closeFormResume,
   openFormApplyJob,
   closeFormApplyJob,
+  openFormApplicationDetail,
+  closeApplicationDetail,
   setId,
   setType,
 } from "./openForm/openFormSlice";

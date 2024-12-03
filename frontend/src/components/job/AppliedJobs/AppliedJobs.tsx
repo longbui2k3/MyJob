@@ -92,10 +92,10 @@ export default function AppliedJobs({
           <Table variant="simple">
             <Thead color={"var(--gray-500)"}>
               <Tr>
-                <Th>JOBS</Th>
-                <Th>DATE APPLIED</Th>
-                <Th>STATUS</Th>
-                <Th>ACTION</Th>
+                <Th w={"50%"}>JOBS</Th>
+                <Th w={"15%"}>DATE APPLIED</Th>
+                <Th w={"15%"}>STATUS</Th>
+                <Th w={"20%"}>ACTION</Th>
               </Tr>
             </Thead>
             <Tbody>

@@ -103,10 +103,10 @@ export default function MyJobs({ isCheck = true, limit }: MyJobsProps) {
           <Table variant="simple">
             <Thead color={"var(--gray-500)"}>
               <Tr>
-                <Th>JOBS</Th>
-                <Th>STATUS</Th>
-                <Th>APPLICATIONS</Th>
-                <Th>ACTIONS</Th>
+                <Th w={"40%"}>JOBS</Th>
+                <Th w={"20%"}>STATUS</Th>
+                <Th w={"20%"}>APPLICATIONS</Th>
+                <Th w={"20%"}> ACTIONS</Th>
               </Tr>
             </Thead>
             <Tbody>
