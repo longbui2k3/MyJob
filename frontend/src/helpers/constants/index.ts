@@ -22,10 +22,6 @@ export {
   FIND_JOBS_KEY,
   FIND_EMPLOYERS_KEY,
   MY_CV_KEY,
-  FIND_CANDIDATES_KEY,
-  CANDIDATE_DETAIL_KEY,
-  FIND_APPLICATIONS_KEY,
-  APPLICATION_DETAIL_KEY,
   COMPANY_KEY,
   CREATE_COMPANY_KEY,
   COMPLETED_COMPANY_KEY,
@@ -133,7 +129,13 @@ export const TeamSizes = [
   "5001+",
 ];
 
-export const ApplicationStatuses = ["submitted", "accepted", "rejected"];
+export const ApplicationStatuses = [
+  "Submitted",
+  "Consider",
+  "Interview",
+  "Hired",
+  "Rejected",
+];
 
 export const JobLevels = ["Entry Level", "Mid Level", "Expert Level"];
 

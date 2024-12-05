@@ -42,9 +42,13 @@
   --toastify-color-error: #e05151;
   --toastify-text-color-success: rgba(10, 101, 204, 1);
   --toastify-text-color-warning: #e05151;
-  --accepted: #27c200;
   --submitted: #ffaa00;
+  --consider: #ff8a65;
+  --interview: #2196f3;
+  --hired: #27c200;
   --rejected: #ff4f4f;
+  --active: #27c200;
+  --expired: #ff4f4f;
 }
 
 .canvas-field .ql-editor {

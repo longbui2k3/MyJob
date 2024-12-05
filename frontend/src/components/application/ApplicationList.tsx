@@ -1,46 +1,61 @@
-import { useEffect, useState } from "react";
-import { Pagination, usePagination } from "../global";
-import {
-  FindApplicationsAPI,
-  FindResumeByIdAPI,
-  UpdateApplicationAPI,
-} from "../../apis";
+import { useEffect, useRef, useState } from "react";
+import { AdvanceFilter, Pagination, usePagination } from "../global";
+import { FindApplicationsAPI, UpdateApplicationAPI } from "../../apis";
 import { useParams } from "react-router-dom";
-import { toastError, toastSuccess } from "../toast";
-import { Heading5, Heading6 } from "../headings";
+import { Heading5 } from "../headings";
 import {
-  Avatar,
   IconButton,
-  ListItem,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  UnorderedList,
 } from "@chakra-ui/react";
-import { ButtonOutline } from "../buttons";
-import { GoDownload } from "react-icons/go";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { IoCheckmarkCircleOutline } from "react-icons/io5";
-import { CiCircleRemove } from "react-icons/ci";
-import { useDispatch } from "react-redux";
-import { openFormApplicationDetail, setId } from "../../features";
+import Applications from "./Applications";
+import { ApplicationStatuses } from "../../helpers/constants";
+import { ButtonSolid } from "../buttons";
+import { TfiEmail } from "react-icons/tfi";
+import { MdOutlineSaveAs } from "react-icons/md";
+import { AdvanceFilterSelect } from "../select/AdvanceFilterSelect";
+import { useSearchInput_3 } from "../inputs";
+import { useSelector } from "react-redux";
 
 export default function ApplicationList() {
   const { jobId } = useParams();
-  const dispatch = useDispatch();
   const [applications, setApplications] = useState<Array<any>>([]);
-  const [status, setStatus] = useState<string | undefined>();
+  const [status, setStatus] = useState<string | undefined>("Submitted");
+  const [updatedStatuses, setUpdatedStatuses] = useState<
+    Record<string, string>
+  >({});
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
+  const [applicationCounts, setApplicationCounts] = useState<
+    Record<string, number>
+  >({});
+  const isDataChange = useSelector(
+    (state: any) => state.changeData.isDataChange
+  );
+  const [isOpenAdvanceFilter, setIsOpenAdvanceFilter] = useState(false);
+  const advanceFilterRef = useRef<HTMLDivElement | null>(null);
+  const { experiences, setExperiences, educations, setEducations } =
+    useSearchInput_3();
+
+  useEffect(() => {
+    if (advanceFilterRef.current) {
+      const parentWidth =
+        advanceFilterRef.current.parentElement?.getBoundingClientRect().width;
+      if (parentWidth) {
+        advanceFilterRef.current.style.width = `${parentWidth}px`;
+      }
+    }
+  }, [isOpenAdvanceFilter]);
 
   async function findApplications() {
-    const data = await FindApplicationsAPI({ job: jobId, status });
+    const data = await FindApplicationsAPI({
+      job: jobId,
+      status,
+      page: curPage,
+    });
     if (data.isSuccess) {
       setApplications(data.metadata.applications);
       setSize(data.metadata.meta.size);
@@ -50,141 +65,116 @@ export default function ApplicationList() {
     findApplications();
   }, [status]);
 
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).format(date);
-  };
-
-  const handleDownloadCv = async (resume: string) => {
-    const data = await FindResumeByIdAPI(resume);
-    if (data.isSuccess) {
-      const link = document.createElement("a");
-      link.href = data.metadata.resume.resume.fileUrl;
-      document.body.appendChild(link);
-      link.click();
+  async function fetchApplicationCounts() {
+    const counts: Record<string, number> = {};
+    for (const value of ApplicationStatuses) {
+      const data = await FindApplicationsAPI({ job: jobId, status: value });
+      if (data.isSuccess) {
+        counts[value] = data.metadata.applications.length;
+      }
     }
+    setApplicationCounts(counts);
+  }
+  useEffect(() => {
+    fetchApplicationCounts();
+  }, []);
+
+  const handleTabChange = (index: number) => {
+    setStatus(ApplicationStatuses[index]);
   };
 
-  const handleApplicationStatus = async (id: string, status: string) => {
-    const data = await UpdateApplicationAPI(id, { status });
-    if (data.isSuccess) {
-      toastSuccess("update status successfully!");
+  // update list application status
+  const handleStatusChange = (
+    id: string,
+    newStatus: string,
+    currentStatus: string
+  ) => {
+    if (newStatus !== "" && newStatus !== currentStatus) {
+      setUpdatedStatuses((prevStatus) => ({
+        ...prevStatus,
+        [id]: newStatus,
+      }));
     } else {
-      toastError("update status failed!");
+      setUpdatedStatuses((prevStatus) => {
+        const { [id]: _, ...rest } = prevStatus;
+        return rest;
+      });
     }
   };
+  const handleUpdateApplication = async () => {
+    const promises = Object.entries(updatedStatuses).map(([id, status]) =>
+      UpdateApplicationAPI(id, { status })
+    );
+    await Promise.all(promises);
+    findApplications();
+    fetchApplicationCounts();
+  };
+
   return (
     <>
-      <Heading5 name="Job Applications" />
-      <Tabs variant="enclosed" className="mt-4">
+      <div className="flex items-center justify-between">
+        <Heading5 name="Job Applications" />
+        <div className="flex space-x-2">
+          <div className="border-2 rounded-md">
+            <AdvanceFilterSelect
+              onClick={() => {
+                setIsOpenAdvanceFilter(!isOpenAdvanceFilter);
+              }}
+            />
+          </div>
+          <ButtonSolid
+            className="my-auto"
+            onClick={() => {}}
+            children={"Send Email"}
+            leftIcon={<TfiEmail size={20} />}
+            height="40px"
+            width="150px"
+          />
+          <IconButton
+            icon={<MdOutlineSaveAs size={22} color="white" />}
+            bg={"var(--primary-500)"}
+            aria-label="Save changes"
+            onClick={() => handleUpdateApplication()}
+          />
+        </div>
+      </div>
+      <AdvanceFilter
+        ref={advanceFilterRef}
+        isOpenAdvanceFilter={isOpenAdvanceFilter}
+        setIsOpenAdvanceFilter={setIsOpenAdvanceFilter}
+        experiences={experiences}
+        setExperiences={setExperiences}
+        educations={educations}
+        setEducations={setEducations}
+      />
+      <Tabs
+        variant="soft-rounded"
+        colorScheme="green"
+        className="mt-4"
+        onChange={handleTabChange}
+      >
         <TabList mb="1em">
-          <Tab>Submit</Tab>
-          <Tab>Consider</Tab>
-          <Tab>Interview</Tab>
-          <Tab>Hire</Tab>
-          <Tab>Reject</Tab>
+          {ApplicationStatuses.map((value) => (
+            <Tab>
+              {value}
+              <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center">
+                {applicationCounts[value] ?? 0}
+              </div>
+            </Tab>
+          ))}
         </TabList>
         <TabPanels>
-          <TabPanel>
-            <p>
-              <div className="grid grid-cols-3 gap-4 ">
-                {applications.map((application) => (
-                  <>
-                    <div className="border-2 text-gray-500 p-3 space-y-3 rounded-md">
-                      <div
-                        onClick={() => {
-                          dispatch(openFormApplicationDetail());
-                          dispatch(setId(application._id));
-                        }}
-                        className="flex gap-3 items-center"
-                      >
-                        <Avatar
-                          height={"40px"}
-                          width={"40px"}
-                          src={application.profile.avatar}
-                        />
-                        <div>
-                          <Heading6 name={application.profile.fullName} />
-                          <p className="text-sm">{application.profile.title}</p>
-                        </div>
-                      </div>
-                      <div className="border-b-2" />
-                      <UnorderedList fontSize={"14px"}>
-                        <ListItem>
-                          Experience: {application.profile.experience}
-                        </ListItem>
-                        <ListItem>
-                          Education: {application.profile.education}
-                        </ListItem>
-                        <ListItem>
-                          Applied: {formatDate(application.appliedAt)}
-                        </ListItem>
-                      </UnorderedList>
-                      <div className="flex justify-between">
-                        <ButtonOutline
-                          leftIcon={<GoDownload size={18} />}
-                          children={"Download Cv"}
-                          onClick={() => handleDownloadCv(application.resume)}
-                        />
-                        <Menu>
-                          <MenuButton
-                            as={IconButton}
-                            aria-label="Options"
-                            icon={<HiOutlineDotsVertical />}
-                            bg={"white"}
-                          />
-                          <MenuList>
-                            <MenuItem
-                              icon={
-                                <IoCheckmarkCircleOutline
-                                  color="green"
-                                  size={20}
-                                />
-                              }
-                              onClick={() =>
-                                handleApplicationStatus(
-                                  application._id,
-                                  "accepted"
-                                )
-                              }
-                            >
-                              Accept
-                            </MenuItem>
-                            <MenuItem
-                              icon={<CiCircleRemove color="red" size={20} />}
-                              onClick={() =>
-                                handleApplicationStatus(
-                                  application._id,
-                                  "rejected"
-                                )
-                              }
-                            >
-                              Reject
-                            </MenuItem>
-                          </MenuList>
-                        </Menu>
-                      </div>
-                    </div>
-                  </>
-                ))}
-              </div>
-              <Pagination
-                curPage={curPage}
-                setCurPage={setCurPage}
-                size={size}
+          {ApplicationStatuses.map(() => (
+            <TabPanel>
+              <Applications
+                applications={applications}
+                onStatusChange={handleStatusChange}
               />
-            </p>
-          </TabPanel>
-          <TabPanel>
-            <p>two!</p>
-          </TabPanel>
+            </TabPanel>
+          ))}
         </TabPanels>
       </Tabs>
+      <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />
     </>
   );
 }

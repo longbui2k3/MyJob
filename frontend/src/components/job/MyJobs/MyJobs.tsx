@@ -11,6 +11,7 @@ import {
   Th,
   Thead,
   Tr,
+  Text,
 } from "@chakra-ui/react";
 import { Heading5 } from "../../headings";
 import { BaseSelect } from "../../select";
@@ -21,7 +22,6 @@ import { useEffect, useState } from "react";
 import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
-import MyJobStatus from "./MyJobStatus";
 import { FindCompanyAPI, FindJobsAPI, UpdateJobAPI } from "../../../apis";
 import { getRoute } from "../../../helpers/constants";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +31,28 @@ import {
 } from "../../../helpers/constants/routes";
 import { useCookies } from "react-cookie";
 import NumberOfApplications from "./NumberOfApplications";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
+
+interface StatusesProps {
+  status?: string;
+}
+function Statuses({ status = "Active" }: StatusesProps) {
+  const statuses: { [key: string]: JSX.Element } = {
+    Active: (
+      <div className="flex items-center space-x-1 text-[--active]">
+        <IoCheckmarkCircleOutline size={21} />
+        <Text className="mt-[0px] text-[var(--active)]">Active</Text>
+      </div>
+    ),
+    Expired: (
+      <div className="flex items-center space-x-1 text-[--expired]">
+        <CiCircleRemove size={20} />
+        <Text className="mt-[0px] text-[var(--expired)]">Expired</Text>
+      </div>
+    ),
+  };
+  return statuses[status];
+}
 
 interface MyJobsProps {
   isCheck?: boolean;
@@ -120,7 +142,8 @@ export default function MyJobs({ isCheck = true, limit }: MyJobsProps) {
                     />
                   </Td>
                   <Td>
-                    <MyJobStatus status={job.status} />
+                    <Statuses status={job.status} />
+                    {/* <MyJobStatus status={job.status} /> */}
                   </Td>
                   <Td>
                     <NumberOfApplications job={job._id} />
@@ -166,7 +189,7 @@ export default function MyJobs({ isCheck = true, limit }: MyJobsProps) {
                             Edit Job
                           </MenuItem>
                           <MenuItem
-                            onClick={async (e) => {
+                            onClick={async () => {
                               const response = await UpdateJobAPI(job._id, {
                                 expirationDate: new Date().toISOString(),
                               });

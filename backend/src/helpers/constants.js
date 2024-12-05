@@ -146,9 +146,11 @@ const ResumeTypes = {
 };
 
 const ApplicationStatuses = {
-  SUBMITTED: "submitted",
-  REJECTED: "rejected",
-  ACCEPTED: "accepted",
+  SUBMITTED: "Submitted",
+  CONSIDER: "Consider",
+  INTERVIEW: "Interview",
+  HIRED: "Hired",
+  REJECTED: "Rejected",
 };
 
 module.exports = {
