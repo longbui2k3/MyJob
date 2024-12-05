@@ -147,3 +147,171 @@ export const JobStatuses = {
   ACTIVE: "Active",
   EXPIRED: "Expired",
 };
+
+export const defaultState = {
+  fullName: "",
+  avatar: "",
+  position: "",
+  phone: "",
+  email: "",
+  location: "",
+  objective: {
+    name: "<h2><strong>Objective</strong></h2>",
+    content: "",
+  },
+  workExperience: {
+    name: "<h2><strong>Work Experience</strong></h2>",
+    content: [
+      {
+        companyName: "",
+        from: "",
+        to: "",
+        position: "",
+        experienceDescription: "",
+      },
+    ],
+  },
+  projects: {
+    name: "<h2><strong>Projects</strong></h2>",
+    content: [
+      {
+        projectName: "",
+        from: "",
+        to: "",
+        nameOfCustomer: "",
+        teamSize: "",
+        position: "",
+        responsibility: "",
+        technologies: "",
+      },
+    ],
+  },
+  education: {
+    name: "<h2><strong>Education</strong></h2>",
+    content: [
+      {
+        from: "",
+        to: "",
+        courses: "",
+        schoolName: "",
+        educationDescription: "",
+      },
+    ],
+  },
+  skills: {
+    name: "<h2><strong>Skills</strong></h2>",
+    content: [
+      {
+        skillName: "",
+        skillDescription: "",
+      },
+    ],
+  },
+  awards: {
+    name: "<h2><strong>Awards</strong></h2>",
+    content: [
+      {
+        time: "",
+        awardName: "",
+      },
+    ],
+  },
+  certifications: {
+    name: "<h2><strong>Certifications</strong></h2>",
+    content: [
+      {
+        time: "",
+        certificationName: "",
+      },
+    ],
+  },
+  referrers: {
+    name: "<h2><strong>Referrers</strong></h2>",
+    content: "",
+  },
+  activities: {
+    name: "<h2><strong>Activities</strong></h2>",
+    content: [
+      {
+        from: "",
+        to: "",
+        organizationName: "",
+        position: "",
+        activityDescription: "",
+      },
+    ],
+  },
+  interests: {
+    name: "<h2><strong>Interests</strong></h2>",
+    content: "",
+  },
+  additionalInformation: {
+    name: "<h2><strong>Additional Information</strong></h2>",
+    content: "",
+  },
+  informations: [],
+  template: [],
+};
+
+export const defaultFields = [
+  {
+    id: 0,
+    type: "business_card",
+    title: "Business Card",
+  },
+  {
+    id: 1,
+    type: "personal_information",
+    title: "Personal Information",
+  },
+  {
+    id: 2,
+    type: "objective",
+    title: "Objective",
+  },
+  {
+    id: 3,
+    type: "work_experience",
+    title: "Work Experience",
+  },
+  {
+    id: 4,
+    type: "projects",
+    title: "Projects",
+  },
+  {
+    id: 5,
+    type: "education",
+    title: "Education",
+  },
+  {
+    id: 6,
+    type: "skills",
+    title: "Skills",
+  },
+  {
+    id: 7,
+    type: "certifications",
+    title: "Certifications",
+  },
+  {
+    id: 8,
+    type: "referrers",
+    title: "Referrers",
+  },
+  {
+    id: 9,
+    type: "activities",
+    title: "Activities",
+  },
+  {
+    id: 10,
+    type: "interests",
+    title: "Interests",
+  },
+  {
+    id: 11,
+    type: "additionalInformation",
+    title: "Additional Informations",
+  },
+];

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { InputHeader, InputNormal } from "../Components";
-import ReactQuill from "react-quill";
+import { Editor } from "../Components";
+import CustomEditor from "../CustomToolbar";
 
 export default function Objective() {
   const state = useSelector((state: any) => state.createCV.state);
@@ -10,16 +10,19 @@ export default function Objective() {
       id="objective"
       className="relative flex flex-col justify-between h-full"
     >
-      <ReactQuill
+      <Editor
         placeholder="Name"
         value={state?.objective?.name}
-        modules={{ toolbar: false }}
+        readonly={true}
       />
-      <div></div>
-      <ReactQuill
+
+      <Editor
         placeholder="Your career goals, including short-term and long-term goals."
         value={state?.objective?.content}
-        modules={{ toolbar: false }}
+        readonly={true}
+        style={{
+          marginTop: "30px",
+        }}
       />
     </div>
   );

@@ -70,3 +70,24 @@ export function formatFileSize(bytes: number) {
 }
 
 export { StatusCodes } from "./statusCodes";
+
+export const pxToMm = (px: number) => {
+  const myMm = document.getElementById("myMm");
+  if (!myMm) return 0;
+  return px / myMm.offsetHeight;
+};
+
+export const mmToPx = (mm: number) => {
+  const myMm = document.getElementById("myMm");
+  if (!myMm) return 0;
+  return myMm.offsetHeight * mm;
+};
+
+export const range = (start: number, end: number) => {
+  return Array(end - start)
+    .join(0)
+    .split(0)
+    .map(function (val, id) {
+      return id + start;
+    });
+};

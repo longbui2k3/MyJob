@@ -247,7 +247,7 @@ class AuthenService {
         user: removeUndefinedInObject({
           ...getInfoData({
             object: user,
-            fields: ["_id", "name", "email", "role"],
+            fields: ["_id", "name", "email", "role", "userType"],
           }),
         }),
         tokens,

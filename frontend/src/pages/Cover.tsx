@@ -10,7 +10,9 @@ import { ApplicationDetail, FormApplyJob } from "../components/application";
 import { useAuthContext } from "../context";
 import { UserTypes } from "../helpers/constants";
 
+import { useLocation } from "react-router-dom";
 export default function Cover() {
+  const location = useLocation();
   const { user } = useAuthContext();
   const isOpenFormCategory = useSelector(
     (state: any) => state.openForm.isOpenFormCategory
@@ -44,14 +46,25 @@ export default function Cover() {
         style={{
           display: "flex",
           flexDirection: "column",
-          minHeight: "800px",
+
           height: "100%",
+          ...(!["edit-cv", "create-cv"].includes(
+            location.pathname.split("/")[2]
+          )
+            ? {
+                minHeight: "800px",
+              }
+            : {}),
         }}
       >
         <Outlet />
       </div>
       <ToastContainer />
-      <Footer />
+      {!["edit-cv", "create-cv"].includes(location.pathname.split("/")[2]) ? (
+        <Footer />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

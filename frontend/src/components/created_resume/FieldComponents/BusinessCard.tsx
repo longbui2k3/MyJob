@@ -1,26 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setState } from "../../../features";
-import ReactQuill from "react-quill";
+import { Editor } from "../Components";
+import { useRef } from "react";
 
 export default function BusinessCard() {
   const state = useSelector((state: any) => state.createCV.state);
-  const dispatch = useDispatch();
+  const fullNameRef = useRef<any>(null);
+  const positionRef = useRef<any>(null);
 
   return (
-    <div id="business_card">
-      <ReactQuill
+    <div id="business_card" className="flex flex-col justify-between">
+      <Editor
         placeholder="Full Name"
         value={state?.fullName || ""}
-        modules={{
-          toolbar: false,
-        }}
-        onChange={(value) => dispatch(setState({ key: "fullName", value }))}
+        ref={fullNameRef}
+        readonly={true}
       />
-      <ReactQuill
+      <Editor
         placeholder="Position"
         value={state?.position || ""}
-        modules={{ toolbar: false }}
-        onChange={(value) => dispatch(setState({ key: "position", value }))}
+        ref={positionRef}
+        readonly={true}
       />
     </div>
   );

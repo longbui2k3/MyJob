@@ -76,12 +76,11 @@ export default function PageSignin() {
         message: data.message,
       });
       setTimeout(() => {
-        if (typeof user === "string") return;
-        if (user?.userType === UserTypes.EMPLOYEE)
+        if (data.metadata.user.userType === UserTypes.EMPLOYEE)
           navigate(getRoute(DEFAULT_KEY).path, { replace: true });
         else navigate(getRoute(DASHBOARD_OVERVIEW_KEY).path, { replace: true });
         navigate(0);
-      }, 1000);
+      }, 100);
     } else {
       toastError(data.message);
       setMessage({

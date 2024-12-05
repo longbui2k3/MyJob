@@ -1,34 +1,34 @@
 import { useSelector } from "react-redux";
-import ReactQuill from "react-quill";
+import { Editor } from "../Components";
 
 export default function WorkExperience() {
   const state = useSelector((state: any) => state.createCV.state);
   return (
     <div
       id="work_experience"
-      className="relative flex flex-col justify-between gap-4 h-full"
+      className="relative flex flex-col justify-between gap-4 h-fit"
     >
-      <ReactQuill
+      <Editor
         placeholder="Name"
         value={state?.workExperience?.name}
-        modules={{ toolbar: false }}
+        readonly={true}
       />
       {state?.workExperience?.content.map((content) => (
         <div className="flex gap-3">
           <div className="w-[25%] flex flex-col gap-2">
-            <ReactQuill
+            <Editor
               placeholder="Company Name"
               value={content?.companyName}
-              modules={{ toolbar: false }}
+              readonly={true}
             />
             <div className="flex items-center gap-1">
-              <ReactQuill
+              <Editor
                 placeholder="From"
                 value={content?.from}
-                modules={{ toolbar: false }}
                 style={{
-                  width: "100%",
+                  width: "70px",
                 }}
+                readonly={true}
               />
               <div
                 style={{
@@ -38,20 +38,20 @@ export default function WorkExperience() {
               >
                 {"-"}
               </div>
-              <ReactQuill
+              <Editor
                 placeholder="To"
                 value={content?.to}
-                modules={{ toolbar: false }}
                 style={{
-                  width: "100%",
+                  width: "70px",
                 }}
+                readonly={true}
               />
             </div>
           </div>
           <div className="relative">
             <div
               style={{
-                height: "calc(100% - 2px)",
+                height: "calc(100% - 7px)",
                 width: "2px",
                 display: "block",
                 position: "absolute",
@@ -74,15 +74,15 @@ export default function WorkExperience() {
             ></div>
           </div>
           <div className="w-[75%] flex flex-col gap-2">
-            <ReactQuill
+            <Editor
               placeholder="Position"
               value={content?.position}
-              modules={{ toolbar: false }}
+              readonly={true}
             />
-            <ReactQuill
+            <Editor
               placeholder="Experience Description"
               value={content?.experienceDescription}
-              modules={{ toolbar: false }}
+              readonly={true}
             />
           </div>
         </div>

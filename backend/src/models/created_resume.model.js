@@ -184,13 +184,13 @@ const createdResumeSchema = new mongoose.Schema(
         ],
       },
     },
-    references: {
+    referrers: {
       type: {
         name: String,
         content: String,
       },
       default: {
-        name: "References",
+        name: "Referrers",
         content: "",
       },
     },
@@ -240,12 +240,13 @@ const createdResumeSchema = new mongoose.Schema(
         content: "",
       },
     },
-    information: {
-      type: String,
-      default: "",
+    informations: {
+      type: [{ type: String }],
+      default: [],
     },
     template: {
       type: Array,
+      default: [],
     },
   },
   { timestamps: true, collection: COLLECTION_NAME }

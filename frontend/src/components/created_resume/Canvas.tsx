@@ -4,9 +4,10 @@ import { useSortable } from "@dnd-kit/sortable";
 
 import { renderers } from "./Fields";
 import LayoutCV from "./LayoutCV";
-import { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedElement } from "../../features";
+import WrapperPopUp from "./WrapperPopUp";
 
 function getRenderer(type) {
   if (type === "spacer") {
@@ -14,43 +15,77 @@ function getRenderer(type) {
       return (
         <div
           id="space"
-          className="spacer bg-[--gray-100] w-[full] h-full"
+          className="spacer bg-[--gray-200] w-[full] h-full"
         ></div>
       );
     };
   }
 
   return renderers[type]
-    ? () => {
+    ? React.forwardRef(({ attributes, listeners }, ref: any) => {
         const dispatch = useDispatch();
         const divRef = useRef<any>(null);
+        const wrapperRef = useRef<any>(null);
+        useEffect(() => {
+          function handleClickOutside(event: any) {
+            const properties = document.getElementById("properties");
+            if (properties && properties.contains(event.target)) {
+              return;
+            }
+            if (divRef.current && !divRef.current.contains(event.target)) {
+              dispatch(setSelectedElement(null));
+            }
+          }
+          document.addEventListener("mousedown", handleClickOutside);
+          return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+          };
+        }, []);
         return (
-          <div
-            ref={divRef}
-            onClick={(e: any) => {
-              e.preventDefault();
-              if (!divRef) return;
-              const selectedElement = divRef.current.childNodes[0];
-              if (selectedElement) {
-                if (selectedElement?.id !== "space") {
-                  dispatch(setSelectedElement(selectedElement));
+          <div className="relative" ref={ref}>
+            <WrapperPopUp
+              ref={wrapperRef}
+              attributes={attributes}
+              listeners={listeners}
+              type={type}
+            ></WrapperPopUp>
+            <div
+              ref={divRef}
+              onClick={(e: any) => {
+                if (!divRef) {
+                  return;
+                }
+                const selectedElement = divRef.current.childNodes[0];
+                if (selectedElement) {
+                  if (selectedElement?.id !== "space") {
+                    dispatch(setSelectedElement(selectedElement));
+                  } else {
+                    dispatch(setSelectedElement(null));
+                  }
                 } else {
                   dispatch(setSelectedElement(null));
                 }
-              } else {
-                dispatch(setSelectedElement(null));
-              }
-            }}
-            className="h-full"
-          >
-            {renderers[type]}
+              }}
+              onMouseOver={(e) => {
+                if (!wrapperRef.current) return;
+                wrapperRef.current.style.display = "block";
+              }}
+              onMouseLeave={(e) => {
+                if (!wrapperRef.current) return;
+                if (wrapperRef.current.childNodes[0].matches(":hover")) return;
+                wrapperRef.current.style.display = "none";
+              }}
+              className="h-full cursor-pointer"
+            >
+              {renderers[type]}
+            </div>
           </div>
         );
-      }
+      })
     : () => <div>No renderer found for {type}</div>;
 }
 
-export function Field(props) {
+export const Field = React.forwardRef((props: any, ref) => {
   const { field, overlay, ...rest } = props;
   const { type } = field;
 
@@ -63,10 +98,10 @@ export function Field(props) {
 
   return (
     <div className={className} style={{ height: "100%" }}>
-      <Component {...rest} />
+      <Component {...rest} ref={ref} />
     </div>
   );
-}
+});
 
 function SortableField(props) {
   const { id, index, field } = props;
@@ -88,8 +123,13 @@ function SortableField(props) {
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <Field field={field} />
+    <div style={style}>
+      <Field
+        ref={setNodeRef}
+        field={field}
+        attributes={attributes}
+        listeners={listeners}
+      />
     </div>
   );
 }
@@ -114,12 +154,15 @@ export default function Canvas(props) {
   return (
     <div
       ref={setNodeRef}
-      className="canvas flex-[1] border-[1px] border-[--gray-100] bg-[--gray-100] p-[10px] flex flex-col w-full h-full overflow-auto"
+      className="canvas flex-[1] border-[1px] border-[--gray-100] bg-[--gray-100] py-[25px] px-[20px]  flex flex-col w-fit h-fit overflow-auto"
       style={{ ...style }}
       {...attributes}
       {...listeners}
     >
-      <div className="canvas-fields flex flex-col h-full bg-white">
+      <div
+        id="cvPdf"
+        className="canvas-fields flex flex-col w-[840px] h-[full] bg-white"
+      >
         <LayoutCV
           items={fields?.map((f, i) => (
             <SortableField key={f.id} id={f.id} field={f} index={i} />
