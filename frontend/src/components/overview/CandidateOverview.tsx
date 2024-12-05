@@ -5,7 +5,11 @@ import { JobIcon, SavedIcon } from "../icons";
 import FunFacts from "./FunFacts";
 import { AppliedJobs } from "../job/AppliedJobs";
 import { useNavigate } from "react-router-dom";
-import { DASHBOARD_APPLIED_JOBS_KEY, getRoute } from "../../helpers/constants";
+import {
+  DASHBOARD_APPLIED_JOBS_KEY,
+  DASHBOARD_FAVORITE_JOBS_KEY,
+  getRoute,
+} from "../../helpers/constants";
 import { useEffect, useState } from "react";
 import { StatisticizeJobsAPI } from "../../apis";
 import { useAuthContext } from "../../context";
@@ -62,6 +66,11 @@ export default function CandidateOverview() {
         <FunFacts
           number={statistics.applicationsNum}
           title="Favorite jobs"
+          onClick={() => {
+            navigate(getRoute(DASHBOARD_FAVORITE_JOBS_KEY).path, {
+              replace: true,
+            });
+          }}
           classname="bg-[#FFF6E6]"
           icon={<SavedIcon />}
         />

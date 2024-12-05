@@ -7,7 +7,7 @@ class SavedCandidateController {
   findSavedCandidate = async (req, res, next) => {
     const result = await SavedCandidateService.findSavedCandidate(
       req.user.userId,
-      req.params.profileId
+      req.params.applicationId
     );
 
     return new OK({
@@ -21,7 +21,7 @@ class SavedCandidateController {
   savedCandidate = async (req, res, next) => {
     const result = await SavedCandidateService.savedCandidate(
       req.user.userId,
-      req.params.profileId
+      req.params.applicationId
     );
 
     return new OK({
@@ -35,7 +35,7 @@ class SavedCandidateController {
   unfavoriteJob = async (req, res, next) => {
     const result = await SavedCandidateService.unsavedCandidate(
       req.user.userId,
-      req.params.profileId
+      req.params.applicationId
     );
 
     return new OK({

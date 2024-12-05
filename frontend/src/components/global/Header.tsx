@@ -244,7 +244,11 @@ export default function Header() {
         className={`flex flex-col justify-center w-full h-[80px] bg-white`}
         ref={headerRef}
         style={{
-          padding: `0px ${DEFAULT_PADDING_X}`,
+          padding: ` 0px ${
+            typeof user !== "string" && user?.userType === UserTypes.EMPLOYER
+              ? "50px"
+              : DEFAULT_PADDING_X
+          }`,
         }}
       >
         <div className="flex justify-between">

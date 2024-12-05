@@ -11,6 +11,11 @@ router.use(authentication);
 router.route("/:id").get(
   // #swagger.tags = ['Application']
   // #swagger.summary = 'Find application'
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
   asyncHandler(applicationController.findApplication)
 );
 
@@ -43,6 +48,11 @@ router.route("/").get(
       "type": "string",
       "description": "Status"
     }
+  */
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
   */
   asyncHandler(applicationController.findApplications)
 );

@@ -65,8 +65,7 @@ export default function FormContact({
             type="text"
             value={address}
             onChange={handleAddressChange}
-            required={false}
-          />
+           />
         </div>
       </div>
       <div>

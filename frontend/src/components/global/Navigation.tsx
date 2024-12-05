@@ -34,9 +34,9 @@ const navigationRoles = {
   normal: [
     Navigations.FIND_JOB,
     Navigations.EMPLOYERS,
-    Navigations.CANDIDATES,
-    Navigations.PRICING_PLANS,
-    Navigations.CUSTOMER_SUPPORTS,
+    // Navigations.CANDIDATES,
+    // Navigations.PRICING_PLANS,
+    // Navigations.CUSTOMER_SUPPORTS,
   ],
   employee: [
     Navigations.FIND_JOB,

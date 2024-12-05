@@ -20,17 +20,17 @@ export default function PageDashboard() {
     <div
       className={`flex border-y-[1px] border-[--gray-100]`}
       style={{
-        padding: `0px ${DEFAULT_PADDING_X} ${
+        padding: ` 0px ${
           typeof user !== "string" && user?.userType === UserTypes.EMPLOYER
-            ? "px-[0px]"
-            : ""
+            ? "50px"
+            : DEFAULT_PADDING_X
         }`,
       }}
     >
-      <div className="w-[25%] border-r-[1px] border-[--gray-100]">
+      <div className="w-[20%] border-r-[1px] border-[--gray-100]">
         <NavigationDashboard />
       </div>
-      <div className="w-[75%] border-l-[1px] border-[--gray-100] p-10 pr-0">
+      <div className="w-[80%] border-l-[1px] border-[--gray-100] p-10 pr-0">
         <Outlet />
       </div>
     </div>

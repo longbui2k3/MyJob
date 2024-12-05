@@ -15,32 +15,43 @@ import { FindAppliedJobByUser } from "../../../apis";
 import { changeDateToString } from "../../../utils";
 import { Text } from "../../text";
 import { GiBackwardTime } from "react-icons/gi";
-import { FaRegCircleXmark } from "react-icons/fa6";
-import { IoMdCheckmark } from "react-icons/io";
 import { Pagination, usePagination } from "../../global";
 import { useNavigate } from "react-router-dom";
+import { CiCircleRemove } from "react-icons/ci";
 
 interface StatusesProps {
   status?: string;
 }
-function Statuses({ status = "submitted" }: StatusesProps) {
+function Statuses({ status = "Submitted" }: StatusesProps) {
   const statuses: { [key: string]: JSX.Element } = {
-    submitted: (
+    Submitted: (
       <div className="flex items-center space-x-1 text-[--submitted]">
         <GiBackwardTime size={20} />
         <Text className="mt-[0px] text-[var(--submitted)]">Submitted</Text>
       </div>
     ),
-    rejected: (
-      <div className="flex items-center space-x-1 text-[--rejected]">
-        <FaRegCircleXmark size={20} />
-        <Text className="mt-[0px] text-[var(--rejected)]">Rejected</Text>
+    Consider: (
+      <div className="flex items-center space-x-1 text-[--consider]">
+        <GiBackwardTime size={20} />
+        <Text className="mt-[0px] text-[var(--consider)]">Consider</Text>
       </div>
     ),
-    accepted: (
-      <div className="flex items-center space-x-1 text-[--accepted]">
-        <IoMdCheckmark size={20} />
-        <Text className="mt-[0px] text-[var(--accepted)]">Accepted</Text>
+    Interview: (
+      <div className="flex items-center space-x-1 text-[--interview]">
+        <GiBackwardTime size={20} />
+        <Text className="mt-[0px] text-[var(--interview)]">Interview</Text>
+      </div>
+    ),
+    Hired: (
+      <div className="flex items-center space-x-1 text-[--hired]">
+        <GiBackwardTime size={20} />
+        <Text className="mt-[0px] text-[var(--hired)]">Hired</Text>
+      </div>
+    ),
+    Rejected: (
+      <div className="flex items-center space-x-1 text-[--rejected]">
+        <CiCircleRemove size={20} />
+        <Text className="mt-[0px] text-[var(--rejected)]">Rejected</Text>
       </div>
     ),
   };
@@ -92,10 +103,10 @@ export default function AppliedJobs({
           <Table variant="simple">
             <Thead color={"var(--gray-500)"}>
               <Tr>
-                <Th>JOBS</Th>
-                <Th>DATE APPLIED</Th>
-                <Th>STATUS</Th>
-                <Th>ACTION</Th>
+                <Th w={"50%"}>JOBS</Th>
+                <Th w={"15%"}>DATE APPLIED</Th>
+                <Th w={"15%"}>STATUS</Th>
+                <Th w={"20%"}>ACTION</Th>
               </Tr>
             </Thead>
             <Tbody>

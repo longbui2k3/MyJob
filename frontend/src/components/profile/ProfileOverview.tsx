@@ -60,7 +60,7 @@ export default function ProfileOverview({ profile }: { profile: any }) {
     },
   ];
   return (
-    <div className="border-[1px] border-[--gray-100] rounded-md w-full h-[400px] p-5">
+    <div className="border-2 border-[--gray-100] rounded-md w-full h-[400px] p-5">
       <Heading size={18} name="Profile Overview" />
       <div className="mt-6 grid grid-cols-2 gap-6">
         {overviews.map((overview) => (

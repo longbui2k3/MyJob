@@ -48,7 +48,7 @@ class ApplicationService {
     return application;
   };
 
-  static findApplications = async (userId, { job, page, limit }) => {
+  static findApplications = async (userId, { job, page, limit, status }) => {
     const user = await userRepo.findById(userId);
     if (!user) {
       throw new BadRequestError("User not found!");
@@ -61,7 +61,7 @@ class ApplicationService {
     }
 
     return await applicationRepo.find(
-      removeUndefinedInObject({ job, company: company._id }),
+      removeUndefinedInObject({ job, company: company._id, status }),
       {
         page,
         limit,

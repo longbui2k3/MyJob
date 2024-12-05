@@ -99,20 +99,23 @@ class UserService {
     if (!user) {
       throw new BadRequestError("User not found!");
     }
-
     const savedCandidates = await savedCandidateRepo.find(
       {
         user: user._id,
       },
       {
-        populates: ["candidate"],
         page,
         limit,
+        populates: ["candidate.profile"],
+        populateSelects: [
+          { profile: "avatar fullName title provinceCode experience" },
+        ],
       }
     );
     savedCandidates.data = savedCandidates.data.map(
-      (candidate) => candidate.candidate
+      (savedCandidate) => savedCandidate.candidate
     );
+
     return savedCandidates;
   };
 }

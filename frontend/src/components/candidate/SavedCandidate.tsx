@@ -30,11 +30,11 @@ export default function SavedCandidate() {
       {savedCandidates.map((candidate) => (
         <CandidateRowsFill
           _id={candidate._id}
-          avatar={candidate.avatar}
-          fullName={candidate.fullName}
-          title={candidate.title}
-          provinceCode={candidate.provinceCode}
-          experience={candidate.experience}
+          avatar={candidate.profile.avatar}
+          fullName={candidate.profile.fullName}
+          title={candidate.profile.title}
+          provinceCode={candidate.profile.provinceCode}
+          experience={candidate.profile.experience}
         />
       ))}
       <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />

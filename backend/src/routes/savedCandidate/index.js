@@ -8,14 +8,14 @@ const router = express.Router();
 
 router.use(authentication);
 
-router.route("/:profileId").get(
+router.route("/:applicationId").get(
   // #swagger.tags = ['Saved Candidate']
   // #swagger.summary = 'Find save candidate'
   asyncHandler(savedCandidateController.findSavedCandidate)
 );
 
 router
-  .route("/:profileId")
+  .route("/:applicationId")
   .post(
     // #swagger.tags = ['Saved Candidate']
     // #swagger.summary = 'Saved candidate'

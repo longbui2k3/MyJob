@@ -6,6 +6,7 @@ export const openFormSlice = createSlice({
     isOpenFormCategory: false,
     isOpenFormResume: false,
     isOpenFormApplyJob: false,
+    isOpenApplicationDetail: false,
     id: "",
     type: "",
   },
@@ -28,12 +29,18 @@ export const openFormSlice = createSlice({
     closeFormApplyJob(state) {
       state.isOpenFormApplyJob = false;
     },
+    openFormApplicationDetail(state) {
+      state.isOpenApplicationDetail = true;
+    },
+    closeApplicationDetail(state) {
+      state.isOpenApplicationDetail = false;
+    },
     setId(state, action) {
       state.id = action.payload;
     },
     setType(state, action) {
       state.type = action.payload;
-    }
+    },
   },
 });
 export const {
@@ -43,6 +50,8 @@ export const {
   closeFormResume,
   openFormApplyJob,
   closeFormApplyJob,
+  openFormApplicationDetail,
+  closeApplicationDetail,
   setId,
   setType,
 } = openFormSlice.actions;

@@ -8,11 +8,9 @@ import { useAuthContext } from "../../context";
 import { useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import { TbBriefcase } from "react-icons/tb";
-import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
+import { IoSettingsOutline } from "react-icons/io5";
 import { Text } from "../text";
-import { CgProfile } from "react-icons/cg";
 import { FiPlusCircle } from "react-icons/fi";
-import { PiNotebookLight } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
 
@@ -76,7 +74,7 @@ const navigationRoles = {
     },
     {
       Icon: BiCategory,
-      navigation: Navigations.DASHBOARD_CATEGORIES
+      navigation: Navigations.DASHBOARD_CATEGORIES,
     },
   ],
 };
