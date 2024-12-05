@@ -19,4 +19,7 @@ export {
   default as createCVSlice,
   setSelectedElement,
   setState,
+  setFields,
+  setDeletedFields,
+  setDeleteType,
 } from "./createCV/createCVSlice";

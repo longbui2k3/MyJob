@@ -30,7 +30,14 @@ import {
 } from "../../apis";
 import { toastError, toastSuccess } from "../../components/toast";
 import { useParams } from "react-router-dom";
-import { setState } from "../../features";
+import {
+  setDeletedFields,
+  setDeleteType,
+  setFields,
+  setState,
+} from "../../features";
+import Properties from "./Properties";
+import { ButtonPrint } from "./Components";
 function getData(prop: any) {
   return prop?.data?.current ?? {};
 }
@@ -49,6 +56,11 @@ interface FormBuildCVProps {
 
 export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
   const { id } = useParams();
+  const fieldsState = useSelector((state) => state.createCV.fields);
+  const deletedFieldsState = useSelector(
+    (state) => state.createCV.deletedFields
+  );
+  const deleteType = useSelector((state) => state.createCV.deleteType);
   const dispatch = useDispatch();
   const [sidebarFieldsRegenKey, setSidebarFieldsRegenKey] = useState(
     Date.now()
@@ -165,28 +177,37 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
 
   const handleDragEnd = (e) => {
     const { active, over } = e;
-
+    console.log(active, over);
     // We dropped outside of the over so clean up so we can start fresh.
-    if (!over) {
-      cleanUp();
-      updateData((draft) => {
-        draft.fields = draft.fields.filter((f) => f.type !== "spacer");
-      });
-      return;
-    }
+    // if (!over) {
+    //   cleanUp();
+    //   // updateData((draft) => {
+    //   //   draft.fields = draft.fields.filter((f) => f.type !== "spacer");
+    //   // });
+    //   return;
+    // }
 
     // This is where we commit the clone.
     // We take the field from the this ref and replace the spacer we inserted.
     // Since the ref just holds a reference to a field that the context is aware of
     // we just swap out the spacer with the referenced field.
     let nextField = currentDragFieldRef.current;
-
     if (nextField) {
       const overData = getData(over);
       const activeData = getData(active);
       updateData((draft) => {
         const spacerIndex = draft.fields.findIndex((f) => f.type === "spacer");
         draft.fields.splice(spacerIndex, 1, nextField);
+        const filterState = fieldsState.find(
+          (field) => field.type === nextField.type
+        );
+        dispatch(
+          setFields(
+            fieldsState.filter((field) => field.type !== nextField.type)
+          )
+        );
+        if (filterState)
+          dispatch(setDeletedFields([...deletedFieldsState, filterState]));
         if (activeData.index !== undefined && overData.index !== undefined)
           draft.fields = arrayMove(
             draft.fields,
@@ -205,12 +226,75 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
   }, []);
 
   const { fields } = data;
-  // useEffect(() => {
-  //   updateData((draft: any) => {
-  //     draft.fields = [];
-  //   });
-  // }, []);
+  useEffect(() => {
+    updateData((draft: any) => {
+      draft.fields = [
+        {
+          id: "e0TugEJOM_xOQvhUTjjx1",
+          type: "business_card",
+          name: "business_card1",
+          parent: null,
+        },
+        {
+          id: "WkvTP1xoCEXYcINmoDivT",
+          type: "personal_information",
+          name: "personal_information2",
+          parent: null,
+        },
+        {
+          id: "aPXwGSAC8Ip73N1T8G3y7",
+          type: "objective",
+          name: "objective3",
+          parent: null,
+        },
+        {
+          id: "AD4_roVkwfnp43pSVJOjA",
+          type: "work_experience",
+          name: "work_experience4",
+          parent: null,
+        },
+      ];
+      const otherFields = [];
+      const deletedFields = [];
+      for (let f of fieldsState) {
+        const field = draft.fields.find((t) => t.type === f.type);
+        if (field) {
+          deletedFields.push(f);
+        } else {
+          otherFields.push(f);
+        }
+      }
+      dispatch(setFields(otherFields));
+      dispatch(setDeletedFields(deletedFields));
+    });
+  }, []);
   console.log("Fields", fields);
+  console.log("Deleted fields", deletedFieldsState);
+
+  useEffect(() => {
+    if (deleteType) {
+      updateData((draft) => {
+        draft.fields = draft.fields.filter(
+          (field) => field.type !== deleteType
+        );
+        const deletedField = deletedFieldsState.find(
+          (field) => field.type === deleteType
+        );
+        const fields = Object.assign([], fieldsState);
+        fields.splice(deletedField.id, 0, deletedField);
+
+        dispatch(setFields(fields));
+        dispatch(
+          setDeletedFields(
+            deletedFieldsState.filter(
+              (field) => field.type !== deletedField.type
+            )
+          )
+        );
+        dispatch(setDeleteType(undefined));
+      });
+    }
+  }, [deleteType]);
 
   const state = useSelector((state: any) => state.createCV.state);
   useEffect(() => {
@@ -259,10 +343,22 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
       console.log(data);
       setResume(data.metadata.resume);
       setName(data.metadata.resume.name);
-      dispatch(setState(data.metadata.resume.resume));
+      dispatch(setState({ key: "", value: data.metadata.resume.resume }));
       updateData((draft: any) => {
         const template = data.metadata.resume.resume.template;
         draft.fields = template;
+        const otherFields = [];
+        const deletedFields = [];
+        for (let f of fieldsState) {
+          const field = template.find((t) => t.type === f.type);
+          if (field) {
+            deletedFields.push(f);
+          } else {
+            otherFields.push(f);
+          }
+        }
+        dispatch(setFields(otherFields));
+        dispatch(setDeletedFields(deletedFields));
       });
     }
   }
@@ -276,8 +372,7 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
 
   return (
     <>
-      {/* <BreadcrumbHeader breadcrumbRoutes={getBreadcrumb(CREATE_CV_KEY)} /> */}
-      <div className="h-[60px] w-full border-[1px] border-[--gray-100] flex justify-between px-[20px] py-[10px]">
+      <div className="z-[1] h-[60px] w-full border-[1px] border-[--gray-100] flex justify-between px-[20px] py-[10px]">
         <Input
           placeholder="Your CV name"
           width="350px"
@@ -286,19 +381,34 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
             setName(e.target.value);
           }}
         />
-        <ButtonSolid
-          leftIcon={<IoSaveOutline size={18} />}
-          children={"Save"}
-          width="100px"
-          onClick={(e) => {
-            e.preventDefault();
-            if (type === "create") {
-              createCreatedResume();
-            } else if (type === "update") {
-              updateCreatedResume();
-            }
-          }}
-        />
+        <div className="flex items-center gap-3">
+          <ButtonSolid
+            leftIcon={<IoSaveOutline size={18} />}
+            children={"Save"}
+            width="100px"
+            onClick={(e) => {
+              e.preventDefault();
+              if (type === "create") {
+                createCreatedResume();
+              } else if (type === "update") {
+                updateCreatedResume();
+              }
+            }}
+            height="40px"
+          />
+          <ButtonPrint
+            id={"cvPdf"}
+            label={"Save and Download"}
+            name={name}
+            onClick={() => {
+              if (type === "create") {
+                createCreatedResume();
+              } else if (type === "update") {
+                updateCreatedResume();
+              }
+            }}
+          />
+        </div>
       </div>
       <DndContext
         onDragStart={handleDragStart}
@@ -311,20 +421,28 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
         <PanelGroup
           direction="horizontal"
           style={{
-            height: "100%",
-            flexGrow: "1",
+            height: "calc(100vh - 190px)",
           }}
         >
           <Panel
-            defaultSize={25}
-            maxSize={30}
+            defaultSize={15}
+            maxSize={15}
             minSize={15}
             className="border-[1px] border-[--gray-100]"
+            style={{
+              overflow: "auto",
+            }}
           >
             <Sidebar fieldsRegKey={sidebarFieldsRegenKey} />
           </Panel>
           <PanelResizeHandle />
-          <Panel defaultSize={50} className="border-[1px] border-[--gray-100]">
+          <Panel
+            defaultSize={59}
+            className="border-[1px] border-[--gray-100]"
+            style={{
+              overflow: "auto",
+            }}
+          >
             <SortableContext
               strategy={rectSortingStrategy}
               items={fields.map((f) => f.id)}
@@ -339,6 +457,18 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
             </DragOverlay>
           </Panel>
           <PanelResizeHandle />
+          <Panel
+            defaultSize={26}
+            maxSize={26}
+            minSize={26}
+            className="border-[1px] border-[--gray-100]"
+            style={{
+              overflow: "auto",
+            }}
+            id="properties"
+          >
+            <Properties />
+          </Panel>
         </PanelGroup>
       </DndContext>
     </>
