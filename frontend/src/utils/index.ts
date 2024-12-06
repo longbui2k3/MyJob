@@ -36,6 +36,9 @@ export function changeQueryObjToQueryStr(queryObj: { [key: string]: any }) {
 }
 
 export function distanceBetweenTwoDates(date1: Date, date2: Date): string {
+  if (date1 < date2) {
+    return "0 Days";
+  }
   const seconds = Math.abs(date1.getTime() - date2.getTime()) / 1000;
   if (seconds > 86400) {
     return Math.floor(seconds / 86400) + " Days";
