@@ -3,57 +3,95 @@ import BaseInput from "../inputs/Input/BaseInput";
 import provinces from "../../data/provinces.json";
 import { BaseSelect } from "../select";
 import { ButtonSolid } from "../buttons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toastError, toastSuccess } from "../toast";
+import { FindProfileByUserAPI, UpdateProfileAPI } from "../../apis";
+import { useDispatch } from "react-redux";
+import { setDataChange } from "../../features";
 
-interface FormContactProps {
-  mapLocation?: string;
-  address?: string;
-  phone?: string;
-  email?: string;
-  onMapLocationChange?: (value: string) => void;
-  onProvinceCodeChange?: (value: number) => void;
-  onAddressChange?: (value: string) => void;
-  onPhoneChange?: (value: string) => void;
-  onEmailChange?: (value: string) => void;
-}
+// interface FormContactProps {
+//   mapLocation?: string;
+//   address?: string;
+//   phone?: string;
+//   email?: string;
+//   onMapLocationChange?: (value: string) => void;
+//   onProvinceCodeChange?: (value: number) => void;
+//   onAddressChange?: (value: string) => void;
+//   onPhoneChange?: (value: string) => void;
+//   onEmailChange?: (value: string) => void;
+// }
 
-export default function FormContact({
-  mapLocation = "Ho Chi Minh",
-  address = "District 12, Ho Chi Minh",
-  phone = "0777981051",
-  email = "buiduclongit@gmail.com",
-  onMapLocationChange = () => {},
-  onProvinceCodeChange = () => {},
-  onAddressChange = () => {},
-  onPhoneChange = () => {},
-  onEmailChange = () => {},
-}: FormContactProps) {
+export default function FormContact() {
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const locations = provinces.map((province) => {
     return {
       label: province.english_name,
       value: province.code,
     };
   });
+
+  // map location
+  const [mapLocation, setMapLocation] = useState<string>("");
+  // provinceCode
+  const [provinceCode, setProvinceCode] = useState<number>(0);
+
   const handleMapLocationChange = (mapLocation: string) => {
-    onMapLocationChange(mapLocation);
+    setMapLocation(mapLocation);
     locations.map((location) => {
       if (location.label === mapLocation) {
-        onProvinceCodeChange(location.value);
+        setProvinceCode(location.value);
       }
     });
   };
+
+  // address
+  const [address, setAddress] = useState<string>("");
   const handleAddressChange = (e) => {
-    onAddressChange(e.target.value);
-  };
-  const handlePhoneChange = (e) => {
-    onPhoneChange(e.target.value);
-  };
-  const handleEmailChange = (e) => {
-    onEmailChange(e.target.value);
+    setAddress(e.target.value);
   };
 
-  function handleSubmit() {}
+  // phone
+  const [mobile, setMobile] = useState<string>("");
+  const handleMobileChange = (e) => {
+    setMobile(e.target.value);
+  };
+
+  const findProfile = async () => {
+    const data = await FindProfileByUserAPI();
+    if (data.isSuccess) {
+      setMapLocation(data.metadata.profile.mapLocation);
+      setAddress(data.metadata.profile.address);
+      setMobile(data.metadata.profile.mobile);
+    }
+  };
+  useEffect(() => {
+    dispatch(setDataChange());
+  }, []);
+
+  useEffect(() => {
+    findProfile();
+  }, []);
+
+  const updateProfile = async () => {
+    setIsLoading(true);
+    const data = await UpdateProfileAPI({
+      mapLocation,
+      provinceCode,
+      address,
+      mobile,
+    });
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+    } else {
+      toastError(data.message);
+    }
+    setIsLoading(false);
+  };
+
+  async function handleSubmit() {
+    await updateProfile();
+  }
   return (
     <div className="space-y-3 font-normal text-sm">
       <div className="flex flex-row space-x-3">
@@ -79,8 +117,8 @@ export default function FormContact({
           label="Phone"
           type="text"
           placeholder="Phone number..."
-          value={phone}
-          onChange={handlePhoneChange}
+          value={mobile}
+          onChange={handleMobileChange}
         />
       </div>
 
@@ -90,8 +128,7 @@ export default function FormContact({
           label="Email"
           type="text"
           placeholder="Email address"
-          value={email}
-          onChange={handleEmailChange}
+          value={"buiduclong911@gmail.com"}
         />
       </div>
       <ButtonSolid
