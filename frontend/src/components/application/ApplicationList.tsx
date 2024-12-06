@@ -106,9 +106,9 @@ export default function ApplicationList() {
   };
   const handleUpdateApplication = async () => {
     const promises = Object.entries(updatedStatuses).map(([id, status]) =>
-       UpdateApplicationAPI(id, { status })
+      UpdateApplicationAPI(id, { status })
     );
-    toastSuccess("Update application successfully!")
+    toastSuccess("Update application successfully!");
     await Promise.all(promises);
 
     findApplications();
@@ -156,7 +156,7 @@ export default function ApplicationList() {
       /> */}
       <Tabs
         variant="soft-rounded"
-        colorScheme="green"
+        colorScheme="blue"
         className="mt-4"
         onChange={handleTabChange}
       >
@@ -165,7 +165,7 @@ export default function ApplicationList() {
             <Tab>
               {value}
               {/* <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center"> */}
-                {/* {applicationCounts[value] ?? 0} */}
+              {/* {applicationCounts[value] ?? 0} */}
               {/* </div> */}
             </Tab>
           ))}

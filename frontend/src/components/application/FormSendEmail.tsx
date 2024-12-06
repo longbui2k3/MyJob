@@ -73,11 +73,11 @@ export default function FormSendEmail() {
             }}
           />
         ))}
-        <RichTextEditer
+        <BaseInput
           label={"Subject"}
           placeholder={"Subject"}
           value={subject ? subject : ""}
-          onChange={setSubject}
+          onChange={(e) => setSubject(e.target.value)}
         />
         <RichTextEditer
           label={"Content"}
