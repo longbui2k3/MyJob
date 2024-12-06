@@ -8,7 +8,7 @@ export default function ObjectiveProperties() {
   return (
     <div id="objective" className="flex flex-col gap-[5px]">
       <EditorProperty
-        placeholder="Objective Name"
+        placeholder="Objective Header"
         value={state?.objective?.name || ""}
         onChange={(value) => {
           dispatch(setState({ key: "objective.name", value }));

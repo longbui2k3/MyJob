@@ -253,6 +253,60 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
           name: "work_experience4",
           parent: null,
         },
+        {
+          id: "VjGo95AA5hZALSigTP-If",
+          type: "projects",
+          name: "projects5",
+          parent: null,
+        },
+        {
+          id: "NgkEp3JbgjLOvb4g27q7B",
+          type: "education",
+          name: "education6",
+          parent: null,
+        },
+        {
+          id: "0_AmN01k9KHz53CGbr_2D",
+          type: "skills",
+          name: "skills7",
+          parent: null,
+        },
+        {
+          id: "fPseX59YIxHBsg7WV9SoO",
+          type: "awards",
+          name: "awards8",
+          parent: null,
+        },
+        {
+          id: "aIFTsivp12w4qqO_JZOXk",
+          type: "certifications",
+          name: "certifications9",
+          parent: null,
+        },
+        {
+          id: "vY_MW0GZ8Isl5gYbc-fpi",
+          type: "referrers",
+          name: "referrers10",
+          parent: null,
+        },
+        {
+          id: "PFp4inBe5QuuxC5f-pejG",
+          type: "activities",
+          name: "activities11",
+          parent: null,
+        },
+        {
+          id: "bSfIa_R_j_M7awwQzmFDo",
+          type: "interests",
+          name: "interests12",
+          parent: null,
+        },
+        {
+          id: "1V2PJ7boBb0rRcaP-zBqO",
+          type: "additionalInformation",
+          name: "additionalInformation13",
+          parent: null,
+        },
       ];
       const otherFields = [];
       const deletedFields = [];

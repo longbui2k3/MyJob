@@ -314,4 +314,9 @@ export const defaultFields = [
     type: "additionalInformation",
     title: "Additional Informations",
   },
+  {
+    id: 12,
+    type: "awards",
+    title: "Awards",
+  },
 ];

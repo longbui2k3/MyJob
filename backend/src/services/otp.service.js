@@ -70,7 +70,7 @@ class OTPService {
 
     try {
       await Promise.all([
-        new Email({ type: "signup", email, value: otp }).sendEmail(),
+        new Email({ type: "signup", email, value: otp }).sendEmailForAuthen(),
         this.createOTP({ email, otp }),
       ]);
     } catch (err) {

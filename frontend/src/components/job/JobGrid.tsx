@@ -16,7 +16,7 @@ import { FindFavoriteJobAPI } from "../../apis/favoriteJobAPI";
 import UnfavoriteJobIcon from "./UnfavoriteJobIcon";
 import FavoriteJobIcon from "./FavoriteJobIcon";
 import { useDispatch } from "react-redux";
-import { openFormApplyJob } from "../../features";
+import { openFormApplyJob, setId } from "../../features";
 import { useAuthContext } from "../../context";
 
 interface JobGridProps {
@@ -201,6 +201,7 @@ export default function JobGrid({
                   }).path
                 );
                 dispatch(openFormApplyJob());
+                dispatch(setId(_id));
               }}
               bgColor="transparent"
             />

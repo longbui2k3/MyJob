@@ -70,12 +70,12 @@ const subNavigationRoles = {
       if (!user) return <></>;
       if (typeof user === "string") return <></>;
       const items = [
-        {
-          item: "My profile",
-          onClick: (e) => {
-            navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
-          },
-        },
+        // {
+        //   item: "My profile",
+        //   onClick: (e) => {
+        //     navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
+        //   },
+        // },
         {
           item: "Settings",
           onClick: (e) => {
@@ -114,12 +114,12 @@ const subNavigationRoles = {
       if (!user) return <></>;
       if (typeof user === "string") return <></>;
       const items = [
-        {
-          item: "My profile",
-          onClick: (e) => {
-            navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
-          },
-        },
+        // {
+        //   item: "My profile",
+        //   onClick: (e) => {
+        //     navigate(getRoute(DASHBOARD_SETTINGS_KEY).path);
+        //   },
+        // },
         {
           item: "Settings",
           onClick: (e) => {

@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from "react-redux";
+import { ButtonAdd, EditorProperty } from "../Components";
+import { setState } from "../../../features";
 import {
   Accordion,
   AccordionButton,
@@ -5,20 +8,17 @@ import {
   AccordionItem,
   AccordionPanel,
 } from "@chakra-ui/react";
-import { ButtonAdd, EditorProperty } from "../Components";
-import { useDispatch, useSelector } from "react-redux";
-import { setState } from "../../../features";
 
-export default function WorkExperienceProperties() {
+export default function ProjectsProperties() {
   const dispatch = useDispatch();
   const state = useSelector((state: any) => state.createCV.state);
   return (
-    <div id="work_experience" className="flex flex-col gap-[5px]">
+    <div id="projects" className="flex flex-col gap-[5px]">
       <EditorProperty
-        placeholder="Work Experience Header"
-        value={state?.workExperience?.name || ""}
+        placeholder="Projects Header"
+        value={state?.projects?.name || ""}
         onChange={(value) => {
-          dispatch(setState({ key: "workExperience.name", value }));
+          dispatch(setState({ key: "projects.name", value }));
         }}
       />
       <div
@@ -27,11 +27,11 @@ export default function WorkExperienceProperties() {
           fontSize: "16px",
         }}
       >
-        Companies
+        Projects
       </div>
       <Accordion allowToggle>
-        {state?.workExperience?.content.map((content, i) => (
-          <Company content={content} i={i} />
+        {state?.projects?.content.map((content, i) => (
+          <Project content={content} i={i} />
         ))}
       </Accordion>
 
@@ -40,15 +40,18 @@ export default function WorkExperienceProperties() {
           e.preventDefault();
           dispatch(
             setState({
-              key: "workExperience.content",
+              key: "projects.content",
               value: [
-                ...(state?.workExperience?.content || []),
+                ...(state?.projects?.content || []),
                 {
-                  companyName: "",
+                  projectName: "",
                   from: "",
                   to: "",
+                  nameOfCustomer: "",
+                  teamSize: "",
                   position: "",
-                  experienceDescription: "",
+                  responsibility: "",
+                  technologies: "",
                 },
               ],
             })
@@ -59,7 +62,7 @@ export default function WorkExperienceProperties() {
   );
 }
 
-function Company({ content, i }: { content: any; i: number }) {
+function Project({ content, i }: { content: any; i: number }) {
   const dispatch = useDispatch();
   return (
     <AccordionItem>
@@ -76,7 +79,7 @@ function Company({ content, i }: { content: any; i: number }) {
             fontWeight: 500,
             fontSize: "14px",
           }}
-        >{`Company  ${i + 1}`}</div>
+        >{`Project ${i + 1}`}</div>
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel
@@ -87,12 +90,12 @@ function Company({ content, i }: { content: any; i: number }) {
         }}
       >
         <EditorProperty
-          placeholder="Company Name"
-          value={content?.companyName || ""}
+          placeholder="Project Name"
+          value={content?.projectName || ""}
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.companyName`,
+                key: `projects.content.${i}.projectName`,
                 value,
               })
             );
@@ -105,7 +108,7 @@ function Company({ content, i }: { content: any; i: number }) {
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.from`,
+                key: `projects.content.${i}.from`,
                 value,
               })
             );
@@ -118,7 +121,20 @@ function Company({ content, i }: { content: any; i: number }) {
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.to`,
+                key: `projects.content.${i}.to`,
+                value,
+              })
+            );
+          }}
+          fontSizeLabel="14px"
+        />
+        <EditorProperty
+          placeholder="Team Size"
+          value={content?.teamSize || ""}
+          onChange={(value) => {
+            dispatch(
+              setState({
+                key: `projects.content.${i}.teamSize`,
                 value,
               })
             );
@@ -131,7 +147,7 @@ function Company({ content, i }: { content: any; i: number }) {
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.position`,
+                key: `projects.content.${i}.position`,
                 value,
               })
             );
@@ -139,12 +155,25 @@ function Company({ content, i }: { content: any; i: number }) {
           fontSizeLabel="14px"
         />
         <EditorProperty
-          placeholder="Experience Description"
-          value={content?.experienceDescription || ""}
+          placeholder="Responsibility"
+          value={content?.responsibility || ""}
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.experienceDescription`,
+                key: `projects.content.${i}.responsibility`,
+                value,
+              })
+            );
+          }}
+          fontSizeLabel="14px"
+        />
+        <EditorProperty
+          placeholder="Technologies"
+          value={content?.technologies || ""}
+          onChange={(value) => {
+            dispatch(
+              setState({
+                key: `projects.content.${i}.technologies`,
                 value,
               })
             );

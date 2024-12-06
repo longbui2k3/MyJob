@@ -13,6 +13,7 @@ const favoriteJob = require("./favoriteJob");
 const resume = require("./resume");
 const savedCandidate = require("./savedCandidate");
 const application = require("./application");
+const general = require("./general");
 const swagger = require("../../swagger-output.json");
 const router = express.Router();
 router.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swagger));
@@ -31,6 +32,7 @@ router.use("/api/v1/favoriteJob", favoriteJob);
 router.use("/api/v1/savedCandidate", savedCandidate);
 router.use("/api/v1/resume", resume);
 router.use("/api/v1/application", application);
+router.use("/api/v1/general", general);
 router.use("/api/v1", authen);
 
 module.exports = router;

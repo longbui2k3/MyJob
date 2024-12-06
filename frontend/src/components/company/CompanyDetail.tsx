@@ -8,7 +8,7 @@ import { ButtonSubmit } from "../buttons";
 import CompanyOverview from "./CompanyOverview";
 import ContactInformation from "./ContactInformation";
 import FollowUsOn from "./FollowUsOn";
-
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 export default function CompanyDetail() {
   const { id } = useParams();
   const [company, setCompany] = useState<any>({});
@@ -44,7 +44,7 @@ export default function CompanyDetail() {
             <img
               src={company?.logo}
               width={"70px"}
-              height={"70px"}
+              // height={"70px"}
               className="rounded-md aspect-square"
             />
             <div className="flex flex-col justify-between">
@@ -68,30 +68,53 @@ export default function CompanyDetail() {
         </div>
       </div>
       <div className="flex gap-10 w-full h-[800px] mt-[100px]">
-        <div className="flex flex-col gap-6 w-[60%] h-full">
-          <div>
-            <Heading name="About Us" size={17} />
-            <Text>
-              <div dangerouslySetInnerHTML={{ __html: company?.aboutUs }} />
-            </Text>
-          </div>
-          <div>
-            <Heading name="Company Benefits" size={17} />
-            <Text>
-              <div
-                dangerouslySetInnerHTML={{ __html: company?.companyBenefits }}
-              />
-            </Text>
-          </div>
-          <div>
-            <Heading name="Company Vision" size={17} />
-            <Text>
-              <div
-                dangerouslySetInnerHTML={{ __html: company?.companyVision }}
-              />
-            </Text>
-          </div>
-        </div>
+        <Tabs className="flex flex-col gap-6 w-[60%] h-full overflow-auto p-[20px]">
+          <TabList>
+            <Tab>Information</Tab>
+            <Tab>Open Position</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <div>
+                <div>
+                  <Heading name="About Us" size={17} />
+                  <Text>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: company?.aboutUs }}
+                    />
+                  </Text>
+                </div>
+                <div>
+                  <Heading name="Company Benefits" size={17} />
+                  <Text>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: company?.companyBenefits,
+                      }}
+                    />
+                  </Text>
+                </div>
+                <div>
+                  <Heading name="Company Vision" size={17} />
+                  <Text>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: company?.companyVision,
+                      }}
+                    />
+                  </Text>
+                </div>
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className="w-full">
+                <p>Open Position</p>
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+
         <div className="flex flex-col gap-10 w-[40%] h-full">
           <CompanyOverview company={company} />
           <ContactInformation company={company} />

@@ -7,6 +7,7 @@ export const openFormSlice = createSlice({
     isOpenFormResume: false,
     isOpenFormApplyJob: false,
     isOpenApplicationDetail: false,
+    isOpenFormSendEmail: false,
     id: "",
     type: "",
   },
@@ -35,6 +36,12 @@ export const openFormSlice = createSlice({
     closeApplicationDetail(state) {
       state.isOpenApplicationDetail = false;
     },
+    openFormSendEmail(state) {
+      state.isOpenFormSendEmail = true;
+    },
+    closeFormSendEmail(state) {
+      state.isOpenFormSendEmail = false;
+    },
     setId(state, action) {
       state.id = action.payload;
     },
@@ -52,6 +59,8 @@ export const {
   closeFormApplyJob,
   openFormApplicationDetail,
   closeApplicationDetail,
+  openFormSendEmail,
+  closeFormSendEmail,
   setId,
   setType,
 } = openFormSlice.actions;

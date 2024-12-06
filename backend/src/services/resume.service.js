@@ -177,6 +177,8 @@ class ResumeService {
       throw new BadRequestError("Resume not found!");
     }
 
+    await createdResumeRepo.deleteOne({ _id: resume.resume });
+
     await uploadedResumeRepo.deleteOne({ _id: resume.resume });
 
     await resumeRepo.deleteOne({ _id: resumeId });

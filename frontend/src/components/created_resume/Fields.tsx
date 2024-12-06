@@ -1,6 +1,7 @@
 import {
   Activities,
   AdditionalInformation,
+  Awards,
   BusinessCard,
   Certifications,
   Education,
@@ -29,4 +30,5 @@ export const renderers: any = {
   activities: <Activities />,
   interests: <Interests />,
   additionalInformation: <AdditionalInformation />,
+  awards: <Awards />,
 };

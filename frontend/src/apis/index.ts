@@ -54,3 +54,4 @@ export {
   FavoriteJobAPI,
   UnfavoriteJobAPI,
 } from "./favoriteJobAPI";
+export { SendEmailAPI } from "./generalAPI";

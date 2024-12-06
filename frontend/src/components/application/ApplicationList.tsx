@@ -18,9 +18,12 @@ import { TfiEmail } from "react-icons/tfi";
 import { MdOutlineSaveAs } from "react-icons/md";
 import { AdvanceFilterSelect } from "../select/AdvanceFilterSelect";
 import { useSearchInput_3 } from "../inputs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { openFormSendEmail } from "../../features";
+import { toastSuccess } from "../toast";
 
 export default function ApplicationList() {
+  const dispatch = useDispatch();
   const { jobId } = useParams();
   const [applications, setApplications] = useState<Array<any>>([]);
   const [status, setStatus] = useState<string | undefined>("Submitted");
@@ -103,9 +106,11 @@ export default function ApplicationList() {
   };
   const handleUpdateApplication = async () => {
     const promises = Object.entries(updatedStatuses).map(([id, status]) =>
-      UpdateApplicationAPI(id, { status })
+       UpdateApplicationAPI(id, { status })
     );
+    toastSuccess("Update application successfully!")
     await Promise.all(promises);
+
     findApplications();
     fetchApplicationCounts();
   };
@@ -115,16 +120,18 @@ export default function ApplicationList() {
       <div className="flex items-center justify-between">
         <Heading5 name="Job Applications" />
         <div className="flex space-x-2">
-          <div className="border-2 rounded-md">
+          {/* <div className="border-2 rounded-md">
             <AdvanceFilterSelect
               onClick={() => {
                 setIsOpenAdvanceFilter(!isOpenAdvanceFilter);
               }}
             />
-          </div>
+          </div> */}
           <ButtonSolid
             className="my-auto"
-            onClick={() => {}}
+            onClick={() => {
+              dispatch(openFormSendEmail());
+            }}
             children={"Send Email"}
             leftIcon={<TfiEmail size={20} />}
             height="40px"
@@ -138,7 +145,7 @@ export default function ApplicationList() {
           />
         </div>
       </div>
-      <AdvanceFilter
+      {/* <AdvanceFilter
         ref={advanceFilterRef}
         isOpenAdvanceFilter={isOpenAdvanceFilter}
         setIsOpenAdvanceFilter={setIsOpenAdvanceFilter}
@@ -146,7 +153,7 @@ export default function ApplicationList() {
         setExperiences={setExperiences}
         educations={educations}
         setEducations={setEducations}
-      />
+      /> */}
       <Tabs
         variant="soft-rounded"
         colorScheme="green"
@@ -157,9 +164,9 @@ export default function ApplicationList() {
           {ApplicationStatuses.map((value) => (
             <Tab>
               {value}
-              <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center">
-                {applicationCounts[value] ?? 0}
-              </div>
+              {/* <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center"> */}
+                {/* {applicationCounts[value] ?? 0} */}
+              {/* </div> */}
             </Tab>
           ))}
         </TabList>

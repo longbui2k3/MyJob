@@ -9,9 +9,6 @@ import { ButtonSolid } from "../../buttons";
 export default function PersonalInformationProperties() {
   const state = useSelector((state: any) => state.createCV.state);
   const dispatch = useDispatch();
-  const emailRef = useRef<any>(null);
-  const phoneRef = useRef<any>(null);
-  const locationRef = useRef<any>(null);
   return (
     <div id="personal_information" className="flex flex-col gap-[5px]">
       <EditorProperty

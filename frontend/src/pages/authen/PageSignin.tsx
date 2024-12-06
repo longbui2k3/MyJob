@@ -137,11 +137,11 @@ export default function PageSignin() {
           ) : (
             ""
           )}
-          <Or />
+          {/* <Or />
           <div className="my-[15px] flex justify-between space-x-4">
             <ButtonSignInGoogle />
             <ButtonSignInFacebook />
-          </div>
+          </div> */}
         </form>
       </div>
       <Background />

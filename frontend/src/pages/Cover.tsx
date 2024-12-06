@@ -6,7 +6,7 @@ import { FormResume } from "../components/uploaded_resume";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ApplicationDetail, FormApplyJob } from "../components/application";
+import { ApplicationDetail, FormApplyJob, FormSendEmail } from "../components/application";
 import { useAuthContext } from "../context";
 import { UserTypes } from "../helpers/constants";
 
@@ -26,6 +26,9 @@ export default function Cover() {
   const isOpenApplicationDetail = useSelector(
     (state: any) => state.openForm.isOpenApplicationDetail
   );
+  const isOpenFormSendEmail = useSelector(
+    (state: any) => state.openForm.isOpenFormSendEmail
+  );
 
   useEffect(() => {
     if (isOpenFormCategory || isOpenFormResume) window.scrollTo(0, 0);
@@ -36,6 +39,7 @@ export default function Cover() {
       {isOpenFormResume ? <FormResume /> : ""}
       {isOpenFormApplyJob ? <FormApplyJob /> : ""}
       {isOpenApplicationDetail ? <ApplicationDetail /> : ""}
+      {isOpenFormSendEmail ? <FormSendEmail /> : ""}
       <Header />
       <div
         className={`${

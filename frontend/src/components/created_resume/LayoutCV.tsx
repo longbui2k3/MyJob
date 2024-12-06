@@ -32,17 +32,16 @@ export default function LayoutCV({ items = [] }: LayoutCVProps) {
       <div className="flex h-full">
         <Component>{items[5] ? items[5] : <></>}</Component>
         <Component>{items[6] ? items[6] : <></>}</Component>
-        <Component>{items[7] ? items[7] : <></>}</Component>
       </div>
       <div className="flex h-full">
+        <Component>{items[7] ? items[7] : <></>}</Component>
         <Component>{items[8] ? items[8] : <></>}</Component>
         <Component>{items[9] ? items[9] : <></>}</Component>
-        <Component>{items[10] ? items[10] : <></>}</Component>
       </div>
       <div className="flex h-full">
+        <Component>{items[10] ? items[10] : <></>}</Component>
         <Component>{items[11] ? items[11] : <></>}</Component>
         <Component>{items[12] ? items[12] : <></>}</Component>
-        <Component>{items[13] ? items[13] : <></>}</Component>
       </div>
     </>
   );

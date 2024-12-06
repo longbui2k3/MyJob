@@ -108,7 +108,7 @@ const ROUTES: Array<RouteItem> = [
             isPrivate: false,
           },
         ],
-        isPrivate: true,
+        isPrivate: false,
       },
       {
         key: MY_CV_KEY,

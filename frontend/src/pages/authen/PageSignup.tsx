@@ -212,11 +212,11 @@ export default function PageSignup() {
             ) : (
               ""
             )}
-            <Or />
+            {/* <Or />
             <div className="my-[15px] flex justify-between space-x-4">
               <ButtonSignUpGoogle />
               <ButtonSignUpFacebook />
-            </div>
+            </div> */}
           </div>
         </form>
       </div>

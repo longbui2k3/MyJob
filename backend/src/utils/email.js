@@ -6,7 +6,7 @@ class Email {
     this.email = email;
     this.value = value;
   }
-  async sendEmail() {
+  async sendEmailForAuthen() {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       host: "smtp.gmail.com",
@@ -34,6 +34,25 @@ class Email {
             <a href=${
               `${process.env.CLIENT_DOMAIN}/resetpassword/` + this.value
             }>here<a/> to proceed.</p>`, // html body
+    });
+  }
+  static async sendEmail({ from, toList, subject, html }) {
+    console.log(from);
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      secure: true,
+      auth: {
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASS,
+      },
+    });
+
+    return await transporter.sendMail({
+      from: from, // sender address
+      to: toList, // list of receivers
+      subject: subject,
+      html,
     });
   }
 }

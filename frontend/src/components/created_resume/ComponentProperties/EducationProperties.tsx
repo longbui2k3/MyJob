@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from "react-redux";
+import { ButtonAdd, EditorProperty } from "../Components";
+import { setState } from "../../../features";
 import {
   Accordion,
   AccordionButton,
@@ -5,20 +8,17 @@ import {
   AccordionItem,
   AccordionPanel,
 } from "@chakra-ui/react";
-import { ButtonAdd, EditorProperty } from "../Components";
-import { useDispatch, useSelector } from "react-redux";
-import { setState } from "../../../features";
 
-export default function WorkExperienceProperties() {
+export default function EducationProperties() {
   const dispatch = useDispatch();
   const state = useSelector((state: any) => state.createCV.state);
   return (
-    <div id="work_experience" className="flex flex-col gap-[5px]">
+    <div id="education" className="flex flex-col gap-[5px]">
       <EditorProperty
-        placeholder="Work Experience Header"
-        value={state?.workExperience?.name || ""}
+        placeholder="Education Header"
+        value={state?.education?.name || ""}
         onChange={(value) => {
-          dispatch(setState({ key: "workExperience.name", value }));
+          dispatch(setState({ key: "education.name", value }));
         }}
       />
       <div
@@ -27,11 +27,11 @@ export default function WorkExperienceProperties() {
           fontSize: "16px",
         }}
       >
-        Companies
+        Educations
       </div>
       <Accordion allowToggle>
-        {state?.workExperience?.content.map((content, i) => (
-          <Company content={content} i={i} />
+        {state?.education?.content.map((content, i) => (
+          <Education content={content} i={i} />
         ))}
       </Accordion>
 
@@ -40,15 +40,15 @@ export default function WorkExperienceProperties() {
           e.preventDefault();
           dispatch(
             setState({
-              key: "workExperience.content",
+              key: "education.content",
               value: [
-                ...(state?.workExperience?.content || []),
+                ...(state?.education?.content || []),
                 {
-                  companyName: "",
                   from: "",
                   to: "",
-                  position: "",
-                  experienceDescription: "",
+                  courses: "",
+                  schoolName: "",
+                  educationDescription: "",
                 },
               ],
             })
@@ -59,7 +59,7 @@ export default function WorkExperienceProperties() {
   );
 }
 
-function Company({ content, i }: { content: any; i: number }) {
+function Education({ content, i }: { content: any; i: number }) {
   const dispatch = useDispatch();
   return (
     <AccordionItem>
@@ -76,7 +76,7 @@ function Company({ content, i }: { content: any; i: number }) {
             fontWeight: 500,
             fontSize: "14px",
           }}
-        >{`Company  ${i + 1}`}</div>
+        >{`Education  ${i + 1}`}</div>
         <AccordionIcon />
       </AccordionButton>
       <AccordionPanel
@@ -87,25 +87,12 @@ function Company({ content, i }: { content: any; i: number }) {
         }}
       >
         <EditorProperty
-          placeholder="Company Name"
-          value={content?.companyName || ""}
-          onChange={(value) => {
-            dispatch(
-              setState({
-                key: `workExperience.content.${i}.companyName`,
-                value,
-              })
-            );
-          }}
-          fontSizeLabel="14px"
-        />
-        <EditorProperty
           placeholder="From"
           value={content?.from || ""}
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.from`,
+                key: `education.content.${i}.from`,
                 value,
               })
             );
@@ -118,7 +105,7 @@ function Company({ content, i }: { content: any; i: number }) {
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.to`,
+                key: `education.content.${i}.to`,
                 value,
               })
             );
@@ -126,12 +113,12 @@ function Company({ content, i }: { content: any; i: number }) {
           fontSizeLabel="14px"
         />
         <EditorProperty
-          placeholder="Position"
-          value={content?.position || ""}
+          placeholder="Courses"
+          value={content?.courses || ""}
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.position`,
+                key: `education.content.${i}.courses`,
                 value,
               })
             );
@@ -139,12 +126,25 @@ function Company({ content, i }: { content: any; i: number }) {
           fontSizeLabel="14px"
         />
         <EditorProperty
-          placeholder="Experience Description"
-          value={content?.experienceDescription || ""}
+          placeholder="School Name"
+          value={content?.schoolName || ""}
           onChange={(value) => {
             dispatch(
               setState({
-                key: `workExperience.content.${i}.experienceDescription`,
+                key: `education.content.${i}.schoolName`,
+                value,
+              })
+            );
+          }}
+          fontSizeLabel="14px"
+        />
+        <EditorProperty
+          placeholder="Education Description"
+          value={content?.educationDescription || ""}
+          onChange={(value) => {
+            dispatch(
+              setState({
+                key: `education.content.${i}.educationDescription`,
                 value,
               })
             );

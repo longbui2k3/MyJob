@@ -155,7 +155,7 @@ export default function JobDetail() {
           </div>
         </div>
       </div>
-      <div className="flex gap-10 w-full h-[800px] mt-8">
+      <div className="flex gap-10 w-full mt-8">
         <div className="flex flex-col gap-6 w-[60%] h-full">
           <div>
             <Heading name="Job Description" size={17} />

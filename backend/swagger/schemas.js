@@ -85,4 +85,9 @@ module.exports = {
     $resume: "string",
     $coverLetter: "string",
   },
+  sendEmailSchema: {
+    $toList: [],
+    $subject: "string",
+    $html: "string",
+  },
 };

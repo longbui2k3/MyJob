@@ -8,6 +8,8 @@ export {
   closeFormApplyJob,
   openFormApplicationDetail,
   closeApplicationDetail,
+  openFormSendEmail,
+  closeFormSendEmail,
   setId,
   setType,
 } from "./openForm/openFormSlice";

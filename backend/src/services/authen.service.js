@@ -126,7 +126,7 @@ class AuthenService {
     });
 
     try {
-      await new Email({ type: "forgot", email, value: resetToken }).sendEmail();
+      await new Email({ type: "forgot", email, value: resetToken }).sendEmailForAuthen();
     } catch (error) {
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
@@ -212,7 +212,7 @@ class AuthenService {
     });
 
     try {
-      await new Email({ type: "signup", email, value: otp }).sendEmail();
+      await new Email({ type: "signup", email, value: otp }).sendEmailForAuthen();
     } catch (err) {
       throw new InternalServerError(
         "There was an error sending the email. Try again later!"
