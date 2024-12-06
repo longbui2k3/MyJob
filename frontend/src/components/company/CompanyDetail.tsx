@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import { DEFAULT_PADDING_X, JobStatuses } from "../../helpers/constants";
 import { useEffect, useState } from "react";
 import { FindCompanyAPI } from "../../apis/companyAPI";
 import { Heading, Heading5 } from "../headings";
@@ -9,10 +9,13 @@ import CompanyOverview from "./CompanyOverview";
 import ContactInformation from "./ContactInformation";
 import FollowUsOn from "./FollowUsOn";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { FindJobsAPI } from "../../apis";
+import { JobGrid, JobRowsFill } from "../job";
 export default function CompanyDetail() {
   const { id } = useParams();
   const [company, setCompany] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [jobs, setJobs] = useState<Array<any>>([]);
   async function findCompany() {
     if (!id) return;
     const data = await FindCompanyAPI(id);
@@ -20,9 +23,19 @@ export default function CompanyDetail() {
       setCompany(data.metadata.company);
     }
   }
+
+  async function findJobsByCompany() {
+    if (!id) return;
+    const data = await FindJobsAPI({ company: id, status: JobStatuses.ACTIVE });
+    if (data.isSuccess) {
+      setJobs(data.metadata.jobs);
+    }
+  }
+
   useEffect(() => {
     setIsLoading(true);
     findCompany();
+    findJobsByCompany();
     setIsLoading(false);
   }, []);
   return (
@@ -108,8 +121,22 @@ export default function CompanyDetail() {
               </div>
             </TabPanel>
             <TabPanel>
-              <div className="w-full">
-                <p>Open Position</p>
+              <div className="flex flex-col gap-2">
+                {jobs.map((job) => (
+                  <JobGrid
+                    _id={job._id}
+                    companyName={job.company.companyName}
+                    companyId={job.company._id}
+                    companyLogo={job.company.logo}
+                    companyLocation={job.company.mapLocation}
+                    jobTitle={job.jobTitle}
+                    jobType={job.jobType}
+                    minSalary={job.minSalary}
+                    maxSalary={job.maxSalary}
+                    expirationDate={job.expirationDate}
+                    status={job.status}
+                  />
+                ))}
               </div>
             </TabPanel>
           </TabPanels>
