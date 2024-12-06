@@ -5,7 +5,7 @@ import {
   JobStatuses,
   SIGN_IN_KEY,
 } from "../../helpers/constants";
-import { FindJobAPI } from "../../apis";
+import { FindJobAPI, FindJobsAPI } from "../../apis";
 import { useNavigate, useParams } from "react-router-dom";
 import { Heading, Heading5 } from "../headings";
 import { Tag } from "@chakra-ui/react";
@@ -21,6 +21,7 @@ import FavoriteJobIcon from "./FavoriteJobIcon";
 import { useDispatch } from "react-redux";
 import { openFormApplyJob, setId } from "../../features";
 import { useAuthContext } from "../../context";
+import JobGrid from "./JobGrid";
 
 export default function JobDetail() {
   const { user } = useAuthContext();
@@ -28,6 +29,7 @@ export default function JobDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [job, setJob] = useState<any>({});
+  const [jobs, setJobs] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavoriteJob, setIsFavoriteJob] = useState(false);
   async function findFavoriteJob() {
@@ -42,11 +44,24 @@ export default function JobDetail() {
   useEffect(() => {
     findFavoriteJob();
   }, []);
+
+  async function findJobsByCompany(company: string) {
+    if (!id) return;
+    const data = await FindJobsAPI({
+      company: company,
+      status: JobStatuses.ACTIVE,
+    });
+    if (data.isSuccess) {
+      setJobs(data.metadata.jobs);
+    }
+  }
+
   async function findJob() {
     if (!id) return;
     const data = await FindJobAPI(id);
     if (data.isSuccess) {
       setJob(data.metadata.job);
+      await findJobsByCompany(data.metadata.job.company._id);
     }
   }
 
@@ -175,6 +190,26 @@ export default function JobDetail() {
         <div className="flex flex-col gap-10 w-[40%] h-full">
           <JobOverview job={job} />
           <CompanyProfile job={job} />
+        </div>
+      </div>
+      <div className="flex flex-col gap-5 mt-5">
+        <Heading name="Other jobs" size={17} />
+        <div className="grid grid-cols-2 gap-5">
+          {jobs.map((job) => (
+            <JobGrid
+              _id={job._id}
+              companyName={job.company.companyName}
+              companyId={job.company._id}
+              companyLogo={job.company.logo}
+              companyLocation={job.company.mapLocation}
+              jobTitle={job.jobTitle}
+              jobType={job.jobType}
+              minSalary={job.minSalary}
+              maxSalary={job.maxSalary}
+              expirationDate={job.expirationDate}
+              status={job.status}
+            />
+          ))}
         </div>
       </div>
     </div>
