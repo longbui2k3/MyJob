@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OutsideForm } from "../global";
 import { useState } from "react";
 import { closeFormSendEmail } from "../../features";
@@ -13,6 +13,8 @@ import { toastError, toastSuccess } from "../toast";
 export default function FormSendEmail() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const data = useSelector((state) => state.openForm.data);
+  console.log("check", data);
   async function handleSubmit(e) {
     e.preventDefault();
     if (!subject || !content) return;
@@ -49,7 +51,7 @@ export default function FormSendEmail() {
               onChange={(e) => {
                 setInputEmail(e.target.value);
               }}
-              value={inputEmail}
+              value={data ? data : inputEmail}
             />
           </div>
           <ButtonSolid

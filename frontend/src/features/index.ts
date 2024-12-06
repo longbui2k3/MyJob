@@ -12,6 +12,7 @@ export {
   closeFormSendEmail,
   setId,
   setType,
+  setData,
 } from "./openForm/openFormSlice";
 
 export {

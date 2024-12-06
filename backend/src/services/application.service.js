@@ -88,7 +88,7 @@ class ApplicationService {
 
   static findApplication = async (applicationId) => {
     const application = await applicationRepo.findById(applicationId, {
-      populates: ["profile", "resume", "resume.resume", "job"],
+      populates: ["profile", "resume", "resume.resume", "job", "user"],
     });
     return application;
   };

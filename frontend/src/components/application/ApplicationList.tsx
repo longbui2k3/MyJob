@@ -164,9 +164,9 @@ export default function ApplicationList() {
           {ApplicationStatuses.map((value) => (
             <Tab>
               {value}
-              {/* <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center"> */}
-              {/* {applicationCounts[value] ?? 0} */}
-              {/* </div> */}
+              {/* <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center">
+              {applicationCounts[value] ?? 0}
+              </div> */}
             </Tab>
           ))}
         </TabList>
