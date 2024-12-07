@@ -9,12 +9,16 @@ import ProfileOverview from "../profile/ProfileOverview";
 import { ContactInformation } from "../profile";
 import { ButtonSolid } from "../buttons";
 import { OutsideForm } from "../global";
-import { closeApplicationDetail } from "../../features";
-import { useSelector } from "react-redux";
+import {
+  closeApplicationDetail,
+  openFormSendEmail,
+  setData,
+} from "../../features";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ApplicationDetail() {
   const id = useSelector((state: any) => state.openForm.id);
-
+  const dispatch = useDispatch();
   const [application, setApplication] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [isSavedCandidate, setIsSavedCandidate] = useState(false);
@@ -92,7 +96,10 @@ export default function ApplicationDetail() {
               </div>
               <ButtonSolid
                 className="my-auto"
-                onClick={() => {}}
+                onClick={() => {
+                  dispatch(openFormSendEmail());
+                  dispatch(setData(application?.user.email));
+                }}
                 children={"Send Email"}
                 leftIcon={<TfiEmail size={20} />}
                 height="45px"

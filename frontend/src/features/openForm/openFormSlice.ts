@@ -10,6 +10,7 @@ export const openFormSlice = createSlice({
     isOpenFormSendEmail: false,
     id: "",
     type: "",
+    data: undefined,
   },
   reducers: {
     openFormCategory(state) {
@@ -41,12 +42,16 @@ export const openFormSlice = createSlice({
     },
     closeFormSendEmail(state) {
       state.isOpenFormSendEmail = false;
+      state.data = undefined;
     },
     setId(state, action) {
       state.id = action.payload;
     },
     setType(state, action) {
       state.type = action.payload;
+    },
+    setData(state, action) {
+      state.data = action.payload;
     },
   },
 });
@@ -63,5 +68,6 @@ export const {
   closeFormSendEmail,
   setId,
   setType,
+  setData,
 } = openFormSlice.actions;
 export default openFormSlice.reducer;
