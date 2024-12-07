@@ -33,6 +33,9 @@ export default function Cover() {
   const isOpenFormSendEmail = useSelector(
     (state: any) => state.openForm.isOpenFormSendEmail
   );
+  const isOpenCVViewer = useSelector(
+    (state: any) => state.openForm.isOpenCVViewer
+  );
 
   useEffect(() => {
     if (isOpenFormCategory || isOpenFormResume) window.scrollTo(0, 0);
@@ -44,7 +47,7 @@ export default function Cover() {
       {isOpenFormApplyJob ? <FormApplyJob /> : ""}
       {isOpenApplicationDetail ? <ApplicationDetail /> : ""}
       {isOpenFormSendEmail ? <FormSendEmail /> : ""}
-      
+      {isOpenCVViewer ? <CVViewer /> : ""}
       <Header />
       <div
         className={`${

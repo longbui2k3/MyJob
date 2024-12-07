@@ -2,11 +2,10 @@ import { useState } from "react";
 import { closeCVViewer } from "../../features";
 import OutsideForm from "./OutsideForm";
 import { Document, Page, pdfjs } from "react-pdf";
-interface CVViewerProps {
-  fileUrl?: string;
-}
+import { useSelector } from "react-redux";
 
-export default function CVViewer({ fileUrl = "" }: CVViewerProps) {
+export default function CVViewer() {
+  const data = useSelector((state: any) => state.openForm.data);
   pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
   async function handleSubmit() {}
   const [numPages, setNumPages] = useState<number>();
@@ -23,7 +22,7 @@ export default function CVViewer({ fileUrl = "" }: CVViewerProps) {
       width="700px"
       height="1200px"
     >
-      <Document file={fileUrl} onLoadSuccess={onDocumentLoadSuccess}>
+      <Document file={data} onLoadSuccess={onDocumentLoadSuccess}>
         <Page
           pageNumber={pageNumber}
           renderTextLayer={false}

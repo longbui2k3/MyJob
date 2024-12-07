@@ -7,25 +7,21 @@ import { useEffect, useState } from "react";
 import {
   openCVViewer,
   openFormResume,
+  setData,
   setDataChange,
   setId,
   setType,
 } from "../../features";
 import { useAuthContext } from "../../context";
 import CreateResume from "./CreateResume";
-import { CVViewer } from "../global";
 
 export default function UploadedResumeList() {
   const dispatch = useDispatch();
   const isDataChange = useSelector(
     (state: any) => state.changeData.isDataChange
   );
-  const isOpenCVViewer = useSelector(
-    (state: any) => state.openForm.isOpenCVViewer
-  );
   const { userId } = useAuthContext();
   const [resumes, setResumes] = useState<Array<any>>([]);
-  const [selectedFileUrl, setSelectedFileUrl] = useState("");
 
   const findResumes = async () => {
     const data = await FindResumesAPI({
@@ -67,18 +63,13 @@ export default function UploadedResumeList() {
               dispatch(setId(resume._id));
             }}
             onClick={() => {
+              dispatch(setData(resume.resume.fileUrl));
               dispatch(openCVViewer());
-              setSelectedFileUrl(resume.resume.fileUrl);
             }}
           />
         ))}
         <CreateResume />
       </div>
-      {isOpenCVViewer && selectedFileUrl ? (
-        <CVViewer fileUrl={selectedFileUrl} />
-      ) : (
-        ""
-      )}
     </div>
   );
 }

@@ -6,6 +6,8 @@ import { MessageError } from "../../global";
 import { initializeApp } from "firebase/app";
 import { getMetadata, getStorage, ref } from "firebase/storage";
 import { firebaseConfig } from "../../../configs/firebase.config";
+import { useDispatch } from "react-redux";
+import { openCVViewer, setData } from "../../../features";
 initializeApp(firebaseConfig);
 const storage = getStorage();
 
@@ -28,6 +30,7 @@ export default function UploadFileInput({
   fileType = "image",
   isFileEmpty = false,
 }: UploadFileInputProps) {
+  const dispatch = useDispatch();
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -117,6 +120,10 @@ export default function UploadFileInput({
           onDelete={() => {
             setDocument(null);
             onFileChange(null);
+          }}
+          onClick={() => {
+            dispatch(setData(fileUrl));
+            dispatch(openCVViewer());
           }}
         />
       ) : (
