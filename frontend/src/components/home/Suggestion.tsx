@@ -1,43 +1,31 @@
+import { useEffect, useState } from "react";
 import { Text } from "../text";
+import { FindAllCategoriesAPI } from "../../apis";
 
 export default function Suggestion() {
-  const suggestions = [
-    {
-      suggestion: "Designer",
-      href: "#",
-    },
-    {
-      suggestion: "Programming",
-      href: "#",
-    },
-    {
-      suggestion: "Digital Marketing",
-      href: "#",
-    },
-    {
-      suggestion: "Video",
-      href: "#",
-    },
-    {
-      suggestion: "Animation",
-      href: "#",
-    },
-  ];
+  const [categories, setCategories] = useState<Array<any>>([""]);
+  async function findAllCategories() {
+    const limit = 6;
+    const data = await FindAllCategoriesAPI(limit);
+    if (data.isSuccess) {
+      setCategories(data.metadata.categories);
+    }
+  }
+
+  useEffect(() => {
+    findAllCategories();
+  }, []);
 
   return (
     <Text className="font-[600] mt-3">
       <span className="text-[--gray-200]">Suggestion:</span>{" "}
-      {suggestions
-        .map((suggestion) => (
+      {categories
+        .map((category) => (
           <a
-            href={suggestion.href}
-            className={
-              suggestion.suggestion === "Digital Marketing"
-                ? "text-[--primary-600]"
-                : "text-[--gray-700]"
-            }
+            href={`/jobs?category=${category._id}`}
+            className={"text-[--gray-700] hover:text-[--primary-500]"}
           >
-            {suggestion.suggestion}
+            {category.name}
           </a>
         ))
         .reduce((acc, x) =>

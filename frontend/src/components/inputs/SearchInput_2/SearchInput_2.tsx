@@ -10,9 +10,9 @@ export default function SearchInput_2() {
   const { provinceCode, setProvinceCode, search, setSearch } =
     useSearchInput_1();
   return (
-    <div className="flex bg-white rounded-[10px] w-[550px]">
+    <div className="flex bg-white rounded-[10px] w-[580px]">
       <SearchJobInput
-        width="270px"
+        width="300px"
         height="50px"
         search={search}
         setSearch={setSearch}

@@ -44,15 +44,15 @@ export default function HowItWorks() {
           <div className="relative flex mt-10 space-x-4">
             <img
               src="/arrow_down.svg"
-              className="absolute left-[170px] w-[190px]"
+              className="absolute left-[190px] w-[190px]"
             />
             <img
               src="/arrow_up.svg"
-              className="absolute top-[80px] left-[410px] w-[190px]"
+              className="absolute top-[80px] left-[450px] w-[190px]"
             />
             <img
               src="/arrow_down.svg"
-              className="absolute left-[660px] w-[190px]"
+              className="absolute left-[720px] w-[190px]"
             />
             {steps.map((step) => (
               <div

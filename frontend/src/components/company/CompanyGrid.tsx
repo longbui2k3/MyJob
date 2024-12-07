@@ -72,7 +72,7 @@ export default function CompanyGrid({
           </div>
           <div className="flex space-x-2">
             <LocationInfo info={mapLocation.split(",").slice(-1)[0]} />
-            {/* <OpenJobInfo info={`${openJobNum} - Open Job`} /> */}
+            <OpenJobInfo info={`${openJobNum} - Open Job`} />
           </div>
         </div>
       </div>

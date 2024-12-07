@@ -1,5 +1,7 @@
+const { JobStatuses } = require("../../helpers/constants");
 const categoryModel = require("../category.model");
 const BaseRepo = require("./base.repo");
+const jobRepo = require("./job.repo");
 
 class CategoryRepo extends BaseRepo {
   constructor() {
@@ -15,7 +17,20 @@ class CategoryRepo extends BaseRepo {
     return await this.deleteOne({ _id: id });
   }
 
-  
+  async updateOpenPositionNum() {
+    const categories = await categoryModel.find();
+    await Promise.all(
+      categories.map(async (category) => {
+        const openPositionNum = await jobRepo.countDocuments({
+          "category": category._id,
+          status: JobStatuses.ACTIVE,
+        });
+        await this.findByIdAndUpdate(category._id, {
+          openPositionNum,
+        });
+      })
+    );
+  }
 }
 
 module.exports = new CategoryRepo();

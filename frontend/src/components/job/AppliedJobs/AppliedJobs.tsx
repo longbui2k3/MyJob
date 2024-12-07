@@ -18,6 +18,7 @@ import { GiBackwardTime } from "react-icons/gi";
 import { Pagination, usePagination } from "../../global";
 import { useNavigate } from "react-router-dom";
 import { CiCircleRemove } from "react-icons/ci";
+import { getRoute, JOB_DETAIL_KEY } from "../../../helpers/constants";
 
 interface StatusesProps {
   status?: string;
@@ -137,7 +138,13 @@ export default function AppliedJobs({
                       children={"View Details"}
                       onClick={(e) => {
                         e.preventDefault();
-                        navigate(`/jobs/${application.job._id}`);
+                        navigate(
+                          getRoute(JOB_DETAIL_KEY, {
+                            param: {
+                              id: `${application.job._id}`,
+                            },
+                          }).path
+                        );
                       }}
                     />
                   </Td>

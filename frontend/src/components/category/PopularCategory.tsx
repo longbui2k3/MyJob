@@ -42,7 +42,11 @@ export default function PopularCategory() {
       </div>
       <div className="grid grid-cols-4 mt-8">
         {categories.map((category) => (
-          <Category iconUrl={category.iconUrl} categoryName={category.name} />
+          <Category
+            iconUrl={category.iconUrl}
+            categoryName={category.name}
+            num_open_positions={category.openPositionNum}
+          />
         ))}
       </div>
     </div>

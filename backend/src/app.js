@@ -4,6 +4,12 @@ const { default: helmet } = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const cron = require("node-cron");
+const jobModel = require("./models/job.model");
+const { JobStatuses } = require("./helpers/constants");
+const jobRepo = require("./models/repos/job.repo");
+const companyRepo = require("./models/repos/company.repo");
+const categoryRepo = require("./models/repos/category.repo");
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
@@ -13,6 +19,15 @@ app.use(cors());
 
 //thiết lập database
 require("./dbs/init.mongodb");
+
+//kiem tra job het han sau moi mot phut
+cron.schedule("* * * * *", async () => {
+  await jobRepo.updateExpiredJobs();
+  await companyRepo.updateOpenPositionNum();
+  await categoryRepo.updateOpenPositionNum();
+  console.log("Update expire status successfully!");
+});
+
 //load router
 app.use("", require("./routes"));
 

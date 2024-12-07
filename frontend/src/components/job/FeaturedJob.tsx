@@ -2,11 +2,17 @@ import { FiArrowRight } from "react-icons/fi";
 import { ButtonOutline } from "../buttons";
 import { Heading3 } from "../headings";
 import JobRowsFill from "./JobRowsFill";
-import { DEFAULT_PADDING_X } from "../../helpers/constants";
+import {
+  DEFAULT_PADDING_X,
+  FIND_JOBS_KEY,
+  getRoute,
+} from "../../helpers/constants";
 import { FindJobsAPI } from "../../apis";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function FeaturedJob() {
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState<Array<any>>([]);
   async function findJobs() {
     const data = await FindJobsAPI({
@@ -37,6 +43,9 @@ export default function FeaturedJob() {
             </div>
           }
           className="my-auto"
+          onClick={(e) => {
+            navigate(getRoute(FIND_JOBS_KEY).path);
+          }}
         />
       </div>
       <div className="mt-8 flex flex-col space-y-4">

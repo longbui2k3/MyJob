@@ -44,7 +44,7 @@ export default function CompanyList() {
             logo={company.logo}
             companyName={company.companyName}
             mapLocation={company.mapLocation}
-            openJobNum={0}
+            openJobNum={company.openPositionNum}
           />
         ))}
       </div>
@@ -57,7 +57,7 @@ export default function CompanyList() {
             logo={company.logo}
             companyName={company.companyName}
             mapLocation={company.mapLocation}
-            openJobNum={0}
+            openJobNum={company.openPositionNum}
           />
         ))}
       </div>

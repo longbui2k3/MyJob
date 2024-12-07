@@ -13,6 +13,7 @@ const {
   Educations,
   JobTypes,
   JobLevels,
+  JobStatuses,
 } = require("../helpers/constants");
 const applicationRepo = require("../models/repos/application.repo");
 class JobService {
@@ -56,7 +57,7 @@ class JobService {
     provinceCode = 0,
     company,
     category,
-    status,
+    status = JobStatuses.ACTIVE,
     experiences = [],
     salaryMin,
     salaryMax,
@@ -78,7 +79,6 @@ class JobService {
     jobLevels = jobLevels.map((jobLevel) => Object.values(JobLevels)[jobLevel]);
     salaryMin = salaryMin ? Number(salaryMin) : undefined;
     salaryMax = salaryMax ? Number(salaryMax) : undefined;
-    await jobRepo.updateExpiredJobs();
     const job = await jobRepo.find(
       removeUndefinedInObject({
         "company.provinceCode": provinceCode - 0 || undefined,

@@ -20,11 +20,11 @@ export default function HeroSection() {
             className="w-[400px] leading-[1.2]"
           />
           <Text className="text-left w-[450px] mt-8 mb-8">
-            Aliquam vitae turpis in diam convallis finibus in at risus. Nullam
-            in scelerisque leo, eget sollicitudin velit bestibulum.
+            Explore opportunities that align with your goals. Begin your journey
+            towards a fulfilling career today!
           </Text>
           <SearchInput_2 />
-          <Suggestion />
+          <Suggestion />  
         </div>
         <div className="w-[40%]">
           <img src="/home_1.png" className="h-[100%]" />

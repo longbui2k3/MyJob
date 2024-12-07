@@ -10,6 +10,7 @@ import { useSearchParams } from "react-router-dom";
 import ActiveFilterList from "./ActiveFilterList";
 
 export default function JobList() {
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams, __] = useSearchParams();
   const { viewType, setViewType } = useViewTypeSelect();
   const { curPage, setCurPage } = usePagination();
@@ -17,36 +18,64 @@ export default function JobList() {
   const [size, setSize] = useState(1);
   const [jobs, setJobs] = useState<Array<any>>([]);
   async function findJobs(page: number) {
+    if (jobs[page - 1]) return;
+
     const provinceCode = searchParams.get("provinceCode");
-    const data = await FindJobsAPI({
-      limit,
-      page,
-      search: searchParams.get("search") || undefined,
-      provinceCode: provinceCode ? Number(provinceCode) : undefined,
-      category: searchParams.get("category") || undefined,
-      experiences:
-        (searchParams.get("experiences") &&
-          searchParams.get("experiences")?.split("_")) ||
-        undefined,
-      educations:
-        (searchParams.get("educations") &&
-          searchParams.get("educations")?.split("_")) ||
-        undefined,
-      jobLevels:
-        (searchParams.get("jobLevels") &&
-          searchParams.get("jobLevels")?.split("_")) ||
-        undefined,
-      jobTypes:
-        (searchParams.get("jobTypes") &&
-          searchParams.get("jobTypes")?.split("_")) ||
-        undefined,
-      salaryMin: searchParams.get("salary_min") || undefined,
-      salaryMax: searchParams.get("salary_max") || undefined,
-    });
-    if (data.isSuccess) {
-      setJobs(data.metadata.jobs);
-      setSize(data.metadata.meta.size);
+    async function findJobsFromAPI(page: number) {
+      const data = await FindJobsAPI({
+        limit,
+        page,
+        search: searchParams.get("search") || undefined,
+        provinceCode: provinceCode ? Number(provinceCode) : undefined,
+        category: searchParams.get("category") || undefined,
+        experiences:
+          (searchParams.get("experiences") &&
+            searchParams.get("experiences")?.split("_")) ||
+          undefined,
+        educations:
+          (searchParams.get("educations") &&
+            searchParams.get("educations")?.split("_")) ||
+          undefined,
+        jobLevels:
+          (searchParams.get("jobLevels") &&
+            searchParams.get("jobLevels")?.split("_")) ||
+          undefined,
+        jobTypes:
+          (searchParams.get("jobTypes") &&
+            searchParams.get("jobTypes")?.split("_")) ||
+          undefined,
+        salaryMin: searchParams.get("salary_min") || undefined,
+        salaryMax: searchParams.get("salary_max") || undefined,
+      });
+      if (data.isSuccess) {
+        // setJobs([...jobs, data.metadata.jobs]);
+        // setSize(data.metadata.meta.size);
+        return data.metadata;
+      }
+      return {
+        jobs: [],
+        meta: {
+          size: 0,
+        },
+      };
     }
+    setIsLoading(true);
+    if (page === 1) {
+      const data = await findJobsFromAPI(page);
+      setJobs([...jobs, data.jobs]);
+      setSize(data.meta.size);
+    } else {
+      const jobList = [];
+      for (let i = 2; i <= size; i++) {
+        const data = await findJobsFromAPI(i);
+        jobList.push(data.jobs);
+        if (i === size) {
+          setSize(data.meta.size);
+        }
+      }
+      setJobs([...jobs, ...jobList]);
+    }
+    setIsLoading(false);
   }
   useEffect(() => {
     setCurPage(1);
@@ -55,40 +84,43 @@ export default function JobList() {
   useEffect(() => {
     findJobs(curPage);
   }, [curPage]);
+
   const Jobs = {
     GRID: () => (
       <div className="grid grid-cols-2 gap-4">
-        {jobs.map((job) => (
+        {(jobs[curPage - 1] || new Array(limit).fill({}))?.map((job) => (
           <JobGrid
-            _id={job._id}
-            companyId={job.company._id}
-            companyLogo={job.company.logo}
-            companyName={job.company.companyName}
-            companyLocation={job.company.mapLocation}
-            jobTitle={job.jobTitle}
-            jobType={job.jobType}
-            minSalary={job.minSalary}
-            maxSalary={job.maxSalary}
-            expirationDate={job.expirationDate}
-            status={job.status}
+            _id={job?._id}
+            companyId={job?.company?._id}
+            companyLogo={job?.company?.logo}
+            companyName={job?.company?.companyName}
+            companyLocation={job?.company?.mapLocation}
+            jobTitle={job?.jobTitle}
+            jobType={job?.jobType}
+            minSalary={job?.minSalary}
+            maxSalary={job?.maxSalary}
+            expirationDate={job?.expirationDate}
+            status={job?.status}
+            isLoading={isLoading}
           />
         ))}
       </div>
     ),
     ROWS_FILL: () => (
       <div className="flex flex-col space-y-4">
-        {jobs.map((job) => (
+        {(jobs[curPage - 1] || new Array(limit).fill({}))?.map((job) => (
           <JobRowsFill
-            _id={job._id}
-            companyId={job.company._id}
-            companyLogo={job.company.logo}
-            companyLocation={job.company.mapLocation}
-            jobTitle={job.jobTitle}
-            jobType={job.jobType}
-            minSalary={job.minSalary}
-            maxSalary={job.maxSalary}
-            expirationDate={job.expirationDate}
-            status={job.status}
+            _id={job?._id}
+            companyId={job?.company?._id}
+            companyLogo={job?.company?.logo}
+            companyLocation={job?.company?.mapLocation}
+            jobTitle={job?.jobTitle}
+            jobType={job?.jobType}
+            minSalary={job?.minSalary}
+            maxSalary={job?.maxSalary}
+            expirationDate={job?.expirationDate}
+            status={job?.status}
+            isLoading={isLoading}
           />
         ))}
       </div>

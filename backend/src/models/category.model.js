@@ -7,6 +7,7 @@ const categorySchema = new mongoose.Schema(
     name: { type: String, required: true },
     iconUrl: { type: String, required: true },
     imageUrl: { type: String, required: true },
+    openPositionNum: { type: Number, required: true, default: 0 },
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );

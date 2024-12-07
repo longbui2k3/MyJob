@@ -108,6 +108,7 @@ class CompanyService {
         page,
         limit,
         search,
+        sort: ["-openPositionNum"],
       }
     );
   };
