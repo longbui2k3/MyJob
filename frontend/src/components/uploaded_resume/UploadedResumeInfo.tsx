@@ -8,9 +8,14 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Tooltip,
 } from "@chakra-ui/react";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { CVViewer } from "../global";
+import { openCVViewer } from "../../features";
+import { AiOutlineEye } from "react-icons/ai";
 
 interface UploadedResumeInfoProps {
   title?: string;
@@ -19,6 +24,7 @@ interface UploadedResumeInfoProps {
   type?: string;
   onEdit?: () => void;
   onDelete?: () => void;
+  onClick?: () => void;
 }
 
 export default function UploadedResumeInfo({
@@ -28,24 +34,38 @@ export default function UploadedResumeInfo({
   type = "view", //upload, view
   onEdit = () => {},
   onDelete = () => {},
+  onClick = () => {},
 }: UploadedResumeInfoProps) {
+  const dispatch = useDispatch();
+
   return (
     <div className="bg-[--gray-100] h-[70px] flex justify-between items-center p-[20px] rounded-sm">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <IoDocumentTextOutline size={30} color={"var(--primary-500)"} />
           <div className="flex flex-col space-y-1 justify-between ml-[10px]">
-            <a href={file_url} target="_blank">
+            <div onClick={onClick}>
               <Heading6
                 name={title}
                 className="hover:text-[--primary-500] hover:underline cursor-pointer"
               />
-            </a>
+            </div>
             <Text className="mt-[0px]">{file_size}</Text>
           </div>
         </div>
       </div>
-      <div>
+      <div className="flex">
+        <Tooltip label="View CV">
+          <IconButton
+            icon={<AiOutlineEye size={24} color="var(--primary-500)" />}
+            aria-label="View"
+            onClick={onClick}
+            _hover={{
+              bg: "none",
+            }}
+            padding={"0px"}
+          />
+        </Tooltip>
         <Menu>
           <MenuButton
             as={IconButton}
@@ -56,6 +76,7 @@ export default function UploadedResumeInfo({
             variant="outline"
             border={"none"}
             _hover={{ bg: "none" }}
+            padding={"0px"}
           />
           <MenuList style={{ width: "120px" }}>
             {type === "view" ? (

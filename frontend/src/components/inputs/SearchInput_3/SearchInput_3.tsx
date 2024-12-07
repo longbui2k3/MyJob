@@ -104,7 +104,7 @@ export default function SearchInput_3() {
             if (jobTypes.length) query["jobTypes"] = jobTypes.join("_");
             if (jobLevels.length) query["jobLevels"] = jobLevels.join("_");
             navigate(`?${changeQueryObjToQueryStr(query)}`);
-            navigate(0);
+            // navigate(0);
           }}
         />
       </div>

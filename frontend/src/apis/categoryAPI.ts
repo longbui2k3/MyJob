@@ -1,4 +1,5 @@
 import { HttpMethods } from "../helpers/constants";
+import { changeQueryObjToQueryStr } from "../utils";
 import BaseAPI from "./baseAPI";
 export const CreateCategoryAPI = async (body: {
   name?: string | null;
@@ -16,13 +17,12 @@ export const CreateCategoryAPI = async (body: {
   });
 };
 
-export const FindAllCategoriesAPI = async (limit?: number) => {
-  let query = "";
-  if (limit) {
-    query = query + `limit=${limit}`;
-  }
+export const FindAllCategoriesAPI = async (body: {
+  limit?: number;
+  page?: number;
+}) => {
   return await BaseAPI({
-    path: `/category?${query}`,
+    path: `/category?${changeQueryObjToQueryStr(body)}`,
     method: HttpMethods.GET,
   });
 };

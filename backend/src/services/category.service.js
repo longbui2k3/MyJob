@@ -33,7 +33,10 @@ class CategoryService {
   }
 
   static async findAllCategories({ page, limit, search }) {
-    return await categoryRepo.find({}, { page, limit, search });
+    return await categoryRepo.find(
+      {},
+      { page, limit, search, sort: ["-openPositionNum"] }
+    );
   }
 
   static async findCategory(id) {

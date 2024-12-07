@@ -13,7 +13,7 @@ export default function DashboardCategory() {
   const [categories, setCategories] = useState<Array<any>>([]);
 
   async function findAllCategories() {
-    const data = await FindAllCategoriesAPI();
+    const data = await FindAllCategoriesAPI({});
     if (data.isSuccess) {
       setCategories(data.metadata.categories);
     }

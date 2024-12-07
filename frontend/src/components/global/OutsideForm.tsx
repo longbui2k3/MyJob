@@ -51,7 +51,7 @@ export default function OutsideForm({
       >
         <Heading5 name={header} />
         <FaXmark
-          className="absolute right-[26px] top-[16px] text-[20px] text-[--gray-200]"
+          className="absolute right-[26px] top-[16px] text-[20px] text-[--gray-200] z-10"
           onClick={function (e) {
             dispatch(closeForm());
           }}

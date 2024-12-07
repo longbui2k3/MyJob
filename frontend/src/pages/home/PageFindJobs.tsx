@@ -14,7 +14,7 @@ export default function PageFindJobs() {
       <div
         className="bg-[--gray-100]"
         style={{
-          padding: `0px ${DEFAULT_PADDING_X} 30px ${DEFAULT_PADDING_X}`,
+          padding: `0px ${DEFAULT_PADDING_X} 20px ${DEFAULT_PADDING_X}`,
         }}
       >
         <SearchInput_3 />

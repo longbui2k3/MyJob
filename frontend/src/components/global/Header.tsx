@@ -225,6 +225,7 @@ export default function Header() {
     let prevScrollpos = window.scrollY;
     window.onscroll = function () {
       const currentScrollPos = window.scrollY;
+      if (currentScrollPos < 500) return;
       if (prevScrollpos > currentScrollPos) {
         cur.style.display = "";
       } else {
@@ -241,7 +242,7 @@ export default function Header() {
         <Navigation />
       )}
       <div
-        className={`flex flex-col justify-center w-full h-[80px] bg-white`}
+        className={`flex flex-col justify-center w-full h-[70px] bg-white`}
         ref={headerRef}
         style={{
           padding: ` 0px ${
@@ -251,7 +252,7 @@ export default function Header() {
           }`,
         }}
       >
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <div className="flex space-x-8 items-center">
             <a href="/">
               <Logo />

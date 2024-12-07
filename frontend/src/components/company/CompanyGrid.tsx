@@ -1,4 +1,4 @@
-import { Tag } from "@chakra-ui/react";
+import { Skeleton, SkeletonText, Tag } from "@chakra-ui/react";
 import { Heading6 } from "../headings";
 import { LocationInfo, OpenJobInfo } from "./CompanyInfos";
 import { ButtonOutline } from "../buttons";
@@ -11,6 +11,7 @@ interface CompanyGridProps {
   mapLocation?: string;
   openJobNum?: number;
   isFeatured?: boolean;
+  isLoading?: boolean;
 }
 export default function CompanyGrid({
   _id = "",
@@ -19,64 +20,94 @@ export default function CompanyGrid({
   mapLocation = "",
   openJobNum = 0,
   isFeatured = false,
+  isLoading = false,
 }: CompanyGridProps) {
   return (
     <div className="flex flex-col space-y-4 p-5 rounded-lg border-[1px] border-[--gray-100] ease-in-out hover:bg-[--primary-50] hover:border-[--primary-200] cursor-pointer">
       <div className="flex space-x-3">
-        <a
-          href={
-            getRoute(EMPLOYER_DETAIL_KEY, {
-              param: {
-                id: _id,
-              },
-            }).path
-          }
-        >
-          <img
-            src={logo}
-            width={"52px"}
-            height={"52px"}
-            className="rounded-md aspect-square border-[1px] border-gray-100"
-          />
-        </a>
+        <Skeleton isLoaded={!isLoading}>
+          <a
+            href={
+              getRoute(EMPLOYER_DETAIL_KEY, {
+                param: {
+                  id: _id,
+                },
+              }).path
+            }
+          >
+            <img
+              src={logo}
+              width={"52px"}
+              height={"52px"}
+              className="rounded-md aspect-square border-[1px] border-gray-100"
+            />
+          </a>
+        </Skeleton>
         <div className="flex flex-col justify-between ml-4">
-          <div className="flex space-x-3">
-            <a
-              href={
-                getRoute(EMPLOYER_DETAIL_KEY, {
-                  param: {
-                    id: _id,
-                  },
-                }).path
-              }
-            >
-              <Heading6
-                name={companyName}
-                className="hover:text-[--primary-500] hover:underline"
-              />
-            </a>
-            {isFeatured ? (
-              <Tag
-                bg="var(--danger-50)"
-                textColor={"var(--danger-500)"}
-                fontSize={"13px"}
-                paddingX={"8px"}
-                paddingY="4px"
-                marginY="auto"
-              >
-                Featured
-              </Tag>
-            ) : (
-              ""
-            )}
-          </div>
-          <div className="flex space-x-2">
-            <LocationInfo info={mapLocation.split(",").slice(-1)[0]} />
-            <OpenJobInfo info={`${openJobNum} - Open Job`} />
-          </div>
+          {isLoading ? (
+            <SkeletonText
+              noOfLines={2}
+              width={"200px"}
+              height={"100%"}
+              gap={"2"}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            />
+          ) : (
+            <>
+              <div className="flex space-x-3">
+                <a
+                  href={
+                    getRoute(EMPLOYER_DETAIL_KEY, {
+                      param: {
+                        id: _id,
+                      },
+                    }).path
+                  }
+                >
+                  <Heading6
+                    name={companyName}
+                    className="hover:text-[--primary-500] hover:underline"
+                  />
+                </a>
+                {isFeatured ? (
+                  <Tag
+                    bg="var(--danger-50)"
+                    textColor={"var(--danger-500)"}
+                    fontSize={"13px"}
+                    paddingX={"8px"}
+                    paddingY="4px"
+                    marginY="auto"
+                  >
+                    Featured
+                  </Tag>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="flex space-x-2">
+                <LocationInfo info={mapLocation.split(",").slice(-1)[0]} />
+                <OpenJobInfo info={`${openJobNum} - Open Job`} />
+              </div>
+            </>
+          )}
         </div>
       </div>
-      <ButtonOutline children={"Open Position"} onClick={() => {}} />
+      <Skeleton
+        isLoaded={!isLoading}
+        style={{
+          width: "100%",
+        }}
+      >
+        <ButtonOutline
+          children={"Open Position"}
+          className="w-full"
+          onClick={() => {}}
+        />
+      </Skeleton>
     </div>
   );
 }

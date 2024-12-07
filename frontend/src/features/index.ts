@@ -10,6 +10,8 @@ export {
   closeApplicationDetail,
   openFormSendEmail,
   closeFormSendEmail,
+  openCVViewer,
+  closeCVViewer,
   setId,
   setType,
   setData,

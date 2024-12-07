@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DEFAULT_PADDING_X, ViewTypes } from "../../helpers/constants";
-import { Pagination, usePagination } from "../global";
+import { NotFoundList, Pagination, usePagination } from "../global";
 import { PageLimitSelect, usePageLimitSelect } from "../select/PageLimitSelect";
 import { useViewTypeSelect, ViewTypeSelect } from "../select/ViewTypeSelect";
 import JobGrid from "./JobGrid";
@@ -17,7 +17,7 @@ export default function JobList() {
   const { limit, handleLimitChange } = usePageLimitSelect();
   const [size, setSize] = useState(1);
   const [jobs, setJobs] = useState<Array<any>>([]);
-  async function findJobs(page: number) {
+  async function findJobs(page: number, jobs: Array<any>) {
     if (jobs[page - 1]) return;
 
     const provinceCode = searchParams.get("provinceCode");
@@ -79,11 +79,11 @@ export default function JobList() {
   }
   useEffect(() => {
     setCurPage(1);
-    findJobs(1);
-  }, [limit]);
+    findJobs(1, []);
+  }, [limit, searchParams]);
   useEffect(() => {
-    findJobs(curPage);
-  }, [curPage]);
+    findJobs(curPage, [...jobs]);
+  }, [curPage, searchParams]);
 
   const Jobs = {
     GRID: () => (
@@ -141,7 +141,13 @@ export default function JobList() {
         </div>
       </div>
       <div className="mt-8 mb-16">
-        {viewType === ViewTypes.GRID ? <Jobs.GRID /> : <Jobs.ROWS_FILL />}
+        {!isLoading && jobs[curPage - 1]?.length === 0 ? (
+          <NotFoundList info="No jobs matching your requirements have been found yet." />
+        ) : viewType === ViewTypes.GRID ? (
+          <Jobs.GRID />
+        ) : (
+          <Jobs.ROWS_FILL />
+        )}
       </div>
       <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />
     </div>

@@ -8,6 +8,7 @@ export const openFormSlice = createSlice({
     isOpenFormApplyJob: false,
     isOpenApplicationDetail: false,
     isOpenFormSendEmail: false,
+    isOpenCVViewer: false,
     id: "",
     type: "",
     data: undefined,
@@ -44,6 +45,12 @@ export const openFormSlice = createSlice({
       state.isOpenFormSendEmail = false;
       state.data = undefined;
     },
+    openCVViewer(state) {
+      state.isOpenCVViewer = true;
+    },
+    closeCVViewer(state) {
+      state.isOpenCVViewer = false;
+    },
     setId(state, action) {
       state.id = action.payload;
     },
@@ -66,6 +73,8 @@ export const {
   closeApplicationDetail,
   openFormSendEmail,
   closeFormSendEmail,
+  openCVViewer,
+  closeCVViewer,
   setId,
   setType,
   setData,

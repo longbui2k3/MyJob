@@ -1,12 +1,16 @@
 import { Outlet } from "react-router-dom";
-import { Footer, Header } from "../components/global";
+import { CVViewer, Footer, Header } from "../components/global";
 import { useSelector } from "react-redux";
 import { FormCategory } from "../components/category";
 import { FormResume } from "../components/uploaded_resume";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ApplicationDetail, FormApplyJob, FormSendEmail } from "../components/application";
+import {
+  ApplicationDetail,
+  FormApplyJob,
+  FormSendEmail,
+} from "../components/application";
 import { useAuthContext } from "../context";
 import { UserTypes } from "../helpers/constants";
 
@@ -40,12 +44,13 @@ export default function Cover() {
       {isOpenFormApplyJob ? <FormApplyJob /> : ""}
       {isOpenApplicationDetail ? <ApplicationDetail /> : ""}
       {isOpenFormSendEmail ? <FormSendEmail /> : ""}
+      
       <Header />
       <div
         className={`${
           typeof user !== "string" && user?.userType === UserTypes.EMPLOYER
-            ? "pt-[80px]"
-            : "pt-[130px]"
+            ? "pt-[70px]"
+            : "pt-[120px]"
         }`}
         style={{
           display: "flex",

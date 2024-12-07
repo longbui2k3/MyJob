@@ -4,17 +4,28 @@ import UploadedResumeInfo from "./UploadedResumeInfo";
 import { DeleteResumeAPI, FindResumesAPI } from "../../apis";
 import { toastError, toastSuccess } from "../toast";
 import { useEffect, useState } from "react";
-import { openFormResume, setDataChange, setId, setType } from "../../features";
+import {
+  openCVViewer,
+  openFormResume,
+  setDataChange,
+  setId,
+  setType,
+} from "../../features";
 import { useAuthContext } from "../../context";
 import CreateResume from "./CreateResume";
+import { CVViewer } from "../global";
 
 export default function UploadedResumeList() {
   const dispatch = useDispatch();
   const isDataChange = useSelector(
     (state: any) => state.changeData.isDataChange
   );
+  const isOpenCVViewer = useSelector(
+    (state: any) => state.openForm.isOpenCVViewer
+  );
   const { userId } = useAuthContext();
   const [resumes, setResumes] = useState<Array<any>>([]);
+  const [selectedFileUrl, setSelectedFileUrl] = useState("");
 
   const findResumes = async () => {
     const data = await FindResumesAPI({
@@ -55,10 +66,19 @@ export default function UploadedResumeList() {
               dispatch(setType("update"));
               dispatch(setId(resume._id));
             }}
+            onClick={() => {
+              dispatch(openCVViewer());
+              setSelectedFileUrl(resume.resume.fileUrl);
+            }}
           />
         ))}
         <CreateResume />
       </div>
+      {isOpenCVViewer && selectedFileUrl ? (
+        <CVViewer fileUrl={selectedFileUrl} />
+      ) : (
+        ""
+      )}
     </div>
   );
 }

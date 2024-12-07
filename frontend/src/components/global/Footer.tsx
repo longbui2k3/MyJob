@@ -103,8 +103,8 @@ export default function Footer() {
             <Text className="text-white">{"(319)-555-0115"}</Text>
           </div>
           <Text className="w-[250px]">
-            6391 Elgin St. Celina, Delaware 10299, New York, United States of
-            America
+            No. 1 Vo Van Ngan Street, Linh Chieu Ward, Thu Duc City, Ho Chi Minh
+            City, Vietnam.
           </Text>
         </div>
         <div className="w-[70%] flex justify-between">
@@ -146,7 +146,7 @@ export default function Footer() {
         }}
       >
         <Text
-          children={"@ 2024 MyJob - Job Portal. All rights Rserved"}
+          children={"@ 2024 MyJob - Job Portal. All rights reserved"}
           className="mt-[0px]"
         />
         <div className="flex space-x-4">

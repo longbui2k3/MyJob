@@ -1,5 +1,5 @@
 import { DEFAULT_PADDING_X, ViewTypes } from "../../helpers/constants";
-import { Pagination, usePagination } from "../global";
+import { NotFoundList, Pagination, usePagination } from "../global";
 import { PageLimitSelect, usePageLimitSelect } from "../select/PageLimitSelect";
 import { useViewTypeSelect, ViewTypeSelect } from "../select/ViewTypeSelect";
 import CompanyGrid from "./CompanyGrid";
@@ -9,57 +9,97 @@ import { FindCompaniesAPI } from "../../apis";
 import { useSearchParams } from "react-router-dom";
 
 export default function CompanyList() {
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams, __] = useSearchParams();
   const { viewType, setViewType } = useViewTypeSelect();
   const { curPage, setCurPage } = usePagination();
   const { limit, handleLimitChange } = usePageLimitSelect();
   const [size, setSize] = useState(1);
   const [companies, setCompanies] = useState<Array<any>>([]);
-  async function findCompanies() {
+  async function findCompanies(page: number, companies: Array<any>) {
+    if (companies[page - 1]) return;
     const provinceCode = searchParams.get("provinceCode");
-    const data = await FindCompaniesAPI({
-      limit,
-      page: curPage,
-      search: searchParams.get("search") || undefined,
-      organizationType:
-        (searchParams.get("org_type") &&
-          Number(searchParams.get("org_type"))) ||
-        undefined,
-      provinceCode: provinceCode ? Number(provinceCode) : undefined,
-    });
-    if (data.isSuccess) {
-      setCompanies(data.metadata.companies);
-      setSize(data.metadata.meta.size);
+    async function findCompaniesFromAPI(page: number) {
+      const data = await FindCompaniesAPI({
+        limit,
+        page,
+        search: searchParams.get("search") || undefined,
+        organizationType:
+          (searchParams.get("org_type") &&
+            Number(searchParams.get("org_type"))) ||
+          undefined,
+        provinceCode: provinceCode ? Number(provinceCode) : undefined,
+      });
+      if (data.isSuccess) {
+        // setCompanies(data.metadata.companies);
+        // setSize(data.metadata.meta.size);
+        return data.metadata;
+      }
+      return {
+        companies: [],
+        meta: {
+          size: 0,
+        },
+      };
     }
+    setIsLoading(true);
+    if (page === 1) {
+      const data = await findCompaniesFromAPI(page);
+      setCompanies([...companies, data.companies]);
+      setSize(data.meta.size);
+    } else {
+      const jobList = [];
+      for (let i = 2; i <= size; i++) {
+        const data = await findCompaniesFromAPI(i);
+        jobList.push(data.companies);
+        if (i === size) {
+          setSize(data.meta.size);
+        }
+      }
+      setCompanies([...companies, ...jobList]);
+    }
+    setIsLoading(false);
   }
+
   useEffect(() => {
-    findCompanies();
-  }, [limit, curPage]);
+    setCurPage(1);
+    findCompanies(1, []);
+  }, [limit, searchParams]);
+
+  useEffect(() => {
+    findCompanies(curPage, [...companies]);
+  }, [curPage, searchParams]);
   const Companies = {
     GRID: () => (
       <div className="grid grid-cols-3 gap-4">
-        {companies.map((company) => (
-          <CompanyGrid
-            _id={company._id}
-            logo={company.logo}
-            companyName={company.companyName}
-            mapLocation={company.mapLocation}
-            openJobNum={company.openPositionNum}
-          />
-        ))}
+        {(companies[curPage - 1] || new Array(limit).fill({})).map(
+          (company) => (
+            <CompanyGrid
+              _id={company?._id}
+              logo={company?.logo}
+              companyName={company?.companyName}
+              mapLocation={company?.mapLocation}
+              openJobNum={company?.openPositionNum}
+              isLoading={isLoading}
+            />
+          )
+        )}
       </div>
     ),
     ROWS_FILL: () => (
       <div className="flex flex-col space-y-4">
-        {companies.map((company) => (
-          <CompanyRowsFill
-            _id={company._id}
-            logo={company.logo}
-            companyName={company.companyName}
-            mapLocation={company.mapLocation}
-            openJobNum={company.openPositionNum}
-          />
-        ))}
+        {(companies[curPage - 1] || new Array(limit).fill({})).map(
+          (company) => (
+            <CompanyRowsFill
+              _id={company?._id}
+              logo={company?.logo}
+              companyName={company?.companyName}
+              mapLocation={company?.mapLocation}
+              openJobNum={company?.openPositionNum}
+              isLoading={isLoading}
+            />
+          )
+        )}
       </div>
     ),
   };
@@ -77,7 +117,9 @@ export default function CompanyList() {
         </div>
       </div>
       <div className="mt-8 mb-16">
-        {viewType === ViewTypes.GRID ? (
+        {!isLoading && companies[curPage - 1]?.length === 0 ? (
+          <NotFoundList info="No companies matching your requirements have been found yet." />
+        ) : viewType === ViewTypes.GRID ? (
           <Companies.GRID />
         ) : (
           <Companies.ROWS_FILL />

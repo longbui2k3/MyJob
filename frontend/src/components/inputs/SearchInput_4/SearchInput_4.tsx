@@ -50,7 +50,7 @@ export default function SearchInput_4() {
             if (provinceCode) query["provinceCode"] = provinceCode;
             if (organizationType >= 0) query["org_type"] = organizationType;
             navigate(`?${changeQueryObjToQueryStr(query)}`);
-            navigate(0);
+            // navigate(0);
           }}
         />
       </div>

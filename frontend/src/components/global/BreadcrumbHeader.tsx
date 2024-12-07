@@ -11,7 +11,7 @@ export default function BreadcrumbHeader({
 }: BreadcrumbHeaderProps) {
   return (
     <div
-      className="flex items-center justify-between h-[70px] bg-[--gray-100]"
+      className="flex items-center justify-between h-[60px] bg-[--gray-100]"
       style={{
         padding: `0px ${DEFAULT_PADDING_X}`,
       }}
