@@ -57,7 +57,7 @@ export default function ProfilePicture({
       />
       <div
         onClick={handleClick}
-        className={`${className} rounded-md border-2 border-dashed border-gray-300 bg-gray-100`}
+        className={`${className} rounded-md border-2 border-dashed border-gray-300 bg-gray-100 cursor-pointer`}
       >
         {imageUrl ? (
           <img

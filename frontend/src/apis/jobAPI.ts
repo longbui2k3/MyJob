@@ -67,6 +67,7 @@ export const UpdateJobAPI = async (
     applyJobOn?: string;
     jobDescription?: string;
     jobResponsibilities?: string;
+    status?: string;
   }
 ) => {
   return await BaseAPI({

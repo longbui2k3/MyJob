@@ -1,5 +1,5 @@
 import { MyJobs } from "../job/MyJobs";
 
 export default function DashboardMyJobs() {
-  return <MyJobs limit={5} />;
+  return <MyJobs />;
 }

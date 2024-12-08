@@ -28,10 +28,10 @@ export default function CompletedCompany() {
           textColor={"var(--primary-500)"}
           bg={"var(--primary-50)"}
           className="mr-3"
-          onClick={(e) => {
-            setTimeout(() => {
-              navigate(getRoute(DASHBOARD_KEY).path, { replace: true });
-            }, 500);
+          onClick={() => {
+            navigate(getRoute(DASHBOARD_KEY).path, {
+              replace: true,
+            });
           }}
         >
           View Dashboard
@@ -40,12 +40,10 @@ export default function CompletedCompany() {
           textColor={"white"}
           bg={"var(--primary-500)"}
           rightIcon={<GrLinkNext />}
-          onClick={(e) => {
-            setTimeout(() => {
-              navigate(getRoute(DASHBOARD_POST_A_JOB_KEY).path, {
-                replace: true,
-              });
-            }, 500);
+          onClick={() => {
+            navigate(getRoute(DASHBOARD_POST_A_JOB_KEY).path, {
+              replace: true,
+            });
           }}
         >
           Post Job

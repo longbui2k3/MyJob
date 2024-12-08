@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { FindSavedCandidateAPI } from "../../apis";
 import { useDispatch } from "react-redux";
 import { openFormApplicationDetail, setId } from "../../features";
+import { Avatar } from "@chakra-ui/react";
 interface CandidateRowsFillProps {
   _id?: string;
   avatar?: string;
@@ -46,7 +47,7 @@ export default function CandidateRowsFill({
   return (
     <div className="flex items-center border-[1px] border-[--gray-100] rounded-lg p-5 justify-between">
       <div className="flex items-center space-x-3">
-        <img
+        <Avatar
           width={"70px"}
           height={"70px"}
           src={avatar}

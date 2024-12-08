@@ -87,6 +87,7 @@ export default function SearchInput_3() {
           children={"Find Job"}
           className={"my-auto mr-1 w-[100px]"}
           onClick={() => {
+            setIsOpenAdvanceFilter(!isOpenAdvanceFilter);
             const query: {
               [key: string]: any;
             } = {};

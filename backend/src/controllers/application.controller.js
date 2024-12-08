@@ -41,11 +41,8 @@ class ApplicationController {
 
     return new OK({
       message: "update application successfully",
-      metadata: {
-        applications: result.data,
-        meta: result.meta,
-      },
-    });
+      metadata: result,
+    }).send(res);
   };
 
   findApplication = async (req, res, next) => {
