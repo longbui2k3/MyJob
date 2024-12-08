@@ -15,6 +15,7 @@ import {
   setData,
 } from "../../features";
 import { useDispatch, useSelector } from "react-redux";
+import { Avatar } from "@chakra-ui/react";
 
 export default function ApplicationDetail() {
   const id = useSelector((state: any) => state.openForm.id);
@@ -61,7 +62,7 @@ export default function ApplicationDetail() {
       <div className={`w-full `}>
         <div className="flex justify-between items-center">
           <div className="flex space-x-5 items-center">
-            <img
+            <Avatar
               src={application?.profile?.avatar}
               width={"80px"}
               height={"80px"}

@@ -42,7 +42,9 @@ export default function AdvanceInformation({
   };
 
   const handleExpirationDateChange = (e) => {
-    onExpirationDateChange(e.target.value);
+    const date = e.target.value;
+    const updatedDate = `${date}T23:59:59.000Z`;
+    onExpirationDateChange(updatedDate);
   };
   return (
     <>

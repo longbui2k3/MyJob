@@ -3,33 +3,22 @@ import { AdvanceFilter, Pagination, usePagination } from "../global";
 import { FindApplicationsAPI, UpdateApplicationAPI } from "../../apis";
 import { useParams } from "react-router-dom";
 import { Heading5 } from "../headings";
-import {
-  IconButton,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import Applications from "./Applications";
 import { ApplicationStatuses } from "../../helpers/constants";
 import { ButtonSolid } from "../buttons";
 import { TfiEmail } from "react-icons/tfi";
-import { MdOutlineSaveAs } from "react-icons/md";
-import { AdvanceFilterSelect } from "../select/AdvanceFilterSelect";
 import { useSearchInput_3 } from "../inputs";
 import { useDispatch, useSelector } from "react-redux";
 import { openFormSendEmail } from "../../features";
-import { toastSuccess } from "../toast";
+import { toastError, toastSuccess } from "../toast";
 
 export default function ApplicationList() {
   const dispatch = useDispatch();
   const { jobId } = useParams();
   const [applications, setApplications] = useState<Array<any>>([]);
-  const [status, setStatus] = useState<string | undefined>("Submitted");
-  const [updatedStatuses, setUpdatedStatuses] = useState<
-    Record<string, string>
-  >({});
+  const [tabStatus, setTabStatus] = useState<string | undefined>("Submitted");
+  const [checkUpdate, setCheckUpdate] = useState<number>(1);
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
   const [applicationCounts, setApplicationCounts] = useState<
@@ -56,7 +45,7 @@ export default function ApplicationList() {
   async function findApplications() {
     const data = await FindApplicationsAPI({
       job: jobId,
-      status,
+      status: tabStatus,
       page: curPage,
     });
     if (data.isSuccess) {
@@ -64,9 +53,10 @@ export default function ApplicationList() {
       setSize(data.metadata.meta.size);
     }
   }
+  console.log("checkUpdate", checkUpdate);
   useEffect(() => {
     findApplications();
-  }, [status]);
+  }, [tabStatus, checkUpdate]);
 
   async function fetchApplicationCounts() {
     const counts: Record<string, number> = {};
@@ -83,36 +73,19 @@ export default function ApplicationList() {
   }, []);
 
   const handleTabChange = (index: number) => {
-    setStatus(ApplicationStatuses[index]);
+    setTabStatus(ApplicationStatuses[index]);
   };
 
-  // update list application status
-  const handleStatusChange = (
-    id: string,
-    newStatus: string,
-    currentStatus: string
-  ) => {
-    if (newStatus !== "" && newStatus !== currentStatus) {
-      setUpdatedStatuses((prevStatus) => ({
-        ...prevStatus,
-        [id]: newStatus,
-      }));
+  const handleUpdateStatus = async (id: string, value: string) => {
+    console.log("handleUpdateStatus called", id, value);
+    const data = await UpdateApplicationAPI(id, { status: value });
+    console.log("checkdata", data);
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+      setCheckUpdate((prev) => prev + 1);
     } else {
-      setUpdatedStatuses((prevStatus) => {
-        const { [id]: _, ...rest } = prevStatus;
-        return rest;
-      });
+      toastError(data.message);
     }
-  };
-  const handleUpdateApplication = async () => {
-    const promises = Object.entries(updatedStatuses).map(([id, status]) =>
-      UpdateApplicationAPI(id, { status })
-    );
-    toastSuccess("Update application successfully!");
-    await Promise.all(promises);
-
-    findApplications();
-    fetchApplicationCounts();
   };
 
   return (
@@ -137,12 +110,12 @@ export default function ApplicationList() {
             height="40px"
             width="150px"
           />
-          <IconButton
+          {/* <IconButton
             icon={<MdOutlineSaveAs size={22} color="white" />}
             bg={"var(--primary-500)"}
             aria-label="Save changes"
             onClick={() => handleUpdateApplication()}
-          />
+          /> */}
         </div>
       </div>
       {/* <AdvanceFilter
@@ -175,7 +148,7 @@ export default function ApplicationList() {
             <TabPanel>
               <Applications
                 applications={applications}
-                onStatusChange={handleStatusChange}
+                onStatusChange={handleUpdateStatus}
               />
             </TabPanel>
           ))}

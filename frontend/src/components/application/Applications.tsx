@@ -1,20 +1,27 @@
 import { useDispatch } from "react-redux";
-import { openFormApplicationDetail, setId } from "../../features";
-import { Avatar, ListItem, Tag, UnorderedList } from "@chakra-ui/react";
+import {
+  openCVViewer,
+  openFormApplicationDetail,
+  setData,
+  setId,
+} from "../../features";
+import {
+  Avatar,
+  IconButton,
+  ListItem,
+  Tag,
+  Tooltip,
+  UnorderedList,
+} from "@chakra-ui/react";
 import { Heading6 } from "../headings";
 import { ButtonOutline } from "../buttons";
-import { GoDownload } from "react-icons/go";
-import { FindResumeByIdAPI } from "../../apis";
-import { BaseSelect } from "../select";
-import { ApplicationStatuses } from "../../helpers/constants";
+import { LuCalendarCheck } from "react-icons/lu";
+import { FaCheck, FaUserCircle } from "react-icons/fa";
+import { CiCircleRemove } from "react-icons/ci";
 
 interface ApplicationsProps {
   applications?: Array<any>;
-  onStatusChange: (
-    id: string,
-    newstatus: string,
-    currentStatus: string
-  ) => void;
+  onStatusChange: (id: string, value: string) => void;
 }
 export default function Applications({
   applications,
@@ -31,16 +38,8 @@ export default function Applications({
       year: "numeric",
     }).format(date);
   };
+  console.log(applications);
 
-  const handleDownloadCv = async (resume: string) => {
-    const data = await FindResumeByIdAPI(resume);
-    if (data.isSuccess) {
-      const link = document.createElement("a");
-      link.href = data.metadata.resume.resume.fileUrl;
-      document.body.appendChild(link);
-      link.click();
-    }
-  };
   return (
     <div className="grid grid-cols-3 gap-4 ">
       {applications?.map((application) => (
@@ -51,13 +50,18 @@ export default function Applications({
                 dispatch(openFormApplicationDetail());
                 dispatch(setId(application._id));
               }}
-              className="flex gap-3 items-center"
+              className="flex gap-3 items-center cursor-pointer"
             >
-              <Avatar
-                height={"40px"}
-                width={"40px"}
-                src={application.profile.avatar}
-              />
+              {application?.profile?.avatar ? (
+                <Avatar
+                  height={"40px"}
+                  width={"40px"}
+                  src={application?.profile?.avatar}
+                />
+              ) : (
+                <FaUserCircle size="40px" color="var(--default-avatar)" />
+              )}
+
               <div>
                 <div className="flex space-x-3 items-center">
                   <Heading6 name={application.profile.fullName} />
@@ -83,17 +87,47 @@ export default function Applications({
             </UnorderedList>
             <div className="flex justify-between">
               <ButtonOutline
-                leftIcon={<GoDownload size={18} />}
-                children={"Download Cv"}
-                onClick={() => handleDownloadCv(application.resume)}
+                // leftIcon={<GoDownload size={18} />}
+                children={"View CV"}
+                onClick={() => {
+                  dispatch(setData(application.resume.resume.fileUrl));
+                  dispatch(openCVViewer());
+                }}
               />
-              <BaseSelect
+              {/* <BaseSelect
                 placeholder="Status Change"
                 options={ApplicationStatuses}
                 onChange={(newStatus) =>
                   onStatusChange(application._id, newStatus, application.status)
                 }
-              />
+              /> */}
+
+              <div className="space-x-2">
+                <Tooltip label="Interview">
+                  <IconButton
+                    icon={<LuCalendarCheck size={20} color="white" />}
+                    bg={"var(--interview)"}
+                    aria-label="Interview"
+                    onClick={() => onStatusChange(application._id, "Interview")}
+                  />
+                </Tooltip>
+                <Tooltip label="Hire">
+                  <IconButton
+                    icon={<FaCheck size={17} color="white" />}
+                    bg={"var(--hired)"}
+                    aria-label="Hired"
+                    onClick={() => onStatusChange(application._id, "Hired")}
+                  />
+                </Tooltip>
+                <Tooltip label="Reject">
+                  <IconButton
+                    icon={<CiCircleRemove size={22} color="white" />}
+                    bg={"var(--rejected)"}
+                    aria-label="Rejected"
+                    onClick={() => onStatusChange(application._id, "Rejected")}
+                  />
+                </Tooltip>
+              </div>
             </div>
           </div>
         </>

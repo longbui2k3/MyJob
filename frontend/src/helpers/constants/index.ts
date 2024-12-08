@@ -131,7 +131,6 @@ export const TeamSizes = [
 
 export const ApplicationStatuses = [
   "Submitted",
-  "Consider",
   "Interview",
   "Hired",
   "Rejected",

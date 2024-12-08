@@ -66,7 +66,7 @@ class ApplicationService {
         page,
         limit,
         sort: ["createdAt"],
-        populates: ["profile", "job"],
+        populates: ["profile", "job", "resume.resume.fileUrl"],
         populateSelects: [
           {
             profile: "avatar fullName provinceCode experience title education",

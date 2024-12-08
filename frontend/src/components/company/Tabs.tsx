@@ -17,13 +17,14 @@ import GearSixIcon from "../icons/GearSixIcon";
 import { useCookies } from "react-cookie";
 import { ButtonSubmit } from "../buttons";
 import { toastError, toastSuccess } from "../toast";
+import { GetUser } from "../../apis";
 
 export default function Tabs() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handelClick = (index: number) => setActiveIndex(index);
   const navigate = useNavigate();
   const [isSettings, setIsSettings] = useState<boolean>(false);
-  const { user } = useAuthContext();
+  const { user, userId, setUserId } = useAuthContext();
   const [cookie] = useCookies();
 
   useEffect(() => {
@@ -144,9 +145,10 @@ export default function Tabs() {
   const [companyData, setCompanyData] = useState<any>(null);
   useEffect(() => {
     const fetchCompanyData = async () => {
-      const data = await FindCompanyAPI(cookie.user);
-      console.log(data.metadata.company);
-      setCompanyData(data.metadata.company); // Lưu dữ liệu vào state
+      if (userId) {
+        const data = await FindCompanyAPI(userId);
+        setCompanyData(data.metadata.company);
+      }
     };
 
     fetchCompanyData();
@@ -163,9 +165,7 @@ export default function Tabs() {
       setOrganizationType(companyData.organizationType);
       setIndustryType(companyData.industryType);
       setTeamSize(companyData.teamSize);
-      setYearOfEstablishmentVal(
-        companyData.yearOfEstablishment.split("T")[0]
-      );
+      setYearOfEstablishmentVal(companyData.yearOfEstablishment.split("T")[0]);
       setCompanyWebsite(companyData.companyWebsite);
       setCompanyBenefits(companyData.companyBenefits);
       setCompanyVision(companyData.companyVision);
@@ -215,13 +215,10 @@ export default function Tabs() {
     });
     if (data.isSuccess) {
       toastSuccess(data.message);
-      console.log("tao cong ty thanh cong");
-      setTimeout(() => {
-        navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
-      }, 500);
+      setUserId(data.metadata._id);
+      navigate(getRoute(COMPLETED_COMPANY_KEY).path, { replace: true });
     } else {
       toastError(data.message);
-      console.log("tao cong ty that bai");
     }
   };
 
