@@ -8,7 +8,6 @@ import Applications from "./Applications";
 import { ApplicationStatuses } from "../../helpers/constants";
 import { ButtonSolid } from "../buttons";
 import { TfiEmail } from "react-icons/tfi";
-import { useSearchInput_3 } from "../inputs";
 import { useDispatch } from "react-redux";
 import { openFormSendEmail, setData, setId } from "../../features";
 import { toastError, toastSuccess } from "../toast";
@@ -25,21 +24,6 @@ export default function ApplicationList() {
     Record<string, number>
   >({});
   const [listEmail, setListEmail] = useState<Array<string>>([]);
-  const [isOpenAdvanceFilter, setIsOpenAdvanceFilter] = useState(false);
-  const advanceFilterRef = useRef<HTMLDivElement | null>(null);
-  const { experiences, setExperiences, educations, setEducations } =
-    useSearchInput_3();
-
-  console.log(applications);
-  useEffect(() => {
-    if (advanceFilterRef.current) {
-      const parentWidth =
-        advanceFilterRef.current.parentElement?.getBoundingClientRect().width;
-      if (parentWidth) {
-        advanceFilterRef.current.style.width = `${parentWidth}px`;
-      }
-    }
-  }, [isOpenAdvanceFilter]);
 
   async function findApplications() {
     const data = await FindApplicationsAPI({
@@ -62,19 +46,19 @@ export default function ApplicationList() {
     findApplications();
   }, [tabStatus, checkUpdate]);
 
-  // async function fetchApplicationCounts() {
-  //   const counts: Record<string, number> = {};
-  //   for (const value of ApplicationStatuses) {
-  //     const data = await FindApplicationsAPI({ job: jobId, status: value });
-  //     if (data.isSuccess) {
-  //       counts[value] = data.metadata.applications.length;
-  //     }
-  //   }
-  //   setApplicationCounts(counts);
-  // }
-  // useEffect(() => {
-  //   fetchApplicationCounts();
-  // }, []);
+  async function fetchApplicationCounts() {
+    const counts: Record<string, number> = {};
+    for (const value of ApplicationStatuses) {
+      const data = await FindApplicationsAPI({ job: jobId, status: value });
+      if (data.isSuccess) {
+        counts[value] = data.metadata.applications.length;
+      }
+    }
+    setApplicationCounts(counts);
+  }
+  useEffect(() => {
+    fetchApplicationCounts();
+  }, [checkUpdate]);
 
   const handleTabChange = (index: number) => {
     setTabStatus(ApplicationStatuses[index]);
@@ -97,13 +81,6 @@ export default function ApplicationList() {
       <div className="flex items-center justify-between">
         <Heading5 name="Job Applications" />
         <div className="flex space-x-2">
-          {/* <div className="border-2 rounded-md">
-            <AdvanceFilterSelect
-              onClick={() => {
-                setIsOpenAdvanceFilter(!isOpenAdvanceFilter);
-              }}
-            />
-          </div> */}
           <ButtonSolid
             className="my-auto"
             onClick={() => {
@@ -118,15 +95,6 @@ export default function ApplicationList() {
           />
         </div>
       </div>
-      {/* <AdvanceFilter
-        ref={advanceFilterRef}
-        isOpenAdvanceFilter={isOpenAdvanceFilter}
-        setIsOpenAdvanceFilter={setIsOpenAdvanceFilter}
-        experiences={experiences}
-        setExperiences={setExperiences}
-        educations={educations}
-        setEducations={setEducations}
-      /> */}
       <Tabs
         variant="soft-rounded"
         colorScheme="blue"
@@ -137,9 +105,9 @@ export default function ApplicationList() {
           {ApplicationStatuses.map((value) => (
             <Tab>
               {value}
-              {/* <div className="ml-2 bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center">
-              {applicationCounts[value] ?? 0}
-              </div> */}
+              <div className="ml-2 bg-gray-200 rounded-full w-6 h-6 flex items-center justify-center">
+                {applicationCounts[value] ?? 0}
+              </div>
             </Tab>
           ))}
         </TabList>

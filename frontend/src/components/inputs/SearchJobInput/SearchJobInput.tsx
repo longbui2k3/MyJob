@@ -14,7 +14,7 @@ export default function SearchJobInput({
   height,
   search = "",
   setSearch = () => {},
-  placeholder = "Job title, keyword, company,...",
+  placeholder = "Job title, keyword,...",
 }: SearchJobInputProps) {
   return (
     <InputGroup width={width} bg="white">
