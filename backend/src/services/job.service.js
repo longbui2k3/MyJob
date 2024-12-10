@@ -26,10 +26,11 @@ class JobService {
     return await jobRepo.deleteJob(id);
   };
   static updateJob = async (id, data) => {
+    const { expirationDate } = data;
     const updateJob = await jobRepo.updateJob(id, data);
     if (!updateJob)
       throw new BadRequestError(`Job with id ${id} is not found!`);
-    await jobRepo.updateActiveJob(id);
+    if (expirationDate) await jobRepo.updateActiveJob(id);
     return updateJob;
   };
 

@@ -11,33 +11,24 @@ import { JobIcon, SavedIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
 import { MyJobs } from "../job/MyJobs";
 import { useAuthContext } from "../../context";
-import {
-  FindCompanyAPI,
-  FindJobsAPI,
-  FindSavedCandidatesByUser,
-} from "../../apis";
-import { useCookies } from "react-cookie";
+import { FindJobsAPI, FindSavedCandidatesByUser } from "../../apis";
 import { useEffect, useState } from "react";
 import { GoBookmark } from "react-icons/go";
 import { PiBriefcaseLight } from "react-icons/pi";
 
 export default function EmployerOverview() {
-  const { user } = useAuthContext();
-  const [cookie] = useCookies();
+  const { user, userId } = useAuthContext();
   const [jobsNum, setJobsNum] = useState<number>(0);
   const [savedCandidatesNum, setSavedCandidatesNum] = useState<number>(0);
 
   async function statisticize() {
-    const company = await FindCompanyAPI(cookie.user);
-    if (company.isSuccess) {
-      const jobs = await FindJobsAPI({
-        company: company.metadata.company._id,
-      });
-      const savedCandidates = await FindSavedCandidatesByUser({});
-      if (jobs.isSuccess && savedCandidates.isSuccess) {
-        setJobsNum(jobs.metadata.jobs.length);
-        setSavedCandidatesNum(savedCandidates.metadata.savedCandidates.length);
-      }
+    const jobs = await FindJobsAPI({
+      company: userId || undefined,
+    });
+    const savedCandidates = await FindSavedCandidatesByUser({});
+    if (jobs.isSuccess && savedCandidates.isSuccess) {
+      setJobsNum(jobs.metadata.jobs.length);
+      setSavedCandidatesNum(savedCandidates.metadata.savedCandidates.length);
     }
   }
 

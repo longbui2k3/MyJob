@@ -13,8 +13,10 @@ import {
   closeApplicationDetail,
   openFormSendEmail,
   setData,
+  setId,
 } from "../../features";
 import { useDispatch, useSelector } from "react-redux";
+import { Avatar } from "@chakra-ui/react";
 
 export default function ApplicationDetail() {
   const id = useSelector((state: any) => state.openForm.id);
@@ -61,7 +63,7 @@ export default function ApplicationDetail() {
       <div className={`w-full `}>
         <div className="flex justify-between items-center">
           <div className="flex space-x-5 items-center">
-            <img
+            <Avatar
               src={application?.profile?.avatar}
               width={"80px"}
               height={"80px"}
@@ -74,14 +76,14 @@ export default function ApplicationDetail() {
               <div className="flex space-x-5">
                 <Text
                   className="mt-[0px]"
-                  children={application?.job?.jobTitle}
+                  children={application?.profile?.title}
                 />
               </div>
             </div>
           </div>
           <div>
             <div className="flex space-x-4 items-center">
-              <div className="flex justify-center items-center h-[45px] w-[45px] bg-[--primary-100] rounded-md">
+              <div className="flex justify-center items-center h-[45px] w-[45px] bg-[--primary-100] rounded-md ">
                 {isSavedCandidate ? (
                   <SavedCandidateIcon
                     candidateId={id}
@@ -99,6 +101,7 @@ export default function ApplicationDetail() {
                 onClick={() => {
                   dispatch(openFormSendEmail());
                   dispatch(setData(application?.user.email));
+                  dispatch(setId(application?.job?._id));
                 }}
                 children={"Send Email"}
                 leftIcon={<TfiEmail size={20} />}

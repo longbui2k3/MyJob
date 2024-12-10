@@ -20,10 +20,9 @@ class CompanyService {
   static updateCompany = async (id, data, files) => {
     const { socialMedias, provinceCode, ...otherData } = data;
 
-    const [logoImg, bannerImg] = await Promise.all([
-      this.uploadFile(files?.logo?.[0]),
-      this.uploadFile(files?.banner?.[0]),
-    ]);
+    const logoImg = await this.uploadFile(files?.logo?.[0]);
+    const bannerImg = await this.uploadFile(files?.banner?.[0]);
+
     // let parseSocialMedias = [];
     // if (socialMedias) {
     //   parseSocialMedias = JSON.parse(socialMedias);
@@ -57,11 +56,10 @@ class CompanyService {
   };
 
   static createCompany = async (data, files) => {
-    let { user, socialMedias, provinceCode, ...otherData } = data;
-    const [logoImg, bannerImg] = await Promise.all([
-      this.uploadFile(files?.logo?.[0]),
-      this.uploadFile(files?.banner?.[0]),
-    ]);
+    let { socialMedias, provinceCode, ...otherData } = data;
+    const logoImg = await this.uploadFile(files?.logo?.[0]);
+    const bannerImg = await this.uploadFile(files?.banner?.[0]);
+
     // let parseSocialMedias = [];
     // if (socialMedias) {
     //   parseSocialMedias = JSON.parse(socialMedias);
@@ -76,7 +74,6 @@ class CompanyService {
     }
     return await companyRepo.createCompany({
       ...otherData,
-      _id: user,
       logo: logoImg,
       banner: bannerImg,
       socialMedias: parseSocialMedias,

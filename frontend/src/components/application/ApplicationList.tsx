@@ -1,48 +1,36 @@
 import { useEffect, useRef, useState } from "react";
-import { AdvanceFilter, Pagination, usePagination } from "../global";
+import { Pagination, usePagination } from "../global";
 import { FindApplicationsAPI, UpdateApplicationAPI } from "../../apis";
 import { useParams } from "react-router-dom";
 import { Heading5 } from "../headings";
-import {
-  IconButton,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import Applications from "./Applications";
 import { ApplicationStatuses } from "../../helpers/constants";
 import { ButtonSolid } from "../buttons";
 import { TfiEmail } from "react-icons/tfi";
-import { MdOutlineSaveAs } from "react-icons/md";
-import { AdvanceFilterSelect } from "../select/AdvanceFilterSelect";
 import { useSearchInput_3 } from "../inputs";
-import { useDispatch, useSelector } from "react-redux";
-import { openFormSendEmail } from "../../features";
-import { toastSuccess } from "../toast";
+import { useDispatch } from "react-redux";
+import { openFormSendEmail, setData, setId } from "../../features";
+import { toastError, toastSuccess } from "../toast";
 
 export default function ApplicationList() {
   const dispatch = useDispatch();
   const { jobId } = useParams();
   const [applications, setApplications] = useState<Array<any>>([]);
-  const [status, setStatus] = useState<string | undefined>("Submitted");
-  const [updatedStatuses, setUpdatedStatuses] = useState<
-    Record<string, string>
-  >({});
+  const [tabStatus, setTabStatus] = useState<string | undefined>("Submitted");
+  const [checkUpdate, setCheckUpdate] = useState<number>(1);
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
   const [applicationCounts, setApplicationCounts] = useState<
     Record<string, number>
   >({});
-  const isDataChange = useSelector(
-    (state: any) => state.changeData.isDataChange
-  );
+  const [listEmail, setListEmail] = useState<Array<string>>([]);
   const [isOpenAdvanceFilter, setIsOpenAdvanceFilter] = useState(false);
   const advanceFilterRef = useRef<HTMLDivElement | null>(null);
   const { experiences, setExperiences, educations, setEducations } =
     useSearchInput_3();
 
+  console.log(applications);
   useEffect(() => {
     if (advanceFilterRef.current) {
       const parentWidth =
@@ -56,63 +44,52 @@ export default function ApplicationList() {
   async function findApplications() {
     const data = await FindApplicationsAPI({
       job: jobId,
-      status,
+      status: tabStatus,
       page: curPage,
     });
     if (data.isSuccess) {
       setApplications(data.metadata.applications);
       setSize(data.metadata.meta.size);
+
+      const emails = data.metadata.applications
+        .map((app: any) => app.profile?.email)
+        .filter((email: string | undefined) => email);
+      setListEmail(emails);
     }
   }
+
   useEffect(() => {
     findApplications();
-  }, [status]);
+  }, [tabStatus, checkUpdate]);
 
-  async function fetchApplicationCounts() {
-    const counts: Record<string, number> = {};
-    for (const value of ApplicationStatuses) {
-      const data = await FindApplicationsAPI({ job: jobId, status: value });
-      if (data.isSuccess) {
-        counts[value] = data.metadata.applications.length;
-      }
-    }
-    setApplicationCounts(counts);
-  }
-  useEffect(() => {
-    fetchApplicationCounts();
-  }, []);
+  // async function fetchApplicationCounts() {
+  //   const counts: Record<string, number> = {};
+  //   for (const value of ApplicationStatuses) {
+  //     const data = await FindApplicationsAPI({ job: jobId, status: value });
+  //     if (data.isSuccess) {
+  //       counts[value] = data.metadata.applications.length;
+  //     }
+  //   }
+  //   setApplicationCounts(counts);
+  // }
+  // useEffect(() => {
+  //   fetchApplicationCounts();
+  // }, []);
 
   const handleTabChange = (index: number) => {
-    setStatus(ApplicationStatuses[index]);
+    setTabStatus(ApplicationStatuses[index]);
   };
 
-  // update list application status
-  const handleStatusChange = (
-    id: string,
-    newStatus: string,
-    currentStatus: string
-  ) => {
-    if (newStatus !== "" && newStatus !== currentStatus) {
-      setUpdatedStatuses((prevStatus) => ({
-        ...prevStatus,
-        [id]: newStatus,
-      }));
+  const handleUpdateStatus = async (id: string, value: string) => {
+    console.log("handleUpdateStatus called", id, value);
+    const data = await UpdateApplicationAPI(id, { status: value });
+    console.log("checkdata", data);
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+      setCheckUpdate((prev) => prev + 1);
     } else {
-      setUpdatedStatuses((prevStatus) => {
-        const { [id]: _, ...rest } = prevStatus;
-        return rest;
-      });
+      toastError(data.message);
     }
-  };
-  const handleUpdateApplication = async () => {
-    const promises = Object.entries(updatedStatuses).map(([id, status]) =>
-      UpdateApplicationAPI(id, { status })
-    );
-    toastSuccess("Update application successfully!");
-    await Promise.all(promises);
-
-    findApplications();
-    fetchApplicationCounts();
   };
 
   return (
@@ -131,17 +108,13 @@ export default function ApplicationList() {
             className="my-auto"
             onClick={() => {
               dispatch(openFormSendEmail());
+              dispatch(setId(jobId));
+              dispatch(setData(listEmail));
             }}
             children={"Send Email"}
             leftIcon={<TfiEmail size={20} />}
             height="40px"
             width="150px"
-          />
-          <IconButton
-            icon={<MdOutlineSaveAs size={22} color="white" />}
-            bg={"var(--primary-500)"}
-            aria-label="Save changes"
-            onClick={() => handleUpdateApplication()}
           />
         </div>
       </div>
@@ -175,7 +148,7 @@ export default function ApplicationList() {
             <TabPanel>
               <Applications
                 applications={applications}
-                onStatusChange={handleStatusChange}
+                onStatusChange={handleUpdateStatus}
               />
             </TabPanel>
           ))}

@@ -13,6 +13,7 @@ interface InputBaseProps {
   required?: boolean;
   LeftIcon?: IconType;
   currency?: string;
+  disable?: boolean;
 }
 
 export default function BaseInput({
@@ -25,6 +26,7 @@ export default function BaseInput({
   required = true,
   LeftIcon,
   currency,
+  disable,
 }: InputBaseProps) {
   return (
     <>
@@ -52,6 +54,7 @@ export default function BaseInput({
           value={value || ""}
           onChange={onChange}
           className={`${className}`}
+          isDisabled={disable}
         />
         {currency ? (
           <InputRightAddon pointerEvents="none" color="var(--gray-600)">

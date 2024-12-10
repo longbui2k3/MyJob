@@ -54,6 +54,7 @@
   --rejected: #ff4f4f;
   --active: #27c200;
   --expired: #ff4f4f;
+  --default-avatar: #a0aec0;
 }
 
 .canvas-field .ql-editor {

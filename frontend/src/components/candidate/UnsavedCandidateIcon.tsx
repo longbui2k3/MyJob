@@ -27,6 +27,7 @@ export default function UnsavedCandidateIcon({
       className="my-auto"
       color="var(--primary-500)"
       onClick={savedCandidate}
+      style={{ cursor: "pointer" }}
     />
   );
 }

@@ -57,12 +57,18 @@ export default function FormContact() {
     setMobile(e.target.value);
   };
 
+  //email
+  const [email, setEmail] = useState<string>("");
+
   const findProfile = async () => {
     const data = await FindProfileByUserAPI();
     if (data.isSuccess) {
-      setMapLocation(data.metadata.profile.mapLocation);
-      setAddress(data.metadata.profile.address);
-      setMobile(data.metadata.profile.mobile);
+      const dataProfile = data.metadata.profile;
+      console.log(dataProfile);
+      setMapLocation(dataProfile.mapLocation);
+      setAddress(dataProfile.address);
+      setMobile(dataProfile.mobile);
+      setEmail(dataProfile.email);
     }
   };
   useEffect(() => {
@@ -108,7 +114,6 @@ export default function FormContact() {
             type="text"
             value={address}
             onChange={handleAddressChange}
-            required={false}
           />
         </div>
       </div>
@@ -128,7 +133,8 @@ export default function FormContact() {
           label="Email"
           type="text"
           placeholder="Email address"
-          value={"buiduclong911@gmail.com"}
+          disable={true}
+          value={email}
         />
       </div>
       <ButtonSolid

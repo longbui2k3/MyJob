@@ -45,6 +45,10 @@ const profileSchema = new mongoose.Schema(
     provinceCode: {
       type: Number,
     },
+    email: {
+      type: String,
+      require: true,
+    },
     isPrivacy: {
       type: Boolean,
       default: false,

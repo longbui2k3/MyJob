@@ -113,7 +113,7 @@ export default function PostAJob({ jobId }: PostAJobProps) {
     setVacancies(value);
   };
 
-  // expiratio nDate
+  // expirationDate
   const [expirationDate, setExpirationDate] = useState<string>("");
   const handleExpirationDateChange = (value: string) => {
     setExpirationDate(value);

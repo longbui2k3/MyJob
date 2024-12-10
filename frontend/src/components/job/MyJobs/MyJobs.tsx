@@ -22,16 +22,19 @@ import { useEffect, useState } from "react";
 import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
-import { FindCompanyAPI, FindJobsAPI, UpdateJobAPI } from "../../../apis";
+import { FindJobsAPI, UpdateJobAPI } from "../../../apis";
 import { getRoute } from "../../../helpers/constants";
 import { useNavigate } from "react-router-dom";
 import {
   DASHBOARD_APPLICATIONS_KEY,
   DASHBOARD_EDIT_JOB_KEY,
 } from "../../../helpers/constants/routes";
-import { useCookies } from "react-cookie";
 import NumberOfApplications from "./NumberOfApplications";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { useSearchInput_1 } from "../../inputs";
+import { SearchJobInput } from "../../inputs/SearchJobInput";
+import { useAuthContext } from "../../../context";
+import { toastError, toastSuccess } from "../../toast";
 
 interface StatusesProps {
   status?: string;
@@ -59,62 +62,77 @@ interface MyJobsProps {
   limit?: number;
 }
 
-export default function MyJobs({ isCheck = true, limit }: MyJobsProps) {
+export default function MyJobs({ isCheck = true, limit = 5 }: MyJobsProps) {
   const navigate = useNavigate();
+  const { userId } = useAuthContext();
   const { curPage, setCurPage } = usePagination();
   const [size, setSize] = useState(1);
   const [status, setStatus] = useState<string | undefined>();
   const [jobs, setJobs] = useState<Array<any>>([]);
   const [jobsNum, setJobsNum] = useState<number>(0);
   const [refresh, setRefresh] = useState<number>(0);
-  const [cookie] = useCookies();
+  const { search, setSearch } = useSearchInput_1();
 
   async function findJobs() {
-    const company = await FindCompanyAPI(cookie.user);
-    if (company.isSuccess) {
-      const data = await FindJobsAPI({
-        company: company.metadata.company._id,
-        limit: limit,
-        page: curPage,
-        status,
-      });
-      if (data.isSuccess) {
-        setJobs(data.metadata.jobs);
-        setSize(data.metadata.meta.size);
-      }
-      const jobsData = await FindJobsAPI({
-        company: company.metadata.company._id,
-      });
-      if (jobsData.isSuccess) setJobsNum(jobsData.metadata.jobs.length);
+    const data = await FindJobsAPI({
+      company: userId || undefined,
+      limit: limit,
+      page: curPage,
+      status,
+      search: search || undefined,
+    });
+    if (data.isSuccess) {
+      setJobs(data.metadata.jobs);
+      setSize(data.metadata.meta.size);
     }
+    const jobsData = await FindJobsAPI({
+      company: userId || undefined,
+    });
+    if (jobsData.isSuccess) setJobsNum(jobsData.metadata.jobs.length);
   }
 
   useEffect(() => {
     findJobs();
-  }, [curPage, status, refresh]);
+  }, [curPage, status, refresh, search]);
 
   const handleStatusChange = (value: string) => {
     if (value === "") setStatus(undefined);
     else setStatus(value);
   };
+  const handleExpiredJob = async (id: string, status: string) => {
+    const data = await UpdateJobAPI(id, { status });
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+      setRefresh((prev) => prev + 1);
+    } else {
+      toastError(data.message);
+    }
+  };
   return (
     <>
       {isCheck ? (
-        <div className="flex justify-between mb-3">
+        <div className="space-y-5">
           <div className="flex space-x-2">
             <Heading5 name="My Jobs"></Heading5>
             <div className="font-normal text-xl text-gray-500">({jobsNum})</div>
           </div>
-          <BaseSelect
-            label="Job status"
-            options={["Active", "Expired"]}
-            placeholder="All Jobs"
-            className="flex space-x-3 items-center"
-            width="120px"
-            value={status}
-            onChange={handleStatusChange}
-            required={false}
-          />
+          <div className="flex justify-between">
+            <SearchJobInput
+              search={search}
+              setSearch={setSearch}
+              placeholder="Job title, keyword"
+            />
+            <BaseSelect
+              label="Job status"
+              options={["Active", "Expired"]}
+              placeholder="All Jobs"
+              className="flex space-x-3 items-center"
+              width="120px"
+              value={status}
+              onChange={handleStatusChange}
+              required={false}
+            />
+          </div>
         </div>
       ) : (
         ""
@@ -189,14 +207,7 @@ export default function MyJobs({ isCheck = true, limit }: MyJobsProps) {
                             Edit Job
                           </MenuItem>
                           <MenuItem
-                            onClick={async () => {
-                              const response = await UpdateJobAPI(job._id, {
-                                expirationDate: new Date().toISOString(),
-                              });
-                              if (response.isSuccess) {
-                                setRefresh((prev) => prev + 1);
-                              }
-                            }}
+                            onClick={() => handleExpiredJob(job._id, "Expired")}
                             icon={<CiCircleRemove size={20} />}
                           >
                             Make it Expire
