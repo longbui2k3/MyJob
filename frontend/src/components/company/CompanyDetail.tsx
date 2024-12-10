@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_PADDING_X, JobStatuses } from "../../helpers/constants";
 import { useEffect, useState } from "react";
 import { FindCompanyAPI } from "../../apis/companyAPI";
@@ -9,13 +9,58 @@ import CompanyOverview from "./CompanyOverview";
 import ContactInformation from "./ContactInformation";
 import FollowUsOn from "./FollowUsOn";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import { FindJobsAPI } from "../../apis";
+import {
+  FindFollowedCompanyAPI,
+  FindJobsAPI,
+  FollowCompanyAPI,
+  UnfollowCompanyAPI,
+} from "../../apis";
 import { JobGrid, JobRowsFill } from "../job";
+import { toastError, toastSuccess } from "../toast";
+
 export default function CompanyDetail() {
   const { id } = useParams();
+  const [searchParams, _] = useSearchParams();
   const [company, setCompany] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<Array<any>>([]);
+  const [isFollowedCompany, setIsFollowedCompany] = useState(false);
+  async function findFollowedCompany() {
+    if (!id) return;
+    const data = await FindFollowedCompanyAPI(id);
+    if (data.isSuccess) {
+      setIsFollowedCompany(true);
+    } else {
+      setIsFollowedCompany(false);
+    }
+  }
+
+  async function followCompany() {
+    if (!id) return;
+    const data = await FollowCompanyAPI(id);
+    if (data.isSuccess) {
+      setIsFollowedCompany(true);
+      toastSuccess(data.message);
+    } else {
+      setIsFollowedCompany(false);
+      toastError(data.message);
+    }
+  }
+
+  async function unfollowCompany() {
+    if (!id) return;
+    const data = await UnfollowCompanyAPI(id);
+    if (data.isSuccess) {
+      setIsFollowedCompany(false);
+      toastSuccess(data.message);
+    } else {
+      setIsFollowedCompany(true);
+      toastError(data.message);
+    }
+  }
+  useEffect(() => {
+    findFollowedCompany();
+  }, []);
   async function findCompany() {
     if (!id) return;
     const data = await FindCompanyAPI(id);
@@ -71,20 +116,31 @@ export default function CompanyDetail() {
           </div>
           <div className="flex space-x-4">
             <ButtonSubmit
-              label="View Open Position"
-              className="my-auto"
+              label={isFollowedCompany ? "Following" : "Follow"}
+              className={`my-auto`}
               height="45px"
               width="200px"
               fontSize="14px"
+              onClick={() => {
+                if (isFollowedCompany) {
+                  unfollowCompany();
+                } else {
+                  followCompany();
+                }
+              }}
             />
           </div>
         </div>
       </div>
       <div className="flex gap-10 w-full h-[800px] mt-[100px]">
-        <Tabs className="flex flex-col gap-6 w-[60%] h-full overflow-auto p-[20px]">
+        <Tabs
+          isFitted
+          className="flex flex-col gap-6 w-[60%] h-full overflow-auto p-[20px] color-[--primary-500]"
+          defaultIndex={Number(searchParams.get("defaultIndex")) || 0}
+        >
           <TabList>
-            <Tab>Information</Tab>
-            <Tab>Open Position</Tab>
+            <Tab className="color-[--primary-500]">Information</Tab>
+            <Tab className="color-[--primary-500]">{`Open Position (${jobs.length})`}</Tab>
           </TabList>
 
           <TabPanels>

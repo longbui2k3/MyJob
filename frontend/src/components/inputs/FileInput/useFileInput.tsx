@@ -11,5 +11,5 @@ export default function useFileInput() {
       setFile(file);
     }
   };
-  return { imageUrl, handleFileChange, file };
+  return { imageUrl, setImageUrl, handleFileChange, file };
 }

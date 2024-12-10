@@ -25,9 +25,13 @@ class JobRepo extends BaseRepo {
   }
 
   async updateExpiredJobs() {
-    return await this.updateMany(
+    await this.updateMany(
       { expirationDate: { $lt: new Date() }, status: JobStatuses.ACTIVE },
       { $set: { status: JobStatuses.EXPIRED } }
+    );
+    await this.updateMany(
+      { expirationDate: { $gte: new Date() }, status: JobStatuses.EXPIRED},
+      { $set: { status: JobStatuses.ACTIVE } }
     );
   }
 

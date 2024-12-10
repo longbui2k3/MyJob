@@ -7,3 +7,4 @@ export { default as DashboardMyJobs } from "./DashboardMyJobs";
 export { default as DashboardSavedCandidate } from "./DashboardSavedCandidate";
 export { default as DashboardAppliedJobs } from "./DashboardAppliedJobs";
 export { default as DashboardFavoriteJobs } from "./DashboardFavoriteJobs";
+export { default as DashboardUsers } from "./DashboardUsers";

@@ -19,6 +19,7 @@ import {
   UserTypes,
 } from "../../helpers/constants";
 import { toastError, toastSuccess } from "../toast";
+import { FaUserCircle } from "react-icons/fa";
 
 interface SubNavigationProps {
   user: string | User | null;
@@ -94,12 +95,11 @@ const subNavigationRoles = {
           <IoNotificationsOutline size="22px" />
           <Dropdown
             Button={
-              <Avatar
-                name={user.fullName}
-                src={user.avatar}
-                width={"40px"}
-                height={"40px"}
-              />
+              user?.avatar ? (
+                <Avatar src={user.avatar} width={"40px"} height={"40px"} />
+              ) : (
+                <FaUserCircle size="40px" color="var(--gray-200)" />
+              )
             }
             items={items}
           />
@@ -147,12 +147,11 @@ const subNavigationRoles = {
           </a>
           <Dropdown
             Button={
-              <Avatar
-                name={user.fullName}
-                src={user.avatar}
-                width={"40px"}
-                height={"40px"}
-              />
+              user?.avatar ? (
+                <Avatar src={user.avatar} width={"40px"} height={"40px"} />
+              ) : (
+                <FaUserCircle size="40px" color="var(--gray-200)" />
+              )
             }
             items={items}
           />
@@ -191,12 +190,11 @@ const subNavigationRoles = {
           <IoNotificationsOutline size="22px" />
           <Dropdown
             Button={
-              <Avatar
-                name={user.fullName}
-                src={user.avatar}
-                width={"40px"}
-                height={"40px"}
-              />
+              user?.avatar ? (
+                <Avatar src={user.avatar} width={"40px"} height={"40px"} />
+              ) : (
+                <FaUserCircle size="40px" color="var(--gray-200)" />
+              )
             }
             items={items}
           />
@@ -225,7 +223,7 @@ export default function Header() {
     let prevScrollpos = window.scrollY;
     window.onscroll = function () {
       const currentScrollPos = window.scrollY;
-      if (currentScrollPos < 500) return;
+      if (currentScrollPos < 200) return;
       if (prevScrollpos > currentScrollPos) {
         cur.style.display = "";
       } else {
@@ -236,7 +234,9 @@ export default function Header() {
   }, [headerRef]);
   return (
     <div className="fixed top-0 w-full z-[1000]">
-      {typeof user !== "string" && user?.userType === UserTypes.EMPLOYER ? (
+      {typeof user !== "string" &&
+      (user?.userType === UserTypes.EMPLOYER ||
+        user?.userType === UserTypes.ADMIN) ? (
         ""
       ) : (
         <Navigation />
@@ -246,7 +246,9 @@ export default function Header() {
         ref={headerRef}
         style={{
           padding: ` 0px ${
-            typeof user !== "string" && user?.userType === UserTypes.EMPLOYER
+            typeof user !== "string" &&
+            (user?.userType === UserTypes.EMPLOYER ||
+              user?.userType === UserTypes.ADMIN)
               ? "50px"
               : DEFAULT_PADDING_X
           }`,
@@ -255,10 +257,16 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <div className="flex space-x-8 items-center">
             <a href="/">
-              <Logo />
+              {typeof user !== "string" &&
+              user?.userType === UserTypes.ADMIN ? (
+                <Logo text="MyJob for Admin" />
+              ) : (
+                <Logo />
+              )}
             </a>
             {typeof user !== "string" &&
-            user?.userType === UserTypes.EMPLOYER ? (
+            (user?.userType === UserTypes.EMPLOYER ||
+              user?.userType === UserTypes.ADMIN) ? (
               ""
             ) : (
               <SearchInput_1 />

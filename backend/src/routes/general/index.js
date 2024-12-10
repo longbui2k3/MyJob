@@ -4,8 +4,12 @@ const express = require("express");
 const { authentication } = require("../../auth/authUtils");
 const { asyncHandler } = require("../../helpers/asyncHandler");
 const { sendEmail } = require("../../controllers/general.controller");
+const generalController = require("../../controllers/general.controller");
 const router = express.Router();
 router.use(authentication);
+router
+  .route("/statistics")
+  .get(asyncHandler(generalController.generalStatistics));
 router.route("/email").post(
   // #swagger.tags = ['General']
   // #swagger.summary = 'Send email'

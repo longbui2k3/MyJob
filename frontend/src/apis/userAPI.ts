@@ -51,3 +51,10 @@ export const FindProfileByUserAPI = async () => {
     method: HttpMethods.GET,
   });
 };
+
+export const FindUsersAPI = async () => {
+  return await BaseAPI({
+    path: `/user`,
+    method: HttpMethods.GET,
+  });
+};

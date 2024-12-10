@@ -11,9 +11,12 @@ const {
   findSavedCandidatesByUser,
 } = require("../../controllers/user.controller");
 const { asyncHandler } = require("../../helpers/asyncHandler");
+const userController = require("../../controllers/user.controller");
 const router = express.Router();
 
 router.use(authentication);
+router.route("/").get(asyncHandler(userController.findUsers));
+
 router.route("/me").get(
   // #swagger.tags = ['User']
   // #swagger.summary = 'Get Me'

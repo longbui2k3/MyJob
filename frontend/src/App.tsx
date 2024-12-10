@@ -46,6 +46,7 @@ import {
   DASHBOARD_SAVED_CANDIDATE_KEY,
   DASHBOARD_APPLIED_JOBS_KEY,
   DASHBOARD_FAVORITE_JOBS_KEY,
+  DASHBOARD_USERS_KEY,
   CREATE_CV_KEY,
   UPDATE_CV_KEY,
 } from "./helpers/constants";
@@ -61,6 +62,7 @@ import {
   DashboardPostAJob,
   DashboardSavedCandidate,
   DashboardSettings,
+  DashboardUsers,
 } from "./components/dashboard";
 import { PageCompletedCompany } from "./pages/company";
 import { EditJob } from "./components/job/MyJobs";
@@ -183,6 +185,10 @@ const DashboardRoutes = [
     route: getRoute(DASHBOARD_SETTINGS_KEY),
     element: <DashboardSettings />,
   },
+  {
+    route: getRoute(DASHBOARD_USERS_KEY),
+    element: <DashboardUsers />,  
+  }
 ];
 
 function App() {

@@ -6,6 +6,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import { CiEdit } from "react-icons/ci";
@@ -14,8 +15,9 @@ import { useNavigate } from "react-router-dom";
 import { getRoute, UPDATE_CV_KEY } from "../../helpers/constants";
 import { DeleteResumeAPI } from "../../apis";
 import { toastError, toastSuccess } from "../toast";
-import { useDispatch } from "react-redux";
-import { setDataChange } from "../../features";
+import { useDispatch, useSelector } from "react-redux";
+import { setDataChange, setId } from "../../features";
+import CustomAlertDialog from "../global/AlertDialog";
 
 interface CreatedResumeInfoProps {
   _id?: string;
@@ -26,6 +28,8 @@ export default function CreatedResumeInfo({
   _id = "",
   name = "",
 }: CreatedResumeInfoProps) {
+  const id = useSelector((state: any) => state.openForm.id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   function onEdit() {
@@ -47,7 +51,8 @@ export default function CreatedResumeInfo({
     }
   };
   function onDelete() {
-    deleteResume(_id);
+    onOpen();
+    dispatch(setId(_id));
   }
   return (
     <div
@@ -95,6 +100,18 @@ export default function CreatedResumeInfo({
           </div>
         </div>
       </div>
+      <CustomAlertDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        header="Delete Resume"
+        onDelete={() => {
+          async function __() {
+            await deleteResume(id);
+            dispatch(setDataChange());
+          }
+          __();
+        }}
+      />
     </div>
   );
 }

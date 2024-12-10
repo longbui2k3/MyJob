@@ -3,7 +3,11 @@ import { Heading6 } from "../headings";
 import { LocationInfo, OpenJobInfo } from "./CompanyInfos";
 import { ButtonOutline } from "../buttons";
 import { getRoute } from "../../helpers/constants";
-import { EMPLOYER_DETAIL_KEY } from "../../helpers/constants/routes";
+import {
+  COMPANY_KEY,
+  EMPLOYER_DETAIL_KEY,
+} from "../../helpers/constants/routes";
+import { useNavigate } from "react-router-dom";
 interface CompanyGridProps {
   _id?: string;
   logo?: string;
@@ -22,6 +26,7 @@ export default function CompanyGrid({
   isFeatured = false,
   isLoading = false,
 }: CompanyGridProps) {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col space-y-4 p-5 rounded-lg border-[1px] border-[--gray-100] ease-in-out hover:bg-[--primary-50] hover:border-[--primary-200] cursor-pointer">
       <div className="flex space-x-3">
@@ -105,7 +110,17 @@ export default function CompanyGrid({
         <ButtonOutline
           children={"Open Position"}
           className="w-full"
-          onClick={() => {}}
+          onClick={() => {
+            navigate(
+              `${
+                getRoute(EMPLOYER_DETAIL_KEY, {
+                  param: {
+                    id: _id,
+                  },
+                }).path
+              }?defaultIndex=1`
+            );
+          }}
         />
       </Skeleton>
     </div>

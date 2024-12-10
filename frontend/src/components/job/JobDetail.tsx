@@ -5,12 +5,12 @@ import {
   JobStatuses,
   SIGN_IN_KEY,
 } from "../../helpers/constants";
-import { FindJobAPI, FindJobsAPI } from "../../apis";
+import { CheckUserAppliedJobAPI, FindJobAPI, FindJobsAPI } from "../../apis";
 import { useNavigate, useParams } from "react-router-dom";
 import { Heading, Heading5 } from "../headings";
 import { Tag } from "@chakra-ui/react";
 import { LinkInfo, MailInfo, PhoneInfo } from "./JobInfos";
-import { ButtonDisabled, ButtonSubmit } from "../buttons";
+import { ButtonDisabled, ButtonSolid, ButtonSubmit } from "../buttons";
 import { Text } from "../text";
 import { changeDateToString } from "../../utils";
 import JobOverview from "./JobOverview";
@@ -18,12 +18,15 @@ import CompanyProfile from "./CompanyProfile";
 import { FindFavoriteJobAPI } from "../../apis/favoriteJobAPI";
 import UnfavoriteJobIcon from "./UnfavoriteJobIcon";
 import FavoriteJobIcon from "./FavoriteJobIcon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openFormApplyJob, setId } from "../../features";
 import { useAuthContext } from "../../context";
 import JobGrid from "./JobGrid";
 
 export default function JobDetail() {
+  const isDataChange = useSelector(
+    (state: any) => state.changeData.isDataChange
+  );
   const { user } = useAuthContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +35,8 @@ export default function JobDetail() {
   const [jobs, setJobs] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavoriteJob, setIsFavoriteJob] = useState(false);
+  const [isAppliedJob, setIsAppliedJob] = useState(false);
+  const [appliedAt, setAppliedAt] = useState<string | undefined>(undefined);
   async function findFavoriteJob() {
     if (!id) return;
     const data = await FindFavoriteJobAPI(id);
@@ -41,9 +46,18 @@ export default function JobDetail() {
       setIsFavoriteJob(false);
     }
   }
+  async function checkUserAppliedJob() {
+    if (!id) return;
+    const data = await CheckUserAppliedJobAPI(id);
+    if (data.isSuccess) {
+      setIsAppliedJob(Boolean(data.metadata.application));
+      setAppliedAt(data.metadata.application.appliedAt);
+    }
+  }
   useEffect(() => {
     findFavoriteJob();
-  }, []);
+    checkUserAppliedJob();
+  }, [isDataChange]);
 
   async function findJobsByCompany(company: string) {
     if (!id) return;
@@ -136,9 +150,16 @@ export default function JobDetail() {
                 />
               )}
             </div>
-            {new Date(job.expirationDate) < new Date(Date.now()) ||
-            job.status === JobStatuses.EXPIRED ? (
-              <ButtonDisabled width="200px" fontSize="14px">
+            {isAppliedJob ? (
+              <ButtonDisabled
+                children="Applied"
+                height="45px"
+                width="200px"
+                fontSize="14px"
+              />
+            ) : new Date(job.expirationDate) < new Date(Date.now()) ||
+              job.status === JobStatuses.EXPIRED ? (
+              <ButtonDisabled width="200px" height="45px" fontSize="14px">
                 {"Deadline Expired"}
               </ButtonDisabled>
             ) : (
@@ -169,6 +190,18 @@ export default function JobDetail() {
             </Text>
           </div>
         </div>
+      </div>
+      <div className="flex flex-row-reverse">
+        {isAppliedJob && appliedAt ? (
+          <Text>
+            You submitted your CV for this position on:{" "}
+            <span className="ml-1 text-[--success]">
+              {changeDateToString(appliedAt)}
+            </span>
+          </Text>
+        ) : (
+          ""
+        )}
       </div>
       <div className="flex gap-10 w-full mt-8">
         <div className="flex flex-col gap-6 w-[60%] h-full">

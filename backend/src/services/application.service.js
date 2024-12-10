@@ -92,6 +92,25 @@ class ApplicationService {
     });
     return application;
   };
+
+  static checkUserAppliedJob = async (userId, jobId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    const job = await jobRepo.findById(jobId);
+    if (!job) {
+      throw new BadRequestError("Job not found!");
+    }
+
+    const application = await applicationRepo.findOne({
+      user: userId,
+      job: jobId,
+    });
+
+    return application;
+  };
 }
 
 module.exports = ApplicationService;

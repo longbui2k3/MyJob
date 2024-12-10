@@ -51,7 +51,9 @@ export default function Cover() {
       <Header />
       <div
         className={`${
-          typeof user !== "string" && user?.userType === UserTypes.EMPLOYER
+          typeof user !== "string" &&
+          (user?.userType === UserTypes.EMPLOYER ||
+            user?.userType === UserTypes.ADMIN)
             ? "pt-[70px]"
             : "pt-[120px]"
         }`}

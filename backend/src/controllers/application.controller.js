@@ -58,5 +58,19 @@ class ApplicationController {
       },
     }).send(res);
   };
+
+  checkUserAppliedJob = async (req, res, next) => {
+    const result = await applicationService.checkUserAppliedJob(
+      req.user.userId,
+      req.body.job
+    );
+
+    return new OK({
+      message: "Check user applied job successfully",
+      metadata: {
+        application: result,
+      },
+    }).send(res);
+  };
 }
 module.exports = new ApplicationController();

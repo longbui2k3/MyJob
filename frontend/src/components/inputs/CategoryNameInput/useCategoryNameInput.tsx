@@ -6,10 +6,11 @@ interface UseCategoryNameInputProps {
 export default function useCategoryNameInput({
   defaultValue = null,
 }: UseCategoryNameInputProps) {
-  const { input, handleInput, isEmpty } = useInput({ defaultValue });
+  const { input, setInput, handleInput, isEmpty } = useInput({ defaultValue });
 
   return {
     inputCategoryName: input,
+    setInputCategoryName: setInput,
     handleInputCategoryName: handleInput,
     isEmptyCategoryName: isEmpty,
   };

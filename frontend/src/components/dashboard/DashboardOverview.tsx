@@ -1,19 +1,21 @@
 import { useAuthContext } from "../../context";
-import { CandidateOverview, EmployerOverview } from "../overview";
+import {
+  AdminOverview,
+  CandidateOverview,
+  EmployerOverview,
+} from "../overview";
 
 export default function DashboardOverview() {
   const { user } = useAuthContext();
-
+  const roleOverviews = {
+    employee: <CandidateOverview />,
+    employer: <EmployerOverview />,
+    admin: <AdminOverview />,
+  };
   return (
     <>
-      {typeof user === "object" && user?.userType === "employee" ? (
-        <div>
-          <CandidateOverview />
-        </div>
-      ) : (
-        <div>
-          <EmployerOverview />
-        </div>
+      {typeof user === "object" && user?.userType && (
+        <div>{roleOverviews[user.userType]}</div>
       )}
     </>
   );

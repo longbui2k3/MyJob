@@ -18,6 +18,8 @@ import FavoriteJobIcon from "./FavoriteJobIcon";
 import { useDispatch } from "react-redux";
 import { openFormApplyJob, setId } from "../../features";
 import { useAuthContext } from "../../context";
+import { CheckUserAppliedJobAPI } from "../../apis";
+import { functionsIn } from "lodash";
 
 interface JobGridProps {
   _id?: string;
@@ -49,10 +51,12 @@ export default function JobGrid({
   status = "Active",
   isLoading = false,
 }: JobGridProps) {
+  const [isLoadingInner, setIsLoadingInner] = useState(false);
   const { user } = useAuthContext();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isFavoriteJob, setIsFavoriteJob] = useState(false);
+  const [isAppliedJob, setIsAppliedJob] = useState(false);
   async function findFavoriteJob() {
     const data = await FindFavoriteJobAPI(_id);
     if (data.isSuccess) {
@@ -61,8 +65,23 @@ export default function JobGrid({
       setIsFavoriteJob(false);
     }
   }
+  async function checkUserAppliedJob() {
+    if (!_id) return;
+    const data = await CheckUserAppliedJobAPI(_id);
+    if (data.isSuccess) {
+      setIsAppliedJob(Boolean(data.metadata.application));
+    }
+  }
   useEffect(() => {
-    findFavoriteJob();
+    async function __() {
+      setIsLoadingInner(true);
+      await Promise.all([findFavoriteJob(), checkUserAppliedJob()]);
+      setTimeout(() => {
+        setIsLoadingInner(false);
+      }, 100)
+      
+    }
+    __();
   }, []);
   return (
     <div
@@ -133,8 +152,19 @@ export default function JobGrid({
                 ) : (
                   ""
                 )}
-                {new Date(expirationDate) < new Date(Date.now()) ||
-                status === JobStatuses.EXPIRED ? (
+                {isAppliedJob ? (
+                  <Tag
+                    bg="var(--danger-50)"
+                    textColor={"var(--danger-500)"}
+                    fontSize={"13px"}
+                    paddingX={"8px"}
+                    paddingY="4px"
+                    marginY="auto"
+                  >
+                    {"Applied"}
+                  </Tag>
+                ) : new Date(expirationDate) < new Date(Date.now()) ||
+                  status === JobStatuses.EXPIRED ? (
                   <Tag
                     bg="var(--danger-50)"
                     textColor={"var(--danger-500)"}
@@ -153,7 +183,7 @@ export default function JobGrid({
             </div>
           )}
         </div>
-        <Skeleton isLoaded={!isLoading}>
+        <Skeleton isLoaded={!isLoadingInner && !isLoading}>
           {!isFavoriteJob ? (
             <UnfavoriteJobIcon
               jobId={_id}
@@ -204,9 +234,11 @@ export default function JobGrid({
           </div>
         </div>
         <div className="flex flex-col-reverse">
-          <Skeleton isLoaded={!isLoading}>
-            {new Date(expirationDate) < new Date(Date.now()) ||
-            status === JobStatuses.EXPIRED ? (
+          <Skeleton isLoaded={!isLoadingInner && !isLoading}>
+            {isAppliedJob ? (
+              ""
+            ) : new Date(expirationDate) < new Date(Date.now()) ||
+              status === JobStatuses.EXPIRED ? (
               ""
             ) : (
               <ButtonOutline

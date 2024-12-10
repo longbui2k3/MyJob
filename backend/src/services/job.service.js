@@ -16,6 +16,7 @@ const {
   JobStatuses,
 } = require("../helpers/constants");
 const applicationRepo = require("../models/repos/application.repo");
+const companyModel = require("../models/company.model");
 class JobService {
   static deleteJob = async (id) => {
     const checkJobExists = await jobRepo.findJobById(id);
@@ -57,7 +58,7 @@ class JobService {
     provinceCode = 0,
     company,
     category,
-    status = JobStatuses.ACTIVE,
+    status,
     experiences = [],
     salaryMin,
     salaryMax,
@@ -82,7 +83,7 @@ class JobService {
     const job = await jobRepo.find(
       removeUndefinedInObject({
         "company.provinceCode": provinceCode - 0 || undefined,
-        "company._id": company || undefined,
+        "company._id": company ? convertToObjectId(company) : undefined,
         category,
         status,
         experience: experiences.length

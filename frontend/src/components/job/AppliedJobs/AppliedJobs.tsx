@@ -7,7 +7,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { Heading5 } from "../../headings";
+import { Heading5, Heading6 } from "../../headings";
 import { ButtonSolid_2 } from "../../buttons";
 import AppliedJobInfo from "./AppliedJobInfo";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ import { GiBackwardTime } from "react-icons/gi";
 import { Pagination, usePagination } from "../../global";
 import { useNavigate } from "react-router-dom";
 import { CiCircleRemove } from "react-icons/ci";
-import { getRoute, JOB_DETAIL_KEY } from "../../../helpers/constants";
+import { EMPLOYER_DETAIL_KEY, getRoute, JOB_DETAIL_KEY } from "../../../helpers/constants";
 
 interface StatusesProps {
   status?: string;
@@ -104,10 +104,10 @@ export default function AppliedJobs({
           <Table variant="simple">
             <Thead color={"var(--gray-500)"}>
               <Tr>
-                <Th w={"50%"}>JOBS</Th>
+                <Th w={"50%"}>JOB</Th>
+                <Th w={"20%"}>COMPANY</Th>
                 <Th w={"15%"}>DATE APPLIED</Th>
                 <Th w={"15%"}>STATUS</Th>
-                <Th w={"20%"}>ACTION</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -115,6 +115,7 @@ export default function AppliedJobs({
                 <Tr>
                   <Td>
                     <AppliedJobInfo
+                      jobId={application.job._id}
                       logo={application.job.company.logo}
                       jobTitle={application.job.jobTitle}
                       jobType={application.job.jobType}
@@ -122,6 +123,22 @@ export default function AppliedJobs({
                       minSalary={application.job.minSalary}
                       maxSalary={application.job.maxSalary}
                     />
+                  </Td>
+                  <Td>
+                    <a
+                      href={
+                        getRoute(EMPLOYER_DETAIL_KEY, {
+                          param: {
+                            id: application.job.company._id,
+                          },
+                        }).path
+                      }
+                    >
+                      <Heading6
+                        name={application.job.company.companyName}
+                        className="hover:text-[--primary-500] hover:underline"
+                      />
+                    </a>
                   </Td>
                   <Td>
                     <Text className="mt-[0px]">
@@ -132,21 +149,6 @@ export default function AppliedJobs({
                     <Text className="mt-[0px]">
                       <Statuses status={application.status} />
                     </Text>
-                  </Td>
-                  <Td>
-                    <ButtonSolid_2
-                      children={"View Details"}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate(
-                          getRoute(JOB_DETAIL_KEY, {
-                            param: {
-                              id: `${application.job._id}`,
-                            },
-                          }).path
-                        );
-                      }}
-                    />
                   </Td>
                 </Tr>
               ))}

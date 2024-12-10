@@ -43,3 +43,13 @@ export const FindApplicationAPI = async (id: string) => {
     method: HttpMethods.GET,
   });
 };
+
+export const CheckUserAppliedJobAPI = async (jobId: string) => {
+  return await BaseAPI({
+    path: `/application/check`,
+    method: HttpMethods.POST,
+    body: {
+      job: jobId,
+    },
+  });
+};

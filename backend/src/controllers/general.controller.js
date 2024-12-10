@@ -12,5 +12,12 @@ class GeneralController {
       message: "Send email successfully!",
     }).send(res);
   };
+
+  generalStatistics = async (req, res, next) => {
+    const result = await GeneralService.generalStatistics();
+    return new OK({
+      metadata: result,
+    }).send(res);
+  };
 }
 module.exports = new GeneralController();
