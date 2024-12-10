@@ -10,8 +10,8 @@ class ProfileRepo extends BaseRepo {
     return await this.findOne({ user: userId });
   }
 
-  async createProfile({ userId, fullName }) {
-    return await this.create({ user: userId, fullName });
+  async createProfile({ userId, fullName, email }) {
+    return await this.create({ user: userId, fullName, email });
   }
 
   async updateProfile(userId, body) {

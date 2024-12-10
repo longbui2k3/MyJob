@@ -38,7 +38,6 @@ export default function Applications({
       year: "numeric",
     }).format(date);
   };
-  console.log(applications);
 
   return (
     <div className="grid grid-cols-3 gap-4 ">

@@ -66,10 +66,11 @@ class ApplicationService {
         page,
         limit,
         sort: ["createdAt"],
-        populates: ["profile", "job", "resume.resume.fileUrl"],
+        populates: ["profile", "job", "resume.resume"],
         populateSelects: [
           {
-            profile: "avatar fullName provinceCode experience title education",
+            profile:
+              "avatar fullName provinceCode experience title education email",
           },
         ],
       }

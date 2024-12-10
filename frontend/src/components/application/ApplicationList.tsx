@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AdvanceFilter, Pagination, usePagination } from "../global";
+import { Pagination, usePagination } from "../global";
 import { FindApplicationsAPI, UpdateApplicationAPI } from "../../apis";
 import { useParams } from "react-router-dom";
 import { Heading5 } from "../headings";
@@ -9,8 +9,8 @@ import { ApplicationStatuses } from "../../helpers/constants";
 import { ButtonSolid } from "../buttons";
 import { TfiEmail } from "react-icons/tfi";
 import { useSearchInput_3 } from "../inputs";
-import { useDispatch, useSelector } from "react-redux";
-import { openFormSendEmail } from "../../features";
+import { useDispatch } from "react-redux";
+import { openFormSendEmail, setData, setId } from "../../features";
 import { toastError, toastSuccess } from "../toast";
 
 export default function ApplicationList() {
@@ -24,14 +24,13 @@ export default function ApplicationList() {
   const [applicationCounts, setApplicationCounts] = useState<
     Record<string, number>
   >({});
-  const isDataChange = useSelector(
-    (state: any) => state.changeData.isDataChange
-  );
+  const [listEmail, setListEmail] = useState<Array<string>>([]);
   const [isOpenAdvanceFilter, setIsOpenAdvanceFilter] = useState(false);
   const advanceFilterRef = useRef<HTMLDivElement | null>(null);
   const { experiences, setExperiences, educations, setEducations } =
     useSearchInput_3();
 
+  console.log(applications);
   useEffect(() => {
     if (advanceFilterRef.current) {
       const parentWidth =
@@ -51,26 +50,31 @@ export default function ApplicationList() {
     if (data.isSuccess) {
       setApplications(data.metadata.applications);
       setSize(data.metadata.meta.size);
+
+      const emails = data.metadata.applications
+        .map((app: any) => app.profile?.email)
+        .filter((email: string | undefined) => email);
+      setListEmail(emails);
     }
   }
-  console.log("checkUpdate", checkUpdate);
+
   useEffect(() => {
     findApplications();
   }, [tabStatus, checkUpdate]);
 
-  async function fetchApplicationCounts() {
-    const counts: Record<string, number> = {};
-    for (const value of ApplicationStatuses) {
-      const data = await FindApplicationsAPI({ job: jobId, status: value });
-      if (data.isSuccess) {
-        counts[value] = data.metadata.applications.length;
-      }
-    }
-    setApplicationCounts(counts);
-  }
-  useEffect(() => {
-    fetchApplicationCounts();
-  }, []);
+  // async function fetchApplicationCounts() {
+  //   const counts: Record<string, number> = {};
+  //   for (const value of ApplicationStatuses) {
+  //     const data = await FindApplicationsAPI({ job: jobId, status: value });
+  //     if (data.isSuccess) {
+  //       counts[value] = data.metadata.applications.length;
+  //     }
+  //   }
+  //   setApplicationCounts(counts);
+  // }
+  // useEffect(() => {
+  //   fetchApplicationCounts();
+  // }, []);
 
   const handleTabChange = (index: number) => {
     setTabStatus(ApplicationStatuses[index]);
@@ -104,18 +108,14 @@ export default function ApplicationList() {
             className="my-auto"
             onClick={() => {
               dispatch(openFormSendEmail());
+              dispatch(setId(jobId));
+              dispatch(setData(listEmail));
             }}
             children={"Send Email"}
             leftIcon={<TfiEmail size={20} />}
             height="40px"
             width="150px"
           />
-          {/* <IconButton
-            icon={<MdOutlineSaveAs size={22} color="white" />}
-            bg={"var(--primary-500)"}
-            aria-label="Save changes"
-            onClick={() => handleUpdateApplication()}
-          /> */}
         </div>
       </div>
       {/* <AdvanceFilter

@@ -81,7 +81,6 @@ export default function MyJobs({ isCheck = true, limit = 5 }: MyJobsProps) {
       status,
       search: search || undefined,
     });
-    console.log("Check", userId);
     if (data.isSuccess) {
       setJobs(data.metadata.jobs);
       setSize(data.metadata.meta.size);

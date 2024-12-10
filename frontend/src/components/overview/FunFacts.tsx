@@ -7,11 +7,17 @@ interface FunFactsProps {
   number?: number;
   title?: string;
 }
-export default function FunFacts({ classname, icon, onClick, number, title }: FunFactsProps) {
+export default function FunFacts({
+  classname,
+  icon,
+  onClick,
+  number,
+  title,
+}: FunFactsProps) {
   return (
     <div
       onClick={onClick}
-      className={`flex items-center justify-between p-5 w-[33%] h-[100px] rounded-lg ${classname}`}
+      className={`flex items-center justify-between p-5 w-[33%] h-[100px] rounded-lg cursor-pointer ${classname}`}
     >
       <div>
         <Heading3 name={`${number}`} />
