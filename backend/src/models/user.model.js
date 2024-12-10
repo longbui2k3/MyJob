@@ -55,10 +55,31 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    lastLogin: {
+      type: Date,
+    },
+    oldStatus: {
+      type: String,
+      enum: Object.values(UserStatus),
+    },
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );
-
+userSchema.index({ username: "text" });
+userSchema.statics = {
+  findAndSearchPartial: function (obj, q) {
+    return this.find({
+      ...obj,
+      username: new RegExp(q, "gi"),
+    });
+  },
+  findAndSearchFull: function (obj, q) {
+    return this.find({
+      ...obj,
+      $text: { $search: q, $caseSensitive: false },
+    });
+  },
+};
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);

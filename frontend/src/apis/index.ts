@@ -13,6 +13,8 @@ export {
   FindProfileByUserAPI,
   FindSavedCandidatesByUser,
   FindUsersAPI,
+  ActiveUserAPI,
+  InactiveUserAPI,
 } from "./userAPI";
 
 export {

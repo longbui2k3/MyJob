@@ -6,6 +6,11 @@ import { PiBriefcaseLight } from "react-icons/pi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { GeneralStatisticsAPI } from "../../apis";
+import { Chart, registerables } from "chart.js";
+Chart.register(...registerables);
+import { Bar } from "react-chartjs-2";
+import { steps } from "framer-motion";
+
 export default function AdminOverview() {
   const { user } = useAuthContext();
 
@@ -21,6 +26,21 @@ export default function AdminOverview() {
   useEffect(() => {
     getStatistics();
   }, []);
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
 
   return (
     <div className="space-y-7">
@@ -68,20 +88,55 @@ export default function AdminOverview() {
           iconColor="var(--danger-500)"
         />
       </div>
-      <div>
-        {/* <div className="flex items-center justify-between mb-2">
-          <Heading6 name="Recently Posted Jobs" />
-          <ButtonOutline
-            children={"View all"}
-            rightIcon={<FiArrowRight className="text-[18px]" />}
-            onClick={() => {
-              navigate(getRoute(DASHBOARD_MY_JOBS_KEY).path, {
-                replace: true,
-              });
+      <div className="grid grid-cols-2 gap-5">
+        <div>
+          <Bar
+            options={{
+              scales: {
+                yAxes: {
+                  ticks: {
+                    stepSize: 1,
+                  },
+                  reverse: false,
+                },
+              },
+            }}
+            data={{
+              labels: months,
+              datasets: [
+                {
+                  label: "Created Jobs",
+                  data: statistics.createdJobsByMonthNum,
+                  backgroundColor: "rgba(10, 101, 204, 1)",
+                },
+              ],
             }}
           />
         </div>
-        <MyJobs isCheck={false} limit={5} /> */}
+        <div>
+          <Bar
+            options={{
+              scales: {
+                yAxes: {
+                  ticks: {
+                    stepSize: 1,
+                  },
+                  reverse: false,
+                },
+              },
+            }}
+            data={{
+              labels: ["Active", "Expired"],
+              datasets: [
+                {
+                  label: "Jobs",
+                  data: statistics.jobsNum,
+                  backgroundColor: "rgba(10, 101, 204, 1)",
+                },
+              ],
+            }}
+          />
+        </div>
       </div>
     </div>
   );

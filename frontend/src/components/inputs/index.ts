@@ -13,3 +13,8 @@ export { SearchInput_3, useSearchInput_3 } from "./SearchInput_3";
 export { CategoryNameInput, useCategoryNameInput } from "./CategoryNameInput";
 export { UploadFileInput, useUploadFileInput } from "./UploadFileInput";
 export { ResumeNameInput, useResumeNameInput } from "./ResumeNameInput";
+export {
+  SearchCategoryInput,
+  useSearchCategoryInput,
+} from "./SearchCategoryInput";
+export { SearchUserInput, useSearchUserInput } from "./SearchUserInput";

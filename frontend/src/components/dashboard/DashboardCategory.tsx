@@ -18,7 +18,7 @@ import {
   setId,
   setType,
 } from "../../features";
-import { CustomTooltip } from "../global";
+import { CustomTooltip, Pagination, usePagination } from "../global";
 import { useEffect, useState } from "react";
 import { DeleteCategoryAPI, FindAllCategoriesAPI } from "../../apis";
 import { IconWithBg } from "../icons";
@@ -26,6 +26,7 @@ import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { toastError, toastSuccess } from "../toast";
 import CustomAlertDialog from "../global/AlertDialog";
+import { SearchCategoryInput, useSearchCategoryInput } from "../inputs";
 
 export default function DashboardCategory() {
   const id = useSelector((state: any) => state.openForm.id);
@@ -35,11 +36,19 @@ export default function DashboardCategory() {
   );
   const dispatch = useDispatch();
   const [categories, setCategories] = useState<Array<any>>([]);
-
+  const { curPage, setCurPage } = usePagination();
+  const [size, setSize] = useState(1);
+  const { search, setSearch } = useSearchCategoryInput();
   async function findAllCategories() {
-    const data = await FindAllCategoriesAPI({});
+    const limit = 8;
+    const data = await FindAllCategoriesAPI({
+      limit,
+      page: curPage,
+      search: search || undefined,
+    });
     if (data.isSuccess) {
       setCategories(data.metadata.categories);
+      setSize(data.metadata.meta.size);
     }
   }
 
@@ -53,30 +62,32 @@ export default function DashboardCategory() {
   }
 
   useEffect(() => {
-    console.log(isDataChange);
     findAllCategories();
-  }, [isDataChange]);
+  }, [isDataChange, curPage, search]);
   return (
     <>
       <div className="flex justify-between">
         <Heading5 name="Categories" />
-        <CustomTooltip label="Create category">
-          <IconButton
-            aria-label="Create category"
-            icon={<GoPlus size={30} />}
-            borderRadius={"100%"}
-            color={"var(--gray-200)"}
-            background={"none"}
-            border={"1px"}
-            _hover={{
-              color: "var(--primary-500)",
-            }}
-            onClick={() => {
-              dispatch(openFormCategory());
-              dispatch(setType("create"));
-            }}
-          />
-        </CustomTooltip>
+        <div className="flex items-center gap-3">
+          <SearchCategoryInput search={search} setSearch={setSearch} />
+          <CustomTooltip label="Create category">
+            <IconButton
+              aria-label="Create category"
+              icon={<GoPlus size={30} />}
+              borderRadius={"100%"}
+              color={"var(--gray-200)"}
+              background={"none"}
+              border={"1px"}
+              _hover={{
+                color: "var(--primary-500)",
+              }}
+              onClick={() => {
+                dispatch(openFormCategory());
+                dispatch(setType("create"));
+              }}
+            />
+          </CustomTooltip>
+        </div>
       </div>
       <div className="mt-6 space-y-1">
         <TableContainer>
@@ -107,7 +118,7 @@ export default function DashboardCategory() {
                     </div>
                   </Td>
                   <Td>
-                    <img src={category.imageUrl} width={"80px"} />
+                    <img src={category.imageUrl} width={"90px"} />
                   </Td>
                   <Td>{category.openPositionNum}</Td>
                   <Td>
@@ -156,6 +167,7 @@ export default function DashboardCategory() {
             </Tbody>
           </Table>
         </TableContainer>
+        <Pagination curPage={curPage} setCurPage={setCurPage} size={size} />
       </div>
     </>
   );

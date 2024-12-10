@@ -247,8 +247,16 @@ class AuthenService {
       );
     }
 
-    const tokens = await this.#createTokens(user);
+    if (user.status === UserStatus.INACTIVE) {
+      throw new AuthFailureError(
+        "Error: This account is inactive! Please contact admin to solve."
+      );
+    }
 
+    const tokens = await this.#createTokens(user);
+    await userRepo.findByIdAndUpdate(user._id, {
+      lastLogin: Date.now(),
+    });
     return {
       statusCode: 200,
       message: "Log in successfully!",

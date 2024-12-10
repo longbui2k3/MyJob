@@ -5,8 +5,8 @@ import { FindAllCategoriesAPI } from "../../apis";
 export default function Suggestion() {
   const [categories, setCategories] = useState<Array<any>>([""]);
   async function findAllCategories() {
-    const limit = 6;
-    const data = await FindAllCategoriesAPI(limit);
+    const limit = 4;
+    const data = await FindAllCategoriesAPI({ limit });
     if (data.isSuccess) {
       setCategories(data.metadata.categories);
     }

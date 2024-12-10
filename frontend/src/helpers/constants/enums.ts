@@ -8,6 +8,12 @@ export type UserTypeKeys = keyof typeof UserTypes;
 
 export type UserTypeValues = (typeof UserTypes)[UserTypeKeys];
 
+export enum UserStatuses {
+  UNVERIFIED = "unverified",
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+}
+
 export enum ViewTypes {
   GRID = "grid",
   ROWS_FILL = "rows_fill",

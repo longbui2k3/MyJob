@@ -166,18 +166,18 @@ const subNavigationRoles = {
       if (!user) return <></>;
       if (typeof user === "string") return <></>;
       const items = [
-        {
-          item: "My profile",
-          onClick: (e) => {
-            navigate("/");
-          },
-        },
-        {
-          item: "Settings",
-          onClick: (e) => {
-            navigate("/");
-          },
-        },
+        // {
+        //   item: "My profile",
+        //   onClick: (e) => {
+        //     navigate("/");
+        //   },
+        // },
+        // {
+        //   item: "Settings",
+        //   onClick: (e) => {
+        //     navigate("/");
+        //   },
+        // },
         {
           item: "Log out",
           onClick: async (e) => {

@@ -46,7 +46,7 @@ export default function BaseSelect({
       >
         {options.map((option) => (
           <option key={option} value={option}>
-            {option}
+            {option[0].toUpperCase() + option.slice(1)}
           </option>
         ))}
       </Select>

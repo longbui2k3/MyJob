@@ -1,13 +1,14 @@
 "use strict";
 
 const { BadRequestError, NotFoundError } = require("../core/error.response");
-const { UserType } = require("../helpers/constants");
+const { UserType, UserStatus } = require("../helpers/constants");
 const applicationRepo = require("../models/repos/application.repo");
 const favoriteJobRepo = require("../models/repos/favoriteJob.repo");
 const savedCandidateRepo = require("../models/repos/savedCandidate.repo");
 const companyRepo = require("../models/repos/company.repo");
 const profileRepo = require("../models/repos/profile.repo");
 const userRepo = require("../models/repos/user.repo");
+const { removeUndefinedInObject } = require("../utils");
 
 class UserService {
   static async getMe(userId) {
@@ -119,11 +120,55 @@ class UserService {
     return savedCandidates;
   };
 
-  static findUsers = async ({ page, limit, search }) => {
-    return await userRepo.find(
-      {},
-      { page, limit, search, sort: ["-createdAt"] }
+  static findUsers = async ({ page, limit, search, status, userType }) => {
+    console.log({ page, limit, search, status, userType });
+    const users = await userRepo.find(
+      removeUndefinedInObject({
+        status: status || undefined,
+        userType: userType || undefined,
+      }),
+      { page, limit, search, sort: ["username"] }
     );
+    users.data = await Promise.all(
+      users.data.map(async (user) => {
+        user.profile = await profileRepo.findOne({ user: user._id });
+        return user;
+      })
+    );
+    return users;
+  };
+
+  static inactiveUser = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+
+    if (user.status === UserStatus.INACTIVE) {
+      throw new BadRequestError("User should be active!");
+    }
+
+    return await userRepo.findByIdAndUpdate(userId, {
+      oldStatus: user.status,
+      status: UserStatus.INACTIVE,
+    });
+  };
+
+  static activeUser = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+    if (
+      user.status === UserStatus.ACTIVE ||
+      user.status === UserStatus.UNVERIFIED
+    ) {
+      throw new BadRequestError("User should be inactive!");
+    }
+    return await userRepo.findByIdAndUpdate(userId, {
+      oldStatus: undefined,
+      status: user.oldStatus,
+    });
   };
 }
 

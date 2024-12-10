@@ -6,7 +6,7 @@ interface NotFoundListProps {
 
 export default function NotFoundList({ info = "" }: NotFoundListProps) {
   return (
-    <div className="flex flex-col items-center h-[300px]">
+    <div className="w-full flex flex-col items-center h-[300px]">
       <img src="/not_found_list.png" height={"100%"} width={"350px"} />
       <Text className="text-[14px]">{info}</Text>
     </div>

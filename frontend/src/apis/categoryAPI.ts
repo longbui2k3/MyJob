@@ -20,6 +20,7 @@ export const CreateCategoryAPI = async (body: {
 export const FindAllCategoriesAPI = async (body: {
   limit?: number;
   page?: number;
+  search?: string;
 }) => {
   return await BaseAPI({
     path: `/category?${changeQueryObjToQueryStr(body)}`,

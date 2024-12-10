@@ -92,5 +92,27 @@ class UserController {
       },
     }).send(res);
   };
+
+  inactiveUser = async (req, res, next) => {
+    const result = await UserService.inactiveUser(req.params.id);
+
+    return new OK({
+      message: "Inactive user successfully",
+      metadata: {
+        user: result,
+      },
+    }).send(res);
+  };
+
+  activeUser = async (req, res, next) => {
+    const result = await UserService.activeUser(req.params.id);
+
+    return new OK({
+      message: "Active user successfully",
+      metadata: {
+        user: result,
+      },
+    }).send(res);
+  };
 }
 module.exports = new UserController();

@@ -1,4 +1,4 @@
-export { UserTypes, ViewTypes, HttpMethods } from "./enums";
+export { UserTypes, ViewTypes, HttpMethods, UserStatuses } from "./enums";
 export type {
   UserTypeKeys,
   UserTypeValues,
@@ -75,7 +75,7 @@ export const Salaries = [
   { label: "$6000 - $8000", from: 6000, to: 8000 },
   { label: "$8000 - $10000", from: 8000, to: 10000 },
   { label: "$10000 - $15000", from: 10000, to: 15000 },
-  { label: "$15000+", from: 15000, to: null },
+  { label: "$15000+", from: 15000, to: 1000000 },
 ];
 
 export const SalaryTypes = ["Hour", "Week", "Month", "Year"];

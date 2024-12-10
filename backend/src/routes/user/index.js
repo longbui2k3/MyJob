@@ -16,6 +16,8 @@ const router = express.Router();
 
 router.use(authentication);
 router.route("/").get(asyncHandler(userController.findUsers));
+router.route("/:id/active").patch(asyncHandler(userController.activeUser));
+router.route("/:id/inactive").patch(asyncHandler(userController.inactiveUser));
 
 router.route("/me").get(
   // #swagger.tags = ['User']

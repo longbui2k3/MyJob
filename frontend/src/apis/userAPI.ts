@@ -52,9 +52,29 @@ export const FindProfileByUserAPI = async () => {
   });
 };
 
-export const FindUsersAPI = async () => {
+export const FindUsersAPI = async (body: {
+  limit?: number;
+  page?: number;
+  status?: string;
+  userType?: string;
+  search?: string;
+}) => {
   return await BaseAPI({
-    path: `/user`,
+    path: `/user?${changeQueryObjToQueryStr(body)}`,
     method: HttpMethods.GET,
+  });
+};
+
+export const ActiveUserAPI = async (userId: string) => {
+  return await BaseAPI({
+    path: `/user/${userId}/active`,
+    method: HttpMethods.PATCH,
+  });
+};
+
+export const InactiveUserAPI = async (userId: string) => {
+  return await BaseAPI({
+    path: `/user/${userId}/inactive`,
+    method: HttpMethods.PATCH,
   });
 };
