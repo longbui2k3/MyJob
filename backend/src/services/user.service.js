@@ -118,6 +118,13 @@ class UserService {
 
     return savedCandidates;
   };
+
+  static findUsers = async ({ page, limit, search }) => {
+    return await userRepo.find(
+      {},
+      { page, limit, search, sort: ["-createdAt"] }
+    );
+  };
 }
 
 module.exports = UserService;

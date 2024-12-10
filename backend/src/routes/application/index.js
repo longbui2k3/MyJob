@@ -8,6 +8,17 @@ const router = express.Router();
 
 router.use(authentication);
 
+router.route("/check").post(
+  // #swagger.tags = ['Application']
+  // #swagger.summary = 'Check user applied job'
+  /* #swagger.security = [{
+      "apiKeyAuth": [],
+      "clientId": []
+    }] 
+  */
+  asyncHandler(applicationController.checkUserAppliedJob)
+);
+
 router.route("/:id").get(
   // #swagger.tags = ['Application']
   // #swagger.summary = 'Find application'

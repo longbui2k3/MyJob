@@ -9,7 +9,6 @@ export default function CVViewer() {
   pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
   async function handleSubmit() {}
   const [numPages, setNumPages] = useState<number>();
-  const [pageNumber, setPageNumber] = useState<number>(1);
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
     setNumPages(numPages);
@@ -23,12 +22,16 @@ export default function CVViewer() {
       height="1200px"
     >
       <Document file={data} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page
-          pageNumber={pageNumber}
-          renderTextLayer={false}
-          renderAnnotationLayer={false}
-          //   customTextRenderer={false}
-        />
+        {new Array(numPages)
+          .fill(0)
+          .map((x, i) => i + 1)
+          .map((page) => (
+            <Page
+              pageNumber={page}
+              renderTextLayer={false}
+              renderAnnotationLayer={false}
+            />
+          ))}
       </Document>
     </OutsideForm>
   );

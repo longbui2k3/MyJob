@@ -1,6 +1,6 @@
 import { Skeleton, SkeletonText, Tag } from "@chakra-ui/react";
 import { Heading6 } from "../headings";
-import { ButtonDisabled, ButtonSubmit } from "../buttons";
+import { ButtonDisabled, ButtonSolid, ButtonSubmit } from "../buttons";
 import { DeadlineInfo, LocationInfo, SalaryInfo } from "../company";
 import { distanceBetweenTwoDates } from "../../utils";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +17,7 @@ import FavoriteJobIcon from "./FavoriteJobIcon";
 import { useDispatch } from "react-redux";
 import { openFormApplyJob, setId } from "../../features";
 import { useAuthContext } from "../../context";
+import { CheckUserAppliedJobAPI } from "../../apis";
 interface JobRowsFillProps {
   _id?: string;
   companyId?: string;
@@ -46,10 +47,12 @@ export default function JobRowsFill({
   status = JobStatuses.ACTIVE,
   isLoading = false,
 }: JobRowsFillProps) {
+  const [isLoadingInner, setIsLoadingInner] = useState(false);
   const { user } = useAuthContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isFavoriteJob, setIsFavoriteJob] = useState(false);
+  const [isAppliedJob, setIsAppliedJob] = useState(false);
   async function findFavoriteJob() {
     const data = await FindFavoriteJobAPI(_id);
     if (data.isSuccess) {
@@ -58,8 +61,23 @@ export default function JobRowsFill({
       setIsFavoriteJob(false);
     }
   }
+  async function checkUserAppliedJob() {
+    if (!_id) return;
+    const data = await CheckUserAppliedJobAPI(_id);
+    if (data.isSuccess) {
+      setIsAppliedJob(Boolean(data.metadata.application));
+    }
+  }
   useEffect(() => {
-    findFavoriteJob();
+    async function __() {
+      setIsLoadingInner(true);
+      findFavoriteJob();
+      checkUserAppliedJob();
+      setTimeout(() => {
+        setIsLoadingInner(false);
+      }, 100);
+    }
+    __();
   }, []);
   return (
     <div className="flex justify-between w-full p-5 border-[1px] border-[--gray-100] rounded-lg ease-in-out hover:bg-[--primary-50] hover:border-[--primary-200] cursor-pointer">
@@ -163,7 +181,7 @@ export default function JobRowsFill({
         </div>
       </div>
       <div className="flex space-x-4 py-auto items-center">
-        <Skeleton isLoaded={!isLoading}>
+        <Skeleton isLoaded={!isLoadingInner && !isLoading}>
           {!isFavoriteJob ? (
             <UnfavoriteJobIcon
               jobId={_id}
@@ -173,9 +191,16 @@ export default function JobRowsFill({
             <FavoriteJobIcon jobId={_id} setIsFavoriteJob={setIsFavoriteJob} />
           )}
         </Skeleton>
-        <Skeleton isLoaded={!isLoading}>
-          {new Date(expirationDate) < new Date(Date.now()) ||
-          status === JobStatuses.EXPIRED ? (
+        <Skeleton isLoaded={!isLoadingInner && !isLoading}>
+          {isAppliedJob ? (
+            <ButtonDisabled
+              children="Applied"
+              height="40px"
+              width="150px"
+              fontSize="13px"
+            />
+          ) : new Date(expirationDate) < new Date(Date.now()) ||
+            status === JobStatuses.EXPIRED ? (
             <ButtonDisabled width="150px" fontSize="13px">
               {"Deadline Expired"}
             </ButtonDisabled>

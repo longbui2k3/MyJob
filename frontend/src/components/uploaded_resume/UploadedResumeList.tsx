@@ -14,8 +14,12 @@ import {
 } from "../../features";
 import { useAuthContext } from "../../context";
 import CreateResume from "./CreateResume";
+import { useDisclosure } from "@chakra-ui/react";
+import CustomAlertDialog from "../global/AlertDialog";
 
 export default function UploadedResumeList() {
+  const id = useSelector((state: any) => state.openForm.id);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const isDataChange = useSelector(
     (state: any) => state.changeData.isDataChange
@@ -55,7 +59,8 @@ export default function UploadedResumeList() {
             file_url={resume.resume.fileUrl}
             file_size={formatFileSize(resume.resume.fileSize)}
             onDelete={() => {
-              deleteResume(resume._id);
+              onOpen();
+              dispatch(setId(resume._id));
             }}
             onEdit={() => {
               dispatch(openFormResume());
@@ -70,6 +75,18 @@ export default function UploadedResumeList() {
         ))}
         <CreateResume />
       </div>
+      <CustomAlertDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        header="Delete Resume"
+        onDelete={() => {
+          async function __() {
+            await deleteResume(id);
+            dispatch(setDataChange());
+          }
+          __();
+        }}
+      />
     </div>
   );
 }

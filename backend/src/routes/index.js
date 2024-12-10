@@ -10,6 +10,7 @@ const user = require("./user");
 const otp = require("./otp");
 const profile = require("./profile");
 const favoriteJob = require("./favoriteJob");
+const followedCompany = require("./followedCompany");
 const resume = require("./resume");
 const savedCandidate = require("./savedCandidate");
 const application = require("./application");
@@ -33,6 +34,7 @@ router.use("/api/v1/savedCandidate", savedCandidate);
 router.use("/api/v1/resume", resume);
 router.use("/api/v1/application", application);
 router.use("/api/v1/general", general);
+router.use("/api/v1/followedCompany", followedCompany);
 router.use("/api/v1", authen);
 
 module.exports = router;

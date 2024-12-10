@@ -12,3 +12,10 @@ export const SendEmailAPI = async (body: {
     body,
   });
 };
+
+export const GeneralStatisticsAPI = async () => {
+  return await BaseAPI({
+    path: `/general/statistics`,
+    method: HttpMethods.GET,
+  });
+}

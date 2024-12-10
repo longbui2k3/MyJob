@@ -1,9 +1,11 @@
 interface LogoProps {
   textColor?: string;
+  text?: string;
 }
 
 export default function Logo({
   textColor = "var(--gray-900)",
+  text = "MyJob",
 }: LogoProps): JSX.Element {
   return (
     <div className="inline-flex items-center gap-2 relative cursor-pointer">
@@ -56,7 +58,7 @@ export default function Logo({
           color: textColor,
         }}
       >
-        MyJob
+        {text}
       </div>
     </div>
   );

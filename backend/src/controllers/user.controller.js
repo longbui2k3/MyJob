@@ -80,5 +80,17 @@ class UserController {
       metadata: result,
     }).send(res);
   };
+
+  findUsers = async (req, res, next) => {
+    const result = await UserService.findUsers(req.query);
+
+    return new OK({
+      message: "Find users successfully",
+      metadata: {
+        users: result.data,
+        meta: result.meta,
+      },
+    }).send(res);
+  };
 }
 module.exports = new UserController();

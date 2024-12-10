@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { DEFAULT_PADDING_X, ViewTypes } from "../../helpers/constants";
+import {
+  DEFAULT_PADDING_X,
+  JobStatuses,
+  ViewTypes,
+} from "../../helpers/constants";
 import { NotFoundList, Pagination, usePagination } from "../global";
 import { PageLimitSelect, usePageLimitSelect } from "../select/PageLimitSelect";
 import { useViewTypeSelect, ViewTypeSelect } from "../select/ViewTypeSelect";
@@ -46,6 +50,7 @@ export default function JobList() {
           undefined,
         salaryMin: searchParams.get("salary_min") || undefined,
         salaryMax: searchParams.get("salary_max") || undefined,
+        status: JobStatuses.ACTIVE,
       });
       if (data.isSuccess) {
         // setJobs([...jobs, data.metadata.jobs]);

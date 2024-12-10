@@ -14,3 +14,4 @@ export { AdvanceFilter, useAdvanceFilter } from "./AdvanceFilter";
 export { default as Info } from "./Info";
 export { default as NotFoundList } from "./NotFoundList";
 export { default as CVViewer } from "./CVViewer";
+export { default as AlertDialog } from "./AlertDialog";

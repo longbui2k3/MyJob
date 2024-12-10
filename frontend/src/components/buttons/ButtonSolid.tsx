@@ -8,6 +8,7 @@ interface ButtonSolidProps {
   isLoading?: boolean;
   width?: string;
   height?: string;
+  fontSize?: string;
 }
 
 export default function ButtonSolid({
@@ -18,12 +19,13 @@ export default function ButtonSolid({
   isLoading = false,
   width,
   height,
+  fontSize = "14px",
 }: ButtonSolidProps) {
   return (
     <Button
       bg="var(--primary-500)"
       textColor={"white"}
-      fontSize={"14px"}
+      fontSize={fontSize}
       className={className}
       _hover={{ bg: "var(--primary-500)", color: "white" }}
       leftIcon={leftIcon}

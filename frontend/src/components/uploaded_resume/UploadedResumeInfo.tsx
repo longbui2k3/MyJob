@@ -3,6 +3,7 @@ import { Heading6 } from "../headings";
 import { Text } from "../text";
 import { HiOutlineEllipsisHorizontal } from "react-icons/hi2";
 import {
+  Button,
   IconButton,
   Menu,
   MenuButton,
@@ -12,9 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
-import { CVViewer } from "../global";
-import { openCVViewer } from "../../features";
+import { useDispatch } from "react-redux";
 import { AiOutlineEye } from "react-icons/ai";
 
 interface UploadedResumeInfoProps {
@@ -54,18 +53,22 @@ export default function UploadedResumeInfo({
           </div>
         </div>
       </div>
-      <div className="flex">
-        <Tooltip label="View CV">
-          <IconButton
-            icon={<AiOutlineEye size={24} color="var(--primary-500)" />}
-            aria-label="View"
-            onClick={onClick}
-            _hover={{
-              bg: "none",
-            }}
-            padding={"0px"}
-          />
-        </Tooltip>
+      <div className="flex items-center ">
+        <Button
+          leftIcon={<AiOutlineEye size={16} color="var(--primary-500)" />}
+          bg={"var(--primary-50)"}
+          onClick={onClick}
+          _hover={{
+            bg: "var(--primary-50)",
+          }}
+          padding={"0px 5px"}
+          fontSize={"11px"}
+          color="var(--primary-500)"
+          borderRadius={"10px"}
+          height={"30px"}
+        >
+          View CV
+        </Button>
         <Menu>
           <MenuButton
             as={IconButton}

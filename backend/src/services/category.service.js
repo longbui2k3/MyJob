@@ -64,7 +64,7 @@ class CategoryService {
     }
 
     if (files["imageUrl"]) {
-      imageUrl = new UploadFiles(
+      imageUrl = await new UploadFiles(
         "categories",
         "images",
         files["imageUrl"][0]

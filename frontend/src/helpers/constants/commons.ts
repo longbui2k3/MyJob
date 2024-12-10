@@ -19,6 +19,7 @@ import {
   FIND_JOBS_KEY,
   getRoute,
   HOME_KEY,
+  DASHBOARD_USERS_KEY,
 } from "./routes";
 
 export const Navigations = {
@@ -136,6 +137,11 @@ export const Navigations = {
   DASHBOARD_CATEGORIES: {
     label: "Categories",
     href: getRoute(DASHBOARD_CATEGORIES_KEY).path,
+    pattern: getRoute(DASHBOARD_KEY).path,
+  },
+  DASHBOARD_USERS: {
+    label: "Users",
+    href: getRoute(DASHBOARD_USERS_KEY).path,
     pattern: getRoute(DASHBOARD_KEY).path,
   },
 };

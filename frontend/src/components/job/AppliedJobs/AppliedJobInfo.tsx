@@ -3,8 +3,10 @@ import { Heading6 } from "../../headings";
 import { LocationInfo, SalaryInfo } from "../../company";
 import { GiBackwardTime } from "react-icons/gi";
 import { Text } from "../../text";
+import { getRoute, JOB_DETAIL_KEY } from "../../../helpers/constants";
 
 interface AppliedJobInfoProps {
+  jobId?: string;
   logo?: string;
   jobTitle?: string;
   jobType?: string;
@@ -14,6 +16,7 @@ interface AppliedJobInfoProps {
 }
 
 export default function AppliedJobInfo({
+  jobId = "",
   logo = "",
   jobTitle = "",
   jobType = "",
@@ -32,7 +35,20 @@ export default function AppliedJobInfo({
         />
         <div className="flex flex-col justify-between ml-4">
           <div className="flex space-x-3">
-            <Heading6 name={jobTitle} />
+            <a
+              href={
+                getRoute(JOB_DETAIL_KEY, {
+                  param: {
+                    id: jobId,
+                  },
+                }).path
+              }
+            >
+              <Heading6
+                name={jobTitle}
+                className="hover:text-[--primary-500] hover:underline"
+              />
+            </a>
             <Tag
               bg="var(--primary-50)"
               textColor={"var(--primary-500)"}

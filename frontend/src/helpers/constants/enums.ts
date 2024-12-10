@@ -1,6 +1,7 @@
 export enum UserTypes {
   EMPLOYEE = "employee",
   EMPLOYER = "employer",
+  ADMIN = "admin",
 }
 
 export type UserTypeKeys = keyof typeof UserTypes;
@@ -18,9 +19,8 @@ export enum HttpMethods {
   PUT = "put",
   PATCH = "patch",
   DELETE = "delete",
-};
+}
 
 export type HttpMethodsKeys = keyof typeof HttpMethods;
 
 export type HttpMethodsValues = (typeof HttpMethods)[HttpMethodsKeys];
-

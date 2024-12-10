@@ -13,6 +13,7 @@ import { Text } from "../text";
 import { FiPlusCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
+import { FaRegUser } from "react-icons/fa";
 
 const navigationRoles = {
   employee: [
@@ -76,6 +77,10 @@ const navigationRoles = {
       Icon: BiCategory,
       navigation: Navigations.DASHBOARD_CATEGORIES,
     },
+    {
+      Icon: FaRegUser,
+      navigation: Navigations.DASHBOARD_USERS,
+    },
   ],
 };
 
@@ -92,12 +97,16 @@ export default function NavigationDashboard() {
     if (!user || typeof user === "string") return;
     setNavigations(navigationRoles[user.userType]);
   }, [user]);
+  const roles = {
+    employee: "CANDIDATE",
+    employer: "EMPLOYER",
+    admin: "ADMIN",
+  };
   return (
     <div className="h-[600px]">
       {user && typeof user !== "string" && (
         <Text className="ml-4 mt-5 mb-5 text-[12px] font-semibold">
-          {(user.userType === UserTypes.EMPLOYEE ? "CANDIDATE" : "EMPLOYERS") +
-            " DASHBOARD"}
+          {roles[user.userType] + " DASHBOARD"}
         </Text>
       )}
       <ul>

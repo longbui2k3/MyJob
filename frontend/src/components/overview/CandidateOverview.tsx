@@ -13,6 +13,8 @@ import {
 import { useEffect, useState } from "react";
 import { StatisticizeJobsAPI } from "../../apis";
 import { useAuthContext } from "../../context";
+import { PiBriefcaseLight } from "react-icons/pi";
+import { GoBookmark } from "react-icons/go";
 
 export default function CandidateOverview() {
   const { user } = useAuthContext();
@@ -60,8 +62,9 @@ export default function CandidateOverview() {
               replace: true,
             });
           }}
-          classname="bg-[#E7F0FA]"
-          icon={<JobIcon />}
+          classname="bg-[--primary-50]"
+          Icon={PiBriefcaseLight}
+          iconColor="var(--primary-500)"
         />
         <FunFacts
           number={statistics.applicationsNum}
@@ -71,8 +74,9 @@ export default function CandidateOverview() {
               replace: true,
             });
           }}
-          classname="bg-[#FFF6E6]"
-          icon={<SavedIcon />}
+          classname="bg-[--warning-50]"
+          Icon={GoBookmark}
+          iconColor="var(--warning-500)"
         />
       </div>
       <div>

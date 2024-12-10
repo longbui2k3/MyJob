@@ -4,6 +4,7 @@ import {
   DASHBOARD_OVERVIEW_KEY,
   DEFAULT_PADDING_X,
   getRoute,
+  UserRoles,
   UserTypes,
 } from "../../helpers/constants";
 import { useEffect } from "react";
@@ -21,7 +22,9 @@ export default function PageDashboard() {
       className={`flex border-y-[1px] border-[--gray-100]`}
       style={{
         padding: ` 0px ${
-          typeof user !== "string" && user?.userType === UserTypes.EMPLOYER
+          typeof user !== "string" &&
+          (user?.userType === UserTypes.EMPLOYER ||
+            user?.userType === UserTypes.ADMIN)
             ? "50px"
             : DEFAULT_PADDING_X
         }`,

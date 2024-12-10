@@ -38,6 +38,7 @@ export const DASHBOARD_APPLICATIONS_KEY = "DASHBOARD_APPLICATIONS";
 export const DASHBOARD_SAVED_CANDIDATE_KEY = "DASHBOARD_SAVED_CANDIDATE";
 export const DASHBOARD_PLANS_AND_BILLING_KEY = "DASHBOARD_PLANS_AND_BILLING";
 export const DASHBOARD_CATEGORIES_KEY = "DASHBOARD_CATEGORIES";
+export const DASHBOARD_USERS_KEY = "DASHBOARD_USERS";
 
 const ROUTES: Array<RouteItem> = [
   {
@@ -233,6 +234,12 @@ const ROUTES: Array<RouteItem> = [
             key: DASHBOARD_CATEGORIES_KEY,
             name: "Dashboard Categories",
             path: "/dashboard/categories",
+            isPrivate: true,
+          },
+          {
+            key: DASHBOARD_USERS_KEY,
+            name: "Dashboard Users",
+            path: "/dashboard/users",
             isPrivate: true,
           },
         ],

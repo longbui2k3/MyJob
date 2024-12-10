@@ -12,6 +12,7 @@ export {
   StatisticizeJobsAPI,
   FindProfileByUserAPI,
   FindSavedCandidatesByUser,
+  FindUsersAPI,
 } from "./userAPI";
 
 export {
@@ -20,7 +21,13 @@ export {
   UpdateCompanyAPI,
   FindCompanyAPI,
 } from "./companyAPI";
-export { CreateCategoryAPI, FindAllCategoriesAPI } from "./categoryAPI";
+export {
+  CreateCategoryAPI,
+  FindAllCategoriesAPI,
+  FindCategoryAPI,
+  UpdateCategoryAPI,
+  DeleteCategoryAPI,
+} from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";
 export { FindJobsAPI, FindJobAPI, UpdateJobAPI, CreateJobAPI } from "./jobAPI";
 export {
@@ -43,6 +50,7 @@ export {
   FindApplicationsAPI,
   FindApplicationAPI,
   UpdateApplicationAPI,
+  CheckUserAppliedJobAPI,
 } from "./applicationAPI";
 export {
   FindSavedCandidateAPI,
@@ -54,4 +62,9 @@ export {
   FavoriteJobAPI,
   UnfavoriteJobAPI,
 } from "./favoriteJobAPI";
-export { SendEmailAPI } from "./generalAPI";
+export {
+  FindFollowedCompanyAPI,
+  FollowCompanyAPI,
+  UnfollowCompanyAPI,
+} from "./followedCompanyAPI";
+export { SendEmailAPI, GeneralStatisticsAPI } from "./generalAPI";

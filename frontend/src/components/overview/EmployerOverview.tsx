@@ -13,6 +13,8 @@ import { MyJobs } from "../job/MyJobs";
 import { useAuthContext } from "../../context";
 import { FindJobsAPI, FindSavedCandidatesByUser } from "../../apis";
 import { useEffect, useState } from "react";
+import { GoBookmark } from "react-icons/go";
+import { PiBriefcaseLight } from "react-icons/pi";
 
 export default function EmployerOverview() {
   const { user, userId } = useAuthContext();
@@ -55,8 +57,9 @@ export default function EmployerOverview() {
               replace: true,
             });
           }}
-          classname="bg-[#E7F0FA]"
-          icon={<JobIcon />}
+          classname="bg-[--primary-50]"
+          Icon={PiBriefcaseLight}
+          iconColor="var(--primary-500)"
         />
         <FunFacts
           number={savedCandidatesNum}
@@ -66,8 +69,9 @@ export default function EmployerOverview() {
               replace: true,
             });
           }}
-          classname="bg-[#FFF6E6]"
-          icon={<SavedIcon />}
+          classname="bg-[--warning-50]"
+          Icon={GoBookmark}
+          iconColor="var(--warning-500)"
         />
       </div>
       <div>
