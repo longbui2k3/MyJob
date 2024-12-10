@@ -223,7 +223,7 @@ export default function Header() {
     let prevScrollpos = window.scrollY;
     window.onscroll = function () {
       const currentScrollPos = window.scrollY;
-      if (currentScrollPos < 200) return;
+      if (currentScrollPos < 200 && prevScrollpos < 200) return;
       if (prevScrollpos > currentScrollPos) {
         cur.style.display = "";
       } else {

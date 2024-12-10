@@ -10,10 +10,10 @@ export const FindJobsAPI = async (query: {
   company?: string;
   category?: string;
   status?: string;
-  experiences?: Array<string>;
-  educations?: Array<string>;
-  jobLevels?: Array<string>;
-  jobTypes?: Array<string>;
+  experiences?: Array<number>;
+  educations?: Array<number>;
+  jobLevels?: Array<number>;
+  jobTypes?: Array<number>;
   salaryMin?: string;
   salaryMax?: string;
 }) => {

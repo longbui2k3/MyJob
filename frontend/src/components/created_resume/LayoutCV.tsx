@@ -3,7 +3,7 @@ interface ComponentProps {
 }
 function Component({ children = <></> }: ComponentProps) {
   return (
-    <div className="w-full h-full border-[1px] border-[--gray-100] p-[10px] min-h-[120px]">
+    <div className="w-full border-[1px] border-[--gray-100] p-[10px] min-h-[120px]">
       {children}
     </div>
   );

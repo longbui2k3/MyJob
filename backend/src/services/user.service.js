@@ -64,7 +64,7 @@ class UserService {
         user: user._id,
       },
       {
-        populates: ["job"],
+        populates: ["job", "resume.resume"],
         page,
         limit,
       }

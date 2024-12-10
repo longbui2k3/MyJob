@@ -15,6 +15,7 @@ export default function ActiveFilter({
       color={"var(--gray-100)"}
       padding={"0px 13px"}
       height={"30px"}
+      className="flex justify-between"
     >
       <TagLabel
         textColor={"var(--gray-900)"}

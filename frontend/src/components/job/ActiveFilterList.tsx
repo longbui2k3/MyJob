@@ -102,7 +102,7 @@ export default function ActiveFilterList() {
     setFilters(filters);
   }, [categories, searchParams]);
   return (
-    <div className="flex space-x-4">
+    <div className="grid grid-cols-4 gap-3">
       {filters.map((filter) => (
         <ActiveFilter
           label={filter.label}
