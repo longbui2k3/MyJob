@@ -83,3 +83,10 @@ export const FindJobAPI = async (id: string) => {
     method: HttpMethods.GET,
   });
 };
+
+export const DeleteJobAPI = async (id: string) => {
+  return await BaseAPI({
+    path: `/job/${id}`,
+    method: HttpMethods.DELETE,
+  });
+};

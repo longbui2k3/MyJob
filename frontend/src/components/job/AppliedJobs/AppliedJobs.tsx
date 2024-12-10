@@ -8,7 +8,6 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { Heading5, Heading6 } from "../../headings";
-import { ButtonSolid_2 } from "../../buttons";
 import AppliedJobInfo from "./AppliedJobInfo";
 import { useEffect, useState } from "react";
 import { FindAppliedJobByUser } from "../../../apis";
@@ -18,7 +17,9 @@ import { GiBackwardTime } from "react-icons/gi";
 import { Pagination, usePagination } from "../../global";
 import { useNavigate } from "react-router-dom";
 import { CiCircleRemove } from "react-icons/ci";
-import { EMPLOYER_DETAIL_KEY, getRoute, JOB_DETAIL_KEY } from "../../../helpers/constants";
+import { EMPLOYER_DETAIL_KEY, getRoute } from "../../../helpers/constants";
+import { LuCalendarCheck } from "react-icons/lu";
+import { FaCheck } from "react-icons/fa";
 
 interface StatusesProps {
   status?: string;
@@ -31,21 +32,15 @@ function Statuses({ status = "Submitted" }: StatusesProps) {
         <Text className="mt-[0px] text-[var(--submitted)]">Submitted</Text>
       </div>
     ),
-    Consider: (
-      <div className="flex items-center space-x-1 text-[--consider]">
-        <GiBackwardTime size={20} />
-        <Text className="mt-[0px] text-[var(--consider)]">Consider</Text>
-      </div>
-    ),
     Interview: (
       <div className="flex items-center space-x-1 text-[--interview]">
-        <GiBackwardTime size={20} />
+        <LuCalendarCheck size={20} />
         <Text className="mt-[0px] text-[var(--interview)]">Interview</Text>
       </div>
     ),
     Hired: (
       <div className="flex items-center space-x-1 text-[--hired]">
-        <GiBackwardTime size={20} />
+        <FaCheck size={20} />
         <Text className="mt-[0px] text-[var(--hired)]">Hired</Text>
       </div>
     ),

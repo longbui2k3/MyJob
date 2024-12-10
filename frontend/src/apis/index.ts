@@ -31,7 +31,13 @@ export {
   DeleteCategoryAPI,
 } from "./categoryAPI";
 export { ResendOtpAPI } from "./otpAPI";
-export { FindJobsAPI, FindJobAPI, UpdateJobAPI, CreateJobAPI } from "./jobAPI";
+export {
+  FindJobsAPI,
+  FindJobAPI,
+  UpdateJobAPI,
+  CreateJobAPI,
+  DeleteJobAPI,
+} from "./jobAPI";
 export {
   FindResumesAPI,
   FindResumeByIdAPI,

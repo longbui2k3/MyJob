@@ -17,12 +17,12 @@ import { Heading5 } from "../../headings";
 import { BaseSelect } from "../../select";
 import { ButtonSolid_2 } from "../../buttons";
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { MdOutlineModeEdit } from "react-icons/md";
+import { MdDeleteOutline, MdOutlineModeEdit } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { Pagination, usePagination } from "../../global";
 import { CiCircleRemove } from "react-icons/ci";
 import MyJobInfo from "./MyJobInfo";
-import { FindJobsAPI, UpdateJobAPI } from "../../../apis";
+import { DeleteJobAPI, FindJobsAPI, UpdateJobAPI } from "../../../apis";
 import { getRoute } from "../../../helpers/constants";
 import { useNavigate } from "react-router-dom";
 import {
@@ -101,6 +101,15 @@ export default function MyJobs({ isCheck = true, limit = 5 }: MyJobsProps) {
   };
   const handleExpiredJob = async (id: string, status: string) => {
     const data = await UpdateJobAPI(id, { status });
+    if (data.isSuccess) {
+      toastSuccess(data.message);
+      setRefresh((prev) => prev + 1);
+    } else {
+      toastError(data.message);
+    }
+  };
+  const handleDeleteJob = async (id: string) => {
+    const data = await DeleteJobAPI(id);
     if (data.isSuccess) {
       toastSuccess(data.message);
       setRefresh((prev) => prev + 1);
@@ -211,6 +220,12 @@ export default function MyJobs({ isCheck = true, limit = 5 }: MyJobsProps) {
                             icon={<CiCircleRemove size={20} />}
                           >
                             Make it Expire
+                          </MenuItem>
+                          <MenuItem
+                            onClick={() => handleDeleteJob(job._id)}
+                            icon={<MdDeleteOutline size={20} />}
+                          >
+                            Delete Job
                           </MenuItem>
                         </MenuList>
                       </Menu>
