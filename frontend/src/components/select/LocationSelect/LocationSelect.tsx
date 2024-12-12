@@ -32,7 +32,7 @@ export default function LocationSelect({
       provinces.find((province) => province.code === provinceCode)
         ?.english_name || "Select Location"
     );
-  }, []);
+  }, [provinceCode]);
   return (
     <Menu>
       <MenuButton

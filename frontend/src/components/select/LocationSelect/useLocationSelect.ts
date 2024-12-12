@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function useLocationSelect() {
@@ -8,6 +8,14 @@ export default function useLocationSelect() {
       Number(searchParams.get("provinceCode"))) ||
       0
   );
+
+  useEffect(() => {
+    setProvinceCode(
+      (searchParams.get("provinceCode") &&
+        Number(searchParams.get("provinceCode"))) ||
+        0
+    );
+  }, [searchParams]);
 
   return { provinceCode, setProvinceCode };
 }

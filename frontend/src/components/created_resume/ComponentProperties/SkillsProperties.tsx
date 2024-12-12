@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ButtonAdd, EditorProperty } from "../Components";
 import { setState } from "../../../features";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel } from "@chakra-ui/react";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 export default function SkillsProperties() {
     const dispatch = useDispatch();
@@ -52,6 +53,7 @@ export default function SkillsProperties() {
 
 function Skill({ content, i }: { content: any; i: number }) {
     const dispatch = useDispatch();
+    const state = useSelector((state: any) => state.createCV.state);
     return (
       <AccordionItem>
         <AccordionButton
@@ -68,7 +70,29 @@ function Skill({ content, i }: { content: any; i: number }) {
               fontSize: "14px",
             }}
           >{`Skill ${i + 1}`}</div>
-          <AccordionIcon />
+          <div className="flex gap-2 items-center">
+            {state.skills.content.length > 1 ? (
+              <HiOutlineXMark
+                color="var(--danger-500)"
+                size={20}
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(
+                    setState({
+                      key: "skills.content",
+                      value: [
+                        ...state.skills.content.slice(0, i),
+                        ...state.skills.content.slice(i + 1),
+                      ],
+                    })
+                  );
+                }}
+              />
+            ) : (
+              ""
+            )}
+            <AccordionIcon />
+          </div>
         </AccordionButton>
         <AccordionPanel
           style={{
@@ -103,7 +127,6 @@ function Skill({ content, i }: { content: any; i: number }) {
             }}
             fontSizeLabel="14px"
           />
-
         </AccordionPanel>
       </AccordionItem>
     );

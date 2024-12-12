@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function useJobLevelCheckbox() {
@@ -8,5 +8,12 @@ export default function useJobLevelCheckbox() {
       searchParams.get("jobLevels")?.split("_")) ||
       []
   );
+  useEffect(() => {
+    setJobLevels(
+      (searchParams.get("jobLevels") &&
+        searchParams.get("jobLevels")?.split("_")) ||
+        []
+    );
+  }, [searchParams]);
   return { jobLevels, setJobLevels };
 }
