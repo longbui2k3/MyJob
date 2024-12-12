@@ -1,4 +1,3 @@
-"# MyJob" 
 # HƯỚNG DẪN SỬ DỤNG WEBSITE HỖ TRỢ ĐĂNG TIN VÀ TÌM KIẾM VIỆC LÀM
 
 ## Yêu cầu
