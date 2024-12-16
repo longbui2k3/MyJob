@@ -56,7 +56,7 @@ const subNavigationRoles = {
           <a href="/signin">
             <ButtonOutline children={"Sign In"} />
           </a>
-          <a href="/post">
+          <a href="/signin">
             <ButtonSolid children={"Post A Job"} />
           </a>
         </div>

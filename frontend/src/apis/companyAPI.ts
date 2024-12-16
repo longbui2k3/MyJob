@@ -16,7 +16,7 @@ export const CreateCompanyAPI = async (body: {
   socialMedias: { socialMedia: string; linkUrl: string }[];
   mapLocation: string;
   address: string;
-  provinceCode: number;
+  provinceCode: number | undefined;
   phone: string;
   email: string;
 }) => {
@@ -38,7 +38,8 @@ export const CreateCompanyAPI = async (body: {
   formData.append("socialMedias", JSON.stringify(body.socialMedias));
   formData.append("mapLocation", body.mapLocation);
   formData.append("address", body.address);
-  formData.append("provinceCode", body.provinceCode.toString());
+  if (body.provinceCode)
+    formData.append("provinceCode", body.provinceCode.toString());
   formData.append("phone", body.phone);
   formData.append("email", body.email);
   return await BaseAPI({
@@ -65,7 +66,7 @@ export const UpdateCompanyAPI = async (
     socialMedias: { socialMedia: string; linkUrl: string }[];
     mapLocation: string;
     address: string;
-    provinceCode: number;
+    provinceCode: number | undefined;
     phone: string;
     email: string;
   }
@@ -89,7 +90,8 @@ export const UpdateCompanyAPI = async (
   formData.append("socialMedias", JSON.stringify(body.socialMedias));
   formData.append("mapLocation", body.mapLocation);
   formData.append("address", body.address);
-  formData.append("provinceCode", body.provinceCode.toString());
+  if (body.provinceCode)
+    formData.append("provinceCode", body.provinceCode.toString());
   formData.append("phone", body.phone);
   formData.append("email", body.email);
 

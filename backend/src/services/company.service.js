@@ -40,7 +40,7 @@ class CompanyService {
       logo: logoImg,
       banner: bannerImg,
       socialMedias: parseSocialMedias,
-      provinceCode: Number(provinceCode),
+      provinceCode: provinceCode ? Number(provinceCode) : undefined,
     });
 
     if (!updateCompany)
