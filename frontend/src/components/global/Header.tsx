@@ -1,11 +1,11 @@
-import { IoNotificationsOutline } from "react-icons/io5";
+import { IoNotifications, IoNotificationsOutline } from "react-icons/io5";
 import { useAuthContext } from "../../context";
 import { User } from "../../interfaces";
 import { ButtonOutline, ButtonSolid } from "../buttons";
 import { SearchInput_1 } from "../inputs";
 import Logo from "./Logo";
 import Navigation from "./Navigation";
-import { Avatar } from "@chakra-ui/react";
+import { Avatar, IconButton } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Dropdown from "./Dropdown";
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ import {
 } from "../../helpers/constants";
 import { toastError, toastSuccess } from "../toast";
 import { FaUserCircle } from "react-icons/fa";
+import { LuMessagesSquare } from "react-icons/lu";
 
 interface SubNavigationProps {
   user: string | User | null;
@@ -92,7 +93,16 @@ const subNavigationRoles = {
       ];
       return (
         <div className="flex space-x-4 items-center">
-          <IoNotificationsOutline size="22px" />
+          <IconButton
+            icon={<IoNotifications size="22px" color="var(--primary-500)" />}
+            aria-label="Notification"
+            borderRadius={"100%"}
+          ></IconButton>
+          <IconButton
+            icon={<LuMessagesSquare size="22px" color="var(--primary-500)" />}
+            aria-label="Message"
+            borderRadius={"100%"}
+          ></IconButton>
           <Dropdown
             Button={
               user?.avatar ? (
@@ -135,7 +145,11 @@ const subNavigationRoles = {
       ];
       return (
         <div className="flex space-x-4 items-center">
-          <IoNotificationsOutline size="22px" />
+          <IconButton
+            icon={<IoNotifications size="22px" color="var(--primary-500)" />}
+            aria-label="Notification"
+            borderRadius={"100%"}
+          ></IconButton>
           <a href="/post">
             <ButtonOutline
               children={"Post A Job"}
@@ -187,7 +201,11 @@ const subNavigationRoles = {
       ];
       return (
         <div className="flex space-x-4 items-center">
-          <IoNotificationsOutline size="22px" />
+          <IconButton
+            icon={<IoNotifications size="22px" color="var(--primary-500)" />}
+            aria-label="Notification"
+            borderRadius={"100%"}
+          ></IconButton>
           <Dropdown
             Button={
               user?.avatar ? (
