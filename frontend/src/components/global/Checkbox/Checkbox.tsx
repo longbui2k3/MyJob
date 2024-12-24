@@ -1,9 +1,12 @@
 import { Switch } from "@chakra-ui/react";
 interface CheckboxProps {
-  label: string | JSX.Element;
-  onChange: () => void;
+  label?: string | JSX.Element;
+  onChange?: () => void;
 }
-export default function Checkbox({ label, onChange }: CheckboxProps) {
+export default function Checkbox({
+  label = "",
+  onChange = () => {},
+}: CheckboxProps) {
   return (
     <div className={"flex flex-row"}>
       <Switch
@@ -22,7 +25,9 @@ export default function Checkbox({ label, onChange }: CheckboxProps) {
         onChange={onChange}
       />
       <div
-        className={"ms-[7px] my-auto text-[14px] leading-tight text-[--gray-500]"}
+        className={
+          "ms-[7px] my-auto text-[14px] leading-tight text-[--gray-500]"
+        }
       >
         {label}
       </div>

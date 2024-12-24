@@ -62,6 +62,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: Object.values(UserStatus),
     },
+    latestOnlineAt: Date,
+    profile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile",
+      required: true,
+    },
   },
   { timestamps: true, collection: COLLECTION_NAME }
 );

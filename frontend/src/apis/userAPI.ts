@@ -58,6 +58,7 @@ export const FindUsersAPI = async (body: {
   status?: string;
   userType?: string;
   search?: string;
+  allow_empty?: boolean
 }) => {
   return await BaseAPI({
     path: `/user?${changeQueryObjToQueryStr(body)}`,

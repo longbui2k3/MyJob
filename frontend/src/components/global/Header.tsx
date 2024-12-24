@@ -1,4 +1,4 @@
-import { IoNotifications, IoNotificationsOutline } from "react-icons/io5";
+import { IoNotifications } from "react-icons/io5";
 import { useAuthContext } from "../../context";
 import { User } from "../../interfaces";
 import { ButtonOutline, ButtonSolid } from "../buttons";
@@ -16,6 +16,7 @@ import {
   DASHBOARD_SETTINGS_KEY,
   DEFAULT_PADDING_X,
   getRoute,
+  MESSAGE_KEY,
   UserTypes,
 } from "../../helpers/constants";
 import { toastError, toastSuccess } from "../toast";
@@ -102,6 +103,9 @@ const subNavigationRoles = {
             icon={<LuMessagesSquare size="22px" color="var(--primary-500)" />}
             aria-label="Message"
             borderRadius={"100%"}
+            onClick={() => {
+              navigate(getRoute(MESSAGE_KEY).path);
+            }}
           ></IconButton>
           <Dropdown
             Button={
@@ -149,6 +153,14 @@ const subNavigationRoles = {
             icon={<IoNotifications size="22px" color="var(--primary-500)" />}
             aria-label="Notification"
             borderRadius={"100%"}
+          ></IconButton>
+          <IconButton
+            icon={<LuMessagesSquare size="22px" color="var(--primary-500)" />}
+            aria-label="Message"
+            borderRadius={"100%"}
+            onClick={() => {
+              navigate(getRoute(MESSAGE_KEY).path);
+            }}
           ></IconButton>
           <a href="/post">
             <ButtonOutline

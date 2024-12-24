@@ -43,6 +43,8 @@ export {
   JOB_DETAIL_KEY,
   CREATE_CV_KEY,
   UPDATE_CV_KEY,
+  MESSAGE_DETAIL_KEY,
+  MESSAGE_KEY,
 } from "./routes";
 export type { RouteItem } from "./routes";
 export const DEFAULT_PADDING_X = "200px";

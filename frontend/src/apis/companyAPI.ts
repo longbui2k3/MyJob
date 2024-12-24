@@ -106,6 +106,7 @@ export const FindCompaniesAPI = async (query: {
   search?: string;
   organizationType?: number;
   provinceCode?: number;
+  allow_empty?: boolean;
 }) => {
   return await BaseAPI({
     path: `/company?${changeQueryObjToQueryStr(query)}`,

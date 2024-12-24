@@ -120,20 +120,31 @@ class UserService {
     return savedCandidates;
   };
 
-  static findUsers = async ({ page, limit, search, status, userType }) => {
-    console.log({ page, limit, search, status, userType });
+  static findUsers = async ({
+    page,
+    limit,
+    search,
+    status,
+    userType,
+    allow_empty = false,
+  }) => {
+    if (!search && allow_empty) {
+      return {
+        data: [],
+        meta: {
+          limit: 20,
+          page: 1,
+          size: 1,
+          length: 0,
+        },
+      };
+    }
     const users = await userRepo.find(
       removeUndefinedInObject({
         status: status || undefined,
         userType: userType || undefined,
       }),
-      { page, limit, search, sort: ["username"] }
-    );
-    users.data = await Promise.all(
-      users.data.map(async (user) => {
-        user.profile = await profileRepo.findOne({ user: user._id });
-        return user;
-      })
+      { page, limit, search, sort: ["username"], populates: ["profile"] }
     );
     return users;
   };
@@ -169,6 +180,14 @@ class UserService {
       oldStatus: undefined,
       status: user.oldStatus,
     });
+  };
+
+  static updateLatestOnlineAt = async (userId) => {
+    const user = await userRepo.findById(userId);
+    if (!user) {
+      throw new BadRequestError("User not found!");
+    }
+    return await userRepo.updateLatestOnlineAt(user._id);
   };
 }
 

@@ -39,6 +39,8 @@ export const DASHBOARD_SAVED_CANDIDATE_KEY = "DASHBOARD_SAVED_CANDIDATE";
 export const DASHBOARD_PLANS_AND_BILLING_KEY = "DASHBOARD_PLANS_AND_BILLING";
 export const DASHBOARD_CATEGORIES_KEY = "DASHBOARD_CATEGORIES";
 export const DASHBOARD_USERS_KEY = "DASHBOARD_USERS";
+export const MESSAGE_KEY = "MESSAGE_KEY";
+export const MESSAGE_DETAIL_KEY = "MESSAGE_DETAIL_KEY";
 
 const ROUTES: Array<RouteItem> = [
   {
@@ -152,6 +154,20 @@ const ROUTES: Array<RouteItem> = [
         isPrivate: false,
       },
       {
+        key: MESSAGE_KEY,
+        name: "Message",
+        path: "/direct/inbox",
+        children: [],
+        isPrivate: true,
+      },
+      {
+        key: MESSAGE_DETAIL_KEY,
+        name: "Message",
+        path: "/direct/t/:id",
+        children: [],
+        isPrivate: true,
+      },
+      {
         key: DASHBOARD_KEY,
         name: "Dashboard",
         path: "/dashboard",
@@ -259,15 +275,15 @@ const DEFAULT_ROUTE = {
 export const getRoute = (
   key: string,
   options?: {
-    query?: { [key: string]: string };
-    param?: { [key: string]: string };
+    query?: { [key: string]: string | undefined };
+    param?: { [key: string]: string | undefined };
   }
 ): RouteItem => {
   const route = findRouteByKey(key, ROUTES) || DEFAULT_ROUTE;
 
   let queryString = "";
   if (options && options.query)
-    queryString = ((obj: { [key: string]: string }) => {
+    queryString = ((obj: { [key: string]: string | undefined }) => {
       const queryString =
         "?" +
         Object.entries(obj)
@@ -279,7 +295,7 @@ export const getRoute = (
 
   if (options && options.param) {
     Object.entries(options.param).forEach(([key, value]) => {
-      route.path = route.path.replace(`:${key}`, value);
+      route.path = route.path.replace(`:${key}`, value || "");
     });
   }
   return route;

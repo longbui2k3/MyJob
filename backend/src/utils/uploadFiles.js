@@ -6,7 +6,7 @@ const {
   uploadBytesResumable,
   getMetadata,
 } = require("firebase/storage");
-const firebaseConfig = require("../config/firebase");
+const firebaseConfig = require("../config/firebase.config");
 initializeApp(firebaseConfig);
 const storage = getStorage();
 class UploadFiles {

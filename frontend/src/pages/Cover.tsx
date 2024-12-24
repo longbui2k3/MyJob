@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { CVViewer, Footer, Header } from "../components/global";
 import { useSelector } from "react-redux";
 import { FormCategory } from "../components/category";
@@ -12,10 +12,18 @@ import {
   FormSendEmail,
 } from "../components/application";
 import { useAuthContext } from "../context";
-import { UserTypes } from "../helpers/constants";
+import {
+  CREATE_CV_KEY,
+  getRoute,
+  MESSAGE_DETAIL_KEY,
+  MESSAGE_KEY,
+  UPDATE_CV_KEY,
+  UserTypes,
+} from "../helpers/constants";
 
 import { useLocation } from "react-router-dom";
 export default function Cover() {
+  const { id } = useParams();
   const location = useLocation();
   const { user } = useAuthContext();
   const isOpenFormCategory = useSelector(
@@ -62,9 +70,20 @@ export default function Cover() {
           flexDirection: "column",
 
           height: "100%",
-          ...(!["edit-cv", "create-cv"].includes(
-            location.pathname.split("/")[2]
-          )
+          ...(![
+            getRoute(CREATE_CV_KEY).path,
+            getRoute(UPDATE_CV_KEY, {
+              param: {
+                id,
+              },
+            }).path,
+            getRoute(MESSAGE_KEY).path,
+            getRoute(MESSAGE_DETAIL_KEY, {
+              param: {
+                id,
+              },
+            }).path,
+          ].includes(location.pathname)
             ? {
                 minHeight: "800px",
               }
@@ -74,7 +93,20 @@ export default function Cover() {
         <Outlet />
       </div>
       <ToastContainer />
-      {!["edit-cv", "create-cv"].includes(location.pathname.split("/")[2]) ? (
+      {![
+        getRoute(CREATE_CV_KEY).path,
+        getRoute(UPDATE_CV_KEY, {
+          param: {
+            id,
+          },
+        }).path,
+        getRoute(MESSAGE_KEY).path,
+        getRoute(MESSAGE_DETAIL_KEY, {
+          param: {
+            id,
+          },
+        }).path,
+      ].includes(location.pathname) ? (
         <Footer />
       ) : (
         ""

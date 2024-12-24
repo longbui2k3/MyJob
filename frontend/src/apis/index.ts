@@ -76,3 +76,14 @@ export {
   UnfollowCompanyAPI,
 } from "./followedCompanyAPI";
 export { SendEmailAPI, GeneralStatisticsAPI } from "./generalAPI";
+export {
+  CreateMessageAPI,
+  FindMessagesByConversationAPI,
+  DeleteMessageAPI,
+} from "./messageAPI";
+export {
+  CreateConversationAPI,
+  GetAllConversationsAPI,
+  GetConversationAPI,
+  DeleteConversationAPI,
+} from "./conversationAPI";

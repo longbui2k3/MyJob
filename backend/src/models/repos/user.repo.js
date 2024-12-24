@@ -61,6 +61,12 @@ class UserRepo extends BaseRepo {
   async updateActiveStatus(id) {
     return await this.findByIdAndUpdate(id, { status: UserStatus.ACTIVE });
   }
+
+  async updateLatestOnlineAt(userId) {
+    return await this.findByIdAndUpdate(userId, {
+      latestOnlineAt: new Date(Date.now()),
+    });
+  }
 }
 
 module.exports = new UserRepo();

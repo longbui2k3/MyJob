@@ -49,6 +49,8 @@ import {
   DASHBOARD_USERS_KEY,
   CREATE_CV_KEY,
   UPDATE_CV_KEY,
+  MESSAGE_DETAIL_KEY,
+  MESSAGE_KEY,
 } from "./helpers/constants";
 import { useAuthContext } from "./context";
 import { CircularProgress } from "@chakra-ui/react";
@@ -67,8 +69,9 @@ import {
 import { PageCompletedCompany } from "./pages/company";
 import { EditJob } from "./components/job/MyJobs";
 
-import { PageUpdateCV } from "./pages/home";
+import { PageMessage, PageUpdateCV } from "./pages/home";
 import { ApplicationList } from "./components/application";
+import { Conversation, NoConversation } from "./components/messages";
 
 const AuthenRoutes = [
   {
@@ -142,6 +145,22 @@ const OtherRoutes = [
     route: getRoute(EMPLOYER_DETAIL_KEY),
     element: <PageEmployerDetail />,
   },
+  {
+    route: getRoute(MESSAGE_KEY),
+    element: (
+      <PageMessage>
+        <NoConversation />
+      </PageMessage>
+    ),
+  },
+  {
+    route: getRoute(MESSAGE_DETAIL_KEY),
+    element: (
+      <PageMessage>
+        <Conversation />
+      </PageMessage>
+    ),
+  },
 ];
 
 const DashboardRoutes = [
@@ -187,8 +206,8 @@ const DashboardRoutes = [
   },
   {
     route: getRoute(DASHBOARD_USERS_KEY),
-    element: <DashboardUsers />,  
-  }
+    element: <DashboardUsers />,
+  },
 ];
 
 function App() {

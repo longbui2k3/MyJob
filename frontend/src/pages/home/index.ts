@@ -7,3 +7,4 @@ export { default as PageEmployerDetail } from "./PageEmployerDetail";
 export { default as PageMyCV } from "./PageMyCV";
 export { default as PageCreateCV } from "./PageCreateCV";
 export { default as PageUpdateCV } from "./PageUpdateCV";
+export { default as PageMessage } from "./PageMessage";

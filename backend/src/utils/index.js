@@ -66,6 +66,80 @@ const flattenQueryArray = (query) => {
   if (!Array.isArray(query)) query = [query];
   return query;
 };
+
+const changeDateToString = (date) => {
+  const now = new Date(Date.now());
+  const timeStr = date
+    .toTimeString()
+    .split(" ")[0]
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  const dateStr = date.toDateString().split(" ").slice(1).join(" ");
+  const dayStr = date.toDateString().split(" ")[0];
+  if (
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === date.getFullYear()
+  ) {
+    return timeStr;
+  }
+  if (
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === date.getFullYear()
+  ) {
+    if (now.getDate() - date.getDate() <= 6 && now.getDate() > date.getDate()) {
+      return `${dayStr}, ${timeStr}`;
+    }
+  }
+  return dateStr + ", " + timeStr;
+};
+
+const messagesWithDays = (messages) => {
+  let messagesWithDays = [];
+  if (messages.length === 0) {
+    return [];
+  }
+  let date = new Date(messages[0].createdAt);
+  let messes = [messages[0]];
+  for (let i = 1; i < messages.length; i++) {
+    if (i === messages.length - 1) {
+      if (new Date(messages[i].createdAt).getHours() === date.getHours()) {
+        messes.push(messages[i]);
+        messagesWithDays.push({
+          date: changeDateToString(date),
+          fullDate: date,
+          messages: messes,
+        });
+      } else {
+        messagesWithDays.push({
+          date: changeDateToString(date),
+          fullDate: date,
+          messages: messes,
+        });
+        messagesWithDays.push({
+          date: changeDateToString(new Date(messages[i].createdAt)),
+          fullDate: new Date(messages[i].createdAt),
+          messages: [messages[i]],
+        });
+      }
+      break;
+    }
+    if (new Date(messages[i].createdAt).getHours() === date.getHours()) {
+      messes.push(messages[i]);
+    } else {
+      messagesWithDays.push({
+        date: changeDateToString(date),
+        fullDate: date,
+        messages: messes,
+      });
+      date = new Date(messages[i].createdAt);
+      messes = [messages[i]];
+    }
+  }
+
+  return messagesWithDays;
+};
 module.exports = {
   getInfoData,
   getSelectData,
@@ -76,4 +150,6 @@ module.exports = {
   hashString,
   createTokenString,
   flattenQueryArray,
+  messagesWithDays,
+  changeDateToString,
 };

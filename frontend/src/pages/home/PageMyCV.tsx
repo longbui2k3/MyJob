@@ -8,7 +8,6 @@ import {
 } from "../../helpers/constants";
 
 export default function PageMyCV() {
-  
   return (
     <>
       <BreadcrumbHeader breadcrumbRoutes={getBreadcrumb(MY_CV_KEY)} />

@@ -15,6 +15,8 @@ const resume = require("./resume");
 const savedCandidate = require("./savedCandidate");
 const application = require("./application");
 const general = require("./general");
+const message = require("./message");
+const conversation = require("./conversation");
 const swagger = require("../../swagger-output.json");
 const router = express.Router();
 router.use("/api/v1/docs", swaggerUi.serve, swaggerUi.setup(swagger));
@@ -35,6 +37,8 @@ router.use("/api/v1/resume", resume);
 router.use("/api/v1/application", application);
 router.use("/api/v1/general", general);
 router.use("/api/v1/followedCompany", followedCompany);
+router.use("/api/v1/message", message);
+router.use("/api/v1/conversation", conversation);
 router.use("/api/v1", authen);
 
 module.exports = router;

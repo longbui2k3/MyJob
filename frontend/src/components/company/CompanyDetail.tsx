@@ -15,7 +15,7 @@ import {
   FollowCompanyAPI,
   UnfollowCompanyAPI,
 } from "../../apis";
-import { JobGrid, JobRowsFill } from "../job";
+import { JobGrid } from "../job";
 import { toastError, toastSuccess } from "../toast";
 
 export default function CompanyDetail() {
@@ -145,7 +145,7 @@ export default function CompanyDetail() {
 
           <TabPanels>
             <TabPanel>
-              <div>
+              <div className="flex flex-col gap-7 mt-[15px]">
                 <div>
                   <Heading name="About Us" size={17} />
                   <Text>
