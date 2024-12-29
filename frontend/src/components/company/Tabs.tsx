@@ -122,8 +122,8 @@ export default function Tabs() {
     setAddress(value);
   };
 
-  // address
-  const [provinceCode, setProvinceCode] = useState<number>(0);
+  // provinceCode
+  const [provinceCode, setProvinceCode] = useState<number | undefined>();
   const handleProvinceCode = (value: number) => {
     setProvinceCode(value);
   };
@@ -224,7 +224,7 @@ export default function Tabs() {
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("check", provinceCode);
     const data = await UpdateCompanyAPI(id, {
       companyName: companyName,
       logo: logoFile,
