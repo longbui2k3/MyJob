@@ -50,8 +50,8 @@ export default function HeaderConversation(body: { conversation: any }) {
         </div>
 
         <div className="flex">
-          <Button Icon={TbPhoneCall} onClick={() => {}} />
-          <Button Icon={RiVideoOnLine} onClick={() => {}} />
+          {/* <Button Icon={TbPhoneCall} onClick={() => {}} />
+          <Button Icon={RiVideoOnLine} onClick={() => {}} /> */}
           {!isOpenConversationInformation ? (
             <Button
               Icon={ImInfo}

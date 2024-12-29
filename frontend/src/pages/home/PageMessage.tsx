@@ -13,8 +13,11 @@ import {
   FormCreateConversation,
   NavigateMoreMessage,
 } from "../../components/messages";
+import { useAuthContext } from "../../context";
+import { UserTypes } from "../../helpers/constants";
 
 export default function PageMessage({ children }) {
+  const { user } = useAuthContext();
   const { isOpenConversation } = useOpenConversation();
   const { isOpenConversationInformation } = useOpenConversationInformation();
   const { conversation } = useConversation();
@@ -59,7 +62,7 @@ export default function PageMessage({ children }) {
     (async () => {
       setIsLoading(true);
       const data = await GetAllConversationsAPI();
-      if (data.status === 200) {
+      if (data.isSuccess) {
         setConversations(data.metadata.conversations);
         setIsLoading(false);
       }
@@ -69,7 +72,13 @@ export default function PageMessage({ children }) {
   return (
     <div
       className="bg-gray-50 flex h-screen relative"
-      style={{ height: "calc(100vh - 120px)" }}
+      style={{
+        height: `calc(100vh - ${
+          typeof user !== "string" && user?.userType === UserTypes.EMPLOYEE
+            ? "120px"
+            : "70px"
+        })`,
+      }}
     >
       {isOpenConversation ? <FormCreateConversation /> : ""}
       {/* <!-- Main Content --> */}

@@ -197,7 +197,7 @@ export default function MessageInput({ messages, setMessages }) {
               </button>
             </div>
           </form>
-          <Button onClick={function () {}} Icon={GrMicrophone} />
+          {/* <Button onClick={function () {}} Icon={GrMicrophone} /> */}
           <button className="w-12 h-12 my-auto px-2 py-2">
             <input
               type="file"
