@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Pagination, usePagination } from "../global";
+import { BreadcrumbHeader, Pagination, usePagination } from "../global";
 import { FindApplicationsAPI, UpdateApplicationAPI } from "../../apis";
 import { useParams } from "react-router-dom";
 import { Heading5 } from "../headings";
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import Applications from "./Applications";
-import { ApplicationStatuses } from "../../helpers/constants";
+import {
+  ApplicationStatuses,
+  DASHBOARD_APPLICATIONS_KEY,
+  getBreadcrumb,
+} from "../../helpers/constants";
 import { ButtonSolid } from "../buttons";
 import { TfiEmail } from "react-icons/tfi";
 import { useDispatch } from "react-redux";
@@ -78,6 +82,10 @@ export default function ApplicationList() {
 
   return (
     <>
+      <BreadcrumbHeader
+        breadcrumbRoutes={getBreadcrumb(DASHBOARD_APPLICATIONS_KEY)}
+        isDashboard={true}
+      />
       <div className="flex items-center justify-between">
         <Heading5 name="Job Applications" />
         <div className="flex space-x-2">
