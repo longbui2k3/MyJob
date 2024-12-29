@@ -26,7 +26,7 @@ export default function CompanyList() {
         search: searchParams.get("search") || undefined,
         organizationType:
           (searchParams.get("org_type") &&
-            Number(searchParams.get("org_type"))) ||
+            Number(searchParams.get("org_type")) + 1) ||
           undefined,
         provinceCode: provinceCode ? Number(provinceCode) : undefined,
       });

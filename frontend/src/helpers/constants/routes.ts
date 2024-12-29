@@ -288,12 +288,7 @@ export const getRoute = (
 export const matchPathPattern = (path: string, pattern: string) => {
   const pathParts = path.split("/");
   const patternParts = pattern.split("/");
-
-  if (pathParts.length !== patternParts.length) {
-    return false;
-  }
-
-  const length = pathParts.length;
+  const length = patternParts.length;
   for (let i = 0; i < length; i++) {
     if (patternParts[i].startsWith(":")) {
       continue;

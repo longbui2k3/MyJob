@@ -96,6 +96,7 @@ class CompanyService {
     organizationType,
   }) => {
     organizationType = Object.values(OrganizationTypes)[organizationType];
+    console.log(organizationType);
     return await companyRepo.find(
       removeUndefinedInObject({
         provinceCode: provinceCode - 0 || undefined,

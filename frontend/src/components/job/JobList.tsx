@@ -34,19 +34,31 @@ export default function JobList() {
         category: searchParams.get("category") || undefined,
         experiences:
           (searchParams.get("experiences") &&
-            searchParams.get("experiences")?.split("_")) ||
+            searchParams
+              .get("experiences")
+              ?.split("_")
+              .map((val) => Number(val) + 1)) ||
           undefined,
         educations:
           (searchParams.get("educations") &&
-            searchParams.get("educations")?.split("_")) ||
+            searchParams
+              .get("educations")
+              ?.split("_")
+              .map((val) => Number(val) + 1)) ||
           undefined,
         jobLevels:
           (searchParams.get("jobLevels") &&
-            searchParams.get("jobLevels")?.split("_")) ||
+            searchParams
+              .get("jobLevels")
+              ?.split("_")
+              .map((val) => Number(val) + 1)) ||
           undefined,
         jobTypes:
           (searchParams.get("jobTypes") &&
-            searchParams.get("jobTypes")?.split("_")) ||
+            searchParams
+              .get("jobTypes")
+              ?.split("_")
+              .map((val) => Number(val) + 1)) ||
           undefined,
         salaryMin: searchParams.get("salary_min") || undefined,
         salaryMax: searchParams.get("salary_max") || undefined,

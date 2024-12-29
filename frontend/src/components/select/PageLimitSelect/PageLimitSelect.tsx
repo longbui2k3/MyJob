@@ -17,8 +17,8 @@ export default function PageLimitSelect({
       width={width}
       onChange={onChange}
     >
-      {new Array(14).fill(0).map((_, i) => (
-        <option value={5 + i}>{`${5 + i} per pages`}</option>
+      {new Array(8).fill(0).map((_, i) => (
+        <option value={8 + i}>{`${8 + i} per pages`}</option>
       ))}
     </Select>
   );

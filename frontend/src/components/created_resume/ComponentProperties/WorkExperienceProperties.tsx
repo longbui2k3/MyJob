@@ -8,6 +8,7 @@ import {
 import { ButtonAdd, EditorProperty } from "../Components";
 import { useDispatch, useSelector } from "react-redux";
 import { setState } from "../../../features";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 export default function WorkExperienceProperties() {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ export default function WorkExperienceProperties() {
 }
 
 function Company({ content, i }: { content: any; i: number }) {
+  const state = useSelector((state: any) => state.createCV.state);
   const dispatch = useDispatch();
   return (
     <AccordionItem>
@@ -77,7 +79,29 @@ function Company({ content, i }: { content: any; i: number }) {
             fontSize: "14px",
           }}
         >{`Company  ${i + 1}`}</div>
-        <AccordionIcon />
+        <div className="flex gap-2 items-center">
+          {state.workExperience.content.length > 1 ? (
+            <HiOutlineXMark
+              color="var(--danger-500)"
+              size={20}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(
+                  setState({
+                    key: "workExperience.content",
+                    value: [
+                      ...state.workExperience.content.slice(0, i),
+                      ...state.workExperience.content.slice(i + 1),
+                    ],
+                  })
+                );
+              }}
+            />
+          ) : (
+            ""
+          )}
+          <AccordionIcon />
+        </div>
       </AccordionButton>
       <AccordionPanel
         style={{

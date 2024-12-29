@@ -74,6 +74,9 @@ const JobRoles = {
   DEVOPSENGINEER: "DevOps Engineer",
   DIGITALMARKETING: "Digital Marketing",
   FINANCIALANALYST: "Financial Analyst",
+  QAENGINEER: "QA Engineer",
+  DATAANALYST: "Data Analyst",
+  SALES: "Sales",
   OTHERS: "Others",
 };
 
@@ -97,6 +100,7 @@ const Experiences = {
 };
 
 const JobTypes = {
+  EMPTY: "",
   FULLTIME: "Full Time",
   PARTTIME: "Part Time",
   INTERNSHIP: "Internship",
@@ -106,13 +110,12 @@ const JobTypes = {
 };
 
 const JobStatuses = {
-  //PENDING: "Pending",
   ACTIVE: "Active",
-  //REVOKED: "Revoked",
   EXPIRED: "Expired",
 };
 
 const Educations = {
+  EMPTY: "",
   HIGHSCHOOL: "High School",
   INTERMEDIATE: "Intermediate",
   GRADUATION: "Graduation",
@@ -121,6 +124,7 @@ const Educations = {
 };
 
 const JobLevels = {
+  EMPTY: "",
   ENTRYLEVEL: "Entry Level",
   MIDLEVEL: "Mid Level",
   EXPERTLEVEL: "Expert Level",

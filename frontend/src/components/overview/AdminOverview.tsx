@@ -9,7 +9,6 @@ import { GeneralStatisticsAPI } from "../../apis";
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
 import { Bar } from "react-chartjs-2";
-import { steps } from "framer-motion";
 
 export default function AdminOverview() {
   const { user } = useAuthContext();
@@ -93,7 +92,7 @@ export default function AdminOverview() {
           <Bar
             options={{
               scales: {
-                yAxes: {
+                y: {
                   ticks: {
                     stepSize: 1,
                   },
@@ -117,7 +116,7 @@ export default function AdminOverview() {
           <Bar
             options={{
               scales: {
-                yAxes: {
+                y: {
                   ticks: {
                     stepSize: 1,
                   },
@@ -132,6 +131,78 @@ export default function AdminOverview() {
                   label: "Jobs",
                   data: statistics.jobsNum,
                   backgroundColor: "rgba(10, 101, 204, 1)",
+                },
+              ],
+            }}
+          />
+        </div>
+        <div>
+          <Bar
+            options={{
+              scales: {
+                y: {
+                  ticks: {
+                    stepSize: 1,
+                  },
+                  reverse: false,
+                },
+              },
+            }}
+            data={{
+              labels: months,
+              datasets: [
+                {
+                  label: "Candidates",
+                  data: statistics.candidatesNum,
+                  backgroundColor: "#ffa500",
+                },
+              ],
+            }}
+          />
+        </div>
+        <div>
+          <Bar
+            options={{
+              scales: {
+                y: {
+                  ticks: {
+                    stepSize: 1,
+                  },
+                  reverse: false,
+                },
+              },
+            }}
+            data={{
+              labels: months,
+              datasets: [
+                {
+                  label: "Companies",
+                  data: statistics.companiesNum,
+                  backgroundColor: "#0ba02c",
+                },
+              ],
+            }}
+          />
+        </div>
+        <div>
+          <Bar
+            options={{
+              scales: {
+                y: {
+                  ticks: {
+                    stepSize: 1,
+                  },
+                  reverse: false,
+                },
+              },
+            }}
+            data={{
+              labels: months,
+              datasets: [
+                {
+                  label: "Applications",
+                  data: statistics.applicationsNum,
+                  backgroundColor: "#e05151",
                 },
               ],
             }}

@@ -25,12 +25,14 @@ import { ButtonSolid } from "../../components/buttons";
 import { IoSaveOutline } from "react-icons/io5";
 import {
   CreateCreatedResumeAPI,
+  FindProfileByUserAPI,
   FindResumeByIdAPI,
   UpdateCreatedResumeAPI,
 } from "../../apis";
 import { toastError, toastSuccess } from "../../components/toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
+  setDataChange,
   setDeletedFields,
   setDeleteType,
   setFields,
@@ -38,6 +40,7 @@ import {
 } from "../../features";
 import Properties from "./Properties";
 import { ButtonPrint } from "./Components";
+import { getRoute, MY_CV_KEY } from "../../helpers/constants";
 function getData(prop: any) {
   return prop?.data?.current ?? {};
 }
@@ -55,6 +58,7 @@ interface FormBuildCVProps {
 }
 
 export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const fieldsState = useSelector((state) => state.createCV.fields);
   const deletedFieldsState = useSelector(
@@ -350,7 +354,49 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
     }
   }, [deleteType]);
 
+  async function getProfile() {
+    if (type !== "create") return;
+    const data = await FindProfileByUserAPI();
+    console.log("Profile", data);
+    if (data.isSuccess) {
+      const profile = data.metadata.profile;
+      dispatch(
+        setState({
+          key: "fullName",
+          value: profile.fullName,
+        })
+      );
+      dispatch(
+        setState({
+          key: "position",
+          value: profile.title,
+        })
+      );
+      dispatch(
+        setState({
+          key: "email",
+          value: profile.email,
+        })
+      );
+      dispatch(
+        setState({
+          key: "phone",
+          value: profile.mobile,
+        })
+      );
+      dispatch(
+        setState({
+          key: "location",
+          value: profile.mapLocation,
+        })
+      );
+    }
+  }
+
   const state = useSelector((state: any) => state.createCV.state);
+  useEffect(() => {
+    getProfile();
+  }, []);
   useEffect(() => {
     console.log("State data", state);
   }, [state]);
@@ -371,6 +417,8 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
     });
     if (data.isSuccess) {
       toastSuccess(data.message);
+      navigate(getRoute(MY_CV_KEY).path);
+      dispatch(setDataChange());
     } else {
       toastError(data.message);
     }
@@ -385,6 +433,7 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
     });
     if (data.isSuccess) {
       toastSuccess(data.message);
+      dispatch(setDataChange());
     } else {
       toastError(data.message);
     }
@@ -438,7 +487,7 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
         <div className="flex items-center gap-3">
           <ButtonSolid
             leftIcon={<IoSaveOutline size={18} />}
-            children={"Save"}
+            children={type === "create" ? "Create" : "Save"}
             width="100px"
             onClick={(e) => {
               e.preventDefault();
@@ -452,7 +501,7 @@ export default function FormBuildCV({ type = "create" }: FormBuildCVProps) {
           />
           <ButtonPrint
             id={"cvPdf"}
-            label={"Save and Download"}
+            label={`${type === "create" ? "Create" : "Save"} and Download`}
             name={name}
             onClick={() => {
               if (type === "create") {

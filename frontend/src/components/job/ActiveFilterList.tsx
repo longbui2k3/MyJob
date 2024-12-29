@@ -35,7 +35,6 @@ export default function ActiveFilterList() {
         onDeleteClick: () => {
           searchParams.delete("category");
           navigate(`?${searchParams.toString()}`);
-          navigate(0);
         },
       });
     }
@@ -49,7 +48,6 @@ export default function ActiveFilterList() {
         onDeleteClick: () => {
           searchParams.delete("provinceCode");
           navigate(`?${searchParams.toString()}`);
-          navigate(0);
         },
       });
     }
@@ -66,7 +64,6 @@ export default function ActiveFilterList() {
           searchParams.delete("salary_min");
           searchParams.delete("salary_max");
           navigate(`?${searchParams.toString()}`);
-          navigate(0);
         },
       });
     }
@@ -87,7 +84,6 @@ export default function ActiveFilterList() {
               if (newValues.length) searchParams.set(queryName, newValues);
               else searchParams.delete(queryName);
               navigate(`?${searchParams.toString()}`);
-              navigate(0);
             },
           });
         });
@@ -102,7 +98,7 @@ export default function ActiveFilterList() {
     setFilters(filters);
   }, [categories, searchParams]);
   return (
-    <div className="flex space-x-4">
+    <div className="grid grid-cols-4 gap-3">
       {filters.map((filter) => (
         <ActiveFilter
           label={filter.label}

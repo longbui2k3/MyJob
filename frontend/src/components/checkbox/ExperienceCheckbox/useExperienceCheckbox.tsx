@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function useExperienceCheckbox() {
@@ -8,5 +8,12 @@ export default function useExperienceCheckbox() {
       searchParams.get("experiences")?.split("_")) ||
       []
   );
+  useEffect(() => {
+    setExperiences(
+      (searchParams.get("experiences") &&
+        searchParams.get("experiences")?.split("_")) ||
+        []
+    );
+  }, [searchParams]);
   return { experiences, setExperiences };
 }

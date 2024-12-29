@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function useJobTypeCheckbox() {
@@ -8,5 +8,12 @@ export default function useJobTypeCheckbox() {
       searchParams.get("jobTypes")?.split("_")) ||
       []
   );
+  useEffect(() => {
+    setJobTypes(
+      (searchParams.get("jobTypes") &&
+        searchParams.get("jobTypes")?.split("_")) ||
+        []
+    );
+  }, [searchParams]);
   return { jobTypes, setJobTypes };
 }

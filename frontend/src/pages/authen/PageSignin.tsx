@@ -79,7 +79,6 @@ export default function PageSignin() {
         if (data.metadata.user.userType === UserTypes.EMPLOYEE)
           navigate(getRoute(DEFAULT_KEY).path, { replace: true });
         else navigate(getRoute(DASHBOARD_OVERVIEW_KEY).path, { replace: true });
-        navigate(0);
       }, 100);
     } else {
       toastError(data.message);

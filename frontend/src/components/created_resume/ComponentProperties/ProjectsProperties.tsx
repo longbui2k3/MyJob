@@ -8,7 +8,8 @@ import {
   AccordionItem,
   AccordionPanel,
 } from "@chakra-ui/react";
-
+import { TiDeleteOutline } from "react-icons/ti";
+import { HiOutlineXMark } from "react-icons/hi2";
 export default function ProjectsProperties() {
   const dispatch = useDispatch();
   const state = useSelector((state: any) => state.createCV.state);
@@ -63,6 +64,7 @@ export default function ProjectsProperties() {
 }
 
 function Project({ content, i }: { content: any; i: number }) {
+  const state = useSelector((state: any) => state.createCV.state);
   const dispatch = useDispatch();
   return (
     <AccordionItem>
@@ -80,7 +82,29 @@ function Project({ content, i }: { content: any; i: number }) {
             fontSize: "14px",
           }}
         >{`Project ${i + 1}`}</div>
-        <AccordionIcon />
+        <div className="flex gap-2 items-center">
+          {state.projects.content.length > 1 ? (
+            <HiOutlineXMark
+              color="var(--danger-500)"
+              size={20}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(
+                  setState({
+                    key: "projects.content",
+                    value: [
+                      ...state.projects.content.slice(0, i),
+                      ...state.projects.content.slice(i + 1),
+                    ],
+                  })
+                );
+              }}
+            />
+          ) : (
+            ""
+          )}
+          <AccordionIcon />
+        </div>
       </AccordionButton>
       <AccordionPanel
         style={{

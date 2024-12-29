@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   TableContainer,
   Tbody,
@@ -20,6 +21,9 @@ import { CiCircleRemove } from "react-icons/ci";
 import { EMPLOYER_DETAIL_KEY, getRoute } from "../../../helpers/constants";
 import { LuCalendarCheck } from "react-icons/lu";
 import { FaCheck } from "react-icons/fa";
+import { AiOutlineEye } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { openCVViewer, setData } from "../../../features";
 
 interface StatusesProps {
   status?: string;
@@ -65,6 +69,7 @@ export default function AppliedJobs({
   isHeader = true,
   limit,
 }: AppliedJobsProps) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [applications, setApplications] = useState<Array<any>>([]);
   const { curPage, setCurPage } = usePagination();
@@ -73,7 +78,7 @@ export default function AppliedJobs({
   async function findAppliedJobs() {
     const data = await FindAppliedJobByUser({
       page: curPage,
-      limit: limit || 10,
+      limit: limit || 6,
     });
     if (data.isSuccess) {
       setApplications(data.metadata.applications);
@@ -144,6 +149,28 @@ export default function AppliedJobs({
                     <Text className="mt-[0px]">
                       <Statuses status={application.status} />
                     </Text>
+                  </Td>
+                  <Td>
+                    <Button
+                      leftIcon={
+                        <AiOutlineEye size={16} color="var(--primary-500)" />
+                      }
+                      bg={"var(--primary-50)"}
+                      onClick={() => {
+                        dispatch(setData(application.resume.resume.fileUrl));
+                        dispatch(openCVViewer());
+                      }}
+                      _hover={{
+                        bg: "var(--primary-50)",
+                      }}
+                      padding={"0px 5px"}
+                      fontSize={"11px"}
+                      color="var(--primary-500)"
+                      borderRadius={"10px"}
+                      height={"30px"}
+                    >
+                      View CV
+                    </Button>
                   </Td>
                 </Tr>
               ))}

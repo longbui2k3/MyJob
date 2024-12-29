@@ -28,7 +28,7 @@ export default function CategorySelect({
       categories.find((cate: any) => cate._id === category)?.name ||
         "Select Category"
     );
-  }, [categories]);
+  }, [categories, category]);
   return (
     <Menu>
       <MenuButton

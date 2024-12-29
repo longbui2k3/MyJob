@@ -16,7 +16,7 @@ export default function FavoriteJobs() {
   async function findFavoriteJobs() {
     const data = await FindFavoriteJobByUser({
       page: curPage,
-      limit: 10,
+      limit: 6,
     });
     if (data.isSuccess) {
       setFavoriteJobs(data.metadata.favoriteJobs);

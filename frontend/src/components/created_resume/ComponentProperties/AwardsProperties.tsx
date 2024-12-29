@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionPanel,
 } from "@chakra-ui/react";
+import { HiOutlineXMark } from "react-icons/hi2";
 
 export default function AwardsProperties() {
   const dispatch = useDispatch();
@@ -58,6 +59,7 @@ export default function AwardsProperties() {
 
 function Award({ content, i }: { content: any; i: number }) {
   const dispatch = useDispatch();
+  const state = useSelector((state: any) => state.createCV.state);
   return (
     <AccordionItem>
       <AccordionButton
@@ -74,7 +76,29 @@ function Award({ content, i }: { content: any; i: number }) {
             fontSize: "14px",
           }}
         >{`Award ${i + 1}`}</div>
-        <AccordionIcon />
+        <div className="flex gap-2 items-center">
+          {state.awards.content.length > 1 ? (
+            <HiOutlineXMark
+              color="var(--danger-500)"
+              size={20}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(
+                  setState({
+                    key: "awards.content",
+                    value: [
+                      ...state.awards.content.slice(0, i),
+                      ...state.awards.content.slice(i + 1),
+                    ],
+                  })
+                );
+              }}
+            />
+          ) : (
+            ""
+          )}
+          <AccordionIcon />
+        </div>
       </AccordionButton>
       <AccordionPanel
         style={{
